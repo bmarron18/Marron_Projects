@@ -1,0 +1,123 @@
+Title:			Output from Marron_NN1a.py
+Project Descriptor:	HWK2
+Project ID:		CS 545 (2016SoE009)
+Record:		
+Author:			bmarron
+Origin Date:		1 Feb 2016
+
+
+
+###############################
+Experiment 2c: tr_d and tr_d
+eta =.6, alpha = .3
+#############################
+
+	#initiation from zero state
+In [36]: hwk2_exp2_run1=LtrRecogNN(NNsize)
+    ...:     
+    ...:     #eta =.6, alpha = .3
+    ...: hwk2_exp2_run1.SGD(tr_d, 100, .6, .3, tr_d)
+    ...: 
+    ...: 
+    ...: 
+Epoch 0: 301 / 10000
+Epoch 1: 244 / 10000
+Epoch 2: 229 / 10000
+Epoch 3: 227 / 10000
+Epoch 4: 224 / 10000
+Epoch 5: 224 / 10000
+Epoch 6: 224 / 10000
+Epoch 7: 227 / 10000
+Epoch 8: 227 / 10000
+Epoch 9: 237 / 10000
+Epoch 10: 236 / 10000
+Epoch 11: 241 / 10000
+Epoch 12: 244 / 10000
+Epoch 13: 245 / 10000
+Epoch 14: 244 / 10000
+Epoch 15: 245 / 10000
+Epoch 16: 245 / 10000
+Epoch 17: 244 / 10000
+Epoch 18: 245 / 10000
+Epoch 19: 245 / 10000
+Epoch 20: 242 / 10000
+Epoch 21: 240 / 10000
+Epoch 22: 246 / 10000
+Epoch 23: 242 / 10000
+Epoch 24: 245 / 10000
+Epoch 25: 248 / 10000
+Epoch 26: 248 / 10000
+Epoch 27: 251 / 10000
+Epoch 28: 253 / 10000
+Epoch 29: 251 / 10000
+Epoch 30: 253 / 10000
+Epoch 31: 256 / 10000
+Epoch 32: 260 / 10000
+Epoch 33: 259 / 10000
+Epoch 34: 263 / 10000
+Epoch 35: 263 / 10000
+Epoch 36: 268 / 10000
+Epoch 37: 269 / 10000
+Epoch 38: 270 / 10000
+Epoch 39: 269 / 10000
+Epoch 40: 271 / 10000
+Epoch 41: 272 / 10000
+Epoch 42: 274 / 10000
+Epoch 43: 274 / 10000
+Epoch 44: 273 / 10000
+Epoch 45: 275 / 10000
+Epoch 46: 275 / 10000
+Epoch 47: 278 / 10000
+Epoch 48: 264 / 10000
+Epoch 49: 265 / 10000
+Epoch 50: 265 / 10000
+Epoch 51: 265 / 10000
+Epoch 52: 267 / 10000
+Epoch 53: 268 / 10000
+Epoch 54: 269 / 10000
+Epoch 55: 270 / 10000
+Epoch 56: 271 / 10000
+Epoch 57: 271 / 10000
+Epoch 58: 272 / 10000
+Epoch 59: 272 / 10000
+Epoch 60: 274 / 10000
+Epoch 61: 275 / 10000
+Epoch 62: 275 / 10000
+Epoch 63: 274 / 10000
+Epoch 64: 275 / 10000
+Epoch 65: 276 / 10000
+Epoch 66: 276 / 10000
+Epoch 67: 277 / 10000
+Epoch 68: 277 / 10000
+Epoch 69: 276 / 10000
+Epoch 70: 278 / 10000
+Epoch 71: 278 / 10000
+Epoch 72: 277 / 10000
+Epoch 73: 276 / 10000
+Epoch 74: 276 / 10000
+Epoch 75: 276 / 10000
+Epoch 76: 277 / 10000
+Epoch 77: 276 / 10000
+Epoch 78: 276 / 10000
+Epoch 79: 276 / 10000
+Epoch 80: 276 / 10000
+Epoch 81: 275 / 10000
+Epoch 82: 273 / 10000
+Epoch 83: 272 / 10000
+Epoch 84: 272 / 10000
+Epoch 85: 274 / 10000
+Epoch 86: 274 / 10000
+Epoch 87: 275 / 10000
+Epoch 88: 275 / 10000
+Epoch 89: 275 / 10000
+Epoch 90: 275 / 10000
+Epoch 91: 275 / 10000
+Epoch 92: 274 / 10000
+Epoch 93: 275 / 10000
+Epoch 94: 274 / 10000
+Epoch 95: 273 / 10000
+Epoch 96: 272 / 10000
+Epoch 97: 275 / 10000
+Epoch 98: 275 / 10000
+Epoch 99: 276 / 10000
+

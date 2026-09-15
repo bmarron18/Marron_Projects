@@ -1,0 +1,2473 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/apasortcite//global/global}
+    \entry{altieri_agroecology_2015}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=bda7bf57ff7a17d9e44188d8552b189a}{%
+           family={Altieri},
+           familyi={A\bibinitperiod},
+           given={Miguel\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7cefa4ed72515aac1b4e30dbe07b03d9}{%
+           family={Nicholls},
+           familyi={N\bibinitperiod},
+           given={Clara\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1343ddb78f71a6fbf5c022df808347c2}{%
+           family={Henao},
+           familyi={H\bibinitperiod},
+           given={Alejandro},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=79d1aef88dccf1dbaf27b26e2297d8c0}{%
+           family={Lana},
+           familyi={L\bibinitperiod},
+           given={Marcos\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9ba70e8f4f5a77d63b9a3e4d7aea187a}
+      \strng{fullhash}{b79bcfeca14dd96030d36fa219c276c3}
+      \strng{bibnamehash}{b79bcfeca14dd96030d36fa219c276c3}
+      \strng{authorbibnamehash}{b79bcfeca14dd96030d36fa219c276c3}
+      \strng{authornamehash}{9ba70e8f4f5a77d63b9a3e4d7aea187a}
+      \strng{authorfullhash}{b79bcfeca14dd96030d36fa219c276c3}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Agronomy for Sustainable Development}
+      \field{number}{3}
+      \field{title}{Agroecology and the design of climate change-resilient farming systems}
+      \field{urlday}{8}
+      \field{urlmonth}{6}
+      \field{urlyear}{2017}
+      \field{volume}{35}
+      \field{year}{2015}
+      \field{urldateera}{ce}
+      \field{pages}{869\bibrangedash 890}
+      \range{pages}{22}
+    \endentry
+    \entry{barnosky_approaching_2012}{article}{}
+      \name{author}{22}{}{%
+        {{un=0,uniquepart=base,hash=66af3f1439691c0c37f43b33a0f80b29}{%
+           family={Barnosky},
+           familyi={B\bibinitperiod},
+           given={Anthony\bibnamedelima D.},
+           giveni={A\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d7adbb93ea7d94ed764cb564bdf56aad}{%
+           family={Hadly},
+           familyi={H\bibinitperiod},
+           given={Elizabeth\bibnamedelima A.},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b71c47fff97792c37706210243e23ae5}{%
+           family={Bascompte},
+           familyi={B\bibinitperiod},
+           given={Jordi},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=667f8d3aa3d430f9f000c639a388544f}{%
+           family={Berlow},
+           familyi={B\bibinitperiod},
+           given={Eric\bibnamedelima L.},
+           giveni={E\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c38a867e3d2dc4d9919e17be19c12ff5}{%
+           family={Brown},
+           familyi={B\bibinitperiod},
+           given={James\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=84cc30e40ce2adfaa8f19e2db99d9f1c}{%
+           family={Fortelius},
+           familyi={F\bibinitperiod},
+           given={Mikael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0eccf1f97774dcecf5b8afc9c0a7c327}{%
+           family={Getz},
+           familyi={G\bibinitperiod},
+           given={Wayne\bibnamedelima M.},
+           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=57c4f41e610f01534a978f3a4863d363}{%
+           family={Harte},
+           familyi={H\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ef66b2c3dacd04fd85ecf953dbfdf70}{%
+           family={Hastings},
+           familyi={H\bibinitperiod},
+           given={Alan},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54f5114ba7a2c32bebc597cbf759d2dd}{%
+           family={Marquet},
+           familyi={M\bibinitperiod},
+           given={Pablo\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2ae2470ca065d7ef410b50b1e3575d2a}{%
+           family={Martinez},
+           familyi={M\bibinitperiod},
+           given={Neo\bibnamedelima D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a88287b77340c082f0989440cb501ddc}{%
+           family={Mooers},
+           familyi={M\bibinitperiod},
+           given={Arne},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7d8b341192101375e9fe50949d7fea5e}{%
+           family={Roopnarine},
+           familyi={R\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=32ae7cb20f1b36fd88599f020e91fa46}{%
+           family={Vermeij},
+           familyi={V\bibinitperiod},
+           given={Geerat},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c4f5eb158ed89ebd386b7205a2a319ff}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={John\bibnamedelima W.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=11aec57968b96c29d9d9c0bf2e3605f0}{%
+           family={Gillespie},
+           familyi={G\bibinitperiod},
+           given={Rosemary},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=43698c36b205bdd65e89df3e8a106621}{%
+           family={Kitzes},
+           familyi={K\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5e5fbe53a906a3757dbb0a4337082509}{%
+           family={Marshall},
+           familyi={M\bibinitperiod},
+           given={Charles},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b3ee539e285dc0389395133f45269620}{%
+           family={Matzke},
+           familyi={M\bibinitperiod},
+           given={Nicholas},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a70273d20664b54491b21a864b405d3a}{%
+           family={Mindell},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=940d77badaef186fae8534373f0e0ca7}{%
+           family={Revilla},
+           familyi={R\bibinitperiod},
+           given={Eloy},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=234b16c43a41b86a589d75de3be3930a}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Adam\bibnamedelima B.},
+           giveni={A\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{7f99e7486d682c3aeb855424f36a6f89}
+      \strng{fullhash}{1db6b80b7b2f5a7a9a165432efb840a0}
+      \strng{bibnamehash}{fcb4ca6e6003c80ceea6bf4e30ce404a}
+      \strng{authorbibnamehash}{fcb4ca6e6003c80ceea6bf4e30ce404a}
+      \strng{authornamehash}{7f99e7486d682c3aeb855424f36a6f89}
+      \strng{authorfullhash}{1db6b80b7b2f5a7a9a165432efb840a0}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Localized ecological systems are known to shift abruptly and irreversibly from one state to another when they are forced across critical thresholds. Here we review evidence that the global ecosystem as a whole can react in the same way and is approaching a planetary-scale critical transition as a result of human influence. The plausibility of a planetary-scale /`tipping point/' highlights the need to improve biological forecasting by detecting early warning signs of critical transitions on global as well as local scales, and by detecting feedbacks that promote such transitions. It is also necessary to address root causes of how humans are forcing biological changes.}
+      \field{issn}{0028-0836}
+      \field{journaltitle}{Nature}
+      \field{month}{6}
+      \field{number}{7401}
+      \field{title}{Approaching a state shift in {Earth}/'s biosphere}
+      \field{urlday}{30}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{486}
+      \field{year}{2012}
+      \field{urldateera}{ce}
+      \field{pages}{52\bibrangedash 58}
+      \range{pages}{7}
+      \verb{file}
+      \verb Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/RWPVVABS/nature11018.html:text/html
+      \endverb
+      \keyw{Earth sciences,Ecology,Environmental science,Palaeontology}
+    \endentry
+    \entry{baulcombe_reaping_2009}{book}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=a8eb7c327845b190c84ecbc071f3a3d4}{%
+           family={Baulcombe},
+           familyi={B\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=890ceb0ab1b865446282e4ffba931af0}{%
+           family={Crute},
+           familyi={C\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4104605034e2c3aa9b24b60770c5c58e}{%
+           family={Davies},
+           familyi={D\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c8f90425b22b8926bc14dde9cb90679d}{%
+           family={Dunwell},
+           familyi={D\bibinitperiod},
+           given={Jim},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f8b43b7e06b7ca6a841d31e49f1a73f6}{%
+           family={Gale},
+           familyi={G\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dbf67cd6f7c62798c04562bf06e6bc9d}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b36d70725d6134f7ce9c035062b8beb}{%
+           family={Pretty},
+           familyi={P\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a93699f48b55ab47f76bb2fc82e00474}{%
+           family={Sutherland},
+           familyi={S\bibinitperiod},
+           given={William},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0ac8a8243f96f7cdd76c47bb0d2e4c9}{%
+           family={Toulmin},
+           familyi={T\bibinitperiod},
+           given={Camilla},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {The Royal Society}%
+      }
+      \strng{namehash}{7cb21ff99e38ba1d61f37bd1688930cc}
+      \strng{fullhash}{11b2178f452701631f8b7a745128b9d3}
+      \strng{bibnamehash}{11b2178f452701631f8b7a745128b9d3}
+      \strng{authorbibnamehash}{11b2178f452701631f8b7a745128b9d3}
+      \strng{authornamehash}{7cb21ff99e38ba1d61f37bd1688930cc}
+      \strng{authorfullhash}{11b2178f452701631f8b7a745128b9d3}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{shorttitle}{Reaping the benefits}
+      \field{title}{Reaping the benefits: science and the sustainable intensification of global agriculture}
+      \field{year}{2009}
+    \endentry
+    \entry{compant_stephane_plant_2010}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=2e604fc21747e0254ddd44e58c5de621}{%
+           family={{Compant, Stephane}},
+           familyi={C\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=dc30f09b2a480333a7ea1346190d6d57}{%
+           family={{Sessitsch, Angela}},
+           familyi={S\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=b068ecc48026dcee7f3060363edfc2a4}{%
+           family={{Clement, Christophe}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e468b5cb48b6809360c3307e9670061c}
+      \strng{fullhash}{84c4944d31a5ca847cc3c01448b291fe}
+      \strng{bibnamehash}{84c4944d31a5ca847cc3c01448b291fe}
+      \strng{authorbibnamehash}{84c4944d31a5ca847cc3c01448b291fe}
+      \strng{authornamehash}{e468b5cb48b6809360c3307e9670061c}
+      \strng{authorfullhash}{84c4944d31a5ca847cc3c01448b291fe}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Soil Biology and Biochemistry}
+      \field{number}{5}
+      \field{title}{Plant growth-promoting bacteria in the rhizo-and endosphere of plants: their role, colonization, mechanisms involved and prospects for utilization}
+      \field{volume}{42}
+      \field{year}{2010}
+      \field{pages}{669\bibrangedash 678}
+      \range{pages}{10}
+    \endentry
+    \entry{dodds_human_2013}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=fbb1df1ef1c866c3da051cc071f3d8df}{%
+           family={Dodds},
+           familyi={D\bibinitperiod},
+           given={Walter\bibnamedelima K.},
+           giveni={W\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5459ea287ebe830002cf4eefbf517618}{%
+           family={Perkin},
+           familyi={P\bibinitperiod},
+           given={Joshuah\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=347141545cb23794799e73d44a21e612}{%
+           family={Gerken},
+           familyi={G\bibinitperiod},
+           given={Joseph\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{09579f808175829a770445b34b438b29}
+      \strng{fullhash}{fa462b6725589f285782d7ebbb0fb96c}
+      \strng{bibnamehash}{fa462b6725589f285782d7ebbb0fb96c}
+      \strng{authorbibnamehash}{fa462b6725589f285782d7ebbb0fb96c}
+      \strng{authornamehash}{09579f808175829a770445b34b438b29}
+      \strng{authorfullhash}{fa462b6725589f285782d7ebbb0fb96c}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Environmental science \& technology}
+      \field{number}{16}
+      \field{shorttitle}{Human impact on freshwater ecosystem services}
+      \field{title}{Human impact on freshwater ecosystem services: a global perspective}
+      \field{urlday}{9}
+      \field{urlmonth}{2}
+      \field{urlyear}{2016}
+      \field{volume}{47}
+      \field{year}{2013}
+      \field{urldateera}{ce}
+      \field{pages}{9061\bibrangedash 9068}
+      \range{pages}{8}
+      \verb{file}
+      \verb [PDF] from tntech.edu:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/KMBQ46JV/Dodds et al. - 2013 - Human impact on freshwater ecosystem services a g.pdf:application/pdf;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/ZP4P5JPW/es4021052.html:text/html
+      \endverb
+    \endentry
+    \entry{eigenbrod_impact_2011}{article}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=2811eaef2fb9c6800c76230d73ee0140}{%
+           family={Eigenbrod},
+           familyi={E\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=85b8fc3c744d778204075513b20db187}{%
+           family={Bell},
+           familyi={B\bibinitperiod},
+           given={V.\bibnamedelimi A.},
+           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=356bb4bbf8634b1a0cb69448c88f0c7f}{%
+           family={Davies},
+           familyi={D\bibinitperiod},
+           given={H.\bibnamedelimi N.},
+           giveni={H\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=682a716741d2702bbd09b4b4c0aa349e}{%
+           family={Heinemeyer},
+           familyi={H\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cd61eace3e3668cb173a8db914a17a2c}{%
+           family={Armsworth},
+           familyi={A\bibinitperiod},
+           given={P.\bibnamedelimi R.},
+           giveni={P\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b5c5c284874d88e1e4bf1ad3f78d03f3}{%
+           family={Gaston},
+           familyi={G\bibinitperiod},
+           given={K.\bibnamedelimi J.},
+           giveni={K\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b01d7845d9d7aef4c91e0e21720b896c}
+      \strng{fullhash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \strng{bibnamehash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \strng{authorbibnamehash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \strng{authornamehash}{b01d7845d9d7aef4c91e0e21720b896c}
+      \strng{authorfullhash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Royal Society of London B: Biological Sciences}
+      \field{title}{The impact of projected increases in urbanization on ecosystem services}
+      \field{urlday}{23}
+      \field{urlmonth}{2}
+      \field{urlyear}{2016}
+      \field{year}{2011}
+      \field{urldateera}{ce}
+      \field{pages}{rspb20102754}
+      \range{pages}{-1}
+      \verb{file}
+      \verb [HTML] from royalsocietypublishing.org:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/IT27IGIV/rspb.2010.2754.html:text/html
+      \endverb
+    \endentry
+    \entry{gliessman_agroecology:_2015}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5376b8b9634a88e1574440951349e90f}{%
+           family={Gliessman},
+           familyi={G\bibinitperiod},
+           given={Stephen\bibnamedelima R.},
+           giveni={S\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{fullhash}{5376b8b9634a88e1574440951349e90f}
+      \strng{bibnamehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{authorbibnamehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{authornamehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{authorfullhash}{5376b8b9634a88e1574440951349e90f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{edition}{Third edition}
+      \field{isbn}{978-1-4398-9561-0}
+      \field{shorttitle}{Agroecology}
+      \field{title}{Agroecology: the ecology of sustainable food systems}
+      \field{year}{2015}
+      \keyw{Agricultural ecology,Agricultural systems,Sustainable agriculture}
+    \endentry
+    \entry{godfray_food_2010}{article}{}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=0de91d74d5232f68859ce77eb2602895}{%
+           family={Godfray},
+           familyi={G\bibinitperiod},
+           given={H.\bibnamedelimi Charles\bibnamedelima J.},
+           giveni={H\bibinitperiod\bibinitdelim C\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b7e7a6bd2747fe209d6b54e582dfaab0}{%
+           family={Beddington},
+           familyi={B\bibinitperiod},
+           given={John\bibnamedelima R.},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1e9e148265c516990c9e9e0bd50c2094}{%
+           family={Crute},
+           familyi={C\bibinitperiod},
+           given={Ian\bibnamedelima R.},
+           giveni={I\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a19337d097995a682b9e14934a3ecc7b}{%
+           family={Haddad},
+           familyi={H\bibinitperiod},
+           given={Lawrence},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d9d8a82c6bc1092b207a2c7b4cd7611c}{%
+           family={Lawrence},
+           familyi={L\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=82ffbd7a9f2cc5eba39410f82727f40a}{%
+           family={Muir},
+           familyi={M\bibinitperiod},
+           given={James\bibnamedelima F.},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b36d70725d6134f7ce9c035062b8beb}{%
+           family={Pretty},
+           familyi={P\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0383c94e9a7e1a50afd56047c49cc09b}{%
+           family={Robinson},
+           familyi={R\bibinitperiod},
+           given={Sherman},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=34a9e0b849bbde635e0a39ab5b8de8e9}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={Sandy\bibnamedelima M.},
+           giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0ac8a8243f96f7cdd76c47bb0d2e4c9}{%
+           family={Toulmin},
+           familyi={T\bibinitperiod},
+           given={Camilla},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6783035f55e94e1dc42357d7680babc4}
+      \strng{fullhash}{73330add2ee55decb71cf6265b8d36e0}
+      \strng{bibnamehash}{73330add2ee55decb71cf6265b8d36e0}
+      \strng{authorbibnamehash}{73330add2ee55decb71cf6265b8d36e0}
+      \strng{authornamehash}{6783035f55e94e1dc42357d7680babc4}
+      \strng{authorfullhash}{73330add2ee55decb71cf6265b8d36e0}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Science}
+      \field{number}{5967}
+      \field{shorttitle}{Food security}
+      \field{title}{Food security: the challenge of feeding 9 billion people}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2017}
+      \field{volume}{327}
+      \field{year}{2010}
+      \field{urldateera}{ce}
+      \field{pages}{812\bibrangedash 818}
+      \range{pages}{7}
+    \endentry
+    \entry{lobell_climate_2011}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=b95e5b4d12fe0ed0847d7cb8abaf7da0}{%
+           family={Lobell},
+           familyi={L\bibinitperiod},
+           given={David\bibnamedelima B.},
+           giveni={D\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=01758524b2f1fd8df078ff9dda77f16e}{%
+           family={Schlenker},
+           familyi={S\bibinitperiod},
+           given={Wolfram},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2cb3deadb16d83c63e7a37f570f08b91}{%
+           family={Costa-Roberts},
+           familyi={C\bibinithyphendelim R\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f2a3d62e71a2c48c10d9537662f2ec48}
+      \strng{fullhash}{669c62ee0f486c2f2f43d0393997fd34}
+      \strng{bibnamehash}{669c62ee0f486c2f2f43d0393997fd34}
+      \strng{authorbibnamehash}{669c62ee0f486c2f2f43d0393997fd34}
+      \strng{authornamehash}{f2a3d62e71a2c48c10d9537662f2ec48}
+      \strng{authorfullhash}{669c62ee0f486c2f2f43d0393997fd34}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Efforts to anticipate how climate change will affect future food availability can benefit from understanding the impacts of changes to date. We found that in the cropping regions and growing seasons of most countries, with the important exception of the United States, temperature trends from 1980 to 2008 exceeded one standard deviation of historic year-to-year variability. Models that link yields of the four largest commodity crops to weather indicate that global maize and wheat production declined by 3.8 and 5.5\%, respectively, relative to a counterfactual without climate trends. For soybeans and rice, winners and losers largely balanced out. Climate trends were large enough in some countries to offset a significant portion of the increases in average yields that arose from technology, carbon dioxide fertilization, and other factors.}
+      \field{journaltitle}{Science}
+      \field{month}{7}
+      \field{number}{6042}
+      \field{title}{Climate {Trends} and {Global} {Crop} {Production} {Since} 1980}
+      \field{volume}{333}
+      \field{year}{2011}
+      \field{pages}{616\bibrangedash 620}
+      \range{pages}{5}
+    \endentry
+    \entry{nicholls_plant_2013}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7cefa4ed72515aac1b4e30dbe07b03d9}{%
+           family={Nicholls},
+           familyi={N\bibinitperiod},
+           given={Clara\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bda7bf57ff7a17d9e44188d8552b189a}{%
+           family={Altieri},
+           familyi={A\bibinitperiod},
+           given={Miguel\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{fullhash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{bibnamehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{authorbibnamehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{authornamehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{authorfullhash}{1e58e1dcfcb434fb2502ff3975484140}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Agronomy for Sustainable development}
+      \field{number}{2}
+      \field{title}{Plant biodiversity enhances bees and other insect pollinators in agroecosystems. {A} review}
+      \field{urlday}{8}
+      \field{urlmonth}{6}
+      \field{urlyear}{2017}
+      \field{volume}{33}
+      \field{year}{2013}
+      \field{urldateera}{ce}
+      \field{pages}{257\bibrangedash 274}
+      \range{pages}{18}
+    \endentry
+    \entry{parry_effects_2004}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=b3333a36a13473b98b91a0d8327f3b4e}{%
+           family={Parry},
+           familyi={P\bibinitperiod},
+           given={Martin\bibnamedelima L.},
+           giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=23daa01739d4c86eaa0c8076f51f0e8d}{%
+           family={Rosenzweig},
+           familyi={R\bibinitperiod},
+           given={Cynthia},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=73dedaf49020ea323f6b9d58b6d70271}{%
+           family={Iglesias},
+           familyi={I\bibinitperiod},
+           given={Ana},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=60fcc6be7d9e1c42e0ac7f2ad4335a0a}{%
+           family={Livermore},
+           familyi={L\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=158744843ce157a8bddea0646fb97bbd}{%
+           family={Fischer},
+           familyi={F\bibinitperiod},
+           given={Gunther},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9d19d649c527285dfa550842b02189fc}
+      \strng{fullhash}{7dd7d3234c62c87074737d65a78bf09e}
+      \strng{bibnamehash}{7dd7d3234c62c87074737d65a78bf09e}
+      \strng{authorbibnamehash}{7dd7d3234c62c87074737d65a78bf09e}
+      \strng{authornamehash}{9d19d649c527285dfa550842b02189fc}
+      \strng{authorfullhash}{7dd7d3234c62c87074737d65a78bf09e}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Global Environmental Change}
+      \field{number}{1}
+      \field{title}{Effects of climate change on global food production under {SRES} emissions and socio-economic scenarios}
+      \field{urlday}{13}
+      \field{urlmonth}{6}
+      \field{urlyear}{2017}
+      \field{volume}{14}
+      \field{year}{2004}
+      \field{urldateera}{ce}
+      \field{pages}{53\bibrangedash 67}
+      \range{pages}{15}
+    \endentry
+    \entry{prosser_role_2007}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=9afc036e9c85750f0434b9575aa591bb}{%
+           family={Prosser},
+           familyi={P\bibinitperiod},
+           given={James\bibnamedelima I.},
+           giveni={J\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6359a72db5404eefaa073e6c2fc48506}{%
+           family={Bohannan},
+           familyi={B\bibinitperiod},
+           given={Brendan\bibnamedelima JM},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9d2ae7776c9b0c41078865cfb3f11818}{%
+           family={Curtis},
+           familyi={C\bibinitperiod},
+           given={Tom\bibnamedelima P.},
+           giveni={T\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f162734e9ebff60c4f662387909d6b67}{%
+           family={Ellis},
+           familyi={E\bibinitperiod},
+           given={Richard\bibnamedelima J.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9462947a6c9b083dd72e99ab75d6e1b8}{%
+           family={Firestone},
+           familyi={F\bibinitperiod},
+           given={Mary\bibnamedelima K.},
+           giveni={M\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=910f777004aa087342470fbc68bb26cc}{%
+           family={Freckleton},
+           familyi={F\bibinitperiod},
+           given={Rob\bibnamedelima P.},
+           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=a74426fc74218054113a6c2823eee9fe}{%
+           family={Green},
+           familyi={G\bibinitperiod},
+           given={Jessica\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=1}}%
+        {{un=1,uniquepart=given,hash=b5566af50e33d14075bce8419a1f9fab}{%
+           family={Green},
+           familyi={G\bibinitperiod},
+           given={Laura\bibnamedelima E.},
+           giveni={L\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=6dc12fdba356b74047e1ab98269d9f7e}{%
+           family={Killham},
+           familyi={K\bibinitperiod},
+           given={Ken},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4812f3ea3a373c63a8308b92a6a408ae}{%
+           family={Lennon},
+           familyi={L\bibinitperiod},
+           given={Jack\bibnamedelima J.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{43ebc8bb0ca977a9a036aa8b22c26d2e}
+      \strng{fullhash}{24b430d9eabd51ac4fe0c53073290f83}
+      \strng{bibnamehash}{24b430d9eabd51ac4fe0c53073290f83}
+      \strng{authorbibnamehash}{24b430d9eabd51ac4fe0c53073290f83}
+      \strng{authornamehash}{43ebc8bb0ca977a9a036aa8b22c26d2e}
+      \strng{authorfullhash}{24b430d9eabd51ac4fe0c53073290f83}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Reviews Microbiology}
+      \field{number}{5}
+      \field{title}{The role of ecological theory in microbial ecology}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{5}
+      \field{year}{2007}
+      \field{urldateera}{ce}
+      \field{pages}{384\bibrangedash 392}
+      \range{pages}{9}
+      \verb{file}
+      \verb [HTML] from nature.com:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/UAGG6FT4/nrmicro1643.html:text/html;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/ZM5T6E7A/nrmicro1643.html:text/html
+      \endverb
+    \endentry
+    \entry{rogers_facing_2008}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5c4e527ab3b56a0ba0cab18a1c314a7a}{%
+           family={Rogers},
+           familyi={R\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{fullhash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{bibnamehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{authorbibnamehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{authornamehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{authorfullhash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{As demand for freshwater soars, planetary supplies are becoming unpredictable. Existing technologies could avert a global watercrisis, but they must be implemented soon}
+      \field{issn}{0036-8733}
+      \field{journaltitle}{Scientific American}
+      \field{month}{8}
+      \field{number}{2}
+      \field{title}{Facing the {Freshwater} {Crisis}}
+      \field{urlday}{2}
+      \field{urlmonth}{4}
+      \field{urlyear}{2014}
+      \field{volume}{299}
+      \field{year}{2008}
+      \field{urldateera}{ce}
+      \field{pages}{46\bibrangedash 53}
+      \range{pages}{8}
+    \endentry
+    \entry{rygiewicz_soil_2010}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=7e98c549ea7ef1befa693b7bf111053a}{%
+           family={Rygiewicz},
+           familyi={R\bibinitperiod},
+           given={Paul\bibnamedelima T.},
+           giveni={P\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=22baf99d7e42e4a3ed343ee4df88596f}{%
+           family={Monleon},
+           familyi={M\bibinitperiod},
+           given={Vicente\bibnamedelima J.},
+           giveni={V\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=22b354e6e537af71ec1dbe847cefd657}{%
+           family={Ingham},
+           familyi={I\bibinitperiod},
+           given={Elaine\bibnamedelima R.},
+           giveni={E\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dbfb52be13df21c654f1e34026b28875}{%
+           family={Martin},
+           familyi={M\bibinitperiod},
+           given={Kendall\bibnamedelima J.},
+           giveni={K\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1902abcae9ad19b749388709a48d4c97}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Mark\bibnamedelima G.},
+           giveni={M\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b30b2ea98af5aba7921c1fc4e4ae6a1b}
+      \strng{fullhash}{06323dd954537fbe3ad60f88d9e430fd}
+      \strng{bibnamehash}{06323dd954537fbe3ad60f88d9e430fd}
+      \strng{authorbibnamehash}{06323dd954537fbe3ad60f88d9e430fd}
+      \strng{authornamehash}{b30b2ea98af5aba7921c1fc4e4ae6a1b}
+      \strng{authorfullhash}{06323dd954537fbe3ad60f88d9e430fd}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Disrupting ecosystem components, while transferring and reconstructing them for experiments can produce myriad responses. Establishing the extent of these biological responses as the system approaches a new equilibrium allows us more reliably to emulate comparable native systems. That is, the sensitivity of analyzing ecosystem processes in a reconstructed system is improved by excluding the period when observed phenomena are primarily responses caused by establishing the experiment rather than effects of imposed treatments; achieved by determining the extent of any pulse of activity caused by preparatory procedures. A native forest soil was physically disrupted when it was collected, sieved, and then rebuilt in lysimeters in a controlled-environment study evaluating the influence of elevated atmospheric CO2 concentration and elevated atmospheric temperature on the reconstructed soil that was planted with Douglas-fir (Pseudotsuga menziesii Mirb. Franco) seedlings. Generally, soil food web populations responded in two phases during the exposure as indicated by preliminary evaluation of the 4.5-year dataset. Also, previous work indicated that relatively elevated soil CO2 effluxes occurred during the first phase, suggesting that food web populations may have responded to carbon sources made available when the soil was harvested and its profile reconstructed in the lysimeters. Results are presented for bacterial and fungal biomass, numbers of protozoa and nematodes to gain insight on whether the first phase responses are attributable to the acute stress of physically disrupting the soil. We found clear relationships between changes in predator and prey populations. A prominent spike for many of the food web populations occurred the year after the climate exposures began. Except for total bacterial biomass and total fungal-hyphae biomass, overall food web responses generally were unrelated to treatments. It appears that initial food web population responses were related to increased availability of soil carbon caused by establishing the experiment. Our results provide insights into determining the length of time to maintain reconstructed forest ecosystems before responses are observed related to experimental treatments. It appears that as long as 3 years elapsed before the soil food web appeared to recover from the acute physical disturbance; 1 year of recovery prior to commencing the climate exposures to allow the soil to rest after it was reconstructed, plus approximately the first 2 years of maintaining the climate treatments. Accounting for consequences of such periods of adjustment is critical for forecasting whether comparable natural ecosystems will be net sources or sinks of elevated concentrations of atmospheric CO2.}
+      \field{issn}{0929-1393}
+      \field{journaltitle}{Applied Soil Ecology}
+      \field{month}{5}
+      \field{number}{1}
+      \field{shorttitle}{Soil life in reconstructed ecosystems}
+      \field{title}{Soil life in reconstructed ecosystems: {Initial} soil food web responses after rebuilding a forest soil profile for a climate change experiment}
+      \field{urlday}{20}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{45}
+      \field{year}{2010}
+      \field{urldateera}{ce}
+      \field{pages}{26\bibrangedash 38}
+      \range{pages}{13}
+      \verb{file}
+      \verb ScienceDirect Full Text PDF:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/3S9PFFQ2/Rygiewicz et al. - 2010 - Soil life in reconstructed ecosystems Initial soi.pdf:application/pdf;ScienceDirect Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/9PCTHPM4/S0929139310000119.html:text/html
+      \endverb
+      \keyw{Amoebae,Atmospheric CO2 concentration,Atmospheric temperature,Bacterial biomass,Climate change,Flagellates,Fungal biomass,Nematodes,Protozoa,Soil physical disturbance}
+    \endentry
+    \entry{scheller_design_2007}{article}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=d1347d7140515157592e5da00ded50f5}{%
+           family={Scheller},
+           familyi={S\bibinitperiod},
+           given={Robert\bibnamedelima M.},
+           giveni={R\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=615d6b98a47479146257017b4ce0d843}{%
+           family={Domingo},
+           familyi={D\bibinitperiod},
+           given={James\bibnamedelima B.},
+           giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=25862c522caf15db361ae4369c497ca5}{%
+           family={Sturtevant},
+           familyi={S\bibinitperiod},
+           given={Brian\bibnamedelima R.},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=19ac76de7599a86134378d0a3ae83db6}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={Jeremy\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b3d209324fd203aa0e465a35c51e74ff}{%
+           family={Rudy},
+           familyi={R\bibinitperiod},
+           given={Arnold},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4266c76d307f672a5ef67399f3e5b0a6}{%
+           family={Gustafson},
+           familyi={G\bibinitperiod},
+           given={Eric\bibnamedelima J.},
+           giveni={E\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c5a351a38b09b0a270ab0d9448204999}{%
+           family={Mladenoff},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0d953e29057a7b59f8154f7203644001}
+      \strng{fullhash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \strng{bibnamehash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \strng{authorbibnamehash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \strng{authornamehash}{0d953e29057a7b59f8154f7203644001}
+      \strng{authorfullhash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ecological modelling}
+      \field{number}{3}
+      \field{title}{Design, development, and application of {LANDIS}-{II}, a spatial landscape simulation model with flexible temporal and spatial resolution}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2015}
+      \field{volume}{201}
+      \field{year}{2007}
+      \field{urldateera}{ce}
+      \field{pages}{409\bibrangedash 419}
+      \range{pages}{11}
+    \endentry
+    \entry{schmidhuber_global_2007}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=ea335f4975a7c051304f28008c0fe598}{%
+           family={Schmidhuber},
+           familyi={S\bibinitperiod},
+           given={Josef},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=29a793187217bb2075087677ab512a40}{%
+           family={Tubiello},
+           familyi={T\bibinitperiod},
+           given={Francesco\bibnamedelima N.},
+           giveni={F\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{fullhash}{256f29561d0691213e12f1bb86686d99}
+      \strng{bibnamehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{authorbibnamehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{authornamehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{authorfullhash}{256f29561d0691213e12f1bb86686d99}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the National Academy of Sciences}
+      \field{number}{50}
+      \field{title}{Global food security under climate change}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2017}
+      \field{volume}{104}
+      \field{year}{2007}
+      \field{urldateera}{ce}
+      \field{pages}{19703\bibrangedash 19708}
+      \range{pages}{6}
+    \endentry
+    \entry{tilman_forecasting_2001}{article}{}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=56e145e8f70192e123c180987985ea9b}{%
+           family={Tilman},
+           familyi={T\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=174c99bdc96a1586bf18944187134ec1}{%
+           family={Fargione},
+           familyi={F\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9dbefb2ca77a3a41c500f8c98a3fbf9a}{%
+           family={Wolff},
+           familyi={W\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b93fb63fab1bcfaef17ad887c2d9d026}{%
+           family={D'Antonio},
+           familyi={D\bibinitperiod},
+           given={Carla},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1e8792c5112724353ef4d1cbe8565333}{%
+           family={Dobson},
+           familyi={D\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4d3d0a31baa011c0272b719f7954438b}{%
+           family={Howarth},
+           familyi={H\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=225f712867a67cbee7877b0048ba0f53}{%
+           family={Schindler},
+           familyi={S\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c67b84f2cc36221712734826eafabd2c}{%
+           family={Schlesinger},
+           familyi={S\bibinitperiod},
+           given={William\bibnamedelima H.},
+           giveni={W\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6574409da7678a25bb6d2ab63311321e}{%
+           family={Simberloff},
+           familyi={S\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0789a8c53a5e62e1223f605dc59ebd6}{%
+           family={Swackhamer},
+           familyi={S\bibinitperiod},
+           given={Deborah},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d487d3d934b1601a783fe367c8f275e7}
+      \strng{fullhash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \strng{bibnamehash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \strng{authorbibnamehash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \strng{authornamehash}{d487d3d934b1601a783fe367c8f275e7}
+      \strng{authorfullhash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{5515}
+      \field{title}{Forecasting agriculturally driven global environmental change}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2017}
+      \field{volume}{292}
+      \field{year}{2001}
+      \field{urldateera}{ce}
+      \field{pages}{281\bibrangedash 284}
+      \range{pages}{4}
+    \endentry
+    \entry{wada_global_2010}{article}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=5f49a53af9ecd9435959b7806af47133}{%
+           family={Wada},
+           familyi={W\bibinitperiod},
+           given={Yoshihide},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d573f2efafb7cbe66ee94ae6d1fb20ce}{%
+           family={Beek},
+           familyi={B\bibinitperiod},
+           given={Ludovicus\bibnamedelimb P.\bibnamedelimi H.},
+           giveni={L\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0,
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=0438a81e510b8a06014120419be62d0e}{%
+           family={Kempen},
+           familyi={K\bibinitperiod},
+           given={Cheryl\bibnamedelima M.},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0,
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=30d0319ed279b0b61c840e6b9f4a716e}{%
+           family={Reckman},
+           familyi={R\bibinitperiod},
+           given={Josef\bibnamedelimb W.\bibnamedelimi T.\bibnamedelimi M.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod\bibinitdelim T\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=59a558322b0058de86803657f72d9a15}{%
+           family={Vasak},
+           familyi={V\bibinitperiod},
+           given={Slavek},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=917b3a1d0253a66cb37c7fe61c26d9a9}{%
+           family={Bierkens},
+           familyi={B\bibinitperiod},
+           given={Marc\bibnamedelimb F.\bibnamedelimi P.},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{424628363c66c58dba67aa205b5262b2}
+      \strng{fullhash}{4cda156b9395dea919518a285c78ece2}
+      \strng{bibnamehash}{4cda156b9395dea919518a285c78ece2}
+      \strng{authorbibnamehash}{4cda156b9395dea919518a285c78ece2}
+      \strng{authornamehash}{424628363c66c58dba67aa205b5262b2}
+      \strng{authorfullhash}{4cda156b9395dea919518a285c78ece2}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In regions with frequent water stress and large aquifer systems groundwater is often used as an additional water source. If groundwater abstraction exceeds the natural groundwater recharge for extensive areas and long times, overexploitation or persistent groundwater depletion occurs. Here we provide a global overview of groundwater depletion (here defined as abstraction in excess of recharge) by assessing groundwater recharge with a global hydrological model and subtracting estimates of groundwater abstraction. Restricting our analysis to sub-humid to arid areas we estimate the total global groundwater depletion to have increased from 126 (±32) km3 a−1 in 1960 to 283 (±40) km3 a−1 in 2000. The latter equals 39 (±10)\% of the global yearly groundwater abstraction, 2 (±0.6)\% of the global yearly groundwater recharge, 0.8 (±0.1)\% of the global yearly continental runoff and 0.4 (±0.06)\% of the global yearly evaporation, contributing a considerable amount of 0.8 (±0.1) mm a−1 to current sea-level rise.}
+      \field{issn}{1944-8007}
+      \field{journaltitle}{Geophysical Research Letters}
+      \field{month}{10}
+      \field{number}{20}
+      \field{title}{Global depletion of groundwater resources}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{37}
+      \field{year}{2010}
+      \field{urldateera}{ce}
+      \field{pages}{L20402}
+      \range{pages}{1}
+      \verb{file}
+      \verb Full Text PDF:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/59HQFJQ3/Wada et al. - 2010 - Global depletion of groundwater resources.pdf:application/pdf;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/UJXP7ANP/abstract.html:text/html
+      \endverb
+      \keyw{1655 Water cycles,1803 Anthropogenic effects,1829 Groundwater hydrology,1836 Hydrological cycles and budgets,4556 Sea level: variations and mean,global hydrology,groundwater depletion,sea level rise,water stress}
+    \endentry
+    \entry{zhao_drought-induced_2010}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=634c55b2f4ffea25a56866df127d2171}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Maosheng},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ef26b1d07b6ecb7220a6538e773e4146}{%
+           family={Running},
+           familyi={R\bibinitperiod},
+           given={Steven\bibnamedelima W.},
+           giveni={S\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{fullhash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{bibnamehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{authorbibnamehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{authornamehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{authorfullhash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Terrestrial net primary production (NPP) quantifies the amount of atmospheric carbon fixed by plants and accumulated as biomass. Previous studies have shown that climate constraints were relaxing with increasing temperature and solar radiation, allowing an upward trend in NPP from 1982 through 1999. The past decade (2000 to 2009) has been the warmest since instrumental measurements began, which could imply continued increases in NPP; however, our estimates suggest a reduction in the global NPP of 0.55 petagrams of carbon. Large-scale droughts have reduced regional NPP, and a drying trend in the Southern Hemisphere has decreased NPP in that area, counteracting the increased NPP over the Northern Hemisphere. A continued decline in NPP would not only weaken the terrestrial carbon sink, but it would also intensify future competition between food demand and proposed biofuel production.}
+      \field{journaltitle}{Science}
+      \field{month}{8}
+      \field{number}{5994}
+      \field{title}{Drought-{Induced} {Reduction} in {Global} {Terrestrial} {Net} {Primary} {Production} from 2000 {Through} 2009}
+      \field{volume}{329}
+      \field{year}{2010}
+      \field{pages}{940\bibrangedash 943}
+      \range{pages}{4}
+    \endentry
+  \enddatalist
+  \datalist[entry]{nyt/global//global/global}
+    \entry{altieri_agroecology_2015}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=bda7bf57ff7a17d9e44188d8552b189a}{%
+           family={Altieri},
+           familyi={A\bibinitperiod},
+           given={Miguel\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7cefa4ed72515aac1b4e30dbe07b03d9}{%
+           family={Nicholls},
+           familyi={N\bibinitperiod},
+           given={Clara\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1343ddb78f71a6fbf5c022df808347c2}{%
+           family={Henao},
+           familyi={H\bibinitperiod},
+           given={Alejandro},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=79d1aef88dccf1dbaf27b26e2297d8c0}{%
+           family={Lana},
+           familyi={L\bibinitperiod},
+           given={Marcos\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9ba70e8f4f5a77d63b9a3e4d7aea187a}
+      \strng{fullhash}{b79bcfeca14dd96030d36fa219c276c3}
+      \strng{bibnamehash}{b79bcfeca14dd96030d36fa219c276c3}
+      \strng{authorbibnamehash}{b79bcfeca14dd96030d36fa219c276c3}
+      \strng{authornamehash}{9ba70e8f4f5a77d63b9a3e4d7aea187a}
+      \strng{authorfullhash}{b79bcfeca14dd96030d36fa219c276c3}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Agronomy for Sustainable Development}
+      \field{number}{3}
+      \field{title}{Agroecology and the design of climate change-resilient farming systems}
+      \field{urlday}{8}
+      \field{urlmonth}{6}
+      \field{urlyear}{2017}
+      \field{volume}{35}
+      \field{year}{2015}
+      \field{urldateera}{ce}
+      \field{pages}{869\bibrangedash 890}
+      \range{pages}{22}
+    \endentry
+    \entry{barnosky_approaching_2012}{article}{}
+      \name{author}{22}{}{%
+        {{un=0,uniquepart=base,hash=66af3f1439691c0c37f43b33a0f80b29}{%
+           family={Barnosky},
+           familyi={B\bibinitperiod},
+           given={Anthony\bibnamedelima D.},
+           giveni={A\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d7adbb93ea7d94ed764cb564bdf56aad}{%
+           family={Hadly},
+           familyi={H\bibinitperiod},
+           given={Elizabeth\bibnamedelima A.},
+           giveni={E\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b71c47fff97792c37706210243e23ae5}{%
+           family={Bascompte},
+           familyi={B\bibinitperiod},
+           given={Jordi},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=667f8d3aa3d430f9f000c639a388544f}{%
+           family={Berlow},
+           familyi={B\bibinitperiod},
+           given={Eric\bibnamedelima L.},
+           giveni={E\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c38a867e3d2dc4d9919e17be19c12ff5}{%
+           family={Brown},
+           familyi={B\bibinitperiod},
+           given={James\bibnamedelima H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=84cc30e40ce2adfaa8f19e2db99d9f1c}{%
+           family={Fortelius},
+           familyi={F\bibinitperiod},
+           given={Mikael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0eccf1f97774dcecf5b8afc9c0a7c327}{%
+           family={Getz},
+           familyi={G\bibinitperiod},
+           given={Wayne\bibnamedelima M.},
+           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=57c4f41e610f01534a978f3a4863d363}{%
+           family={Harte},
+           familyi={H\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ef66b2c3dacd04fd85ecf953dbfdf70}{%
+           family={Hastings},
+           familyi={H\bibinitperiod},
+           given={Alan},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=54f5114ba7a2c32bebc597cbf759d2dd}{%
+           family={Marquet},
+           familyi={M\bibinitperiod},
+           given={Pablo\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2ae2470ca065d7ef410b50b1e3575d2a}{%
+           family={Martinez},
+           familyi={M\bibinitperiod},
+           given={Neo\bibnamedelima D.},
+           giveni={N\bibinitperiod\bibinitdelim D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a88287b77340c082f0989440cb501ddc}{%
+           family={Mooers},
+           familyi={M\bibinitperiod},
+           given={Arne},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7d8b341192101375e9fe50949d7fea5e}{%
+           family={Roopnarine},
+           familyi={R\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=32ae7cb20f1b36fd88599f020e91fa46}{%
+           family={Vermeij},
+           familyi={V\bibinitperiod},
+           given={Geerat},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c4f5eb158ed89ebd386b7205a2a319ff}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={John\bibnamedelima W.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=11aec57968b96c29d9d9c0bf2e3605f0}{%
+           family={Gillespie},
+           familyi={G\bibinitperiod},
+           given={Rosemary},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=43698c36b205bdd65e89df3e8a106621}{%
+           family={Kitzes},
+           familyi={K\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5e5fbe53a906a3757dbb0a4337082509}{%
+           family={Marshall},
+           familyi={M\bibinitperiod},
+           given={Charles},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b3ee539e285dc0389395133f45269620}{%
+           family={Matzke},
+           familyi={M\bibinitperiod},
+           given={Nicholas},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a70273d20664b54491b21a864b405d3a}{%
+           family={Mindell},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=940d77badaef186fae8534373f0e0ca7}{%
+           family={Revilla},
+           familyi={R\bibinitperiod},
+           given={Eloy},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=234b16c43a41b86a589d75de3be3930a}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Adam\bibnamedelima B.},
+           giveni={A\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{7f99e7486d682c3aeb855424f36a6f89}
+      \strng{fullhash}{1db6b80b7b2f5a7a9a165432efb840a0}
+      \strng{bibnamehash}{fcb4ca6e6003c80ceea6bf4e30ce404a}
+      \strng{authorbibnamehash}{fcb4ca6e6003c80ceea6bf4e30ce404a}
+      \strng{authornamehash}{7f99e7486d682c3aeb855424f36a6f89}
+      \strng{authorfullhash}{1db6b80b7b2f5a7a9a165432efb840a0}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Localized ecological systems are known to shift abruptly and irreversibly from one state to another when they are forced across critical thresholds. Here we review evidence that the global ecosystem as a whole can react in the same way and is approaching a planetary-scale critical transition as a result of human influence. The plausibility of a planetary-scale /`tipping point/' highlights the need to improve biological forecasting by detecting early warning signs of critical transitions on global as well as local scales, and by detecting feedbacks that promote such transitions. It is also necessary to address root causes of how humans are forcing biological changes.}
+      \field{issn}{0028-0836}
+      \field{journaltitle}{Nature}
+      \field{month}{6}
+      \field{number}{7401}
+      \field{title}{Approaching a state shift in {Earth}/'s biosphere}
+      \field{urlday}{30}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{486}
+      \field{year}{2012}
+      \field{urldateera}{ce}
+      \field{pages}{52\bibrangedash 58}
+      \range{pages}{7}
+      \verb{file}
+      \verb Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/RWPVVABS/nature11018.html:text/html
+      \endverb
+      \keyw{Earth sciences,Ecology,Environmental science,Palaeontology}
+    \endentry
+    \entry{baulcombe_reaping_2009}{book}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=a8eb7c327845b190c84ecbc071f3a3d4}{%
+           family={Baulcombe},
+           familyi={B\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=890ceb0ab1b865446282e4ffba931af0}{%
+           family={Crute},
+           familyi={C\bibinitperiod},
+           given={I.},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4104605034e2c3aa9b24b60770c5c58e}{%
+           family={Davies},
+           familyi={D\bibinitperiod},
+           given={B.},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c8f90425b22b8926bc14dde9cb90679d}{%
+           family={Dunwell},
+           familyi={D\bibinitperiod},
+           given={Jim},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f8b43b7e06b7ca6a841d31e49f1a73f6}{%
+           family={Gale},
+           familyi={G\bibinitperiod},
+           given={Mike},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dbf67cd6f7c62798c04562bf06e6bc9d}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b36d70725d6134f7ce9c035062b8beb}{%
+           family={Pretty},
+           familyi={P\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a93699f48b55ab47f76bb2fc82e00474}{%
+           family={Sutherland},
+           familyi={S\bibinitperiod},
+           given={William},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0ac8a8243f96f7cdd76c47bb0d2e4c9}{%
+           family={Toulmin},
+           familyi={T\bibinitperiod},
+           given={Camilla},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {The Royal Society}%
+      }
+      \strng{namehash}{7cb21ff99e38ba1d61f37bd1688930cc}
+      \strng{fullhash}{11b2178f452701631f8b7a745128b9d3}
+      \strng{bibnamehash}{11b2178f452701631f8b7a745128b9d3}
+      \strng{authorbibnamehash}{11b2178f452701631f8b7a745128b9d3}
+      \strng{authornamehash}{7cb21ff99e38ba1d61f37bd1688930cc}
+      \strng{authorfullhash}{11b2178f452701631f8b7a745128b9d3}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{shorttitle}{Reaping the benefits}
+      \field{title}{Reaping the benefits: science and the sustainable intensification of global agriculture}
+      \field{year}{2009}
+    \endentry
+    \entry{compant_stephane_plant_2010}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=2e604fc21747e0254ddd44e58c5de621}{%
+           family={{Compant, Stephane}},
+           familyi={C\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=dc30f09b2a480333a7ea1346190d6d57}{%
+           family={{Sessitsch, Angela}},
+           familyi={S\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=b068ecc48026dcee7f3060363edfc2a4}{%
+           family={{Clement, Christophe}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e468b5cb48b6809360c3307e9670061c}
+      \strng{fullhash}{84c4944d31a5ca847cc3c01448b291fe}
+      \strng{bibnamehash}{84c4944d31a5ca847cc3c01448b291fe}
+      \strng{authorbibnamehash}{84c4944d31a5ca847cc3c01448b291fe}
+      \strng{authornamehash}{e468b5cb48b6809360c3307e9670061c}
+      \strng{authorfullhash}{84c4944d31a5ca847cc3c01448b291fe}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Soil Biology and Biochemistry}
+      \field{number}{5}
+      \field{title}{Plant growth-promoting bacteria in the rhizo-and endosphere of plants: their role, colonization, mechanisms involved and prospects for utilization}
+      \field{volume}{42}
+      \field{year}{2010}
+      \field{pages}{669\bibrangedash 678}
+      \range{pages}{10}
+    \endentry
+    \entry{dodds_human_2013}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=fbb1df1ef1c866c3da051cc071f3d8df}{%
+           family={Dodds},
+           familyi={D\bibinitperiod},
+           given={Walter\bibnamedelima K.},
+           giveni={W\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5459ea287ebe830002cf4eefbf517618}{%
+           family={Perkin},
+           familyi={P\bibinitperiod},
+           given={Joshuah\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=347141545cb23794799e73d44a21e612}{%
+           family={Gerken},
+           familyi={G\bibinitperiod},
+           given={Joseph\bibnamedelima E.},
+           giveni={J\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{09579f808175829a770445b34b438b29}
+      \strng{fullhash}{fa462b6725589f285782d7ebbb0fb96c}
+      \strng{bibnamehash}{fa462b6725589f285782d7ebbb0fb96c}
+      \strng{authorbibnamehash}{fa462b6725589f285782d7ebbb0fb96c}
+      \strng{authornamehash}{09579f808175829a770445b34b438b29}
+      \strng{authorfullhash}{fa462b6725589f285782d7ebbb0fb96c}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Environmental science \& technology}
+      \field{number}{16}
+      \field{shorttitle}{Human impact on freshwater ecosystem services}
+      \field{title}{Human impact on freshwater ecosystem services: a global perspective}
+      \field{urlday}{9}
+      \field{urlmonth}{2}
+      \field{urlyear}{2016}
+      \field{volume}{47}
+      \field{year}{2013}
+      \field{urldateera}{ce}
+      \field{pages}{9061\bibrangedash 9068}
+      \range{pages}{8}
+      \verb{file}
+      \verb [PDF] from tntech.edu:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/KMBQ46JV/Dodds et al. - 2013 - Human impact on freshwater ecosystem services a g.pdf:application/pdf;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/ZP4P5JPW/es4021052.html:text/html
+      \endverb
+    \endentry
+    \entry{eigenbrod_impact_2011}{article}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=2811eaef2fb9c6800c76230d73ee0140}{%
+           family={Eigenbrod},
+           familyi={E\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=85b8fc3c744d778204075513b20db187}{%
+           family={Bell},
+           familyi={B\bibinitperiod},
+           given={V.\bibnamedelimi A.},
+           giveni={V\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=356bb4bbf8634b1a0cb69448c88f0c7f}{%
+           family={Davies},
+           familyi={D\bibinitperiod},
+           given={H.\bibnamedelimi N.},
+           giveni={H\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=682a716741d2702bbd09b4b4c0aa349e}{%
+           family={Heinemeyer},
+           familyi={H\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cd61eace3e3668cb173a8db914a17a2c}{%
+           family={Armsworth},
+           familyi={A\bibinitperiod},
+           given={P.\bibnamedelimi R.},
+           giveni={P\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b5c5c284874d88e1e4bf1ad3f78d03f3}{%
+           family={Gaston},
+           familyi={G\bibinitperiod},
+           given={K.\bibnamedelimi J.},
+           giveni={K\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b01d7845d9d7aef4c91e0e21720b896c}
+      \strng{fullhash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \strng{bibnamehash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \strng{authorbibnamehash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \strng{authornamehash}{b01d7845d9d7aef4c91e0e21720b896c}
+      \strng{authorfullhash}{dfbd315033aca1403faec2e1ac6a7a12}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Royal Society of London B: Biological Sciences}
+      \field{title}{The impact of projected increases in urbanization on ecosystem services}
+      \field{urlday}{23}
+      \field{urlmonth}{2}
+      \field{urlyear}{2016}
+      \field{year}{2011}
+      \field{urldateera}{ce}
+      \field{pages}{rspb20102754}
+      \range{pages}{-1}
+      \verb{file}
+      \verb [HTML] from royalsocietypublishing.org:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/IT27IGIV/rspb.2010.2754.html:text/html
+      \endverb
+    \endentry
+    \entry{gliessman_agroecology:_2015}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5376b8b9634a88e1574440951349e90f}{%
+           family={Gliessman},
+           familyi={G\bibinitperiod},
+           given={Stephen\bibnamedelima R.},
+           giveni={S\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{fullhash}{5376b8b9634a88e1574440951349e90f}
+      \strng{bibnamehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{authorbibnamehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{authornamehash}{5376b8b9634a88e1574440951349e90f}
+      \strng{authorfullhash}{5376b8b9634a88e1574440951349e90f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{edition}{Third edition}
+      \field{isbn}{978-1-4398-9561-0}
+      \field{shorttitle}{Agroecology}
+      \field{title}{Agroecology: the ecology of sustainable food systems}
+      \field{year}{2015}
+      \keyw{Agricultural ecology,Agricultural systems,Sustainable agriculture}
+    \endentry
+    \entry{godfray_food_2010}{article}{}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=0de91d74d5232f68859ce77eb2602895}{%
+           family={Godfray},
+           familyi={G\bibinitperiod},
+           given={H.\bibnamedelimi Charles\bibnamedelima J.},
+           giveni={H\bibinitperiod\bibinitdelim C\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b7e7a6bd2747fe209d6b54e582dfaab0}{%
+           family={Beddington},
+           familyi={B\bibinitperiod},
+           given={John\bibnamedelima R.},
+           giveni={J\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1e9e148265c516990c9e9e0bd50c2094}{%
+           family={Crute},
+           familyi={C\bibinitperiod},
+           given={Ian\bibnamedelima R.},
+           giveni={I\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a19337d097995a682b9e14934a3ecc7b}{%
+           family={Haddad},
+           familyi={H\bibinitperiod},
+           given={Lawrence},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d9d8a82c6bc1092b207a2c7b4cd7611c}{%
+           family={Lawrence},
+           familyi={L\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=82ffbd7a9f2cc5eba39410f82727f40a}{%
+           family={Muir},
+           familyi={M\bibinitperiod},
+           given={James\bibnamedelima F.},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b36d70725d6134f7ce9c035062b8beb}{%
+           family={Pretty},
+           familyi={P\bibinitperiod},
+           given={Jules},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0383c94e9a7e1a50afd56047c49cc09b}{%
+           family={Robinson},
+           familyi={R\bibinitperiod},
+           given={Sherman},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=34a9e0b849bbde635e0a39ab5b8de8e9}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={Sandy\bibnamedelima M.},
+           giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0ac8a8243f96f7cdd76c47bb0d2e4c9}{%
+           family={Toulmin},
+           familyi={T\bibinitperiod},
+           given={Camilla},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{6783035f55e94e1dc42357d7680babc4}
+      \strng{fullhash}{73330add2ee55decb71cf6265b8d36e0}
+      \strng{bibnamehash}{73330add2ee55decb71cf6265b8d36e0}
+      \strng{authorbibnamehash}{73330add2ee55decb71cf6265b8d36e0}
+      \strng{authornamehash}{6783035f55e94e1dc42357d7680babc4}
+      \strng{authorfullhash}{73330add2ee55decb71cf6265b8d36e0}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Science}
+      \field{number}{5967}
+      \field{shorttitle}{Food security}
+      \field{title}{Food security: the challenge of feeding 9 billion people}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2017}
+      \field{volume}{327}
+      \field{year}{2010}
+      \field{urldateera}{ce}
+      \field{pages}{812\bibrangedash 818}
+      \range{pages}{7}
+    \endentry
+    \entry{lobell_climate_2011}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=b95e5b4d12fe0ed0847d7cb8abaf7da0}{%
+           family={Lobell},
+           familyi={L\bibinitperiod},
+           given={David\bibnamedelima B.},
+           giveni={D\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=01758524b2f1fd8df078ff9dda77f16e}{%
+           family={Schlenker},
+           familyi={S\bibinitperiod},
+           given={Wolfram},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2cb3deadb16d83c63e7a37f570f08b91}{%
+           family={Costa-Roberts},
+           familyi={C\bibinithyphendelim R\bibinitperiod},
+           given={Justin},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f2a3d62e71a2c48c10d9537662f2ec48}
+      \strng{fullhash}{669c62ee0f486c2f2f43d0393997fd34}
+      \strng{bibnamehash}{669c62ee0f486c2f2f43d0393997fd34}
+      \strng{authorbibnamehash}{669c62ee0f486c2f2f43d0393997fd34}
+      \strng{authornamehash}{f2a3d62e71a2c48c10d9537662f2ec48}
+      \strng{authorfullhash}{669c62ee0f486c2f2f43d0393997fd34}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Efforts to anticipate how climate change will affect future food availability can benefit from understanding the impacts of changes to date. We found that in the cropping regions and growing seasons of most countries, with the important exception of the United States, temperature trends from 1980 to 2008 exceeded one standard deviation of historic year-to-year variability. Models that link yields of the four largest commodity crops to weather indicate that global maize and wheat production declined by 3.8 and 5.5\%, respectively, relative to a counterfactual without climate trends. For soybeans and rice, winners and losers largely balanced out. Climate trends were large enough in some countries to offset a significant portion of the increases in average yields that arose from technology, carbon dioxide fertilization, and other factors.}
+      \field{journaltitle}{Science}
+      \field{month}{7}
+      \field{number}{6042}
+      \field{title}{Climate {Trends} and {Global} {Crop} {Production} {Since} 1980}
+      \field{volume}{333}
+      \field{year}{2011}
+      \field{pages}{616\bibrangedash 620}
+      \range{pages}{5}
+    \endentry
+    \entry{nicholls_plant_2013}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7cefa4ed72515aac1b4e30dbe07b03d9}{%
+           family={Nicholls},
+           familyi={N\bibinitperiod},
+           given={Clara\bibnamedelima I.},
+           giveni={C\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bda7bf57ff7a17d9e44188d8552b189a}{%
+           family={Altieri},
+           familyi={A\bibinitperiod},
+           given={Miguel\bibnamedelima A.},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{fullhash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{bibnamehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{authorbibnamehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{authornamehash}{1e58e1dcfcb434fb2502ff3975484140}
+      \strng{authorfullhash}{1e58e1dcfcb434fb2502ff3975484140}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Agronomy for Sustainable development}
+      \field{number}{2}
+      \field{title}{Plant biodiversity enhances bees and other insect pollinators in agroecosystems. {A} review}
+      \field{urlday}{8}
+      \field{urlmonth}{6}
+      \field{urlyear}{2017}
+      \field{volume}{33}
+      \field{year}{2013}
+      \field{urldateera}{ce}
+      \field{pages}{257\bibrangedash 274}
+      \range{pages}{18}
+    \endentry
+    \entry{parry_effects_2004}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=b3333a36a13473b98b91a0d8327f3b4e}{%
+           family={Parry},
+           familyi={P\bibinitperiod},
+           given={Martin\bibnamedelima L.},
+           giveni={M\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=23daa01739d4c86eaa0c8076f51f0e8d}{%
+           family={Rosenzweig},
+           familyi={R\bibinitperiod},
+           given={Cynthia},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=73dedaf49020ea323f6b9d58b6d70271}{%
+           family={Iglesias},
+           familyi={I\bibinitperiod},
+           given={Ana},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=60fcc6be7d9e1c42e0ac7f2ad4335a0a}{%
+           family={Livermore},
+           familyi={L\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=158744843ce157a8bddea0646fb97bbd}{%
+           family={Fischer},
+           familyi={F\bibinitperiod},
+           given={Gunther},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9d19d649c527285dfa550842b02189fc}
+      \strng{fullhash}{7dd7d3234c62c87074737d65a78bf09e}
+      \strng{bibnamehash}{7dd7d3234c62c87074737d65a78bf09e}
+      \strng{authorbibnamehash}{7dd7d3234c62c87074737d65a78bf09e}
+      \strng{authornamehash}{9d19d649c527285dfa550842b02189fc}
+      \strng{authorfullhash}{7dd7d3234c62c87074737d65a78bf09e}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Global Environmental Change}
+      \field{number}{1}
+      \field{title}{Effects of climate change on global food production under {SRES} emissions and socio-economic scenarios}
+      \field{urlday}{13}
+      \field{urlmonth}{6}
+      \field{urlyear}{2017}
+      \field{volume}{14}
+      \field{year}{2004}
+      \field{urldateera}{ce}
+      \field{pages}{53\bibrangedash 67}
+      \range{pages}{15}
+    \endentry
+    \entry{prosser_role_2007}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=9afc036e9c85750f0434b9575aa591bb}{%
+           family={Prosser},
+           familyi={P\bibinitperiod},
+           given={James\bibnamedelima I.},
+           giveni={J\bibinitperiod\bibinitdelim I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6359a72db5404eefaa073e6c2fc48506}{%
+           family={Bohannan},
+           familyi={B\bibinitperiod},
+           given={Brendan\bibnamedelima JM},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9d2ae7776c9b0c41078865cfb3f11818}{%
+           family={Curtis},
+           familyi={C\bibinitperiod},
+           given={Tom\bibnamedelima P.},
+           giveni={T\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f162734e9ebff60c4f662387909d6b67}{%
+           family={Ellis},
+           familyi={E\bibinitperiod},
+           given={Richard\bibnamedelima J.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9462947a6c9b083dd72e99ab75d6e1b8}{%
+           family={Firestone},
+           familyi={F\bibinitperiod},
+           given={Mary\bibnamedelima K.},
+           giveni={M\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=910f777004aa087342470fbc68bb26cc}{%
+           family={Freckleton},
+           familyi={F\bibinitperiod},
+           given={Rob\bibnamedelima P.},
+           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=1,uniquepart=given,hash=a74426fc74218054113a6c2823eee9fe}{%
+           family={Green},
+           familyi={G\bibinitperiod},
+           given={Jessica\bibnamedelima L.},
+           giveni={J\bibinitperiod\bibinitdelim L\bibinitperiod},
+           givenun=1}}%
+        {{un=1,uniquepart=given,hash=b5566af50e33d14075bce8419a1f9fab}{%
+           family={Green},
+           familyi={G\bibinitperiod},
+           given={Laura\bibnamedelima E.},
+           giveni={L\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=6dc12fdba356b74047e1ab98269d9f7e}{%
+           family={Killham},
+           familyi={K\bibinitperiod},
+           given={Ken},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4812f3ea3a373c63a8308b92a6a408ae}{%
+           family={Lennon},
+           familyi={L\bibinitperiod},
+           given={Jack\bibnamedelima J.},
+           giveni={J\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{43ebc8bb0ca977a9a036aa8b22c26d2e}
+      \strng{fullhash}{24b430d9eabd51ac4fe0c53073290f83}
+      \strng{bibnamehash}{24b430d9eabd51ac4fe0c53073290f83}
+      \strng{authorbibnamehash}{24b430d9eabd51ac4fe0c53073290f83}
+      \strng{authornamehash}{43ebc8bb0ca977a9a036aa8b22c26d2e}
+      \strng{authorfullhash}{24b430d9eabd51ac4fe0c53073290f83}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Reviews Microbiology}
+      \field{number}{5}
+      \field{title}{The role of ecological theory in microbial ecology}
+      \field{urlday}{25}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{5}
+      \field{year}{2007}
+      \field{urldateera}{ce}
+      \field{pages}{384\bibrangedash 392}
+      \range{pages}{9}
+      \verb{file}
+      \verb [HTML] from nature.com:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/UAGG6FT4/nrmicro1643.html:text/html;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/ZM5T6E7A/nrmicro1643.html:text/html
+      \endverb
+    \endentry
+    \entry{rogers_facing_2008}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5c4e527ab3b56a0ba0cab18a1c314a7a}{%
+           family={Rogers},
+           familyi={R\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{fullhash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{bibnamehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{authorbibnamehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{authornamehash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \strng{authorfullhash}{5c4e527ab3b56a0ba0cab18a1c314a7a}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{As demand for freshwater soars, planetary supplies are becoming unpredictable. Existing technologies could avert a global watercrisis, but they must be implemented soon}
+      \field{issn}{0036-8733}
+      \field{journaltitle}{Scientific American}
+      \field{month}{8}
+      \field{number}{2}
+      \field{title}{Facing the {Freshwater} {Crisis}}
+      \field{urlday}{2}
+      \field{urlmonth}{4}
+      \field{urlyear}{2014}
+      \field{volume}{299}
+      \field{year}{2008}
+      \field{urldateera}{ce}
+      \field{pages}{46\bibrangedash 53}
+      \range{pages}{8}
+    \endentry
+    \entry{rygiewicz_soil_2010}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=7e98c549ea7ef1befa693b7bf111053a}{%
+           family={Rygiewicz},
+           familyi={R\bibinitperiod},
+           given={Paul\bibnamedelima T.},
+           giveni={P\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=22baf99d7e42e4a3ed343ee4df88596f}{%
+           family={Monleon},
+           familyi={M\bibinitperiod},
+           given={Vicente\bibnamedelima J.},
+           giveni={V\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=22b354e6e537af71ec1dbe847cefd657}{%
+           family={Ingham},
+           familyi={I\bibinitperiod},
+           given={Elaine\bibnamedelima R.},
+           giveni={E\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dbfb52be13df21c654f1e34026b28875}{%
+           family={Martin},
+           familyi={M\bibinitperiod},
+           given={Kendall\bibnamedelima J.},
+           giveni={K\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1902abcae9ad19b749388709a48d4c97}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Mark\bibnamedelima G.},
+           giveni={M\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b30b2ea98af5aba7921c1fc4e4ae6a1b}
+      \strng{fullhash}{06323dd954537fbe3ad60f88d9e430fd}
+      \strng{bibnamehash}{06323dd954537fbe3ad60f88d9e430fd}
+      \strng{authorbibnamehash}{06323dd954537fbe3ad60f88d9e430fd}
+      \strng{authornamehash}{b30b2ea98af5aba7921c1fc4e4ae6a1b}
+      \strng{authorfullhash}{06323dd954537fbe3ad60f88d9e430fd}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Disrupting ecosystem components, while transferring and reconstructing them for experiments can produce myriad responses. Establishing the extent of these biological responses as the system approaches a new equilibrium allows us more reliably to emulate comparable native systems. That is, the sensitivity of analyzing ecosystem processes in a reconstructed system is improved by excluding the period when observed phenomena are primarily responses caused by establishing the experiment rather than effects of imposed treatments; achieved by determining the extent of any pulse of activity caused by preparatory procedures. A native forest soil was physically disrupted when it was collected, sieved, and then rebuilt in lysimeters in a controlled-environment study evaluating the influence of elevated atmospheric CO2 concentration and elevated atmospheric temperature on the reconstructed soil that was planted with Douglas-fir (Pseudotsuga menziesii Mirb. Franco) seedlings. Generally, soil food web populations responded in two phases during the exposure as indicated by preliminary evaluation of the 4.5-year dataset. Also, previous work indicated that relatively elevated soil CO2 effluxes occurred during the first phase, suggesting that food web populations may have responded to carbon sources made available when the soil was harvested and its profile reconstructed in the lysimeters. Results are presented for bacterial and fungal biomass, numbers of protozoa and nematodes to gain insight on whether the first phase responses are attributable to the acute stress of physically disrupting the soil. We found clear relationships between changes in predator and prey populations. A prominent spike for many of the food web populations occurred the year after the climate exposures began. Except for total bacterial biomass and total fungal-hyphae biomass, overall food web responses generally were unrelated to treatments. It appears that initial food web population responses were related to increased availability of soil carbon caused by establishing the experiment. Our results provide insights into determining the length of time to maintain reconstructed forest ecosystems before responses are observed related to experimental treatments. It appears that as long as 3 years elapsed before the soil food web appeared to recover from the acute physical disturbance; 1 year of recovery prior to commencing the climate exposures to allow the soil to rest after it was reconstructed, plus approximately the first 2 years of maintaining the climate treatments. Accounting for consequences of such periods of adjustment is critical for forecasting whether comparable natural ecosystems will be net sources or sinks of elevated concentrations of atmospheric CO2.}
+      \field{issn}{0929-1393}
+      \field{journaltitle}{Applied Soil Ecology}
+      \field{month}{5}
+      \field{number}{1}
+      \field{shorttitle}{Soil life in reconstructed ecosystems}
+      \field{title}{Soil life in reconstructed ecosystems: {Initial} soil food web responses after rebuilding a forest soil profile for a climate change experiment}
+      \field{urlday}{20}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{45}
+      \field{year}{2010}
+      \field{urldateera}{ce}
+      \field{pages}{26\bibrangedash 38}
+      \range{pages}{13}
+      \verb{file}
+      \verb ScienceDirect Full Text PDF:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/3S9PFFQ2/Rygiewicz et al. - 2010 - Soil life in reconstructed ecosystems Initial soi.pdf:application/pdf;ScienceDirect Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/9PCTHPM4/S0929139310000119.html:text/html
+      \endverb
+      \keyw{Amoebae,Atmospheric CO2 concentration,Atmospheric temperature,Bacterial biomass,Climate change,Flagellates,Fungal biomass,Nematodes,Protozoa,Soil physical disturbance}
+    \endentry
+    \entry{scheller_design_2007}{article}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=d1347d7140515157592e5da00ded50f5}{%
+           family={Scheller},
+           familyi={S\bibinitperiod},
+           given={Robert\bibnamedelima M.},
+           giveni={R\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=615d6b98a47479146257017b4ce0d843}{%
+           family={Domingo},
+           familyi={D\bibinitperiod},
+           given={James\bibnamedelima B.},
+           giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=25862c522caf15db361ae4369c497ca5}{%
+           family={Sturtevant},
+           familyi={S\bibinitperiod},
+           given={Brian\bibnamedelima R.},
+           giveni={B\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=19ac76de7599a86134378d0a3ae83db6}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={Jeremy\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b3d209324fd203aa0e465a35c51e74ff}{%
+           family={Rudy},
+           familyi={R\bibinitperiod},
+           given={Arnold},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4266c76d307f672a5ef67399f3e5b0a6}{%
+           family={Gustafson},
+           familyi={G\bibinitperiod},
+           given={Eric\bibnamedelima J.},
+           giveni={E\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c5a351a38b09b0a270ab0d9448204999}{%
+           family={Mladenoff},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0d953e29057a7b59f8154f7203644001}
+      \strng{fullhash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \strng{bibnamehash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \strng{authorbibnamehash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \strng{authornamehash}{0d953e29057a7b59f8154f7203644001}
+      \strng{authorfullhash}{63c6d133cbc8240f1cdf13dd4086e100}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ecological modelling}
+      \field{number}{3}
+      \field{title}{Design, development, and application of {LANDIS}-{II}, a spatial landscape simulation model with flexible temporal and spatial resolution}
+      \field{urlday}{18}
+      \field{urlmonth}{11}
+      \field{urlyear}{2015}
+      \field{volume}{201}
+      \field{year}{2007}
+      \field{urldateera}{ce}
+      \field{pages}{409\bibrangedash 419}
+      \range{pages}{11}
+    \endentry
+    \entry{schmidhuber_global_2007}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=ea335f4975a7c051304f28008c0fe598}{%
+           family={Schmidhuber},
+           familyi={S\bibinitperiod},
+           given={Josef},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=29a793187217bb2075087677ab512a40}{%
+           family={Tubiello},
+           familyi={T\bibinitperiod},
+           given={Francesco\bibnamedelima N.},
+           giveni={F\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{fullhash}{256f29561d0691213e12f1bb86686d99}
+      \strng{bibnamehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{authorbibnamehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{authornamehash}{256f29561d0691213e12f1bb86686d99}
+      \strng{authorfullhash}{256f29561d0691213e12f1bb86686d99}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the National Academy of Sciences}
+      \field{number}{50}
+      \field{title}{Global food security under climate change}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2017}
+      \field{volume}{104}
+      \field{year}{2007}
+      \field{urldateera}{ce}
+      \field{pages}{19703\bibrangedash 19708}
+      \range{pages}{6}
+    \endentry
+    \entry{tilman_forecasting_2001}{article}{}
+      \name{author}{10}{}{%
+        {{un=0,uniquepart=base,hash=56e145e8f70192e123c180987985ea9b}{%
+           family={Tilman},
+           familyi={T\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=174c99bdc96a1586bf18944187134ec1}{%
+           family={Fargione},
+           familyi={F\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9dbefb2ca77a3a41c500f8c98a3fbf9a}{%
+           family={Wolff},
+           familyi={W\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b93fb63fab1bcfaef17ad887c2d9d026}{%
+           family={D'Antonio},
+           familyi={D\bibinitperiod},
+           given={Carla},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1e8792c5112724353ef4d1cbe8565333}{%
+           family={Dobson},
+           familyi={D\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4d3d0a31baa011c0272b719f7954438b}{%
+           family={Howarth},
+           familyi={H\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=225f712867a67cbee7877b0048ba0f53}{%
+           family={Schindler},
+           familyi={S\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c67b84f2cc36221712734826eafabd2c}{%
+           family={Schlesinger},
+           familyi={S\bibinitperiod},
+           given={William\bibnamedelima H.},
+           giveni={W\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6574409da7678a25bb6d2ab63311321e}{%
+           family={Simberloff},
+           familyi={S\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b0789a8c53a5e62e1223f605dc59ebd6}{%
+           family={Swackhamer},
+           familyi={S\bibinitperiod},
+           given={Deborah},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d487d3d934b1601a783fe367c8f275e7}
+      \strng{fullhash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \strng{bibnamehash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \strng{authorbibnamehash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \strng{authornamehash}{d487d3d934b1601a783fe367c8f275e7}
+      \strng{authorfullhash}{6e24bb52078dcb3be4092a40e98bbf13}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Science}
+      \field{number}{5515}
+      \field{title}{Forecasting agriculturally driven global environmental change}
+      \field{urlday}{8}
+      \field{urlmonth}{3}
+      \field{urlyear}{2017}
+      \field{volume}{292}
+      \field{year}{2001}
+      \field{urldateera}{ce}
+      \field{pages}{281\bibrangedash 284}
+      \range{pages}{4}
+    \endentry
+    \entry{wada_global_2010}{article}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=5f49a53af9ecd9435959b7806af47133}{%
+           family={Wada},
+           familyi={W\bibinitperiod},
+           given={Yoshihide},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d573f2efafb7cbe66ee94ae6d1fb20ce}{%
+           family={Beek},
+           familyi={B\bibinitperiod},
+           given={Ludovicus\bibnamedelimb P.\bibnamedelimi H.},
+           giveni={L\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0,
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=0438a81e510b8a06014120419be62d0e}{%
+           family={Kempen},
+           familyi={K\bibinitperiod},
+           given={Cheryl\bibnamedelima M.},
+           giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0,
+           prefix={van},
+           prefixi={v\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=30d0319ed279b0b61c840e6b9f4a716e}{%
+           family={Reckman},
+           familyi={R\bibinitperiod},
+           given={Josef\bibnamedelimb W.\bibnamedelimi T.\bibnamedelimi M.},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod\bibinitdelim T\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=59a558322b0058de86803657f72d9a15}{%
+           family={Vasak},
+           familyi={V\bibinitperiod},
+           given={Slavek},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=917b3a1d0253a66cb37c7fe61c26d9a9}{%
+           family={Bierkens},
+           familyi={B\bibinitperiod},
+           given={Marc\bibnamedelimb F.\bibnamedelimi P.},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \strng{namehash}{424628363c66c58dba67aa205b5262b2}
+      \strng{fullhash}{4cda156b9395dea919518a285c78ece2}
+      \strng{bibnamehash}{4cda156b9395dea919518a285c78ece2}
+      \strng{authorbibnamehash}{4cda156b9395dea919518a285c78ece2}
+      \strng{authornamehash}{424628363c66c58dba67aa205b5262b2}
+      \strng{authorfullhash}{4cda156b9395dea919518a285c78ece2}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In regions with frequent water stress and large aquifer systems groundwater is often used as an additional water source. If groundwater abstraction exceeds the natural groundwater recharge for extensive areas and long times, overexploitation or persistent groundwater depletion occurs. Here we provide a global overview of groundwater depletion (here defined as abstraction in excess of recharge) by assessing groundwater recharge with a global hydrological model and subtracting estimates of groundwater abstraction. Restricting our analysis to sub-humid to arid areas we estimate the total global groundwater depletion to have increased from 126 (±32) km3 a−1 in 1960 to 283 (±40) km3 a−1 in 2000. The latter equals 39 (±10)\% of the global yearly groundwater abstraction, 2 (±0.6)\% of the global yearly groundwater recharge, 0.8 (±0.1)\% of the global yearly continental runoff and 0.4 (±0.06)\% of the global yearly evaporation, contributing a considerable amount of 0.8 (±0.1) mm a−1 to current sea-level rise.}
+      \field{issn}{1944-8007}
+      \field{journaltitle}{Geophysical Research Letters}
+      \field{month}{10}
+      \field{number}{20}
+      \field{title}{Global depletion of groundwater resources}
+      \field{urlday}{29}
+      \field{urlmonth}{7}
+      \field{urlyear}{2016}
+      \field{volume}{37}
+      \field{year}{2010}
+      \field{urldateera}{ce}
+      \field{pages}{L20402}
+      \range{pages}{1}
+      \verb{file}
+      \verb Full Text PDF:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/59HQFJQ3/Wada et al. - 2010 - Global depletion of groundwater resources.pdf:application/pdf;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/UJXP7ANP/abstract.html:text/html
+      \endverb
+      \keyw{1655 Water cycles,1803 Anthropogenic effects,1829 Groundwater hydrology,1836 Hydrological cycles and budgets,4556 Sea level: variations and mean,global hydrology,groundwater depletion,sea level rise,water stress}
+    \endentry
+    \entry{zhao_drought-induced_2010}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=634c55b2f4ffea25a56866df127d2171}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Maosheng},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ef26b1d07b6ecb7220a6538e773e4146}{%
+           family={Running},
+           familyi={R\bibinitperiod},
+           given={Steven\bibnamedelima W.},
+           giveni={S\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{fullhash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{bibnamehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{authorbibnamehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{authornamehash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \strng{authorfullhash}{a0a5fd8c51daad966ad2da9bcf1a9395}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Terrestrial net primary production (NPP) quantifies the amount of atmospheric carbon fixed by plants and accumulated as biomass. Previous studies have shown that climate constraints were relaxing with increasing temperature and solar radiation, allowing an upward trend in NPP from 1982 through 1999. The past decade (2000 to 2009) has been the warmest since instrumental measurements began, which could imply continued increases in NPP; however, our estimates suggest a reduction in the global NPP of 0.55 petagrams of carbon. Large-scale droughts have reduced regional NPP, and a drying trend in the Southern Hemisphere has decreased NPP in that area, counteracting the increased NPP over the Northern Hemisphere. A continued decline in NPP would not only weaken the terrestrial carbon sink, but it would also intensify future competition between food demand and proposed biofuel production.}
+      \field{journaltitle}{Science}
+      \field{month}{8}
+      \field{number}{5994}
+      \field{title}{Drought-{Induced} {Reduction} in {Global} {Terrestrial} {Net} {Primary} {Production} from 2000 {Through} 2009}
+      \field{volume}{329}
+      \field{year}{2010}
+      \field{pages}{940\bibrangedash 943}
+      \range{pages}{4}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

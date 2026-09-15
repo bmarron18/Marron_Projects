@@ -1,0 +1,8 @@
+[0] Config.pm:307> INFO - This is Biber 2.17
+[1] Config.pm:310> INFO - Logfile is 'CoverLetter_MVSMusic.blg'
+[112] biber:340> INFO - === Mon Jan 12, 2026, 17:42:07
+[132] Biber.pm:418> INFO - Reading 'CoverLetter_MVSMusic.bcf'
+[209] Utils.pm:398> ERROR - Error: Found biblatex control file version 3.1, expected version 3.8.
+This means that your biber (2.17) and biblatex (3.4) versions are incompatible.
+See compat matrix in biblatex or biber PDF documentation.
+[209] Biber.pm:135> INFO - ERRORS: 1

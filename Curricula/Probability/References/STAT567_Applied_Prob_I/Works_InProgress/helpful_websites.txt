@@ -1,0 +1,45 @@
+Title:			
+Project Descriptor:	
+Project ID:		
+Author:			bmarron
+Origin Date:		
+Revision Date:		
+
+
+
+######################
+generating cdf fr. pdf
+#######################
+
+https://onlinecourses.science.psu.edu/stat414/node/98
+
+##########
+Problem 37
+##########
+http://stats.stackexchange.com/questions/18433/how-do-you-calculate-the-probability-density-function-of-the-maximum-of-a-sample
+e.com/questions/313390/probability-density-of-the-maximum-of-samples-from-a-uniform-distribution
+http://math.stackexchange.com/questions/1935238/distribution-of-maximum-of-n-i-i-d-random-variables-uniform-on-a-b
+http://www3.ul.ie/~mlc/support/Exam%20Solutions/2009-2010%20SOLNS/Autumn/2009-2010%20Statistical%20Inference%20MS4214%20exam%20solutions.pdf
+
+
+##############
+Problem 58
+#############
+
+http://math.stackexchange.com/questions/959194/removing-balls-from-an-urn-in-pairs-expected-number-of-pairs-in-which-both-are
+
+
+############
+Problem 63
+###########
+
+https://www.youtube.com/watch?v=zGI3QkoPOC0
+
+
+#########
+Problem 55
+###########
+
+http://math.stackexchange.com/questions/553350/compute-the-probability-mass-function-of-x-y
+
+

@@ -1,0 +1,212 @@
+
+Title:			LOG1_hwk5
+Project Descriptor:	Hwk5: kmeans
+Project ID:		CS545 
+Record:		
+Author:			bmarron
+Origin Date:		05 Mar 2016
+
+
+##########
+Notes
+##############
+
+http://scikit-learn.org/stable/modules/clustering.html
+
+One important thing to note is that the algorithms implemented in this module take different kinds of matrix as input. 
+On one hand, MeanShift and KMeans take data matrices of shape [n_samples, n_features]. These can be obtained from the classes in the sklearn.feature_extraction module. 
+On the other hand, AffinityPropagation and SpectralClustering take similarity matrices of shape [n_samples, n_samples]. 
+These can be obtained from the functions in the sklearn.metrics.pairwise module. 
+In other words, MeanShift and KMeans work with points in a vector space, whereas AffinityPropagation and SpectralClustering can work with arbitrary objects, 
+as long as a similarity measure exists for such objects.
+
+
+
+########
+script
+##########
+
+
+
+#%%Line 449
+#https://github.com/scikit-learn/scikit-learn/blob/51a765acfa4c5d1ec05fc4b406968ad233c75162/sklearn/cluster/k_means_.py
+# computation of the means is also called the M-step of EM
+        if sp.issparse(X):
+            centers = _k_means._centers_sparse(X, labels, n_clusters,
+                                               distances)
+        else:
+            centers = _k_means._centers_dense(X, labels, n_clusters, distances)
+
+#Line 275
+#https://github.com/scikit-learn/scikit-learn/blob/51a765acfa4c5d1ec05fc4b406968ad233c75162/sklearn/cluster/_k_means.pyx
+"""M step of the K-means EM algorithm
+    Computation of cluster centers / means
+
+     Returns
+    -------
+    centers: array, shape (n_clusters, n_features)
+        The resulting centers
+    """
+n_samples_in_cluster = bincount(labels, minlength=n_clusters)
+empty_clusters = np.where(n_samples_in_cluster == 0)[0]
+
+#Line 293
+for i in range(n_samples):
+    for j in range(n_features):
+        centers[labels[i], j] += X[i, j]
+
+centers /= n_samples_in_cluster[:, np.newaxis]
+
+    return centers
+ 
+
+
+
+#%% E step of the K-means EM algorithm
+def _labels_inertia(X, x_squared_norms, centers,
+                    precompute_distances=True, distances=None):
+    """E step of the K-means EM algorithm.
+    Compute the labels and the inertia of the given samples and centers.
+    This will compute the distances in-place.
+    
+    Returns
+    -------
+    labels: int array of shape(n)
+        The resulting assignment
+    inertia : float
+        Sum of distances of samples to their closest cluster center.
+    """
+from sklearn.metrics.pairwise import euclidean_distances
+euclidean_distances(X, self.cluster_centers_)
+best_inertia = np.infty
+#%%
+
+# run a k-means once
+best_labels, best_inertia, best_centers = None, None, None
+labels, inertia, centers, n_iter_ = _kmeans_single()
+distances = np.zeros(shape=(X.shape[0],), dtype=np.float64)
+_labels_inertia()
+
+
+
+# precompute squared norms of data points
+x_squared_norms = row_norms(X, squared=True)
+from sklearn.utils.extmath import row_norms
+
+
+
+
+
+
+
+'k-means++' : selects initial cluster centers for k-mean
+        clustering in a smart way to speed up convergence. See section
+        Notes in k_init for more details					#where is this??
+
+for cluster centers:
+If an ndarray is passed, it should be of shape (n_clusters, n_features)
+        and gives the initial centers.
+
+def transform(self, X, y=None):
+        """Transform X to a cluster-distance space.
+        In the new space, each dimension is the distance to the cluster
+        centers.  Note that even if X is sparse, the array returned by
+        `transform` will typically be dense.
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            New data to transform.
+        Returns
+        -------
+        X_new : array, shape [n_samples, k]
+            X transformed in the new space.
+        """
+        check_is_fitted(self, 'cluster_centers_')
+
+        X = self._check_test_data(X)
+        return self._transform(X)
+
+    def _transform(self, X):
+        """guts of transform method; no input validation"""
+        return euclidean_distances(X, self.cluster_centers_)
+
+
+sklearn.metrics.pairwise.euclidean_distances(X, Y=None, Y_norm_squared=None, squared=False, X_norm_squared=None)
+euclidean_distances(X, self.cluster_centers_) ==> X_new : array, shape [n_samples, k]
+            X transformed in the new space.
+
+
+def predict(self, X):
+        """Predict the closest cluster each sample in X belongs to.
+        In the vector quantization literature, `cluster_centers_` is called
+        the code book and each value returned by `predict` is the index of
+        the closest code in the code book.
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
+            New data to predict.
+        
+	Returns
+        -------
+        labels : array, shape [n_samples,]
+            Index of the cluster each sample belongs to.
+        """
+        check_is_fitted(self, 'cluster_centers_')
+
+        X = self._check_test_data(X)
+        x_squared_norms = row_norms(X, squared=True)
+        return _labels_inertia(X, x_squared_norms, self.cluster_centers_)[0]
+
+from sklearn.utils.extmath import row_norms
+
+
+
+def _check_test_data(self, X):
+        X = check_array(X, accept_sparse='csr', dtype=FLOAT_DTYPES,
+                        warn_on_dtype=True)
+        n_samples, n_features = X.shape
+        expected_n_features = self.cluster_centers_.shape[1]
+        if not n_features == expected_n_features:
+            raise ValueError("Incorrect number of features. "
+                             "Got %d features, expected %d" % (
+                                 n_features, expected_n_features))
+
+        return X
+
+
+#########
+python
+#########
+
+SPN = np.random.randint(0, 100, (3, 6, 5))
+>>> SPN
+array([[[45, 95, 56, 78, 90],
+        [87, 68, 24, 62, 12],
+        [11, 26, 75, 57, 12],
+        [95, 87, 47, 69, 90],
+        [58, 24, 49, 62, 85],
+        [38,  5, 57, 63, 16]],
+
+       [[61, 67, 73, 23, 34],
+        [41,  3, 69, 79, 48],
+        [22, 40, 22, 18, 41],
+        [86, 23, 58, 38, 69],
+        [98, 60, 70, 71,  3],
+        [44,  8, 33, 86, 66]],
+
+       [[62, 45, 56, 80, 22],
+        [27, 95, 55, 87, 22],
+        [42, 17, 48, 96, 65],
+        [36, 64,  1, 85, 31],
+        [10, 13, 15,  7, 92],
+        [27, 74, 31, 91, 60]]])
+
+
+
+The \ character (backslash) is called an escape character, which interprets the character following it differently. 
+For example, n by itself is simply a letter, but when you precede it with a backslash, it becomes \n, which is the newline character.
+
+Two or more physical lines may be joined into logical lines using backslash characters (\), as follows: when a physical line ends in a backslash that is not part of a string literal or comment, it is joined with the following forming a single logical line, deleting the backslash and the following end-of-line character. 
+
+
+

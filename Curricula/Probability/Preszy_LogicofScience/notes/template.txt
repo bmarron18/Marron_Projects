@@ -1,0 +1,44 @@
+Title:			Thunderstorms and cities 
+Project Descriptor:	Science Comm
+Project ID:		2016SoE022
+Author:			bmarron
+Origin Date:		8 Nov 2016
+Revision Date:		
+
+#######
+Slide1
+######
+
+	* examine the question
+	* look at some empirical evidence
+	* use of probability theory as a logic for 
+	building formal constructs to connect correlation to causality
+
+	
+#######
+Slide2
+#######
+
+	* new phenomenon, fresh insight
+	* observe thunderstorms and cities as discrete entities
+	* begin to wonder ==> influence ?
+
+#######
+Slide3
+#######
+
+	* begin to wonder ==> generate?
+
+#######
+Slide4
+#######
+
+	* begin to wonder ==> cause?
+	* what is scientific common sense in the face of investigation of new phenomena?  
+
+
+######
+Slide5
+######
+
+	* 

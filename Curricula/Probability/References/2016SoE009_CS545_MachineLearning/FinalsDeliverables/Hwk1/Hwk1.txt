@@ -1,0 +1,163 @@
+Title:			Letter Recognition
+Project:		2016SoE009 (CS545_MachineLearning)
+Author:			bmarron
+Origin Date:		20 Jan 2016
+
+
+#######################
+dataset pre-processing
+#######################
+
+=======  a sample of letter counts in the data  ============================================================================
+			# print the total number of lines that contain "A" in the original dataset
+$ awk '/A/{n++}; END {print n+0}' /home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work/Hwk1/letter_recog_data.txt
+789
+
+			# print the total number of lines that contain "B" in the original dataset
+$ awk '/B/{n++}; END {print n+0}' /home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt
+766
+
+
+==== selection of training and test datasets ===================================================================================
+			#select lines 1 - 10000 for the training set
+$ awk 'NR < 10001' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt >> ~/Desktop/training_data.txt
+
+
+			#select lines 10001 - 20000 for the test set
+$ awk 'NR > 10000' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt >> ~/Desktop/test_data.txt
+
+
+======  check the training/test split  ==> print the 1st, 10000th, 10001th, and 20000th line  ============================================
+$ awk 'NR==1 { print; exit }' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt 
+T,2,8,3,5,1,8,13,0,6,6,10,8,0,8,0,8
+
+$ awk 'NR==10000 { print; exit }' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt
+Q,5,10,7,9,4,8,5,9,8,5,4,8,3,8,4,8
+
+$ awk 'NR==10001 { print; exit }' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt 
+W,6,9,9,7,6,8,8,4,1,7,9,8,7,11,0,8
+
+$ awk 'NR==20000 { print; exit }' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt 
+A,4,9,6,6,2,9,5,3,1,8,1,8,2,7,2,8
+
+
+
+
+#################################
+all-pairs algorithm per perceptron 
+#################################
+
+	#change all-pairs couplet w/ txt editor before re-running next perceptron pair
+	*run 325 times (couldn't this automate!!!!)
+
+----  in Linux -----------------------------
+			#set pair
+			#sequential listing of "A" and "B" lines
+$ awk 'BEGIN { FS = "," } ; $1=="A" || $1=="B" ' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/DataFiles/training_data.txt >> ~/Desktop/AB.txt
+
+			# change A ==> 1, B==>0 for training data (couldn't automate this !!!)
+			#open ~/Desktop/AB.txt
+			#use txt editor to change A ==> 1, B==>0 (takes too long!!!)
+
+			# divide by 15
+$ awk 'BEGIN {FS=","} {for (i=2; i<=NF; i++) $i=$i/15; OFS=","; print}' ~/Desktop/AB.txt >> ~/Desktop/AB_data.txt
+
+---- in Python --------------------------------
+
+		#enter this ONLY ONCE per Python session
+import numpy as np
+from numpy import genfromtxt
+unit_step = lambda x: 0 if x < 0 else 1
+eta = 0.2
+all_prcptrn_wgts= []
+f = open('/home/bmarron/Desktop/all_prcptrns.txt', 'w')
+print >> f, "Vectors of Final Weights for All-Pairs Perceptrons" 
+f.close()
+
+
+		#enter this FOR EVERY pairwise couplet (couldn't automate this !!!)
+AB_data = genfromtxt('/home/bmarron/Desktop/AB_data.txt', delimiter=',')
+AB_data = np.array_split(AB_data, [1], axis=1)
+X = AB_data[1]            
+y = AB_data[0]
+np.random.seed(47)
+rn = np.random.randn(16, 1)
+syn0 = (rn - np.fix(rn))
+for iter in xrange(10):
+    l0 = X
+    l1 = np.dot(l0,syn0)
+    results = []
+    for x in l1:
+        results.append(unit_step(x))
+    ao = np.hstack(results)
+    error = y - ao
+    delta = error[:,:1]
+    delta = eta * delta
+    syn0 += np.dot(l0.T,delta)
+
+all_prcptrn_wgts.append(syn0.T)
+f = open('/home/bmarron/Desktop/all_prcptrns.txt', 'a')
+print >>f, syn0.T
+f.close()
+
+
+
+#################################
+annotated Python code
+#################################
+
+
+			# set up in Python
+import numpy as np
+all_prcptrn_wgts= []
+f = open('/home/bmarron/Desktop/all_prcptrns.txt', 'w')
+print >> f, "Vectors of Final Weights for All-Pairs Perceptrons" 
+f.close()
+			#import pre-processed data into Python
+from numpy import genfromtxt
+AB_data = genfromtxt('/home/bmarron/Desktop/AB_data.txt', delimiter=',')
+AB_data = np.array_split(AB_data, [1], axis=1)
+
+		# input (training) dataset
+X = AB_data[1]
+
+		# output (training) dataset            
+y = AB_data[0]
+
+		# initialize weights randomly
+np.random.seed(47)
+rn = np.random.randn(16, 1)
+syn0 = (rn - np.fix(rn))
+
+		#run over 100 epochs
+for iter in xrange(100):
+
+		# forward propagation (l1 = activation output)
+l0 = X
+l1 = np.dot(l0,syn0)
+
+		# evaluate activation output as a binary (1,0)
+unit_step = lambda x: 0 if x < 0 else 1
+results = []
+for x in l1:
+    results.append(unit_step(x))
+ao = np.hstack(results)
+
+		# determine error
+error = y - ao
+delta = error[:,:1]
+
+		# add eta
+eta = 0.2
+delta = eta * delta
+
+
+   	# update weights
+syn0 += np.dot(l0.T,delta)
+
+	# save wgts in Python and externally
+all_prcptrn_wgts.append(syn0.T)
+f = open('/home/bmarron/Desktop/all_prcptrns.txt', 'a')
+print >>f, syn0.T
+f.close()
+

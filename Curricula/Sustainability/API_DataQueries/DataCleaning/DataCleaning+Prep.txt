@@ -1,0 +1,134 @@
+Title:		Data Cleaning+Prep for Chart Building in Python
+Project:	Practical Sustainability Now! 	
+Author:		bmarron
+Created:	23 May 2026
+Modified:	
+
+
+## Data Clean I
+Output of datasets often contain spurious quotes, misplaced commas, non-ASCII characters, $ characters, and % characters. The dataset needs to be cleaned to fit the format of a simple comma-separated file. Simple comma separated files are kept as proprietary datasets. Note that there are Linux/Unix vs. Microsoft issues with regards to end-of-line formats as well as with character set encodings in text files:
+
+End-of-line
+* Linux/Unix uses ASCII octal 012 (LF...Line Feed)
+* Microsoft uses ASCII octal 012 + octal 015 (CRLF...Carriage Return Line Feed)
+
+Character set
+* Linux/Unix uses UTF-8 ASCII
+* Microsoft uses WINDOWS-1252 (a non-ISO extended-ASCII)
+
+It is possible to export UTF-8 encoded text file directly from Excel. See this article https://donatstudios.com/CSV-An-Encoding-Nightmare.
+
+
+
+----------
+Convert an .xlsx file directly to a .csv
+
+$ ssconvert Items_sold.xlsx Items_sold.csv
+
+
+
+
+------------
+Visually inspect the data:
+
+$ column -t -s "," SusCurrQuery01_gpt-5.5.csv > dataviz.csv
+
+
+-------------
+Keep/Remove columns:
+
+Keep everything EXCEPT column 2
+cut -d, -f2 --complement SusCurrQuery01_gpt-5.5.csv > clean1.csv
+
+KEEP ONLY columns 1, 3, and 4:
+cut -d, -f1,3,4 SusCurrQuery01_gpt-5.5.csv > clean1.csv
+
+
+awk -F, '{print $1 "," $3}' dataviz.csv > output.csv
+
+
+-----------
+Remove spaces in column names:
+
+$ sed 's/[[:space:]]*,[[:space:]]*/,/g' CC_LastChampionData.csv > temp.csv
+$ mv temp.csv CC_LastChampionData.csv
+
+
+
+----------
+Remove lines
+
+Specific line number
+$ sed -i '3d' file.txt (Deletes line 3; in-place editing)
+
+Last line
+$ sed '$d' file.txt
+
+Range of lines
+$ sed '2,5d' file.txt (Deletes lines 2 through 5)
+
+Everything but a range
+$ sed '3,5!d' file.txt (Keeps only lines 3-5)
+
+Specific pattern
+$ sed '/pattern/d' file.txt (Deletes lines containing "pattern")
+
+Empty lines
+$ sed '/^$/d' file.txt
+
+Commented lines (#)
+$ sed '/^#/d' file.txt
+
+
+
+
+
+------------
+Change file formats, if needed
+
+The 'iconv' command will change the ASCII character set from WINDOWS-1252 to UTF-8 and create a new file as output. The 'dos2unix' command will change the end-of-line format from CRLF to LF. A check of the changes is provided.
+
+NB. May get " Non-ISO extended-ASCII text, with very long lines"  from Microsoft Excel. Assume it is WINDOWS-1258 encoding.
+
+
+Example1:
+$ file LastChampionData*
+LastChampionData_20181120_v2.csv: ASCII text, with very long lines, with CRLF line terminators
+
+$ dos2unix LastChampionData*
+dos2unix: converting file LastChampionData_20181120_v2.csv to Unix format...
+
+$ file LastChampionData*
+LastChampionData_20181120_v2.csv: ASCII text, with very long lines
+
+$ file --mime-encoding LastChampionData*
+LastChampionData_20181120_v2.csv: us-ascii
+
+$ iconv -f us-ascii -t UTF-8 LastChampionData_20181120_v2.csv -o LastChampionData_20181120_v3.csv
+
+$ file --mime-encoding LastChampionData_20181120_v3.csv
+LastChampionData_20181120_v3.csv: us-ascii
+\end{verbatim}
+
+
+Example2:
+\begin{verbatim}
+$ file ROIs_FOR_BRUCE_07_28_2018.csv
+$ dos2unix --info ROIs_FOR_BRUCE_07_28_2018.csv
+$ dos2unix -idu ROIs_FOR_BRUCE_07_28_2018.csv
+$ iconv -f WINDOWS-1252 -t UTF-8 ROIs_FOR_BRUCE_07_28_2018.csv -o ROI.csv
+\end{verbatim}
+
+
+Example3:
+\begin{verbatim}
+#!/bin/sh
+
+TO='utf-8'
+
+for i in <name-files \*>.txt
+do
+    FROM=$(file -b --mime-encoding $i)
+    iconv -f $FROM -t $TO $i -o $i
+done
+\end{verbatim}

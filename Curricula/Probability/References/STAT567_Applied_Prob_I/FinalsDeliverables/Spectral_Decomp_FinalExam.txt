@@ -1,0 +1,177 @@
+Title:			Spectral Decomp for Final Exam STAT 567 (App Prob)	
+Project Descriptor:	Applied_Prob
+Project ID:		SoE25_STAT567
+Author:			bmarron
+Origin Date:		20 Mar 2017
+Final Date:
+
+
+######################
+Spectral Decom Primer
+#######################
+
+--- spectral decomposition ---
+#decomp of a symmetric matrix 	==> A = SUM[ λ_i*e_i*e'_i]
+				==> A = (P %*% LMBDA %*% P.inv)
+
+A <- matrix(c(1:4,2,1,5,6,3,5,1,7,4,6,7,1),4)	#symmetric
+     [,1] [,2] [,3] [,4]
+[1,]    1    2    3    4
+[2,]    2    1    5    6
+[3,]    3    5    1    7
+[4,]    4    6    7    1
+
+A.eigen <- eigen(A, symmetric=T)		#find eigenvalues and eigenvectors 
+$values
+[1] 15.0169875 -0.6746983 -4.0412336 -6.3010555
+
+$vectors
+           [,1]        [,2]       [,3]       [,4]
+[1,] -0.3524919  0.89949656  0.2103859  0.1496435
+[2,] -0.4928788 -0.40507255  0.7284286  0.2497568
+[3,] -0.5420321 -0.15251679 -0.6335166  0.5306568
+[4,] -0.5822553 -0.05967247 -0.1542279 -0.7960099
+
+P <- A.eigen$vectors
+LMBDA <- diag(A.eigen$values)
+P.inv <- solve(A.eigen$vectors)
+
+A.specdecomp <- (P %*% LMBDA %*% P.inv)		#A.specdecomp = A
+     [,1] [,2] [,3] [,4]
+[1,]    1    2    3    4
+[2,]    2    1    5    6
+[3,]    3    5    1    7
+[4,]    4    6    7    1
+
+
+DM1 <- as.matrix(edit(data.frame(x1=numeric(0), x2=numeric(0), x3=numeric(0))))
+DM1 <- as.matrix(read.csv("~/Desktop/DM1", header=F)) 	#Data entered in Leafpad w/ commas
+
+
+##########
+Matrix1
+###########
+
+M1 <- matrix(c(1:4,2,1,5,6,3,5,1,7,4,6,7,1),4)
+(M1specdecomp<-eigen(M1, symmetric=T))
+
+$values
+[1]  1.0 -0.5 -0.5
+
+$vectors
+          [,1]       [,2]       [,3]
+[1,] 0.5773503  0.8164966  0.0000000
+[2,] 0.5773503 -0.4082483 -0.7071068
+[3,] 0.5773503 -0.4082483  0.7071068
+
+
+lambda <-diag(M1specdecomp$values)
+P <- M1specdecomp$vectors
+P.inv <- solve(M1specdecomp$vectors)
+
+As Markov chain iterations go to infinity, all eignvalues to go zero EXCEPT ev=1
+New lambda,
+
+lambda[2,2]<-0
+lambda[3,3]<-0
+lambda
+     [,1] [,2] [,3]
+[1,]    1    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+
+
+the limit of P^n as n goes to infinity
+(P %*% lambda %*% P.inv)	
+          [,1]      [,2]      [,3]
+[1,] 0.3333333 0.3333333 0.3333333
+[2,] 0.3333333 0.3333333 0.3333333
+[3,] 0.3333333 0.3333333 0.3333333
+
+
+
+########
+Matrix2
+########
+
+M2 <- matrix(c(1/2,0,1/2,0,0,1/4,1/2,1/4,0,0,1/2,0,1/2,0,0,0,0,0,1/2,1/2,0,0,0,1/2,1/2),5)
+
+(M2specdecomp<-eigen(M2, symmetric=T))
+
+$values
+[1]  1.059017e+00  1.000000e+00  5.000000e-01  5.551115e-16 -5.901699e-02
+
+$vectors
+           [,1]      [,2]       [,3]       [,4]       [,5]
+[1,] -0.7071068 0.0000000  0.0000000  0.0000000  0.7071068
+[2,] -0.3162278 0.0000000 -0.8944272  0.0000000 -0.3162278
+[3,] -0.6324555 0.0000000  0.4472136  0.0000000 -0.6324555
+[4,]  0.0000000 0.7071068  0.0000000  0.7071068  0.0000000
+[5,]  0.0000000 0.7071068  0.0000000 -0.7071068  0.0000000
+
+
+
+
+
+M2_P <- matrix(c(1/2,1/2,0,0,1/2,1/2,0,0,0,0,1/2,1/2,0,0,1/2,1/2),4)
+(M2_Pspecdecomp<-eigen(M2_P, symmetric=T))
+$values
+[1] 1.000000e+00 1.000000e+00 5.551115e-16 5.551115e-16
+
+$vectors
+          [,1]      [,2]       [,3]       [,4]
+[1,] 0.0000000 0.7071068  0.0000000  0.7071068
+[2,] 0.0000000 0.7071068  0.0000000 -0.7071068
+[3,] 0.7071068 0.0000000  0.7071068  0.0000000
+[4,] 0.7071068 0.0000000 -0.7071068  0.0000000
+
+
+lambda <-diag(M2_Pspecdecomp$values)
+P <- M2_Pspecdecomp$vectors
+P.inv <- solve(M2_Pspecdecomp$vectors)
+
+As Markov chain iterations go to infinity, all eignvalues to go zero EXCEPT ev=1 
+New lambda,
+lambda[3,3]<-0
+lambda[4,4]<-0
+
+
+the limit of P^n as n goes to infinity
+(P %*% lambda %*% P.inv)	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(DM1recon <- P%*%lambda%*%Pt)

@@ -1,0 +1,54 @@
+
+Title:		AI-Assisted Course Development
+Project:	Practical Sustainability Now! 	
+Author:		bmarron
+Created:	23 May 2026
+Modified:	
+
+
+######
+Gemini
+######
+Yes, Gemini is highly capable of generating scientific graphics, interactive 3D models, and dynamic charts. By feeding it raw datasets or clear descriptive prompts, you can generate precise, interactive visualizations across STEM disciplines, including physics, biology, and chemistry
+
+Refining Details: Use precise phrases like "help me visualize..." or "show me a 3D simulation of...". Once the initial graphic is produced, you can use follow-up prompts to adjust variables, tweak the layout, or add color-coding to specific data points
+
+
+---------
+ggplot2
+
+How it Works
+Provide the Data: Upload your raw data in formats like CSV, Excel, or plain text. You can also paste the data directly into the prompt.
+Specify Scientific Requirements: 
+Ask Gemini to write ggplot2 code, specifying publication-quality details (e.g., APA formatting, specific themes, colorblind-friendly palettes, statistical layers, or facet wrapping).
+Execute: 
+Copy the provided R code and run it in your R environment (e.g., RStudio) to generate the chart and save it as an image file.
+
+Example Prompt to Use
+Here is my dataset [attach CSV]. I need a publication-ready scatter plot using ggplot2. Please map Variable X to the x-axis and Variable Y to the y-axis, apply the theme_classic() theme, set the point size to 3, and add a linear regression line with 95% confidence intervals. Write the complete R code so I can save this as a high-resolution PDF."
+
+
+
+########
+GPT
+#######
+Yes, GPT-5.5 can efficiently search the web, compile information, and generate a .csv file directly within your chat window.Using its built-in browsing tools and Python-based code interpreter, you can ask it to find data, organize the results into a table, and output a Download CSV link that you can save to your local device
+
+Define Your Scope: Ask the AI to research a specific topic (e.g., “Search the web for the top 10 tech companies founded in the last 5 years, including their headquarters and funding amounts.”).
+Data Compilation: The AI runs web searches, extracts the information, and structures it into a clean, multi-column format.CSV 
+Export: You can then prompt the model with “Compile this data into a downloadable CSV file.”
+
+Access & Tier: To use the most advanced search and execution capabilities natively, you will need to be using a paid tier (such as ChatGPT Plus, Pro, or Enterprise).
+Data Limits: If you want the AI to search a massive scale of data or iterate through thousands of web pages, processing times may vary. 
+For extensive datasets, it is generally best to ask for the data in manageable chunks to avoid timeouts
+
+---------
+ggplot2
+
+Yes, an AI model like GPT-5.5 can absolutely provide code for the Python equivalent of R's ggplot2.Since ggplot2 is an R package, it cannot be run natively in Python. Instead, GPT-5.5 (or any advanced coding model) will write code for plotnine, which is the leading Python implementation of R's "Grammar of Graphics" and behaves almost exactly like ggplot2
+
+Yes, GPT-4 or later versions (including GPT-4o and advanced reasoning models) are highly capable of analyzing CSV data and generating working plotnine code in Python. GPT uses its data analysis capabilities to examine the structure of your CSV. By understanding your column names and data types, it can write a Python script that reads the file using pandas and builds a plot using plotnine (a Python implementation of R's popular ggplot2).
+
+
+
+

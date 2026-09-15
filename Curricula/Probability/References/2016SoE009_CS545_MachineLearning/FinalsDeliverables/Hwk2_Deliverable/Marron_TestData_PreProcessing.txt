@@ -1,0 +1,124 @@
+Title:			Test Data PreProcessing in Linux, Python, and R
+Project Descriptor:	Letter Recognition with 3-Layer NN
+Project ID:		CS545 MachineLearning (2016SoE009)
+Prepared by:		bmarron
+Original Date:		30 Jan 2016
+
+
+#######################
+Raw Data PreProcessing:
+Test Data
+#######################
+
+==== in Linux =================================================
+
+---- selection of test dataset ----------------------------------
+
+			#select lines 10001 - 20000 for the test set
+awk 'NR > 10000' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt >> ~/Desktop/test_data.txt
+
+			#select all fields except the first field for subsequent standardization of data
+			# -d marks the field separator
+cut -d',' --complement -s -f1 ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Raw/test_data_raw.txt >> ~/Desktop/test_data_noletters.txt
+
+
+
+
+==== in Python =========================================
+
+---- Data PreProcessing1: The target data ----------------
+#set the targets for the test data:
+#(1) define an array of all 0.1 then switch to 0.9 sequentially
+
+targets = np.asarray([[0.1]*26 for _ in range(26)])
+for i in range(26):
+    targets[i][i]=0.9
+    
+
+#(2) define a set of uppercase letters as a set
+
+letters=list(string.ascii_uppercase)
+s = set(letters)
+
+
+#(3) add header (1-17) to test_data_raw.txt and save as te_d_header.txt;
+#import into Python ("Import data" in Spyder) as DATAFRAME
+#populate the te_d_targets array by comparing each letter of each row
+#in the test set with the set of uppercase letters using its index;
+#match the index to the targets array and append to the te_d_targets array
+
+te_d_targets =[]
+for i in range(10000):
+    match=[x for x in te_d_headertxt.ix[i:i,0:1].values[0] if x in s]
+    te_d_targets.append(targets[letters.index(match[0])])
+
+	#convert the list to numpy array
+	#te_d_targets is (10000,26)
+te_d_targets=np.asarray(te_d_targets)
+
+
+
+#(4) change each entry to (16,1) ==> te_d_targets (10000,16,1)
+
+te_d_targets= np.reshape(te_d_targets, (10000,26,1))
+
+
+#(5) save the output
+
+with open("te_d_targets.pkl", 'wb') as f:
+    cPickle.dump(te_d_targets, f, protocol=2)
+
+
+---- Data PreProcessing2: The input data ---------------------------------------
+#(1)import standardized data (from R processing below) as ARRAY using Spyder import fxn ==> te_d_standardizedtxt (10000,16)
+#(2) change each entry to (16,1) ==> te_d_standardizedtxt (10000,16,1)
+
+te_d_standardizedtxt= np.reshape(te_d_standardizedtxt, (10000,16,1))
+
+
+#(3) save the output
+with open("te_d_standardizedtxt.pkl", 'wb') as f:
+    cPickle.dump(te_d_standardizedtxt, f, protocol=2)
+
+
+
+---- Data Preprocessing3: The array of training data (inputs + targets) ----------
+
+    #(1) import te_d_standardizedtxt.pkl
+    #(2) import te_d_targets.pkl
+
+te_d_targets=cPickle.load(open("/home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/te_d_targets.pkl","rb"))
+te_d_standardizedtxt=cPickle.load(open("/home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/te_d_standardizedtxt.pkl","rb"))
+
+    #(3) create duples of training data and targets
+    #into a single array
+te_d = zip(te_d_standardizedtxt, te_d_targets)
+
+    #(4) save the output
+with open("te_d.pkl", 'wb') as f:
+    cPickle.dump(te_d, f, protocol=2)
+
+
+
+==== in R ============================================
+
+---- input data files  ---------------------------------------
+tr_means <- read.csv("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/tr_means.txt", sep="")
+
+tr_sds <- read.csv("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/tr_sds.txt", sep="")
+
+
+te_d_noletters <- read.csv("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/te_d/te_d_noletters.txt", header=FALSE)
+
+
+---- standardize data (per column) with training data means and sds ---------------------
+
+te_d_standardized <- matrix(0, nrow=10000, ncol=16))
+for (i in 1:16){
+	te_d_standardized[,i] <- (te_d_noletters[ ,i] - tr_means[i, ]) / tr_sds[i, ]
+}
+
+
+write.csv(round(te_d_standardized, 3), file = "te_d_standardized.txt", row.names = FALSE, sep = ",", col.names = TRUE)
+	#delete column headers
+

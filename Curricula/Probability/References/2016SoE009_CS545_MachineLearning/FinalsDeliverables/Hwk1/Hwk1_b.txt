@@ -1,0 +1,96 @@
+Title:			Hwk1, PartC: All-Pairs Learning Method, Stochastic Gradient Descent
+Project Descriptor:	Letter Recognition with Perceptrons
+Project ID:		CS545 MachineLearning (2016SoE009)
+Prepared by:		bmarron
+Original Date:		18 Jan 2016
+
+
+
+#################################
+complete code per perceptron 
+#################################
+
+	# Ojo! change all-pairs couplet w/ txt editor BEFORE re-running next perceptron pair
+	* run this 325 times!!!
+
+====   in Linux ====================================================================================
+		#STEP1: set pair
+		#sequential listing of pairs
+awk 'BEGIN { FS = "," } ; $1=="D" || $1=="Z" ' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/DataFiles/training_data.txt >> ~/Desktop/DZ.txt
+
+		#STEP2: divide by 15
+awk 'BEGIN {FS=","} {for (i=2; i<=NF; i++) $i=$i/15; OFS=","; print}' ~/Desktop/DZ.txt >> ~/Desktop/DZ_data.txt
+
+		#STEP3: open ~/Desktop/<letters>_data.txt
+		#use txt editor to change B ==> 1, <other letter>==>0
+
+====  in Python ======================================================================================
+
+		#STEP4: enter this ONLY ONCE for all 325 perceptrons
+import numpy as np
+from numpy import genfromtxt
+unit_step = lambda x: 0 if x < 0 else 1
+eta = 0.2
+all_prcptrn_wgts= []
+f = open('/home/bmarron/Desktop/all_prcptrns.txt', 'w')
+print >> f, "Vectors of Final Weights for All-Pairs Perceptrons" 
+f.close()
+
+
+		#STEP5: enter this FOR EVERY pairwise couplet
+DZ_data = genfromtxt('/home/bmarron/Desktop/D/DZ_data.txt', delimiter=',')
+DZ_data = np.array_split(DZ_data, [1], axis=1)
+X = DZ_data[1]            
+y = DZ_data[0]
+np.random.seed(47)
+rn = np.random.randn(16, 1)
+syn0 = (rn - np.fix(rn))
+for iter in xrange(100):
+    l0 = X
+    l1 = np.dot(l0,syn0)
+    results = []
+    for x in l1:
+        results.append(unit_step(x))
+    ao = np.hstack(results)
+    error = y - ao
+    delta = error[:,:1]
+    delta = eta * delta
+    syn0 += np.dot(l0.T,delta)
+
+all_prcptrn_wgts.append(syn0.T)
+f = open('/home/bmarron/Desktop/all_prcptrns.txt', 'a')
+print >>f, syn0.T
+f.close()
+
+
+#########################
+evaluating the test data
+#########################
+
+testdata1 = genfromtxt('/home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/DataFiles/test_data.txt', delimiter=',')
+testdata2 = testdata1/15
+testdata2 = np.array_split(testdata2, [1], axis=1)
+
+		#append each column of output to create a 10000 x 325 matrix
+		#find the maximum value for each row
+		#  
+np.dot(testdata2[1],all_prcptrn_wgts[0].T)
+np.dot(testdata2[1],all_prcptrn_wgts[1].T)
+np.dot(testdata2[1],all_prcptrn_wgts[2].T)
+....
+np.dot(testdata2[1],all_prcptrn_wgts[324].T)
+
+
+>>> the_count = [1, 2, 3, 4, 5]
+>>> for number in the_count:
+...     print "This is count %d" % number
+... 
+This is count 1
+This is count 2
+This is count 3
+This is count 4
+This is count 5
+
+
+
+

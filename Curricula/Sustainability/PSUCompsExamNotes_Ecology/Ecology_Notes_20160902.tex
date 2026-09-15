@@ -1,0 +1,307 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Detailed Notes for Ecology
+% Comps Exams
+% (2016SoE-016)
+% Rev: 20160902
+% Final: 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+
+
+\usepackage{comment}
+\usepackage[all]{nowidow}
+\usepackage{csquotes}
+\usepackage{tikz}
+%\usepackage{draftwatermark}
+%\SetWatermarkLightness{0.80}
+%\SetWatermarkScale{4}
+\usepackage{everypage}
+
+\usepackage{enumitem}
+\setenumerate[1]{label=\Roman*.}
+\setenumerate[2]{label=\Alph*.}
+\setenumerate[3]{label=\arabic*.}
+\setenumerate[4]{label=\alph*.}
+
+
+
+
+% Margins
+\topmargin= -0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.95in
+\textheight=9.0in
+\headsep=0.35in %distance between header and text
+
+% Line spacing
+\linespread{1.2} 
+
+% Signature macro
+\newcommand*{\SignatureAndDate}[1]{
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}
+}
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{} % Top left header
+\chead{} % Top center header
+\rhead{\footnotesize {Marron Comps Exams: Ecology Notes}} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+%Misc
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setcounter{secnumdepth}{0} % Removes default section numbers
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{5mm}
+\textmd{\textbf{Comps Exams: Ecology Notes}}\\
+\normalsize {Bruce D. Marron}\\
+\textit{\normalsize {Earth, Environment, and Society Ph.D. Program\\
+School of the Environment, Portland State University}}\\
+}
+\date{\today}
+
+
+%----------------------------------------
+%	BEGIN DOC
+%----------------------------------------
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\clearpage\maketitle
+
+
+\section{Ecology}
+
+\subsubsection{I. Fundamentals of Ecology}
+\textbf{ 1. Biology}\\
+ \cite{curtis_biology_1983} \textbf{[pp. 49-75; 157-232]}\\
+\underline{Carbon chemistry}
+\begin{itemize}
+	\item $1s^{2}2s^{2}2p^{2}$ 
+	\item $\Rightarrow sp^{3}$ hybrid orbitals; single covalent bonds
+	\item $\Rightarrow sp^{2}$ hybrid orbitals; double covalent bonds
+	\item $\Rightarrow sp^{1}$ hybrid orbitals; triple covalent bonds
+	\item Oxidation states: -4 ($CH_{4}$) to +4 ($CO_{2}$)
+	\item Reaction types: 1) Substitution, 2) Elimination, 3) Addition, 4) Rearrangement
+	\item Functional groups: 1) -OH alcohols (hydroxy), 2) -COOH carboxylic acid (carboxyl), 3) -NH2 amine (amino), 4) -CHO aldehyde, 5) -CHO- ketone, 6)-PO(OH)2 phosphate
+\end{itemize}
+\underline{Carbohydrates (sugars)}
+\begin{itemize}
+	\item $(CH_2O)_n$ "hydrates of carbon"
+	\item monosaccharides [glucose, $C_6H_{12}O_6$ (an aldose); fructose, $C_6H_{12}O_6$ (a ketose)]
+	\item $ \Rightarrow $ principal energy source: $C_6H_{12}O_6 + 6O_2 \rightarrow 6CO_2 + 6H_2O \ \Delta H = -673 kcal$
+	\item disaccharides [sucrose, condensation of glucose + fructose; $1\rightarrow 2$ linkage]
+	\item $ \Rightarrow $ transport from photosynthesis
+	\item polysaccharides: storage: starch (amylose, amylopectin) and glycogen; $\alpha$ linked glucose
+	\item polysaccharides: structure: cellulose $\beta $ linked glucose; chitin $\beta $ linked glucose w/ N
+\end{itemize}
+\underline{Lipids (fats, oils, waxes)}
+\begin{itemize}
+	\item fats: glycerol + 3 fatty acids (esterification)
+	\item $ \Rightarrow $ 6x more energy stored (per wgt) than polysaccharides; hydrophobic
+	\item $ \Rightarrow $ organ cushion; insulation
+	\item phospholipids: glycerol + 2 fatty acids (esterification) + 1 phosphate; hydrophobic and hydrophyllic ends; cell membrane
+\end{itemize}
+\underline{Proteins (polypeptides}
+\begin{itemize}
+	\item 20 amino acids: $H_2N-CHR-COOH $; only R varies
+	\item amide (ester) linkage: $H_2N-CHR-CO-NH-CHR-COOH$; dipeptide
+	\item primary (sequence), secondary (H bonds); tertiary (S cross links); quaternary (multiple polypeptides)
+	\item structural: collagen (gelatin), keratin
+	\item regulatory: insulin
+	\item transport: hemoglobin
+	\item storage: seed
+	\item protective: antibodies
+	\item toxins: diptheria, botulism
+	\item enzymes: sucrase  
+\end{itemize}
+\underline{Nucleic acids}
+\begin{itemize}
+	\item purines (adenine, guanine), pyrimidines (cytosine, thymine) + sugar (ribose) + phosphate
+	\item deoxyribonucleic acid, ribonucleic acid, tRNA, mRNA
+\end{itemize}
+\underline{Thermodynamics}
+\begin{itemize}
+	\item only $\sim 1\% \ of \ 1.3x10^{24} cal$ of solar energy enters biosphere
+	\item only $\sim 10\%$ energy transfer per trophic level
+	\item Energetics of reactions: Gibbs free energy $\equiv \Delta G = \Delta H - T\Delta S$; exergonic $ \equiv \Delta G \leq 0$; endergonic	$ \equiv \Delta G > 0$
+	\item First Law: Total energy of an isolated system constant
+	\item Second Law: Time's arrow; Transformations from potential energy sources accompanied by heat (friction; non-usable energy) or increase in entropy;  Potential energy of final state LESS than initial state IF $\Delta G \leq 0$
+\end{itemize}
+\underline{Fundamental BioEnergy Cycle (Redox)}
+\begin{itemize}
+	\item Chloroplast: : $6CO_2 + 6H_2O \rightarrow C_6H_{12}O_6 + 6O_2 \ \Delta G = +680 kcal$
+	\item Mitochondrion: $C_6H_{12}O_6 + 6O_2 \rightarrow 6CO_2 + 6H_2O \ \Delta G = -680 kcal$
+	\item Metabolism: molecular construction rxns (anabolism) + molecular deconstruction rxns (catabolism)
+	\item Metabolism: couple an endergonic rxn with hydrolysis of ATP (exergonic $\sim 7 \ kcal/mol$; often phosphorylation of a reactant(s)) \\
+	Example: glucose + fructose + 2ATP $ \rightarrow $ sucrose
+	\item ATP: adenine + ribose + 3 phosphates = adenosine triphosphate
+\end{itemize}
+\underline{Enzymes}
+\begin{itemize}
+	\item Large globular proteins;  catalysts; Reduction of activation potential
+	\item Active site + substrate $ \rightarrow $ products
+	\item Coenzymes (vitamins, cations) needed often as electron acceptors (eg, nictotinamide adenine dinucleotide (NAD) = niacin)
+	\item pH and temp affected; denatured = lost structure ($ 3^{o}, 4^{o}$)
+	\item Enzymatic pathways prevent equilibrium; move rxns forward
+	\item Auxotroph: lack critical enzyme fxning at some point in the pathway (missing or defective enzyme)
+	\item Control of enzyme-mediated rxns with 1) activation enzymes; 2) temp/pH; 3) allosteric factors; 4) feedback inhibition; 5) competitive inhibition (sulfanilamide for PABA in folic acid synthesis); 6) noncompetitive inhibition (Pb poisoning binds to -SH and denatures enzymes); 7) irreversible inhibition (nerve toxins, penicillin on bacterial cell wall construction)
+\end{itemize}
+\underline{Glycolysis and Respiration}
+\begin{itemize}
+	\item Aerobic ATP Production: glycolysis + respiration $ \equiv $ (Krebs cycle + electron transport)
+	\item Glycolysis (in cytoplasm): Phosphorylation of glucose (by kinases)  $ \Rightarrow $ splits glucose to 2, 3C glyceraldehyde phospahtes $ \Rightarrow $  Oxidation to pyruvic acid $H_{3}CCOCOOH$; 9 steps \\
+	Glycolysis: 2 ATP + 2 NAD+ $ \Rightarrow $ 4 ATP + 2NADH \\
+	Glycolysis: controlled by negative feedback of ATP: phosphofructokinase is an allosteric enzyme with ATP itself being the allosteric factor
+	\item Pyruvic acid can go aerobic (respiration) or anaerobic (fermentation to ethanol; oxygen debt to lactic acid)
+	\item Respiration (in mitochondrion): pyruvic acid - CO2 + CoenzymeA  $\Rightarrow $ actyl CoA \\
+	Acetyl CoA enters Krebs cycle $ \Rightarrow $ ATP + NADH + CO2 +H2O \\
+	NADH enters oxidative phosphorylation (electron transport) $ \Rightarrow $ ATP + H2O
+	\item Paul Mitchell (Nobel chemistry, 1976) proposed radical (ingenious) idea that oxidative phosphorylation of ADP to ATP in mitochondria powered by proton gradient (like active transport); proton gradient creates pH gradient and voltage gradient; met with skepticism for 20 yrs
+\end{itemize}
+
+\textbf{ 2. Ecology}\\
+ \cite{curtis_biology_1983} \textbf{[pp. 951-993]}\\
+ \cite{weier_botany:_1982} \textbf{[pp. 347-371]}\\
+ \cite{odum_strategy_1969}\\
+ \cite{hairston_community_1960}\\
+ \cite{cardinale_biodiversity_2012}\\
+ \cite {estes_trophic_2011}\\
+ \cite{wiens_niche_2010}\\
+
+\textbf{ 3. Evolution}\\
+ \cite {curtis_biology_1983} \textbf{[pp. 928-945]}\\
+ \cite{ehrlich_differentiation_1969}\\
+ \cite{alleaume-benharira_geographical_2006}\\
+ \cite{jay_gould_punctuated_1993}\\
+ \cite{kauffman_origins_1993} \textbf{[pp. 3-120; 173-286]}\\
+ \cite{beinhocker_origin_2007} \textbf{[pp. 187-217]}\\
+ \cite{feng_epigenetic_2010}\\
+
+
+\subsubsection{II. Foundations of Landscape Ecology}
+
+\textbf{ 1. Historical Development}\\
+ \cite{solnetsev_natural_1948}\\
+ \cite{troll_geographic_1950}\\
+ \cite{watt_pattern_1947}\\
+ \cite{wiens_allerton_2008}\\
+
+\textbf{ 2. Ecological Landscapes: Scales and Patterns}\\
+ \cite{turner_effects_1989}\\
+ \cite{wu_effects_2004}\\
+ \cite{legendre_spatial_1989}\\
+ \cite{wiens_spatial_1989}\\
+
+\textbf{ 3. Ecological Landscapes: Dynamics and Processes}\\
+ \cite{turner_disturbance_2010}\\
+ \cite{turner_landscape_1989}\\
+ \cite{peterjohn_nutrient_1984}\\
+\begin{itemize}
+	\item exchangeable NH4, total Kjeldahl-N, dissolved NO3 and NO2, exchangeable orthophosphate, total-P, millipore filtered vs. unfiltered samples, point centered quarter sampling technique \cite{mitchell_quantitative_2010}, throughfall, 
+	\item nutrient dynamics in ag (corn field) watershed upstream of broad leaved deciduous trees, Maryland; compare pathways of nutrient flux within and between habitats
+	\item examine N,C,P transformations; samples from surface and shallow subsurface waters
+	\item 1680 kg/ha limestone (April); 2-10-13 fertilizer (April); pre-emergent herbicide (May); liquid N (May); urea (July)
+	\item 105 kg/ha N (63\% organic, 22\% NH4+, 15\% NO3-) PLUS 14 kg/ha N (46\% organic, 20\% NH4+, 34\% NO3-)
+	\item spring input 13.9 kg/ha C ( bulk precip) BUT spring watershed discharge 153 kg/ha C (death of soil biota) ==> every other season has C input proportional to rain but substantially less C discharge (eg, fall C bulk precip 5.7 kg/ha; watershed discharge C 0.42 kg/ha)
+	\item pulse of C in Spring because killed soil biota !!
+	\item Corn: nutrient uptake $\approx  250$ kg N/ha/yr and $\approx 45$ kg P/ha/yr; NPP $\approx  22,000$ kg C/ha/yr
+	\item 28\% of N  and 23\% P exported by corn harvest
+	\item N retention poor in disturbed ecosystems ($\approx 10\%$); N retention excellent in undisturbed forest ecosystems ($\approx 90\%$)
+	\item P retention average in disturbed ecosystems ($\approx 40\%$); P retention very good in undisturbed forest ecosystems ($\approx 80\%$)
+	\item groundwater (subsurface flow)  the major pathway of N loss from both crop filed and forest
+	\item forest throughfall N ==> $\approx 70\%$ retention by canopy
+	\item forest throughfall P ==> $\approx 80\%$ supplemented by canopy
+	\item Big question: What caused the decrease in groundwater NO3 concentration in the riparian forest? Samples pulled below rhizosphere (at 1 m). Peterjohn and Correl hypothesize only vegetative uptake and denitrification. But incremental growth accounts for only 33\%! Authors therefore default to denitrification. But bacteria now known to uptake nitrate and nitrite (nitrate and nitrite reductase enzymes)
+	\item Riparian forest removed 4.1 Mg/ha particulates, 11 kg/ha particulate organic-N, 0.83 kg/ha NH4, 2.7 kg/ha NO3, 3 kg/ha particulate P  from surface runoff
+	\item Riparian forest removed 45 kg/ha NO3 from subsurface flow
+\end{itemize}
+ \cite{wegner_movements_1979}\\
+ \cite{walker_use_2010}\\
+ \cite{wiens_population_1976}\\
+
+\textbf{ 4. Measuring and Modeling Ecological Landscapes}\\
+ \cite{dale_spatial_2014} \textbf{(TBD)}\\
+ \cite{naveh_biocybernetic_1987}\\
+ \cite{lefkovitch_spatial_1985}\\
+ \cite{scheller_ecological_2007}\\
+ \cite{scheller_robert_m._landscape_2013}\\
+ \cite{scheller_design_2007}
+
+
+\subsubsection{III. Agroecology}
+\textbf{ 1. Concepts and Rationales}\\
+ \cite{tilman_agricultural_2002}\\
+ \cite{godfray_food_2010}\\
+ \cite{gliessman_agroecology:_2015} \textbf{[pp. 3-34; 301-344]}\\
+ \cite{wolfe_crop_2000}\\
+ \cite{beus_conventional_1990}\\
+ \cite{rosset_multiple_2000}\\
+ \cite{thompson_agrarian_2010}\\
+
+\textbf{ 2. Biotics and Abiotics}\\
+ \cite{schmidt_persistence_2011}\\
+ \cite{gliessman_agroecology:_2015} \textbf{[pp. 35-142]}\\
+
+\textbf{ 3. Agroecological Interactions}\\
+ \cite{gliessman_agroecology:_2015} \textbf{[pp. 143-298]}\\
+ \cite{gianinazzi_impact_1994}\\
+ \cite{schnitzer_soil_2011}\\
+ \cite{smith_plant_2009}\\
+ \cite {van_der_putten_plantsoil_2013}\\
+
+\textbf{ 4. Milpa Culture}\\
+ \cite{jimenez-osornio_agrodiversidad_1999}\\
+ \cite{toledo_uso_2008}\\
+ \cite{benjamin_carbon_2001}\\
+ \cite {dahlin_reconstructing_2005}\\
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}

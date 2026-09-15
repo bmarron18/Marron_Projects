@@ -1,0 +1,121 @@
+Title:			Output from Marron_NN1a.py
+Project Descriptor:	HWK2
+Project ID:		CS 545 (2016SoE009)
+Record:		
+Author:			bmarron
+Origin Date:		1 Feb 2016
+
+
+
+###############################
+Experiment 2b: tr_d and te_d
+eta =.05, alpha = .3
+#############################
+
+		#initiazation from zero state
+In [34]: hwk2_exp2=LtrRecogNN(NNsize)
+    ...:     
+    ...:     #eta =.05, alpha = .3
+    ...: hwk2_exp2.SGD(tr_d, 100, .05, .3, te_d)
+    ...: 
+    ...: 
+Epoch 0: 369 / 10000
+Epoch 1: 389 / 10000
+Epoch 2: 413 / 10000
+Epoch 3: 432 / 10000
+Epoch 4: 458 / 10000
+Epoch 5: 472 / 10000
+Epoch 6: 488 / 10000
+Epoch 7: 506 / 10000
+Epoch 8: 518 / 10000
+Epoch 9: 526 / 10000
+Epoch 10: 537 / 10000
+Epoch 11: 545 / 10000
+Epoch 12: 551 / 10000
+Epoch 13: 559 / 10000
+Epoch 14: 567 / 10000
+Epoch 15: 570 / 10000
+Epoch 16: 572 / 10000
+Epoch 17: 575 / 10000
+Epoch 18: 587 / 10000
+Epoch 19: 590 / 10000
+Epoch 20: 595 / 10000
+Epoch 21: 595 / 10000
+Epoch 22: 599 / 10000
+Epoch 23: 600 / 10000
+Epoch 24: 603 / 10000
+Epoch 25: 606 / 10000
+Epoch 26: 610 / 10000
+Epoch 27: 612 / 10000
+Epoch 28: 614 / 10000
+Epoch 29: 615 / 10000
+Epoch 30: 615 / 10000
+Epoch 31: 613 / 10000
+Epoch 32: 613 / 10000
+Epoch 33: 618 / 10000
+Epoch 34: 616 / 10000
+Epoch 35: 615 / 10000
+Epoch 36: 614 / 10000
+Epoch 37: 610 / 10000
+Epoch 38: 609 / 10000
+Epoch 39: 609 / 10000
+Epoch 40: 609 / 10000
+Epoch 41: 608 / 10000
+Epoch 42: 608 / 10000
+Epoch 43: 608 / 10000
+Epoch 44: 608 / 10000
+Epoch 45: 608 / 10000
+Epoch 46: 609 / 10000
+Epoch 47: 609 / 10000
+Epoch 48: 610 / 10000
+Epoch 49: 611 / 10000
+Epoch 50: 612 / 10000
+Epoch 51: 612 / 10000
+Epoch 52: 612 / 10000
+Epoch 53: 612 / 10000
+Epoch 54: 609 / 10000
+Epoch 55: 610 / 10000
+Epoch 56: 610 / 10000
+Epoch 57: 609 / 10000
+Epoch 58: 608 / 10000
+Epoch 59: 608 / 10000
+Epoch 60: 608 / 10000
+Epoch 61: 609 / 10000
+Epoch 62: 609 / 10000
+Epoch 63: 609 / 10000
+Epoch 64: 608 / 10000
+Epoch 65: 609 / 10000
+Epoch 66: 609 / 10000
+Epoch 67: 609 / 10000
+Epoch 68: 609 / 10000
+Epoch 69: 609 / 10000
+Epoch 70: 607 / 10000
+Epoch 71: 607 / 10000
+Epoch 72: 607 / 10000
+Epoch 73: 607 / 10000
+Epoch 74: 607 / 10000
+Epoch 75: 607 / 10000
+Epoch 76: 607 / 10000
+Epoch 77: 607 / 10000
+Epoch 78: 607 / 10000
+Epoch 79: 607 / 10000
+Epoch 80: 607 / 10000
+Epoch 81: 606 / 10000
+Epoch 82: 604 / 10000
+Epoch 83: 606 / 10000
+Epoch 84: 607 / 10000
+Epoch 85: 606 / 10000
+Epoch 86: 607 / 10000
+Epoch 87: 607 / 10000
+Epoch 88: 607 / 10000
+Epoch 89: 606 / 10000
+Epoch 90: 606 / 10000
+Epoch 91: 606 / 10000
+Epoch 92: 605 / 10000
+Epoch 93: 605 / 10000
+Epoch 94: 604 / 10000
+Epoch 95: 604 / 10000
+Epoch 96: 604 / 10000
+Epoch 97: 605 / 10000
+Epoch 98: 605 / 10000
+Epoch 99: 605 / 10000

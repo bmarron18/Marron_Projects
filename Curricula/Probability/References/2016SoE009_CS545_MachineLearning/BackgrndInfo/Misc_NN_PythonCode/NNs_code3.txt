@@ -1,0 +1,29 @@
+http://stackoverflow.com/questions/33013204/neural-networks-python
+
+
+a simple neural network which takes 8 inputs and 2 outputs, from an .xls file which has 500 rows of data, 
+with 2 hidden weights in a matrix (8, 2).
+
+#################
+3 Layer Neural Network
+#####################
+
+import numpy as np
+
+def sigmoid(x,deriv=False):
+    if(deriv==True):
+        s = sigmoid(x,False)
+        return s*(1-s)
+    return 1/(1+np.exp(-x))
+
+n_in = 8
+n_out = 2
+n_data = 500
+
+X = np.random.randn( n_data, n_in )
+T = np.random.randn( n_data, n_out )
+
+W = np.random.randn( n_out, n_in )
+b = np.random.randn( n_out, )
+
+err = ( sigmoid( np.dot(X, W.T) + b ) - T ) ** 2

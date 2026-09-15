@@ -1,0 +1,9 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Sustainable and Resilient Biosphere.blg'
+[105] biber:340> INFO - === Sat Jun  6, 2026, 19:40:42
+[126] Biber.pm:419> INFO - Reading 'Sustainable and Resilient Biosphere.bcf'
+[242] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[267] bbl.pm:660> INFO - Writing 'Sustainable and Resilient Biosphere.bbl' with encoding 'UTF-8'
+[267] bbl.pm:763> INFO - Output to Sustainable and Resilient Biosphere.bbl
+[267] Biber.pm:131> WARN - The file 'Sustainable and Resilient Biosphere.bcf' does not contain any citations!
+[267] Biber.pm:133> INFO - WARNINGS: 1

@@ -1,0 +1,284 @@
+
+
+##########################
+My Course in Probability
+#########################
+
+The Truth About Linear Regression
+https://www.stat.cmu.edu/~cshalizi/TALR/
+
+Advanced Data Analysis from an Elementary Point of View
+https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/
+
+Stan: Software for Bayesian Data Analysis
+https://mc-stan.org/
+
+Andrew Gelman
+http:// www.stat.columbia.edu/∼gelman/
+
+The R Project for Statistical Computing
+https://www.r-project.org/
+
+R Cookbook, 2nd Edition
+https://rc2e.com/
+
+
+=======	The Beginnings	====================================
+
+----------------------
+The Big Mental Model
+----------------------
+*Data-generating mechanisms (generators) are based in reality
+	Statistical science models the data-generating mechanisms through probability distributions and 
+	stochastic processes.These models and other inferences are ESTIMATES OF REALITY and are functions of 
+	the generator outputs (aka information or data values).  
+	means that they inherit variability from the underlying stochastic process.
+
+*Data-generating mechanisms (generators) produce information (aka data) over time. What is observable?
+
+
+*We never know the full probability distribution of the variables we are dealing with.
+	Statisticians often pretend that we have gone to the Oracle, and in a mystic trance they have 
+	revealed to us the full joint probability distribution of X and Y , or at least the exact values of
+	all of their moments. As in many mathematical problems, therefore, we have idealized away everything 
+	inconvenient. Even the idea that the variables we see are "randomly generated from a probability 
+	distribution" is a usually-untestable assumption. Rather than exact knowledge from the Oracle, we 
+	have only a limited number of noisy samples from the reality-based data-generating mechanism 
+	(aka sampling distribution).
+	
+My Comment: Statistics in general  Assumes that a) the phenomenon already exists and b) is observable and c) is
+measurable. If the system under study is non-stationary and creates new subsets by i)
+differentiation of the whole (morphogenesis) or ii) emergence, what is the value of the sampling?
+Likewise, what if the system exhibits path dependence and becomes subject to a bifurcation
+point. What then is the value of the sampling data? Law confesses,”... stochastic processes for most real (-world) systems do not have steady-state distributions since characteristics of the system change over time.” (p 493)Law, Averill M. 2006. Simulation Modeling and Analysis. 4th ed. McGraw-Hill Series in Industrial Engineering and Management Science. Boston: McGraw-Hill.
+
+----------
+Concepts and Philosophy
+----------
+Karl Popper, the leading advocate of hypothetico-deductivism in the last century, denied
+that induction was even possible (Cosma+Gelman)
+generator
+
+
+
+
+---------
+Definitions
+-----------
+*statistic
+	a function of the data, and the data alone 
+	
+*estimator
+	a statistic which takes a guess at a parameter θ, or some function of it, h(θ).
+
+
+*assumption
+
+*moments
+
+*distribution
+	sampling
+	probability
+	
+
+*Inference
+	causal
+	statistical
+		estimating statistical functionals, or testing hypotheses about them
+	
+*Parameters
+	statistical functionals (functions of probability distributions and stochastic processes)
+
+*Data compression == statistics
+
+
+
+
+
+---NOTES "Cosma_StatsTextbook.pdf"-----
+
+	1.1 Statistics, Data Analysis, Regression
+		Statistics, then, uses probability to model (statistical) inference from data.
+	
+	6.1 Stochastic Models, Uncertainty, Sampling Distributions
+		We thus model the data-generating mechanism through probability distributions and stochastic processes.
+		Since a function of a function is a “functional”, and these quantities are functions of the true probability distribution function, we’ll call these functionals or statistical functionals1 . Functionals
+could be single numbers (like the total rat population), or vectors, or even whole curves (like the expected time-course of temperature over the year, or the regression of hawks now on rats earlier). 
+
+Statistical inference becomes estimating those functionals, or testing hypotheses about them. Most writers in theoretical statistics just call them “parameters” in a generalized sense, but I will try to restrict that word to actual parameters specifying statistical models, to minimize confusion.
+These estimates and other inferences are functions of the data values, which means that they inherit variability from the underlying stochastic process.
+
+
+
+
+--- Intro Probability Models (Ross) --------------
+
+Chapter 1 Exercises
+--------------------
+
+4. Sent to CHatGPT and DeepSeek
+
+Student in Kolmogorov set theoretic probability. Given the events E, F, and G provide set theoretic expressions for the following:
+a) only F occurs
+b) both E and F occur but not G
+c) at least one event occurs
+d) at least two events occur
+e) all three events occur
+f) no event occurs
+g) at most one event occurs
+h) at most two events occur
+
+a) Only F occurs
+This means:
+    F occurs
+    E does not occur
+    G does not occur
+
+Set-theoretic expression:
+	F ∩ Ec ∩ Gc
+
+
+b) Both E and F occur, but not G
+This means:
+    E and F occur
+    G does not occur
+
+Set-theoretic expression:
+	E ∩ F ∩ Gc
+
+
+c) At least one event occurs
+This is the union of all three events.
+
+Set-theoretic expression:
+	E ∪ F ∪ G
+	
+
+d) At least two events occur
+This means:
+    Any two or all three of the events occur
+
+We take all intersections of pairs and the intersection of all three:
+	(E∩F) ∪ (E∩G) ∪ (F∩G)
+
+(Note: this includes the region where all three occur, which satisfies "at least two.")
+
+
+e) All three events occur
+	All of E, F, and G occur together.
+
+Set-theoretic expression:
+	E ∩ F ∩ G
+	
+	
+f) None of the events occurs
+	This means none of E, F, or G occur.
+
+Set-theoretic expression:
+	Ec ∩ Fc ∩ Gc
+
+
+g) At most one event occurs
+This includes the cases:
+
+    No event occurs
+    Exactly one of E, F, or G occurs
+
+We break it down into disjoint regions:
+    None occurs: Ec ∩ Fc ∩ Gc
+
+    Only E occurs: E ∩ Fc ∩ Gc
+
+    Only F occurs: F ∩ Ec ∩ Gc
+
+    Only G occurs: G ∩ Ec ∩ Fc
+
+Set-theoretic expression:
+	(Ec∩Fc∩Gc) ∪ (E∩Fc∩Gc) ∪ (Ec∩F∩Gc) ∪ (Ec∩Fc∩G)
+	
+	
+h) At most two events occur
+This includes:
+    No events occur
+    Exactly one event occurs
+    Exactly two events occur
+    (Only excludes the case where all three occur)
+
+So we take the complement of the intersection of all three:
+Set-theoretic expression:
+	(E∩F∩G)c
+
+
+
+Certainly! Below are the set-theoretic expressions for each scenario using the events \( E \), \( F \), and \( G \):
+
+### a) Only \( F \) occurs
+This means \( F \) occurs, but neither \( E \) nor \( G \) occurs.
+\[
+F \cap E^c \cap G^c
+\]
+
+### b) Both \( E \) and \( F \) occur but not \( G \)
+This is the intersection of \( E \) and \( F \) minus \( G \).
+\[
+E \cap F \cap G^c
+\]
+
+### c) At least one event occurs
+This is the union of all three events.
+\[
+E \cup F \cup G
+\]
+
+### d) At least two events occur
+This means any two or all three events occur. There are three possible pairs and one triple:
+\[
+(E \cap F) \cup (E \cap G) \cup (F \cap G)
+\]
+
+### e) All three events occur
+This is the intersection of all three events.
+\[
+E \cap F \cap G
+\]
+
+### f) No event occurs
+This is the complement of the union of all events (i.e., none of \( E \), \( F \), or \( G \) occurs).
+\[
+(E \cup F \cup G)^c \quad \text{or} \quad E^c \cap F^c \cap G^c
+\]
+
+### g) At most one event occurs
+This means either no event occurs, or exactly one of \( E \), \( F \), or \( G \) occurs. It can be expressed as:
+\[
+(E^c \cap F^c \cap G^c) \cup (E \cap F^c \cap G^c) \cup (F \cap E^c \cap G^c) \cup (G \cap E^c \cap F^c)
+\]
+Alternatively, it's the complement of "at least two events occur":
+\[
+(E \cap F)^c \cap (E \cap G)^c \cap (F \cap G)^c
+\]
+
+### h) At most two events occur
+This means the scenario where all three events do **not** occur simultaneously. It's the complement of "all three events occur":
+\[
+(E \cap F \cap G)^c
+\]
+Alternatively, it can be expressed as the union of all possible cases where zero, one, or two events occur.
+
+### Summary (in LaTex):
+\[
+\boxed{
+\begin{aligned}
+&\text{a) } F \cap E^c \cap G^c \\
+&\text{b) } E \cap F \cap G^c \\
+&\text{c) } E \cup F \cup G \\
+&\text{d) } (E \cap F) \cup (E \cap G) \cup (F \cap G) \\
+&\text{e) } E \cap F \cap G \\
+&\text{f) } (E \cup F \cup G)^c \text{ or } E^c \cap F^c \cap G^c \\
+&\text{g) } (E \cap F)^c \cap (E \cap G)^c \cap (F \cap G)^c \\
+&\text{h) } (E \cap F \cap G)^c \\
+\end{aligned}
+}
+\]
+
+

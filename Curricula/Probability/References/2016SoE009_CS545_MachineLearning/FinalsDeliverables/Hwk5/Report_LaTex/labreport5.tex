@@ -1,0 +1,584 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lab Report 5
+% CS545_MachineLearning
+% (2016SoE009)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{apacite}
+\usepackage[english]{babel}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{booktabs}	%table rules
+\usepackage[all]{nowidow}
+\usepackage{threeparttable}
+\usepackage{verbatim}
+\usepackage{comment}
+\usepackage{longtable}
+\usepackage{etoolbox}
+\setlength{\LTcapwidth}{=6.95in} %longtable caption width goes the full textwidth 
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
+\tikzset{
+    events/.style={ellipse, draw, align=right},
+}
+
+% paragraph indent
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+% Margins
+\topmargin= -0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.95in
+\textheight=9.0in
+\headsep=0.15in %distance between header and text
+
+\linespread{1.2} % Line spacing
+
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{} % Top left header
+\chead{} % Top center header
+\rhead{bmarron} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+%\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setcounter{secnumdepth}{0} % Removes default section numbers
+
+   
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkClass}{Machine Learning (CS 545), Portland State University, Winter 2016} % Course/class
+\newcommand{\hmwkTitle}{k-Means Clustering} % Assignment title
+\newcommand{\hmwkAuthorName}{Bruce Marron} % Your name
+\newcommand{\hmwkClassInstructor}{Mitchell} % Teacher/lecturer
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkTitle}}\\
+\textit{\normalsize \hmwkClass}
+\vspace{3in}
+}
+\author{\textbf{\hmwkAuthorName}}
+\date{08 March 2016} % Insert date here if you want it to appear below your name
+
+
+%----------------------------------------
+%	BEGIN DOC
+%----------------------------------------
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\clearpage\maketitle
+
+\subsection{Introduction}
+The k-means algorithm is an algorithm for placing N data points $\mathbf{X} = \{ \mathbf{x}^{(n)}\} $ from an I-dimensional space into k clusters where each cluster is parameterized by a vector called its mean. Once the number of cluster has been defined and an initial parameterization of the means accomplished, the k-means algorithm proceeds as an iterative, two-step process. In the \textit{assignment step} each data point is assigned to the nearest mean (centroid). In the \textit{update step} means are adjusted to match the sample means of the data points for which they are responsible. The algorithm is run until the change in centroids is below some user-determined threshold (convergence).\\ 
+
+This report documents the use of k-means clustering in two experiments to classify handwritten digits that have been extracted to normalized bitmaps given a feature vector in $ \mathbb{R}^{64}$. The "OptDigits" dataset was the source of raw data and was provided by the instructor. All data processing and evaluation tasks were done in Python 2.7.11 (Anaconda 2.4.1 (32-bit)) using the integrated development environment (IDE), "Spyder". The open source, "scikit-learn" machine learning package was used as a reference for code construction.\\
+
+\subsection{Data Processing}
+The raw data in OptDigits contains a training set of 3823 cases and a test set of 1797 cases. Each case is a vector of 64 features plus one class attribute. Feature values range from 0 - 16 and class attributes correspond to the natural number set, N = {0,1, 2,...,9}.  The data were imported and class attribute data were separated from case data for both the training dataset and the test dataset. This resulted in four, datasets: \verb!tr_d_X, tr_d_y, te_d_X, te_d_y!. The procedures and methods used for all data processing tasks are detailed in the script \verb!DataProcessing01.py!.
+
+\subsection{Implementation of the k-means Algorithm} 
+The implementation and actualization of the k-means algorithm is detailed in the following scripts,
+\begin{verbatim}
+DataProcessing02.py, DataProcessing03.py, DataProcessing04.py, DataProcessing05.py
+DataProcessing06.py, DataProcessing07.py, DataProcessing08.py, DataProcessing09.py
+DataProcessing10.py, DataProcessing11.py, DataProcessing12.py
+\end{verbatim}
+
+
+\subsection{Experiment 1: Results}
+The results of Experiment 1 (k=10 clusters) are presented in Table~\ref{tab:a1} through Table~\ref{tab:a12}. Accuracy was determined as 20.14\% (=(176+3+2+1+173+2+5)/1797). As shown in Table~\ref{tab:a1}, the fourth random center cluster ('rcc4') had the minimum SSE and maximum entropy and was selected to generate the 'best centers' for Experiment 1. A confusion matrix was generated for each class to better detail classifier performance.
+
+\begin{table} \centering 
+  \caption{The SSE, sum-squared separation, and entropy for k-means classification (k=10) on the OptDigits training dataset.} 
+  \label{tab:a1} 
+\begin{tabular}{lccc} \\
+[-1.8ex] \hline \hline \\[-1.8ex] 
+ Initialization &&& \\ 
+ (random cluster centers) & SSE & Sum-squared separation & Entropy\\
+\hline \\[-1.8ex]
+rcc1 & 2869491 & 166318 & 2.51909\\
+rcc2 & 2716914 & 148726 & 2.94148\\
+rcc3 & 2953240 & 161250 & 2.62772\\
+rcc4 & 2596054 & 128680 & 3.09108\\
+rcc5 & 2874411 & 159626 & 2.70705\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table} \centering 
+  \caption{The assignment of cluster center labels from the best run of Experiment 1 (using rcc4) to the most frequent class they contain.} 
+  \label{tab:a2} 
+\begin{tabular}{lc} \\
+[-1.8ex] \hline \hline \\[-1.8ex] 
+ Cluster Center & Most Freq. Class \\ 
+ \hline \\[-1.8ex]
+0 & 0\\
+7 & 1\\
+7 & 2\\
+8 & 3\\
+5 & 4\\
+9 & 5\\
+6 & 6 \\
+4 & 7\\
+2 & 8\\
+8 & 9\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 0 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a3} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 0 & !0\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 0 & 176 & 10\\
+& !0 & 2 & 1609\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 1 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a4} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 1 & !1\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 1 & 0 & 0\\
+& !1 & 182 & 1615\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 2 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a5} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 2 & !2\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 2 & 3 & 128\\
+& !2 & 174 & 1492\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 3 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a6} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 3 & !3\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 3 & 2 & 131\\
+& !3 & 181 & 1483\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 4 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a7} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 4 & !4\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 4 & 1 & 152\\
+& !4 & 180 & 1464\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 5 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a8} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 5 & !5\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 5 & 0 & 187\\
+& !5 & 182 & 1428\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 6 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a9} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 6 & !6\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 6 & 173 & 8\\
+& !6 & 8 & 1608\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 7 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a10} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 7 & !7\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 7 & 2 & 336\\
+& !7 & 177 & 1282\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 8 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a11} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 8 & !8\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 8 & 5 & 382\\
+& !8 & 169 & 1295\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 9 using the 'best centers' k-means classifier from Experiment 1 as applied to the OptDigits test dataset.} 
+  \label{tab:a12} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 9 & !9\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 9 & 0 & 155\\
+& !9 & 180 & 1462\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\subsection{Experiment 2: Results}
+The results of Experiment 2 (k=30 clusters) are presented in Table~\ref{tab:b1} through Table~\ref{tab:b12}. The accuracy was determined as 51.53\% (= 84+100+59+112+76+100+92+108+116+79)/1797). As shown in Table~\ref{tab:b1}, the fourth random center cluster ('rcc4') again had the minimum SSE and maximum entropy and was selected to generate the 'best centers' for Experiment 2. Again, a confusion matrix was generated for each class to better detail classifier performance.
+
+\begin{table} \centering 
+  \caption{The SSE, sum-squared separation, and entropy for k-means classification (k=30) on the OptDigits training dataset.} 
+  \label{tab:b1} 
+\begin{tabular}{lccc} \\
+[-1.8ex] \hline \hline \\[-1.8ex] 
+ Initialization &&& \\ 
+ (random cluster centers) & SSE & Sum-squared separation & Entropy\\
+\hline \\[-1.8ex]
+rcc1 & 2209306 & 1698804 & 4.04929\\
+rcc2 & 2438089 & 1272426 & 3.21328\\
+rcc3 & 2121108 & 1713960 & 3.97819\\
+rcc4 & 2012952 & 1692684 & 4.42242\\
+rcc5 & 2585148 & 1267474 & 3.12321\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table} \centering 
+  \caption{The assignment of cluster center labels from the best run of Experiment 2 (using rcc4) to the most frequent class they contain.} 
+  \label{tab:b2} 
+\begin{tabular}{lc} \\
+[-1.8ex] \hline \hline \\[-1.8ex] 
+ Cluster Center & Most Freq. Class \\ 
+ \hline \\[-1.8ex]
+13 & 0\\
+9 & 1\\
+7 & 2\\
+27 & 3\\
+19 & 4\\
+0 & 5\\
+26 & 6 \\
+23 & 7\\
+10 & 8\\
+20 & 9\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 0 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b3} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 0 & !0\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 0 & 84 & 0\\
+& !0 & 94 & 1619\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 1 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b4} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 1 & !1\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 1 & 100 & 23\\
+& !1 & 82 & 1592\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 2 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b5} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 2 & !2\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 2 & 59 & 20\\
+& !2 & 118 & 1600\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 3 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b6} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 3 & !3\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 3 & 112 & 3\\
+& !3 & 71 & 1611\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\clearpage	%add if "too many unprocessed floats"error
+\begin{table} \centering 
+  \caption{The confusion matrix for Class = 4 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b7} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 4 & !4\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 4 & 76 & 2\\
+& !4 & 105 & 1614\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table}[!htbp] \centering 
+  \caption{The confusion matrix for Class = 5 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b8} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 5 & !5\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 5 & 100 & 3\\
+& !5 & 82 & 1612\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table}[!htbp] \centering 
+  \caption{The confusion matrix for Class = 6 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b9} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 6 & !6\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 6 & 92 & 0\\
+& !6 & 89 & 1616\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table}[!htbp] \centering 
+  \caption{The confusion matrix for Class = 7 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b10} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 7 & !7\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 7 & 108 & 12\\
+& !7 & 71 & 1606\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table}[!htbp] \centering 
+  \caption{The confusion matrix for Class = 8 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b11} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 8 & !8\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 8 & 116 & 14\\
+& !8 & 58 & 1609\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+
+\begin{table}[!htbp] \centering 
+  \caption{The confusion matrix for Class = 9 using the 'best centers' k-means classifier from Experiment 2 as applied to the OptDigits test dataset.} 
+  \label{tab:b12} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & 9 & !9\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & 9 & 79 & 21\\
+& !9 & 101 & 1596\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\subsection{Discussion}
+The accuracy certainly improved with k=30 clusters although it is still far short of the results reported by the authors of the OptDigit dataset (~90\%). This is most likely to the random selection for all starting clusters rather than a pre-selected set of initial clusters. Interestingly, the top two digits correctly classified differed between Experiment 1 and Experiment 2. In the first experiment, digits "0"and "6" were recognized with very high frequency (176/178 and 173/181, respectively) while in the second experiment, "8" and "3" were recognized with medium frequency (116/174 and 112/183, respectively).\\
+
+All of the 'best center' clusters were translated to 8x8 bitmaps (.pmg files; Exp1Graphics and Exp2Graphics folders). Visualizing these images shows that many do resemble the digits being classified, as for example, 'best center' cluster 0 from Experiment 1 (Figure~\ref{fig:a1}) and "best center" cluster 8 from Experiment 2 (Figure~\ref{fig:a2} ). Others appear strange, as for example, "best center" cluster 5 from Experiment 1 (Figure~\ref{fig:a3} )and "best center" cluster 7 from Experiment 2 (Figure~\ref{fig:a4} ).
+
+\begin{figure}
+   	\begin{center}
+   		\includegraphics[scale=0.5]{Screenshot_Exp1dig0}
+   		\caption{'Best center' cluster 0 from Experiment 1. This centroid had good success in correctly identifying the digit, "0" from the OptDigits training dataset. }
+   		\label{fig:a1}
+   	\end{center}
+   \end{figure}
+   
+\begin{figure}
+   	\begin{center}
+   		\includegraphics[scale=0.5]{Screenshot_Exp2dig10}
+   		\caption{'Best center' cluster 10 from Experiment 2. This centroid had good success in correctly identifying the digit, "8" from the OptDigits training dataset.}
+   		\label{fig:a2}
+   	\end{center}
+   \end{figure} 
+   
+ 
+\begin{figure}
+   	\begin{center}
+   		\includegraphics[scale=0.5]{Screenshot_Exp1dig5}
+   		\caption{'Best center' cluster 5 from Experiment 1. This centroid had poor success in correctly identifying the digit, "4" from the OptDigits training dataset. }
+   		\label{fig:a3}
+   	\end{center}
+   \end{figure}   
+
+\begin{figure}  
+	\begin{center}
+  	 \includegraphics[scale=0.5]{Screenshot_Exp2dig7}
+   		\caption{'Best center' cluster 7 from Experiment 2. This centroid had poor success in correctly identifying the digit, "2" from the OptDigits training dataset.}
+   		\label{fig:a4}
+   	\end{center}
+   \end{figure}
+
+
+      
+
+\subsection{Conclusions}
+Despite its limitations (sensitivity to initial cluster selection; sensitivity to outliers; lack of rigorous methods for selection of the number of clusters; local optimization) this algorithm appears to be very useful for general sorting purposes, especially on new datasets that lack well-defined priors.
+
+
+%\renewcommand{\refname}{\normalfont\selectfont\small \textbf{References}} 
+%\bibliographystyle{/usr/local/share/texmf/tex/latex/apacite/apacite}
+%\bibliography{/home/bmarron//Desktop/BibTex/2016SoE009}
+
+\end{document}

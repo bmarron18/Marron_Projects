@@ -1,0 +1,170 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Paper
+% SYSC505_R&C: Scientific Inference
+% (2016SoE012)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{apacite}
+\usepackage[english]{babel}
+\usepackage{comment}
+\usepackage{multirow}
+\usepackage[all]{nowidow}
+\usepackage{longtable}
+\usepackage{etoolbox}
+\setlength{\LTcapwidth}{=6.95in} %longtable caption width goes the full textwidth 
+\usepackage{csquotes}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
+\tikzset{
+    events/.style={ellipse, draw, align=right},
+}
+
+% paragraph indent, if needed
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+% bigger more balanced num and denom in fractions
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+
+% Margins
+\topmargin= -0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.95in
+\textheight=9.0in
+\headsep=0.15in %distance between header and text
+
+\linespread{1.5} % Line spacing
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{} % Top left header
+\chead{} % Top center header
+\rhead{} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+%\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setcounter{secnumdepth}{0} % Removes default section numbers
+
+   
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkClass}{Reading and Conference (SYSC 505), Portland State University, Winter 2016} % Course/class
+\newcommand{\hmwkTitle}{Scientific Inference in the Eyes of Sir Harold Jeffereys} % Assignment title
+\newcommand{\hmwkAuthorName}{Bruce Marron} % Your name
+\newcommand{\hmwkClassInstructor}{Wakeland} % Teacher/lecturer
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkTitle}}\\
+\textit{\normalsize \hmwkClass}
+\vspace{3in}
+}
+\author{\textbf{\hmwkAuthorName}}
+% \date{25 March 2016} % Insert date here; appears below name
+
+
+%----------------------------------------
+%	BEGIN DOC
+%----------------------------------------
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\clearpage\maketitle
+
+\subsubsection{The Problem of Induction and Inference}
+The central question here is: When, if ever, is it possible for science to successfully generalize from experience thereby creating empirical knowledge? Put another way, Is it possible to make valid scientific inferences using induction? The term \enquote*{empirical knowledge} in this context means the creation of hypotheses (natural laws) from which true predictions can be made. And the term \enquote*{inductive logic} is typically applied to the entire process from observation through generalization to hypothesis although the modern treatment of induction is more complicated \cite{vickers_problem_2016}. Whether or not science actually produces knowledge by inductivism is an old debate reaching back at least to David Hume's indictment (1739) of Francis Bacon's \textit{Novum Organum Scientiarum} (1620).\\
+
+Today, it appears that inductive inference is generally accepted in scientific work without much reflection. Not that this is necessarily an unhelpful or difficult philosophical stance because,
+\begin{myindentpar}{3em}
+Deductive inference can never support contingent judgments such as meteorological forecasts, nor can deduction alone explain the breakdown of one's car, discover the genotype of a new virus, or reconstruct fourteenth century trade routes. Inductive inference can do these things more or less successfully because, in Peirce's phrase, inductions are ampliative. Induction can amplify and generalize our experience, broaden and deepen our empirical knowledge. Deduction on the other hand is explicative. Deduction orders and rearranges our knowledge without adding to its content \cite{vickers_problem_2016}.
+\end{myindentpar}
+
+In fact, in virtually all fields of inquiry modern inductive inference is taken to be the application of the statistical, survey design, and experimental design algorithms of the Fischer-Neyman-Pearson school. The outputs from these algorithms are then used as the support structures for investigative conclusions. But such standard mechanisms of statistical inference are but one of three options to the solution of induction and inference for the modern researcher, the second being Popper's falsification (the hypothetico-deductive method) and the third being Bayesian updating.\\
+
+This paper examines the essentials of the solution to the problem of induction and inference as recommended by Sir Harold Jeffreys (1891-1989), Plumian Professor of Astronomy and Experimental Philosophy in the University of Cambridge. A genteel mathematician, statistician, geophysicist, and astronomer, Sir Harold is considered a founding member of the Bayesian camp of inference. The evolution to the now-considered standard statistical approach to inference (i.e., Fischer-Neyman-Pearson statistics) may well be due to the differences in the personalities of Sir Harold Jeffreys and Sir Ronald Fischer, rather than any inherent gain in inductive power from the standard approach. \citeA{jaynes_probability_2003} have argued that the Bayesian approach, probability theory as the logic of science, permits a much broader and more useful approach to inference, although as falsificationism repeatedly points out, both the standard and the Bayesian approach to induction ultimately suffer from being unable to sort good inductive inferences from bad \cite{miller_critical_1994}.
+
+\subsubsection{The Nature of Scientific Inference}
+A scientific inference is here defined as \underline{any} statement (summary, hypothesis, law, proposition, or conclusion) that is made beyond the observable and recorded data. Under Jeffreys, scientific inference is conceptually quite simple: from the observations, state the inferences in the simplest, most general form possible \enquote{and modify them as later experience dictates}. According to Jeffreys \enquote{not only is this process free from self-contradiction, but ... it is the only method possible}\cite[p.~14]{jeffreys_scientific_1973}. \citeA{jaynes_probability_2003} provide a typology of inductive inference using the weaker syllogisms (If A is true then B is true. (1) B is true therefore A is more plausible; (2) A is false therefore B is less plausible.) And Carnap has provided a taxonomy of the varieties of inductive inference (direct inference, predictive inference, inference by analogy, inverse inference, universal inference)\cite{vickers_problem_2016}.\\
+
+A scientific inference defines a logical relation or connection between the data and the statement of inference. The nature of this logical relation needs careful attention because it is here, in the first step of inference making that the potential for grave mental error creeps in. Specifically, the logical relation or connection is not deductive nor is it necessarily causal. A logical relation or connection is an inference that can propagate equally well either forwards or backwards in time. A causal inference, however, propagates only forwards. Given this framing, it is very clear that scientific inference reflects only probabilistic states of knowledge about reality in the mind of the scientist. Such states of knowledge ultimately may come to be understood as causal relations in light of evidence \cite[p.~5, 62, 92]{jaynes_probability_2003}. The potential mental error is natural because logical and causal inferences are easily conflated. For example, my measurements and evaluations of this year's almond crop may provide some logical inference regarding this year's cherry crop but there is no causal link between the almond and cherry crops. Similarly, the condensed summary provided by a data curve-fitting exercise neither dictates causality nor creates a scientific inference: pickle sales may show a lovely linear relationship to divorce rates but a causal relationship is unlikely, and an empirical equation generated from time vs. displacement data cannot be used to assert (predict) displacement at any future time. Conversely, archeology, geology, and paleontology are only made possible because recent discovery can completely overturn what was believed to have transpired eons ago. And old datasets may be completely re-interpreted in light of new logical relationships.\\
+
+\subsubsection{Probability Theory as the Engine of Scientific Inference}
+For Jeffreys, scientific inference is realized with probability theory, the calculus of inductive reasoning. Explicitly,
+\begin{myindentpar}{3em}
+Our fundamental hypothesis is that degrees of confirmation of different propositions, on the same data, can be put in order, that our fundamental type of comparison is of the form \enquote*{on data \textit{p}, \textit{q} is more probable than \textit{r}} \cite[p.~25]{jeffreys_scientific_1973}.
+\end{myindentpar}
+Jeffreys argues that the relation between a dataset and a statement of inference is in fact probability. Alternatively, probability is here defined as multi-valued logic and not in any way related to the frequencies in \enquote*{random experiments}. The idea is that probability is a form of propositional logic that expresses degrees of reasonable belief and thus provides the appropriate scale between deductive proof and deductive disproof (falsification). Restating Carnap's three axioms as the logical foundations of probability, Jeffreys derives the basic sum and product rules and makes two very important points regarding the use of probability theory as the engine of scientific inference. First, the data used for scientific inference must not be self-contradictory. A self-contradiction assumes impossible conditions which, for Jeffreys, means that there has been a poor translation or an incorrect framing of a scientific question. Second, it is crucial to recognize \enquote{that \enquote*{\textit{q} has probability 0 given \textit{p}} is not the same thing as \enquote*{\textit{p} entails $\sim $ \textit{q}}. (\textit{p} entails $ \sim $ \textit{q}) entails P(\textit{q} $\lvert $ \textit{p}) = 0; the converse is not true}\cite[p.~30]{jeffreys_scientific_1973}.\\
+
+This second point seems a bit tricky. It proposes to differentiate between verified Truth and verisimilitude in the context of scientific practice and may be related to Jeffreys' notion of causality in science. Jeffreys is quite harsh with causality. He denies the determinism that follows from the so-called \enquote*{Principle of Causality} or \enquote*{Uniformity of Nature} because even in its mildest form (the invariable succession of events) \enquote{we do not know of any particular succession that it will always be invariable and we need also to deal with successions that have not been so}\cite[p.~203]{jeffreys_scientific_1973}. Again, Jeffreys own words are best,
+\begin{myindentpar}{3em}
+The argument in this book completely reverses the usual notion of causality. This started with some idea of inherent necessity. After Mach it was replaced by invariable succession, but in fact invariable succession is rare. We now see that science starts with the fact that variation exists and proceeds by first considering the hypothesis that it is random and detecting in succession departures from randomness \cite[p.~262]{jeffreys_scientific_1973}.
+\end{myindentpar}
+and
+\begin{myindentpar}{3em}
+On the present view the classical view of causality is inverted. Instead of saying that every event has a cause, we recognize that observations vary and regard scientific method as a procedure for analysing the variation. Our starting point is to consider all variation as random; then successive significance tests warrant the treatment of more and more of it as predictable, and we explicitly regard the method as one of successive approximation.\cite[p.~81]{jeffreys_scientific_1973}.
+\end{myindentpar}
+Clearly, Jeffreys advocates for scientific progress as ever-better approximations to Truth and in so doing, implies that the goal of scientific inference is to identify and verify potential causal relations by forming a judgment about the likely truth or falsity of a statement (summary, hypothesis, law, proposition, or conclusion) given all of the evidence at hand. This subsequently implies that successful identification and verification of causal relations is directly proportional to successful predictions, or put another way, predictability entails causality.\\
+
+Enter Bayes Theorem or as Jeffreys calls it, the principle of inverse probability. Jeffreys cites four special cases where \enquote{we can see its relation to scientific inference at once} \cite[p.~31]{jeffreys_scientific_1973}. Of note is the special case of the \enquote*{crucial test}. Given \textit{p} is all of the background information (including previously obtained datasets) that forms the basis for generating hypotheses, $ \theta $ is an additional dataset, and $ q_{1}, q_{2}, q_{3}, \dots q_{n}$ is a set of exclusive and exhaustive hypotheses, Bayes provides,
+\begin{equation*}
+P(q_{r}\lvert \theta \cdot p) = \ddfrac{P(q_{r}\lvert p)P(\theta\lvert q_{r} \cdot p)}{\sum_{r=1}^{r=n}P(q_{r}\lvert p)P(\theta\lvert q_{r} \cdot p)}
+\end{equation*}
+or equivalently,
+\begin{equation*}
+Posterior \ probability = \ddfrac{Prior \ probability \ x \ Likelihood}{Evidence}
+\end{equation*}
+The crucial test is such that if the prior probabilities of all of the $ q_{r}$ are comparable, and $ \theta $ has small probability on all of the hypotheses except for a large probability on one of them, say on $ q_1 $, then the posterior probability of this one hypothesis ($ q_1 $) may be very close to one. We would judge this hypothesis to be very likely true. If, on the other hand, the posterior probability of $ q_1 $ was close to 0.5, there would not be sufficient evidence to either confirm or reject the hypothesis and more evidence would be called for.
+
+\subsubsection{A Postulate, a Theorem, and a Problem}
+Jeffreys supplements the use of probability theory for scientific inference with a postulate and a theorem and then considers the problem of prior probabilities. Jeffreys' simplicity postulate is this: \enquote {the set of all possible forms of scientific laws is finite and enumerable and their initial (prior) probabilities form the terms of a convergent series of sum 1}. This postulate effectively translates to the idea that simpler statements are more probable in the absence of observational evidence; conversely, complexity decreases a statement's prior probability.\\
+
+His theorem, derived from Bayes, suggests that researchers should look for opportunities to make highly precise inferences (as predictions) because \enquote{the further we get from the original data the more informative a verification is}\cite[p.~40]{jeffreys_scientific_1973}.\\
+
+Finally, Jeffreys acknowledges the problem of priors. The main arguments against the use of prior (initial) probabilities are that they are arbitrary and inconsistent. Jeffreys answers these criticisms first, by saying that true, priors can be assigned consistently in many different ways. What is required only is that all assigned priors have positive probability on the background information. Thus, arbitrary means only the option of multiple, consistent assignments.
+
+Second, Jeffreys states that priors are necessary because they are fundamental to the logical construct of the calculus of inductive reasoning. Any logical system must have a starting point. Here, the starting point requires scientists to face the question, what were the probabilities of your hypotheses before you had any observational data at all? Or equally, what is your reasonable belief concerning your hypotheses based on your background information?
+
+
+
+\subsection{Conclusions}
+
+Science is a method of successive approximations. \enquote{What is hardly ever mentioned is that induction has often failed in the past but progress in science is very largely the consequence of direct attention to instances where the inductive method has led to incorrect predictions.}\cite[p.~14]{jeffreys_scientific_1973}.
+
+
+
+\renewcommand{\refname}{\normalfont\selectfont\small \textbf{References}} 
+\bibliographystyle{/usr/local/share/texmf/tex/latex/apacite/apacite}
+\bibliography{/home/bmarron//Desktop/BibTex/My_Library20160321}
+
+\end{document}

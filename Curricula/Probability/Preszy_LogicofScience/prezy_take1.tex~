@@ -1,0 +1,284 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2016SoE022
+% Science Communication
+% Portland State University
+% Fall 2016
+% Careful with directory holding graphics (see Line 201!!)
+% slides begin line 207
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+% The class {scrartcl} pro­vides the “ar­ti­cle”-like el­e­ment of the koma-script col­lec­tion.
+% The doc­u­ment lay­out of the class is less ‘stri­dent’ than that of ar­ti­cle, and it of­fers 
+% much more flex­i­bil­ity than ar­ti­cle via other el­e­ments of the koma-script col­lec­tion. 
+% https://www.ctan.org/pkg/scrartcl?lang=en
+% https://www.ctan.org/topic/class
+\documentclass[
+paper=128mm:96mm, % The same paper size as used in the beamer class
+fontsize=11pt, % Font size
+pagesize, % Write page size to dvi or pdf
+parskip=half-, % Paragraphs separated by half a line
+]{scrartcl} 
+
+\linespread{1.12} % Increase line spacing for readability
+
+%--------- Required packages
+\usepackage{xcolor}	 % Required for custom colors
+% Define a few colors for making text stand out within the presentation
+% Use these colors within the presentation by enclosing text in the commands below
+\definecolor{mygreen}{RGB}{44,85,17}
+\definecolor{myblue}{RGB}{34,31,217}
+\definecolor{mybrown}{RGB}{194,164,113}
+\definecolor{myred}{RGB}{255,66,56}
+\newcommand*{\mygreen}[1]{\textcolor{mygreen}{#1}}
+\newcommand*{\myblue}[1]{\textcolor{myblue}{#1}}
+\newcommand*{\mybrown}[1]{\textcolor{mybrown}{#1}}
+\newcommand*{\myred}[1]{\textcolor{myred}{#1}}
+\usepackage[includeheadfoot,
+top=3.5mm,
+bottom=3.5mm,
+left=5.5mm,
+right=5.5mm,
+headsep=6.5mm,
+footskip=8.5mm
+]{geometry} % Page margins settings
+
+\usepackage[T1]{fontenc}	 % Fonts, for correct hyphenation and T1 encoding
+\usepackage{lmodern}         % Default font: latin modern font
+	%\usepackage{fourier} % Alternative font: utopia
+	%\usepackage{charter} % Alternative font: low-resolution roman font
+\renewcommand{\familydefault}{\sfdefault} % Sans serif - this may need to be commented to see the alternative fonts
+\usepackage{amsmath}
+\usepackage{amsthm} % Required for theorem environments
+\usepackage{bm} % Required for bold math symbols (used in the footer of the slides)
+\usepackage{graphicx} % Required for including images in figures
+\usepackage{booktabs} % Required for horizontal rules in tables
+\usepackage{multicol} % Required for creating multiple columns in slides
+\setlength{\columnsep}{0.1mm}
+\usepackage{lastpage} % For printing the total number of pages at the bottom of each slide
+\usepackage[english]{babel} % Document language - required for customizing section titles
+\usepackage{microtype} % Better typography
+\usepackage{tocstyle} % Required for customizing the table of contents
+\usepackage{caption}
+\captionsetup{labelformat=empty,labelsep=none}
+\usepackage{mathtools}
+\usepackage{subcaption}
+\usepackage{nicefrac}
+\usepackage{csquotes}
+\usepackage{enumitem}	%spread enumeration over multiple slides
+\usepackage{pdfpages}
+\usepackage{tikz}  
+\usepackage[absolute, overlay]{textpos} %position textblocks (absolute) on the page
+\setlength{\TPHorizModule}{\textwidth}
+\setlength{\TPVertModule}{\textwidth}
+\usepackage{scrpage2} % Slide layout configuration; Required for customization of the header and footer
+\pagestyle{scrheadings} % Activates the pagestyle from scrpage2 for custom headers and footers
+\clearscrheadfoot % Remove the default header and footer
+\setkomafont{pageheadfoot}{\normalfont\color{black}\sffamily} % Font settings for the header and footer
+\usepackage{titlesec} % Required for customizing section spacing; deeper section titles are given less space due to lesser importance
+\titlespacing{\section}{0mm}{0mm}{0mm} % Lengths are: left, before, after
+\titlespacing{\subsection}{0mm}{0mm}{-1mm} % Lengths are: left, before, after
+\titlespacing{\subsubsection}{0mm}{0mm}{-2mm} % Lengths are: left, before, after
+\setcounter{secnumdepth}{0} % How deep sections are numbered, set to no numbering by default - change to 1 for numbering sections, 2 for numbering sections and subsections, etc
+
+% Presentation mode (uncomment for full screen)
+%\usepackage{hyperref} 
+%\hypersetup{pdfpagemode=FullScreen}
+
+
+
+%---------- Sets vertical centering of slide contents with increased space between paragraphs/lists
+\makeatletter
+\renewcommand*{\@textbottom}{\vskip \z@ \@plus 1fil}
+\newcommand*{\@texttop}{\vskip \z@ \@plus .5fil}
+\addtolength{\parskip}{\z@\@plus .25fil}
+\makeatother
+
+%----------- Remove page numbers and the dots leading to them from the outline slide
+\makeatletter
+\newtocstyle[noonewithdot]{nodotnopagenumber}{\settocfeature{pagenumberbox}{\@gobble}}
+\makeatother
+\usetocstyle{nodotnopagenumber}
+
+%-------- Change the name of the table of contents
+\AtBeginDocument{\renewcaptionname{english}{\contentsname}{\Large Outline}} 
+
+
+%---------- Header configuration
+\ihead{
+\hspace{-2mm}
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=\paperwidth/2,yshift=-\headheight] (mybar) at (current page.north west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=2\headheight,top color=mygreen!64,bottom color=mygreen]{}; % Colored bar
+\node[below of=mybar,yshift=3.3mm,rectangle,shade,inner sep=0pt,minimum width=128mm,minimum height =1.5mm,top color=black!50,bottom color=white]{}; % Shadow under the colored bar
+shadow
+\end{tikzpicture}
+\color{white}\runninghead} % Header text defined by the \runninghead command below and colored white for contrast
+
+%------------- Footer configuration ----------------------------------------------
+	%\newlength{\footheight}
+\setlength{\footheight}{8mm} % Height of the footer
+\addtokomafont{pagefoot}{\footnotesize} % Small font size for the footnote
+% Left side footer
+\ifoot{
+\hspace{-2mm}
+\begin{tikzpicture}[remember picture,overlay]
+\node [xshift=\paperwidth/2,yshift=\footheight] at (current page.south west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=3pt,top color=mygreen,bottom color=mygreen]{}; % Green bar
+\end{tikzpicture}
+\vspace{-3.5 mm}
+\myuni % Left side text w/o author or vertical line
+%\myauthor\ {$\bm{\vert}$}\ \myuni % Left side text w/ author and vertical line separator
+%\myauthor\ \raisebox{-0.5mm}{$\bm{\vert}$}\ \myuni % Left side text
+}
+% Right side footer
+\ofoot[\pagemark/\pageref{LastPage}\hspace{-2mm}]{\pagemark/\pageref{LastPage}\hspace{-2mm}} 
+
+
+
+%----------- Specialty new commands ---------------------------------------------------
+% Paragraph indent
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+     
+% Theorem style
+\newtheoremstyle{mythmstyle} % Defines a new theorem style used in this template
+{0.5em} % Space above
+{0.5em} % Space below
+{} % Body font
+{} % Indent amount
+{\sffamily\bfseries} % Head font
+{} % Punctuation after head
+{\newline} % Space after head
+{\thmname{#1}\ \thmnote{(#3)}} % Head spec
+	
+\theoremstyle{mythmstyle} % Change the default style of the theorem to the one defined above
+\newtheorem{theorem}{Theorem}[section] % Label for theorems
+\newtheorem{remark}[theorem]{Remark} % Label for remarks
+\newtheorem{algorithm}[theorem]{Algorithm} % Label for algorithms
+\makeatletter % Correct qed adjustment
+
+
+% The code for the box which can be used to highlight an element of a slide (such as a theorem)
+\newcommand*{\mybox}[2]{ % The box takes two arguments: width and content
+\par\noindent
+\begin{tikzpicture}[mynodestyle/.style={rectangle,draw=mygreen,thick,inner sep=2mm,text justified,top color=white,bottom color=white,above}]
+\node[mynodestyle,at={(0.5*#1+2mm+0.4pt,0)}]{ % Box formatting
+\begin{minipage}[t]{#1}
+#2
+\end{minipage}
+};
+\end{tikzpicture}
+\par\vspace{-1.3em}}
+
+% Arrow over vector
+\newcommand{\amsvect}{%
+  \mathpalette {\overarrow@\vectfill@}}
+\def\vectfill@{\arrowfill@\relbar\relbar{\raisebox{-3.81pt}[\p@][\p@]{$\mathord\mathchar"017E$}}}
+
+% Nice-looking fractions
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION INFORMATION
+%----------------------------------------------------------------------------------------
+% Title
+\newcommand*{\mytitle}{Do large cities spawn thunderstorms?}
+
+% Running head displayed on almost all slides
+\newcommand*{\runninghead}{Cities and thunderstorms}
+
+% Presenters name(s)
+\newcommand*{\myauthor}{Bruce Marron} 
+
+% Presentation date
+\newcommand*{\mydate}{18 Oct 2016} 
+
+% University or department
+\newcommand*{\myuni}{\includegraphics[scale=.30]{graphics/psulogo_horiz_msword.eps}} 
+
+
+
+%#############
+%SLIDES
+%#############
+\begin{document}
+
+%slide1 (Title slide) ------------------------------------------------------------
+\thispagestyle{empty} % No slide header and footer
+
+\begin{tikzpicture}[remember picture,overlay] % Background box
+	%\node [xshift=\paperwidth/2,yshift=\paperheight/2] at (current page.south west)[rectangle,fill,inner
+\node [xshift=\paperwidth/2,yshift=7 cm] at (current page.south west)[rectangle,fill,inner sep=0pt,minimum width=\paperwidth,minimum height=\paperheight/3,top color=mygreen,bottom color=mygreen]{};
+\end{tikzpicture}
+
+% Text within the tikz box
+\begin{flushright}
+\vspace{-2.7cm}
+\color{white}
+\sffamily{\bfseries\normalsize\mytitle\par} % Title
+\vspace{.1cm}
+\normalsize
+\myauthor\par % Author name
+\vspace{-.3cm}
+\mydate\par % Date
+%\vfill
+\end{flushright}
+ \hspace*{2cm}
+ \vspace*{-2cm}
+ 
+ 
+\clearpage
+
+%slide2----------------------------------------------------------
+
+
+\begin{tikzpicture}[overlay]
+  \node[anchor=south west] at (0.5,-5.5) {\includegraphics[scale=.45]{graphics/lightning1.jpeg}};  
+ \end{tikzpicture}
+ 
+ \begin{textblock}{1}(.625,.2)
+  \scriptsize {Can cityscapes \textbf{influence} weather?\\
+  Can cityscapes \textbf{generate} weather? \\
+  Can cityscapes \textbf{cause} thunderstorms?
+  }
+ \end{textblock}
+
+\clearpage
+
+
+%slide3----------------------------------------------------------
+
+
+\begin{tikzpicture}[overlay]
+  \node[anchor=south west] at (0.5,-5.5) {\includegraphics[scale=.45]{graphics/lightning1.jpeg}};  
+ \end{tikzpicture}
+ 
+ \begin{textblock}{1}(.625,.2)
+  \scriptsize {Can cityscapes \textbf{influence} weather?\\
+  \bigskip
+  Can cityscapes \textbf{generate} weather? \\
+  What factors of cityscapes might \\ 
+  \bigskip
+  \textbf{correlate} with weather?\\ 
+  
+  What data should be collected to evaluate \\
+  the possibility of \textbf{causation}? 
+  }
+ \end{textblock}
+
+\clearpage
+
+
+\end{document}
+
+
+
+
+
+

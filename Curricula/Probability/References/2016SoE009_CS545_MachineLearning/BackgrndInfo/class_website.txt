@@ -1,0 +1,25 @@
+Title:			Machine Learning Website 
+Project Descriptor:	
+Project ID:		
+Record:		
+Author:			bmarron
+Origin Date:		26 Apr 2016
+
+
+Mealnie's website
+http://web.cecs.pdx.edu/~mm/MachineLearningWinter2016/
+
+
+http://neuralnetworksanddeeplearning.com/chap2.html
+http://svmlight.joachims.org/
+
+
+Data Science...
+Cosma Shalizi’s textbook
+http://stat.cmu.edu/~cshalizi/ADAfaEPoV
+(and his blog)
+bactra.org/weblog/
+
+Trey Causey’s blog
+treycausey.com
+https://stat.cmu.edu/~cshalizi/ADAfaEPoV/

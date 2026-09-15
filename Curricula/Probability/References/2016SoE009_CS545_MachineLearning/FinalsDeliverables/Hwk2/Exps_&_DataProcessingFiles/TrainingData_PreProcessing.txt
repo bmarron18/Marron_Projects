@@ -1,0 +1,124 @@
+Title:			Training Data PreProcessing in Linux, Python, and R
+Project Descriptor:	Letter Recognition with 3-Layer NN
+Project ID:		CS545 MachineLearning (2016SoE009)
+Prepared by:		bmarron
+Original Date:		23 Jan 2016
+
+
+#######################
+Raw Data PreProcessing:
+Training Data
+#######################
+
+==== in Linux =================================================
+
+
+---- selection of training datasets ----------------------------------
+			#select lines 1 - 10000 for the training set
+awk 'NR < 10001' ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk1/letter_recog_data.txt >> ~/Desktop/training_data.txt
+
+
+			#select all fields except the first field (for subsequent standardization of data)
+			# -d marks the field separator
+cut -d',' --complement -s -f1 ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/training_data_raw.txt >> ~/Desktop/tr_d_noletters.txt
+
+
+
+
+==== in Python =========================================
+
+---- Data PreProcessing1: The target data ----------------
+#set the targets for the training data:
+#(1) define an array of all 0.1 then switch to 0.9 sequentially
+
+targets = np.asarray([[0.1]*26 for _ in range(26)])
+for i in range(26):
+    targets[i][i]=0.9
+    
+
+#(2) define a set of uppercase letters as a set
+
+letters=list(string.ascii_uppercase)
+s = set(letters)
+
+
+#(3) add header (1-17) to training_data_raw.txt and save as tr_d_header.txt;
+#import into Python ("Import data" in Spyder) as a DATAFRAME
+#populate the tr_d targets array by comparing each letter of each row
+#in the test set with the set of uppercase letters using its index;
+#match the index to the targets array and append to the tr_d_targets array
+
+tr_d_targets =[]
+for i in range(10000):
+    match=[x for x in tr_d_headertxt.ix[i:i,0:1].values[0] if x in s]
+    tr_d_targets.append(targets[letters.index(match[0])])
+
+	#convert the list to numpy array
+	#tr_d_targets is (10000,26)
+tr_d_targets=np.asarray(tr_d_targets)
+
+
+
+#(4) change each entry to (16,1) ==> tr_d_targets (10000,16,1)
+
+tr_d_targets= np.reshape(tr_d_targets, (10000,26,1))
+
+
+#(5) save the output
+
+with open("tr_d_targets.pkl", 'wb') as f:
+    cPickle.dump(tr_d_targets, f, protocol=2)
+
+
+---- Data PreProcessing2: The input data ---------------------------------------
+#(1)import standardized data (from R processing below) as ARRAY using Spyder import fxn ==> tr_d_standardizedtxt (10000,16)
+#(2) change each entry to (16,1) ==> tr_d_standardizedtxt (10000,16,1)
+
+tr_d_standardizedtxt= np.reshape(tr_d_standardizedtxt, (10000,16,1))
+
+
+#(3) save the output
+
+with open("tr_d_standardizedtxt.pkl", 'wb') as f:
+    cPickle.dump(tr_d_targets, f, protocol=2)
+
+
+
+
+---- Data Preprocessing3: The array of training data (inputs + targets) ----------
+
+    #(1) import tr_d_standardizedtxt.pkl
+    #(2) import tr_d_targets.pkl
+
+tr_d_targets=cPickle.load(open("/home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/tr_d_targets.pkl","rb"))
+tr_d_standardizedtxt=cPickle.load(open("/home/bmarron/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/Processed/tr_d_standardizedtxt.pkl","rb"))
+
+    #(3) create duples of training data and targets
+    #into a single array
+tr_d = zip(tr_d_standardizedtxt, tr_d_targets)
+
+    #(4) save the output
+with open("tr_d.pkl", 'wb') as f:
+    cPickle.dump(tr_d, f, protocol=2)
+
+
+
+==== in R ============================================
+
+---- means ---------------------------------------
+training_data_noletters <- read.csv("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_work_inprogress/Hwk2/DataFiles/training_data_noletters.txt", header=FALSE, stringsAsFactors=FALSE)
+
+tr_means <- colMeans(training_data_noletters)
+write.csv(tr_means, file = "tr_means.txt", row.names = FALSE, col.names = FALSE)
+
+
+---- std devs --------------------------------------------------------------------------
+M <- as.matrix(training_data_noletters)
+tr_sds <- apply(M, 2, sd)
+write.csv(tr_sds, file = "tr_sds.txt", row.names = FALSE, sep = ",", col.names = FALSE)
+
+
+---- standardize data (per column) with zero mean and unit variance ---------------------
+training_data_noletters <- scale(training_data_noletters)
+write.csv(round(training_data_noletters, 3), file = "training_data_standardized.txt", row.names = FALSE, sep = ",", col.names = TRUE)
+

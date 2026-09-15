@@ -1,0 +1,240 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Title:				Outlook .pst to .csv; import .csv MailingLists
+Program:			OCVRP
+Creation Date:		12 Dec 2018
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+The following algorithm will produce a variety of Outlook email dumps: .pst files, .txt and .csv files with data extracted from .pst files
+
+
+#####################
+Create a .pst 
+.pst ==> .csv 
+#####################
+
+------- Create Outlook .pst dump -----------------------------------------------
+
+in search box
+received: <2019/7/1
+
+
+1a. Sort email with a date range
+click in search field to get Search Tools/Search tab:
+Search ==> Search Tools ==> Advanced Find ==> Advanced ==> Define More Criteria
+
+Set field:
+Field ==> Date/Time fields ==> Received (etc)
+
+Set condition:
+Received Today
+Received Yesterday
+Received in the Last 7 days
+.....
+between ==> Value: <2018/01/29> and <2019/01/31>
+
+Grab emails that meet condition:
+Add to List ==> Find Now
+
+1b.  Delete non-relevant emails
+
+1c.  Select all remaining emails:
+Ctrl+A
+
+
+1d.  TEMPORARILY move emails to:
+Marron.Bruce@deq.state.or.us ==> OCVRP_TempEmailDump
+
+
+2a. Open "OCVRP_TempEmailDump" folder and export as .pst file; save on Desktop
+
+	File ==> Open&Export ==> Import/Export ==> Import/Export Wizard ==> Export to File
+	==> Outlook Data File (.pst)
+	
+		a. Select folder to process
+		b. Select directory for .pst
+		c. Do not set a password
+
+
+2b. Select all emails in "OCVRP_TempEmailDump" and move them BACK to their original folder
+
+
+------- .pst dump to .csv -----------------------------------------------
+3. Open the newly-created .pst in Outlook
+	File ==> Open&Export ==> Open Outlook Data File
+	
+	
+4a. Export the revised .pst to .csv with various fields slected . Often, ONLY the "body" field 
+should be selected:
+	File ==> Open&Export ==> Import/Export ==> Import/Export Wizard ==> Export to File
+	==> Comma Separated Values
+	
+		a. Select folder to process
+		b. Select directory for .csv
+		c. Check box: Export "E-Mail messages" from folder:OCVRP...
+		d. Open Map Custom Fields...
+		e. Keep ONLY "Body" field (slide other fields back to From: )
+		f. Click "Finish"
+
+4b. NB. If "Body" is selected there is only ONE field of data so there are no comma separated fields.
+
+
+
+
+
+-------- Process the output .csv in Linux to generate EmailLists ---------------------------------
+
+1. If needed, 
+	a. change end of line CRLF ==> LF
+dos2unix test.csv
+
+	b. change encoding WINDOWS-1258 ==> UTF-8
+iconv -f WINDOWS-1258 -t UTF-8 test.csv -o test_v1.csv
+
+
+2. Delete header so that Line 1 starts with data. 
+
+For example,
+Oregon Clean Vehicle Rebate - Phase I Application
+
+3. check line distance between replicate fields. For example, if first field of interest 
+is "Submitted: <date>" this appears regularly every 14 lines
+
+
+4. Add returns to set the .csv file for the correct line distance between desired fields. 
+
+5. Extract lines and look for breaks (ie where there is an incongruity in output)
+https://unix.stackexchange.com/questions/369181/printing-every-nth-line-out-of-a-large-file-into-a-new-file
+
+$ sed -n '0~14p' Modified_Phase1ApplicantData.txt > Email.txt
+
+		0~14p 	==> select and print every 14th line, beginning at line 0. 
+		Line 0 	==> has nothing, so the first printed line is line 14.
+		-n 		==> only explicitly printed lines are included in the output
+
+	# another option. USE THIS!
+$ awk 'NR % 14 == 0' input > output		
+		
+		
+6. Modify .txt file by making entry format identical at incongruities. Can search the output by 
+multiplying line distance by field distance (eg, line number at incongruity x 14)
+
+
+7. Remove "Name" and "Email" or other repeated label
+	
+	
+8. Remove duplicate entries
+https://unix.stackexchange.com/questions/30173/how-to-remove-duplicate-lines-inside-a-text-file
+
+$ uniq Phase1_Email.txt --count
+$ uniq Phase1_Emails.txt > Phase1_EmailList_Unique_20190110.txt
+
+	# another option
+$ sort -u big-csv-file.csv > duplicates-removed.csv
+
+
+
+	
+9. Remove whitespaces, remove misc, and build a .csv for import into Outlook
+
+	# eliminate all white spaces (not including TABs) 
+$  to add
+
+	# eliminate tabs at the beginning of all lines
+$ sed -i 's/^[ \t]*//g' Phase1_EmailList_Unique_20190110.txt
+
+	# remove tabs at the end of all lines
+$ sed -i 's/[ \t]*$//g' Phase1_EmailList_Unique_20190110.txt
+
+	# add a comma at the end of each line
+$ sed 's/$/,/' Phase1_EmailList_Unique_20190110.txt > Phase1Email_Unique_20190110.csv
+
+	# remove all <mailto:...>
+$ sed -i 's/<.*>//g' Phase1Email_Unique_20190110.csv
+
+	# open .csv in Notepad++ and add header (first line) for import into Outlook
+EmailList_Phase1,
+
+	# change to DOS format
+$ unix2dos Phase1Email_Unique_20190110.csv
+
+
+
+
+#############
+import .csv 
+bulk mailings
+##############
+
+
+----- create contact group  ---------------------------------------------
+10. Create a new Contact Group for bulk mailing applicants
+	a. Select the People tab at the bottom of the Outlook screen.
+	
+	b. On the Home tab, under My Contacts, right-click the Contacts folder, and then click New Folder.
+	
+	c. Create folder
+	
+	d. Follow these directions to import contacts from .csv into folder
+	https://support.office.com/en-us/article/import-contacts-to-outlook-bb796340-b58a-46c1-90c7-b549b8f3c5f8
+	
+	e. Use Map Custom Fields (Drag and drop)
+		X1 ==> Email
+				==> Email Address
+
+	f. If over 2000+ email address, create a second folder and split into two (2)
+	contact groups (Part1 and Part2)
+	
+----------------- do bulk email ---------------------------------------------
+	g. to mail all in Contact Group (NOT private)
+		type name of Contact Group in To.. field
+OR
+
+	h. to mail all in "Phase1Applicants_Complete_Part<number>" or "Cohort<number>_<date>" folder(private)
+https://www.teachucomp.com/use-the-bcc-field-for-confidentiality-with-contact-groups-outlook-training-for-lawyers/ 
+	==> NB There is a limit of number of address in the BCC field; do Phase1 applicants in two batches
+
+USE THIS!!!	
+		 Open "New Email"
+		 Select "Address Book" from menu
+		 Open the Contact group in the Address Book pulldown menu (NB. scroll up; starts with "Global Address List - Marron.Bruce@deg...)
+		 
+		 start at first email then Shift-click at last email to select all 
+		 once emails are highlighted click "Bcc ->"  at the bottom (privacy)
+		 all emails should be in the BCC -> field
+
+		
+		
+##################
+build an email active .xlsx sheet
+####################
+	
+	
+11.  Open .csv files in Excel; copy/paste fields as needed to build a desired list; can set for
+individual hyperlinks
+
+
+	a. email will need to have hyperlinks activated; can add extra column or do it in Notepad++
+https://stackoverflow.com/questions/2595692/how-do-i-convert-a-column-of-text-urls-into-active-hyperlinks-in-excel
+
+	b. In new column type formula  
+		=hyperlink("mailto:"&A2) (replacing A2 with whatever cell you are interested in)
+		copy the formula down the rest of the 200 entries.
+
+	c. for bulk distribution list (DOESN'T WORK!)
+https://www.msoutlook.info/question/772
+		Excel ==> CTRL+C to copy the hyperlinked cells.
+		new Contact Group or Distribution List ==> CTRL+SHIFT+L
+		click in the text field next to the Members –> button and press CTRL+V 
+	
+	
+12.  Save as .xlsx file; if needed to make email active 
+
+
+
+13. The .txt files can be imported into a variety of programs (R, Excel) or concatenated directly 
+in order to build a database of Phase 1 applicants.
+

@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Structured General Purpose Assignment
+% LaTeX Template
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{apacite}
+\usepackage[english]{babel}
+
+
+% Margins
+\topmargin= -0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.95in
+\textheight=9.0in
+\headsep=0.15in %distance between header and text
+
+\linespread{1.2} % Line spacing
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{\hmwkTitle} % Top left header
+\chead{\hmwkClass\ (\hmwkClassInstructor} % Top center header
+\rhead{\hmwkAuthorName} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+
+   
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkTitle}{Homework\ \#1} % Assignment title
+%\newcommand{\hmwkDueDate}{Thursday\ October\ 2,\ 2012} % Due date
+\newcommand{\hmwkClass}{CS 545 \ Winter 2016} % Course/class
+%\newcommand{\hmwkClassTime}{} % Class/lecture time
+\newcommand{\hmwkClassInstructor}{Mitchell)} % Teacher/lecturer
+\newcommand{\hmwkAuthorName}{Marron} % Your name
+
+%----------------------------------------
+%	BEGIN DOC
+%----------------------------------------
+\begin{document}
+\begin{center}
+\textbf{\normalsize Perceptron Learning; All-Pairs Classification}
+\end{center}
+No final results. I attempted the task in Python and Awk, taking the opportunity to learn both languages, but could not navigate the syntax of either language for the production of nested loops over arrays. I did successfully produce a perceptron algorithm (code.txt) but could not automate the process for all 325 pairs. I processed the A, B, C, and D perceptrons "by hand" and the weights after 100 epochs are attached (ABCDwgts.txt). I will continue to work on this task in the new languages rather than default to R. 
+
+
+%\renewcommand{\refname}{\normalfont\selectfont\small \textbf{References}} 
+%\bibliographystyle{/usr/local/share/texmf/tex/latex/apacite/apacite}
+%\bibliography{/home/bmarron//Desktop/BibTex/MyLibrary20151104}
+
+\end{document}

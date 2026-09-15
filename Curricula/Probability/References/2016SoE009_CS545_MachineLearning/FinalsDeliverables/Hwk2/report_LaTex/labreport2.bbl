@@ -1,0 +1,73 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Ashby%
+}{%
+Ashby%
+}{%
+{\protect \APACyear {1955}}%
+}]{%
+ashby_introduction_1955}
+\APACinsertmetastar {%
+ashby_introduction_1955}%
+\begin{APACrefauthors}%
+Ashby, W\BPBI R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{1955}.
+\newblock
+\APACrefbtitle {An introduction to cybernetics} {An introduction to
+  cybernetics}.
+\newblock
+\APACaddressPublisher{}{Taylor \& Francis}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+MacKay%
+}{%
+MacKay%
+}{%
+{\protect \APACyear {2003}}%
+}]{%
+mackay_information_2003}
+\APACinsertmetastar {%
+mackay_information_2003}%
+\begin{APACrefauthors}%
+MacKay, D\BPBI J\BPBI C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2003}.
+\newblock
+\APACrefbtitle {Information theory, inference, and learning algorithms}
+  {Information theory, inference, and learning algorithms}.
+\newblock
+\APACaddressPublisher{Cambridge, UK ; New York}{Cambridge University Press}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Nielsen%
+}{%
+Nielsen%
+}{%
+{\protect \APACyear {2015}}%
+}]{%
+nielsen_neural_2015}
+\APACinsertmetastar {%
+nielsen_neural_2015}%
+\begin{APACrefauthors}%
+Nielsen, M\BPBI A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2015}.
+\newblock
+\APACrefbtitle {Neural {Networks} and {Deep} {Learning}} {Neural {Networks} and
+  {Deep} {Learning}}.
+\newblock
+\begin{APACrefURL} [{2016-02-01}]\url{http://neuralnetworksanddeeplearning.com}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

@@ -1,0 +1,119 @@
+Title:			Ouput Data Processing in Linux, Python, and R
+Project Descriptor:	Letter Recognition with 3-Layer NN
+Project ID:		CS545 MachineLearning (2016SoE009)
+Prepared by:		bmarron
+Original Date:		30 Jan 2016
+
+
+#######################
+Python Output Data Processing
+#######################
+
+==== in Python =========================================
+
+	#copy epoch output to .txt file
+
+
+
+==== in Linux =================================================
+
+		#keep only field 3 
+$ cut -d " " --complement -f1,2,4- ~/Desktop/Exp4/hwk2_exp4b_raw.txt > ~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp4/hwk2_exp4b_processed.txt
+
+
+
+==== in R ============================================
+
+library(ggplot2)
+library(reshape2)
+
+	#import processed .txt file(s) with accuracy per epoch
+	#concatenate all relevant data into a single data.frame
+	#make plots
+
+---- Figure 1 ----------------------------------------------
+hwk2_exp1a_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp1/hwk2_exp1a_processed.txt", quote="\"", stringsAsFactors=FALSE)
+exp1<-hwk2_1a_processed
+
+hwk2_exp1c_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp1/hwk2_exp1c_processed.txt", quote="\"")
+exp1 <- hwk2_exp1a_processed
+exp1[,2]<-hwk2_exp1c_processed[,1]
+
+
+x<- c(1:100)
+
+p1 <- ggplot() + 
+geom_line(aes(x, V1, color="green"), data=exp1, linetype = 1) +  
+geom_line(aes(x, V2, color="blue"), data=exp1,  linetype = 1) +
+labs(x="Epoch", y="Accuracy (counts/10000)")+
+scale_color_discrete(name = "Experiment 1", labels = c("te_d | tr_d", "tr_d | tr_d")) 
+
+
+---- Figure 2 ------------------------------------------------------------------
+hwk2_exp2a_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp2/hwk2_exp2a_processed.txt", quote="\"")
+
+hwk2_exp2b_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp2/hwk2_exp2b_processed.txt", quote="\"")
+
+hwk2_exp2c_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp2/hwk2_exp2c_processed.txt", quote="\"")
+
+hwk2_exp2d_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp2/hwk2_exp2d_processed.txt", quote="\"")
+
+exp2 <- hwk2_exp2a_processed
+exp2[,2]<-hwk2_exp2b_processed[,1]
+exp2[,3]<-hwk2_exp2c_processed[,1]
+exp2[,4]<-hwk2_exp2d_processed[,1]
+exp2[,5]<- c(1:100)
+
+
+require(reshape2)
+exp2a <- melt(exp2 ,  id = 'V5')
+ggplot(data = exp2a, aes(x = V5, y = value, color = variable)) + 
+geom_line() +
+labs(x="Epoch", y="Accuracy (counts/10000)") +
+scale_color_discrete(name = "Experiment 2", labels = c("tr_d | tr_d (eta = .05)", "te_d | tr_d (eta = .05)","tr_d | tr_d (eta = .6)", "te_d | tr_d (eta = .6)" )) 
+
+
+
+-------- Figure 3 ---------------------------------------------------
+hwk2_exp3a_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp3/hwk2_exp3a_processed.txt", quote="\"")
+
+hwk2_exp3b_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp3/hwk2_exp3b_processed.txt", quote="\"")
+
+hwk2_exp3c_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp3/hwk2_exp3c_processed.txt", quote="\"")
+
+hwk2_exp3d_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp3/hwk2_exp3d_processed.txt", quote="\"")
+
+exp3 <- hwk2_exp3a_processed
+exp3[,2]<-hwk2_exp3b_processed[,1]
+exp3[,3]<-hwk2_exp3c_processed[,1]
+exp3[,4]<-hwk2_exp3d_processed[,1]
+exp3[,5]<- c(1:100)
+
+
+require(reshape2)
+exp3a <- melt(exp3 ,  id = 'V5')
+ggplot(data = exp3a, aes(x = V5, y = value, color = variable)) + 
+geom_line() +
+labs(x="Epoch", y="Accuracy (counts/10000)") +
+scale_color_discrete(name = "Experiment 3", labels = c("tr_d | tr_d (alpha = .05)", "te_d | tr_d (alpha = .05)","tr_d | tr_d (alpha = .6)", "te_d | tr_d (alpha = .6)" )) 
+
+
+----------- Figure 4 --------------------------------------------
+hwk2_exp4a_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp4/hwk2_exp4a_processed.txt", quote="\"")
+
+hwk2_exp4b_processed <- read.table("~/Desktop/PSU/PhD_EES/SoE/2016SoE009_CS545_MachineLearning/_PWFs_works_inprogress/Hwk2/DataFiles/Output_Data/Processed/Exp4/hwk2_exp4b_processed.txt", quote="\"")
+
+exp4 <- hwk2_exp4a_processed
+exp4[,2]<-hwk2_exp4b_processed[,1]
+exp4[,3]<- c(1:100)
+
+
+require(reshape2)
+exp4a <- melt(exp4 ,  id = 'V3')
+ggplot(data = exp4a, aes(x = V3, y = value, color = variable)) + 
+geom_line() +
+labs(x="Epoch", y="Accuracy (counts/10000)") +
+scale_color_discrete(name = "Experiment 4", labels = c("tr_d | tr_d", "te_d | tr_d")) 
+
+
+

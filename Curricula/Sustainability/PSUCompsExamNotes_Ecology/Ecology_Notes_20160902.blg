@@ -1,0 +1,23 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Ecology_Notes_20160902.blg'
+[105] biber:340> INFO - === Sun May 31, 2026, 21:25:55
+[126] Biber.pm:419> INFO - Reading 'Ecology_Notes_20160902.bcf'
+[241] Biber.pm:979> INFO - Found 50 citekeys in bib section 0
+[265] Biber.pm:4419> INFO - Processing section 0
+[279] Biber.pm:4610> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[555] bibtex.pm:1713> INFO - LaTeX decoding ...
+[2459] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-mx/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[3272] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[3272] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[3272] Biber.pm:4239> INFO - Sorting list 'nyt/apasortcite//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[3273] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[3427] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[3427] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[3427] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[3427] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[3510] bbl.pm:660> INFO - Writing 'Ecology_Notes_20160902.bbl' with encoding 'UTF-8'
+[3605] bbl.pm:763> INFO - Output to Ecology_Notes_20160902.bbl
+[3605] Biber.pm:131> WARN - ISBN '978-1-4221-2103-0 1-4221-2103-8' in entry 'beinhocker_origin_2007' is invalid - run biber with '--validate_datamodel' for details.
+[3605] Biber.pm:131> WARN - ISBN '978-0-521-14350-9 978-0-521-19430-3' in entry 'dale_spatial_2014' is invalid - run biber with '--validate_datamodel' for details.
+[3605] Biber.pm:131> WARN - ISBN '978-3-7643-5000-0 978-0-8176-5000-1' in entry 'gianinazzi_impact_1994' is invalid - run biber with '--validate_datamodel' for details.
+[3605] Biber.pm:133> INFO - WARNINGS: 3

@@ -1,0 +1,631 @@
+
+
+##########################
+Probability Models
+10th ed.
+Sheldon Ross
+#########################
+
+
+
+Chapter 1 Exercises
+--------------------
+
+3. Sent to ChatGPT
+Student of probability; Give a numerical answer to the following probability scenario:
+A fair coin is to be tossed until a head appears twice in a row. What is the probability that the coin will be tossed exactly four times?
+
+We want to find the probability that a fair coin is tossed exactly 4 times before stopping, where the stopping condition is getting two heads in a row (HH)
+
+We are dealing with sequences of coin tosses that end at length 4, with the last two tosses being HH, and no HH occurring before that. Let’s list all such possible valid sequences of exactly 4 tosses, such that:
+
+* The 4th and 3rd tosses are both Heads (HH)
+* There is no HH pattern in the first 3 tosses
+
+Step 1: List all 4-length sequences ending in HH with no HH before
+We’ll check all sequences of 4 coin tosses where:
+* The sequence ends in HH (positions 3 and 4)
+* The first two or three tosses do not contain HH
+Let’s denote the tosses: T1, T2, T3, T4
+We want:
+T3 = H and T4 = H (so that HH ends the sequence)
+But no HH in T1–T2 or T2–T3
+
+So, T3 = H, T4 = H
+→ T2 ≠ H (else T2–T3 = HH) ⇒ T2 = T (tail)
+→ T1 can be either H or T (as T1–T2 = ?–T → cannot be HH anyway)
+
+Now try the two possibilities:
+
+1. T1 = H, T2 = T, T3 = H, T4 = H → Sequence: HTHH
+2. T1 = T, T2 = T, T3 = H, T4 = H → Sequence: TTHH
+
+These are the only sequences of length 4 that:
+
+* End in HH (so process stops after toss 4),
+* Have **no earlier HH**
+
+Step 2: Compute probability of each sequence
+Since the coin is fair, each toss has a ½ probability.
+Each of these 4-toss sequences has probability:
+
+$$
+\left(\frac{1}{2}\right)^4 = \frac{1}{16}
+$$
+
+There are 2 such valid sequences, so the total probability is:
+
+$$
+2 \times \frac{1}{16} = \frac{2}{16} = \frac{1}{8}
+$$
+
+ ✅ Final Answer:
+
+$$
+\boxed{\frac{1}{8}}
+$$
+
+This is the probability that a fair coin will be tossed exactly 4 times before the first occurrence of two consecutive heads.
+
+
+
+
+
+4. Sent to ChatGPT and DeepSeek
+Student in Kolmogorov set theoretic probability. Given the three events E, F, and G, provide set theoretic expressions and explanations for the following outcomes:
+a) only F occurs
+b) both E and F occur but not G
+c) at least one event occurs
+d) at least two events occur
+e) all three events occur
+f) no event occurs
+g) at most one event occurs
+h) at most two events occur
+Provide the output in .tex format
+
+
+
+a) Only F occurs
+This means:
+    F occurs
+    E does not occur
+    G does not occur
+Set-theoretic expression:
+	F ∩ Ec ∩ Gc
+
+
+b) Both E and F occur, but not G
+This means:
+    E and F occur
+    G does not occur
+Set-theoretic expression:
+	E ∩ F ∩ Gc
+
+
+c) At least one event occurs
+This is the union of all three events.
+Set-theoretic expression:
+	E ∪ F ∪ G
+	
+
+d) At least two events occur
+This means:
+    Any two or all three of the events occur
+We take all intersections of pairs and the intersection of all three:
+	(E∩F) ∪ (E∩G) ∪ (F∩G)
+(Note: this includes the region where all three occur, which satisfies "at least two.")
+
+
+e) All three events occur
+	All of E, F, and G occur together.
+Set-theoretic expression:
+	E ∩ F ∩ G
+	
+	
+f) None of the events occurs
+	This means none of E, F, or G occur.
+Set-theoretic expression:
+	Ec ∩ Fc ∩ Gc
+
+
+g) At most one event occurs
+This includes the cases:
+    No event occurs
+    Exactly one of E, F, or G occurs
+We break it down into disjoint regions:
+    None occurs: Ec ∩ Fc ∩ Gc
+    Only E occurs: E ∩ Fc ∩ Gc
+    Only F occurs: F ∩ Ec ∩ Gc
+    Only G occurs: G ∩ Ec ∩ Fc
+Set-theoretic expression:
+	(Ec∩Fc∩Gc) ∪ (E∩Fc∩Gc) ∪ (Ec∩F∩Gc) ∪ (Ec∩Fc∩G)
+	
+	
+h) At most two events occur
+This includes:
+    No events occur
+    Exactly one event occurs
+    Exactly two events occur
+    (Only excludes the case where all three occur)
+So we take the complement of the intersection of all three:
+Set-theoretic expression:
+	(E∩F∩G)c
+
+
+### Summary (in LaTex):
+\[
+\boxed{
+\begin{aligned}
+&\text{a) } F \cap E^c \cap G^c \\
+&\text{b) } E \cap F \cap G^c \\
+&\text{c) } E \cup F \cup G \\
+&\text{d) } (E \cap F) \cup (E \cap G) \cup (F \cap G) \\
+&\text{e) } E \cap F \cap G \\
+&\text{f) } (E \cup F \cup G)^c \text{ or } E^c \cap F^c \cap G^c \\
+&\text{g) } (E \cap F)^c \cap (E \cap G)^c \cap (F \cap G)^c \\
+&\text{h) } (E \cap F \cap G)^c \\
+\end{aligned}
+}
+\]
+
+Chapter 2
+-------------------------
+ChatGPT--
+Student of probability science. Suppose that n independent trials, each of which results in any of m possible outcomes with respective probabilities p1 , . . . , pm , ∑pi = 1, are continually performed. Let X denote the number of trials needed until each outcome has occurred at least once. Define the equation for X=n and explain the reasoning
+
+Great coupon–collector setup! Let outcomes be $1,\dots,m$ with probabilities $p_1,\dots,p_m$ (independent across trials). For $n<m$, $\mathbb{P}(X=n)=0$. For $n\ge m$,
+
+### Clean formula (pmf)
+
+$$
+\boxed{\;\mathbb{P}(X=n)=\sum_{\varnothing\neq S\subseteq\{1,\dots,m\}}
+(-1)^{|S|+1}\Big(\sum_{j\in S}p_j\Big)\Big(1-\sum_{j\in S}p_j\Big)^{\,n-1}\;}
+$$
+
+### Why this is true (reasoning)
+
+* $X=n$ means: after $n-1$ trials at least one outcome is missing, and on trial $n$ the **last** missing type appears for the **first** time.
+* Equivalently, pick any nonempty set $S$ of outcomes and consider the event that **all** outcomes in $S$ have been missing up to time $n-1$ and one of them appears at time $n$.
+* The probability that no outcome from $S$ appears in a given trial is $1-\sum_{j\in S}p_j$. So the chance they are all missing for the first $n-1$ trials and then one of them appears on trial $n$ is
+
+  $$
+  \Big(1-\sum_{j\in S}p_j\Big)^{n-1}\Big(\sum_{j\in S}p_j\Big).
+  $$
+* But these events for different $S$ overlap (inclusion–exclusion fixes the overcount), giving the alternating-sum formula above.
+
+### Alternate, equivalent view (via CDF)
+
+The probability all $m$ outcomes have appeared by time $n$ is
+
+$$
+\mathbb{P}(X\le n)=\sum_{S\subseteq\{1,\dots,m\}}(-1)^{|S|}\Big(1-\sum_{j\in S}p_j\Big)^{n},
+$$
+
+so $\mathbb{P}(X=n)=\mathbb{P}(X\le n)-\mathbb{P}(X\le n-1)$ simplifies to the boxed formula.
+
+### Uniform special case
+
+If $p_1=\cdots=p_m=\tfrac1m$,
+
+$$
+\mathbb{P}(X=n)=\frac{m!\, S(n-1,m-1)}{m^{\,n}},\qquad n\ge m,
+$$
+
+where $S(\cdot,\cdot)$ are Stirling numbers of the second kind.
+
+
+
+
+Run a sample calculation using the above for the case m=3, p1=0.2, p2=0.3, p3=0.5 and 1) n=3 and 2) n=4
+Here $m=3$ with $(p_1,p_2,p_3)=(0.2,0.3,0.5)$.
+Recall
+
+$$
+\mathbb P(X=n)=\sum_{\varnothing\neq S\subseteq\{1,2,3\}}
+(-1)^{|S|+1}\Big(\sum_{j\in S}p_j\Big)\Big(1-\sum_{j\in S}p_j\Big)^{n-1}.
+$$
+
+For $m=3$ this simplifies to
+
+$$
+\mathbb P(X=n)=
+\underbrace{0.2\cdot 0.8^{\,n-1}+0.3\cdot 0.7^{\,n-1}+0.5\cdot 0.5^{\,n-1}}_{\text{singletons}}
+-\underbrace{\Big(0.5\cdot 0.5^{\,n-1}+0.7\cdot 0.3^{\,n-1}+0.8\cdot 0.2^{\,n-1}\Big)}_{\text{pairs}}
+$$
+
+(the triple term is $1\cdot 0^{\,n-1}=0$ for $n\ge3$). The $0.5\cdot 0.5^{\,n-1}$ terms cancel, so
+
+$$
+\mathbb P(X=n)=0.2\cdot 0.8^{\,n-1}+0.3\cdot 0.7^{\,n-1}-0.7\cdot 0.3^{\,n-1}-0.8\cdot 0.2^{\,n-1}.
+$$
+
+### 1) $n=3$
+
+$$
+\begin{aligned}
+\mathbb P(X=3)&=0.2\cdot 0.8^{2}+0.3\cdot 0.7^{2}-0.7\cdot 0.3^{2}-0.8\cdot 0.2^{2}\\
+&=0.2\cdot 0.64+0.3\cdot 0.49-0.7\cdot 0.09-0.8\cdot 0.04\\
+&=0.128+0.147-0.063-0.032\\
+&=\boxed{0.18}.
+\end{aligned}
+$$
+
+(Checks: this equals probability the first three trials are all different: $6p_1p_2p_3=6(0.2)(0.3)(0.5)=0.18$.)
+
+### 2) $n=4$
+
+$$
+\begin{aligned}
+\mathbb P(X=4)&=0.2\cdot 0.8^{3}+0.3\cdot 0.7^{3}-0.7\cdot 0.3^{3}-0.8\cdot 0.2^{3}\\
+&=0.2\cdot 0.512+0.3\cdot 0.343-0.7\cdot 0.027-0.8\cdot 0.008\\
+&=0.1024+0.1029-0.0189-0.0064\\
+&=\boxed{0.18}.
+\end{aligned}
+$$
+
+Reasoning for $n=4$: after 3 trials, at least one outcome is still missing; inclusion–exclusion counts the cases where exactly one type is missing (then the 4th is that type) and subtracts the overcount where two types were missing after 3 trials (all first three were the same).
+
+
+Run another sample calculation using the above for the case m=3, p1=0.2, p2=0.3, p3=0.5 where 1) n=5 and 2) n=6
+Using the same pmf derived earlier (valid for $n\ge 3$):
+
+$$
+\mathbb P(X=n)=0.2\cdot 0.8^{\,n-1}+0.3\cdot 0.7^{\,n-1}-0.7\cdot 0.3^{\,n-1}-0.8\cdot 0.2^{\,n-1}.
+$$
+
+### 1) $n=5$
+
+$$
+\begin{aligned}
+\mathbb P(X=5)
+&=0.2\cdot 0.8^{4}+0.3\cdot 0.7^{4}-0.7\cdot 0.3^{4}-0.8\cdot 0.2^{4}\\
+&=0.2(0.4096)+0.3(0.2401)-0.7(0.0081)-0.8(0.0016)\\
+&=0.08192+0.07203-0.00567-0.00128\\
+&=\boxed{0.147}.
+\end{aligned}
+$$
+
+### 2) $n=6$
+
+$$
+\begin{aligned}
+\mathbb P(X=6)
+&=0.2\cdot 0.8^{5}+0.3\cdot 0.7^{5}-0.7\cdot 0.3^{5}-0.8\cdot 0.2^{5}\\
+&=0.2(0.32768)+0.3(0.16807)-0.7(0.00243)-0.8(0.00032)\\
+&=0.065536+0.050421-0.001701-0.000256\\
+&=\boxed{0.114}.
+\end{aligned}
+$$
+
+
+
+
+Yes, show how to quickly sanity-check these probabilities (like making sure they sum to 1 as 
+n runs from 3 onward)
+Perfect! Let’s **sanity-check** by confirming that the total probability of all possible values of $X$ is 1.
+
+Since $m=3$, $X \ge 3$. We’ll compute $\mathbb{P}(X=n)$ for $n=3,4,5,6,\dots$ and see if the sum converges to 1.
+
+---
+
+### Recap of probabilities we already found:
+
+| $n$ | $\mathbb{P}(X=n)$ |
+| --- | ----------------- |
+| 3   | 0.18              |
+| 4   | 0.18              |
+| 5   | 0.147             |
+| 6   | 0.114             |
+
+Sum so far:
+
+$$
+0.18+0.18+0.147+0.114 = 0.621.
+$$
+
+---
+
+We can keep adding terms using the same formula:
+
+$$
+\mathbb{P}(X=n) = 0.2\cdot 0.8^{n-1} + 0.3\cdot 0.7^{n-1} - 0.7\cdot 0.3^{n-1} - 0.8\cdot 0.2^{n-1}.
+$$
+
+---
+
+#### $n=7$:
+
+$$
+\begin{aligned}
+\mathbb P(X=7) &= 0.2\cdot0.8^6 + 0.3\cdot0.7^6 - 0.7\cdot0.3^6 - 0.8\cdot0.2^6 \\
+&=0.2(0.262144)+0.3(0.117649)-0.7(0.000729)-0.8(0.000064)\\
+&=0.0524288+0.0352947-0.0005103-0.0000512\\
+&\approx 0.08716.
+\end{aligned}
+$$
+
+Running sum:
+
+$$
+0.621+0.08716 = 0.70816.
+$$
+
+---
+
+#### $n=8$:
+
+$$
+\begin{aligned}
+\mathbb P(X=8) &= 0.2\cdot0.8^7+0.3\cdot0.7^7-0.7\cdot0.3^7-0.8\cdot0.2^7\\
+&=0.2(0.2097152)+0.3(0.0823543)-0.7(0.0002187)-0.8(0.0000128)\\
+&=0.0419430+0.0247063-0.0001531-0.0000102\\
+&\approx 0.06649.
+\end{aligned}
+$$
+
+Running sum:
+
+$$
+0.70816+0.06649=0.77465.
+$$
+
+---
+
+#### $n=9$:
+
+$$
+\begin{aligned}
+\mathbb P(X=9)&=0.2\cdot0.8^8+0.3\cdot0.7^8-0.7\cdot0.3^8-0.8\cdot0.2^8\\
+&=0.2(0.1677722)+0.3(0.0576480)-0.7(0.00006561)-0.8(0.00000256)\\
+&=0.0335544+0.0172944-0.00004593-0.00000205\\
+&\approx 0.05080.
+\end{aligned}
+$$
+
+Running sum:
+
+$$
+0.77465+0.05080=0.82545.
+$$
+
+---
+
+#### $n=10$:
+
+$$
+\begin{aligned}
+\mathbb P(X=10)&=0.2\cdot0.8^9+0.3\cdot0.7^9-0.7\cdot0.3^9-0.8\cdot0.2^9\\
+&=0.2(0.1342177)+0.3(0.0403536)-0.7(0.000019683)-0.8(0.000000512)\\
+&=0.0268435+0.0121061-0.00001378-0.00000041\\
+&\approx 0.03894.
+\end{aligned}
+$$
+
+Running sum:
+
+$$
+0.82545+0.03894=0.86439.
+$$
+
+---
+
+We already see the sum creeping toward **1**. Because $0.8^n$, $0.7^n$, $0.3^n$, $0.2^n$ decay exponentially, the leftover “tail” past $n=10$ will be small, so:
+
+$$
+\sum_{n=3}^\infty \mathbb{P}(X=n) \approx 1.00 \quad\text{(as expected)}.
+$$
+
+---
+
+✅ **Sanity check logic:**
+
+* $X$ is a stopping time (you must eventually see all 3 outcomes since all probabilities are positive), so total probability is 1.
+* Summing probabilities numerically confirms convergence toward 1.
+* The pmf values steadily decrease, matching intuition (it’s less likely to wait a very long time to see all types).
+
+
+
+
+
+
+Perfect! Here’s a **landscape, one-page, print-ready cheat sheet** version in a super-compact, bullet-point style, followed by the Python helper. You can drop this into a doc or LaTeX to print neatly.
+
+---
+
+# Coupon Collector Cheat Sheet (General Probabilities)
+
+**Problem:**
+$m$ outcomes with probabilities $p_1,\dots,p_m>0$, $\sum p_i=1$.
+$X =$ number of trials until **all outcomes appear at least once**.
+Define $q_S = \sum_{j\in S}p_j$ for subset $S\subseteq\{1,\dots,m\}$.
+
+---
+
+## 🔹 Core Formulas
+
+| Quantity           | Formula                                                       |   |                          |
+| ------------------ | ------------------------------------------------------------- | - | ------------------------ |
+| **PMF** ($n\ge m$) | (\displaystyle \mathbb P(X=n)=\sum\_{\varnothing\neq S}(-1)^{ | S | +1},q\_S,(1-q\_S)^{n-1}) |
+| **CDF**            | (\displaystyle \mathbb P(X\le n)=\sum\_{S}(-1)^{              | S | }(1-q\_S)^n)             |
+| **Expectation**    | (\displaystyle \mathbb E\[X]=\sum\_{\varnothing\neq S}(-1)^{  | S | +1}\frac{1}{q\_S})       |
+| **Minimum trials** | $X_{\min}=m$                                                  |   |                          |
+| **Check:**         | $\mathbb P(X=m)=m!\prod p_i$; $\sum_{n\ge m}\mathbb P(X=n)=1$ |   |                          |
+
+---
+
+## 🔹 Quick Insights
+
+* **Tail behavior:** dominated by largest $1-q_{\{i\}}=1-\min p_i$; decays geometrically.
+* **Uniform probs:** $p_i=\frac1m\Rightarrow \mathbb E[X]=mH_m\approx m(\ln m+\gamma)$.
+* **Complexity:** Exact computation is $O(2^m)$ via subsets; good for $m\lesssim 20$.
+* **Simulation:** Use Monte Carlo for large $m$.
+* **Sanity check:** First $m$ trials all distinct has probability $m!\prod p_i$.
+
+---
+
+## 🔹 Algorithm (Bitmask or Combinations)
+
+1. Enumerate all non-empty subsets $S$ (bitmask or `itertools.combinations`).
+2. Compute $q_S = \sum_{j\in S}p_j$.
+3. Plug into PMF or expectation formulas.
+4. Verify probabilities sum to 1 within tolerance.
+
+---
+
+## 🔹 Python Helper
+
+```python
+from itertools import combinations
+
+def coupon_collector_pmf(p, n):
+    m = len(p)
+    prob = 0.0
+    idx = list(range(m))
+    for r in range(1, m+1):
+        for subset in combinations(idx, r):
+            q = sum(p[i] for i in subset)
+            prob += ((-1)**(r+1)) * q * (1-q)**(n-1)
+    return prob
+
+def coupon_collector_expectation(p):
+    m = len(p)
+    exp_val = 0.0
+    idx = list(range(m))
+    for r in range(1, m+1):
+        for subset in combinations(idx, r):
+            q = sum(p[i] for i in subset)
+            exp_val += ((-1)**(r+1)) * (1/q)
+    return exp_val
+
+# Example:
+p = [0.2, 0.3, 0.5]
+for n in range(3, 8):
+    print(f"P(X={n}) = {coupon_collector_pmf(p, n):.5f}")
+print("E[X] =", coupon_collector_expectation(p))
+```
+
+---
+
+### Tips for Printing
+
+* Use **landscape mode** with two columns for a perfect one-page fit.
+* Bold headings, monospace code block, and table make scanning easy.
+* Add this to a LaTeX doc or Word with `Courier New` for code clarity.
+
+---
+
+Would you also like me to give you a **ready-to-copy LaTeX version** of this cheat sheet for clean PDF printing?
+Absolutely! Here’s a **ready-to-copy LaTeX document** formatted in landscape mode with two columns, tables, and code blocks, designed to fit neatly on one page for printing.
+
+```latex
+\documentclass[a4paper,landscape,10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath, amssymb}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{courier}
+
+\setlength{\columnsep}{1cm}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{multicols}{2}
+
+\section*{Coupon Collector Cheat Sheet (General Probabilities)}
+
+\textbf{Problem:} $m$ outcomes with probabilities $p_1,\dots,p_m>0$, $\sum p_i=1$.\\
+$X =$ number of trials until \textbf{all outcomes appear at least once}.\\
+Define $q_S = \sum_{j\in S} p_j$ for subset $S \subseteq \{1,\dots,m\}$.
+
+\subsection*{Core Formulas}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Quantity} & \textbf{Formula} \\
+\midrule
+PMF ($n\ge m$) & $\displaystyle \mathbb P(X=n)=\sum_{\varnothing\neq S}(-1)^{|S|+1}\,q_S\,(1-q_S)^{n-1}$ \\
+CDF & $\displaystyle \mathbb P(X\le n)=\sum_{S}(-1)^{|S|}(1-q_S)^n$ \\
+Expectation & $\displaystyle \mathbb E[X]=\sum_{\varnothing\neq S}(-1)^{|S|+1}\frac{1}{q_S}$ \\
+Minimum trials & $X_{\min}=m$ \\
+Sanity Check & $\mathbb P(X=m)=m!\prod p_i$; $\sum_{n\ge m} \mathbb P(X=n)=1$ \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Quick Insights}
+\begin{itemize}
+    \item Tail behavior dominated by largest $1-q_{\{i\}} = 1-\min p_i$; decays geometrically.
+    \item Uniform probs: $p_i=1/m \Rightarrow \mathbb E[X]=m H_m \approx m(\ln m+\gamma)$.
+    \item Complexity: exact computation $O(2^m)$; feasible for $m\lesssim 20$.
+    \item Simulation: use Monte Carlo for large $m$.
+    \item First $m$ trials all distinct probability: $m!\prod p_i$.
+\end{itemize}
+
+\subsection*{Algorithm (Bitmask / Combinations)}
+\begin{enumerate}
+    \item Enumerate all non-empty subsets $S$ (bitmask or itertools.combinations).
+    \item Compute $q_S = \sum_{j\in S} p_j$.
+    \item Plug into PMF or expectation formulas.
+    \item Verify probabilities sum to 1 within tolerance.
+\end{enumerate}
+
+\subsection*{Python Helper}
+\begin{lstlisting}[language=Python]
+from itertools import combinations
+
+def coupon_collector_pmf(p, n):
+    m = len(p)
+    prob = 0.0
+    idx = list(range(m))
+    for r in range(1, m+1):
+        for subset in combinations(idx, r):
+            q = sum(p[i] for i in subset)
+            prob += ((-1)**(r+1)) * q * (1-q)**(n-1)
+    return prob
+
+def coupon_collector_expectation(p):
+    m = len(p)
+    exp_val = 0.0
+    idx = list(range(m))
+    for r in range(1, m+1):
+        for subset in combinations(idx, r):
+            q = sum(p[i] for i in subset)
+            exp_val += ((-1)**(r+1)) * (1/q)
+    return exp_val
+
+# Example usage:
+p = [0.2, 0.3, 0.5]
+for n in range(3, 8):
+    print(f"P(X={n}) = {coupon_collector_pmf(p, n):.5f}")
+print("E[X] =", coupon_collector_expectation(p))
+\end{lstlisting}
+
+\end{multicols}
+\end{document}
+```
+
+---
+
+### ✅ Features:
+
+* Landscape A4 for one-page print.
+* Two columns for compact layout.
+* Table for core formulas, bullet points for insights.
+* Monospace Python code block with `listings`.
+* Fits neatly on a single page; ready to print or PDF.
+
+---
+
+If you want, I can also **highlight formulas in color** and add **quick numerical examples** inline so it’s even more visually intuitive for students.
+
+Do you want me to do that next?
+You’re very welcome! 😄
+
+Glad everything’s all set. You now have a one-page cheat sheet and a Python snippet for practical calculations — perfect for classroom or personal use.
+
+If you ever want, I can also make a visual diagram showing how the subsets contribute to the PMF — it helps a lot with intuition for inclusion–exclusion.
+
+Would you like me to make that in the future?
+

@@ -1,0 +1,257 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: bmarron
+% Created: 22 May 2026
+% Modified:
+%
+% 12-point; 1in margins
+% One inch vertical space is 72.27pt
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}       % Document margins
+
+\usepackage{afterpage}
+%\usepackage{datetime2}               % specialty date formats
+\usepackage{lipsum}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+
+
+\usepackage{lineno}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+
+\usepackage{outlines}
+
+
+\usepackage{threeparttable}
+\usepackage{pgfgantt}                 % simple gantt charts
+\usepackage{bigfoot}
+\usepackage{multirow}
+\usepackage{microtype}                % Slightly tweak font spacing for aesthetics
+\usepackage{booktabs}                 % Horizontal rules in tables
+\usepackage{float}                    % specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{paralist}                 % bullet points with less space between them
+\usepackage[hang, 
+            small,
+            labelfont=bf,
+            up,
+            textfont=it,up]{caption}    % Custom captions under/above floats in tables or figures
+
+\usepackage[sc]{mathpazo}             % Use the Palatino font and the Pazo fonts for math
+\linespread{1.05}                     % global setting - Palatino needs more space
+\usepackage{setspace}
+%\doublespacing                       % global setting
+
+\usepackage{abstract}                                               % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}              % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}         % Set the abstract itself to small italic text
+
+\usepackage{titlesec}                                               % Allows customization of titles
+\renewcommand\thesection{\Roman{section}}                           % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{subsection}}                    % Arabic numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}        % Change the look of the section titles
+\titleformat{\subsection}[block]{\large\underline}{\thesubsection}{1em}{}                    % Change the look of the subsection titles
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.25\baselineskip}            % Change spacing after section
+
+
+\usepackage{fancyhdr}                                              % Headers and footers
+\pagestyle{fancy}                                                 % All pages have headers and footers
+%\pagestyle{plain}                                                  % globally set to "plain"
+%\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\fancyhead[L]{Sustainability Now!}                                                                                    
+\fancyhead[R]{Universidad del Medio Ambiente}
+%\fancyhead[C]{}                                                   % Custom header text
+\fancyfoot[C]{\thepage}    
+%\fancyfoot[RO,LE]{\thepage}                                        % Custom footer text
+
+
+
+\usepackage{everypage}                             % Required for watermarks
+\usepackage{draftwatermark}                        % Watermarks or not
+\SetWatermarkLightness{0.95}
+\SetWatermarkScale{0.75}                            % Set to 1.0 for default
+%\SetWatermarkText{FINAL DRAFT}                      % comment out for default (DRAFT)   
+
+%\usepackage{multicol}                                      % Used for the two-column layout of the document
+%\usepackage{hyperref}                                      % Interferes with cite.sty 
+
+
+
+
+%-------------------------------------------------------------
+% NEW COMMANDS
+%---------------------------------------------------------------------
+%This command creates a box marked ``To Do'' around text.
+%To use: 
+% type \todo{  insert text here  }.
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{To Do}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt\begin{center} #1 \end{center}\end{minipage}}\vspace{5 mm}\par}
+
+% This command makes a sun symbol
+% To use:
+% Type \sun
+\newcommand{\sun}{\ensuremath{\odot}}                                   
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% This command creates a custom indent
+% To use:
+%\begin{myindentpar}{2em}
+% blah blah blah
+%\end {myindentpar}
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{14pt}{10pt}
+                    \selectfont \textbf{Course Outline}   % Article title
+                    \vspace{-7mm}
+      } 
+
+\author{
+     \normalsize Bruce D. Marron \\                     % Name in “small caps”
+%     \normalsize FOR 803-001 \\
+%     \vspace{-9mm}
+%      \normalsize North Carolina State University      % Institution or Class ID
+     \vspace{-5mm}
+}
+\date{\normalsize \today}
+
+
+
+%---------------------------------------------------------------------------------------
+% HELPFUL
+%----------------------------------------------------------------------------------------
+
+%\enquote*{text}                                 % single quotes
+%\shortcites{citation}\cite{citation}           % gives Authors et al.
+% Yucat\'{a}n                                    % accents
+%\includegraphics[width=6.0in, height=5in, page=2]{graphics/Problems1.pdf}              % pdf
+%\includegraphics[width=0.35\textwidth, height=0.6\textheight]{graphics/fig1}           % pdf
+%\thispagestyle{plain}                          % headers/footers included page or not (default =TRUE except for 1st)
+
+%\begin{outlines}
+%\end{outlines}
+
+%---------------------------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+
+\begin{singlespacing}
+%\maketitle                                      % insert title or not
+\end{singlespacing}
+\thispagestyle{fancy}                           % headers/footers included or not (default=FALSE for first pg)
+%\linenumbers                                    % line numbers for document or not
+
+%%%%%%%%%%%% DOC TEXT %%%%%%%%%%%%%%%%%%
+
+\large
+\begin{flushleft}
+\textit{Concepts and Frameworks}
+\end{flushleft}
+
+\normalsize
+\begin{outline}[enumerate]
+\1 Sustainability Concepts
+
+\2 Brundtland Commission
+\2 UN Sustainable Development Goals
+\2 Marshall and Toffel\\
+\textit{\cite{marshall_framing_2005}}\\
+
+\1 Sustainability Frameworks
+
+\2 Ecological Sustainability\\
+\cite{pearce_blueprint_2000} \textbf{[pp. 102-129]}\\
+\cite{folke_regime_2004}\\
+\cite{schnaiberg_treadmill_2002}\\
+
+\3 Ecosystem Services: Definitions and Metrics\\
+\cite{millennium_ecosystem_assessment_program_ecosystems_2005} \textbf{[pp. ]}\\
+\cite{wallace_classification_2007}\\
+\cite{nelson_modeling_2009}\\
+\cite{costanza_value_1997}\\
+\cite{kremen_managing_2005}\\
+\cite{muradian_reconciling_2010}\\
+\cite{niemela_using_2010}\\
+\cite{norgaard_ecosystem_2010}\\
+
+\3 Global Ecosystem Health and Ecosystem Service Delivery\\
+\cite{zhao_drought-induced_2010}\\
+\cite{hoegh-guldberg_impact_2010}\\
+\cite{lobell_climate_2011}\\
+\cite{dodds_human_2013}\\
+\cite{rogers_facing_2008}\\
+\cite{eigenbrod_impact_2011}\\
+
+\2 Social Sustainability\\
+\cite{sen_development_2000}\textbf{[pp. 111-159]}\\
+\cite{pastor_environmental_2007}\\
+\cite{miringoff_growing_1996}\\
+\cite{oecd_well-being_2001}\\
+\cite{berbes-blazquez_towards_2016}\\
+
+\2 Economic Sustainability\\
+\cite{pearce_blueprint_2000} \textbf{[pp. 1-50; 157-209]}\\
+\cite{costanza_natural_1992}\\
+\cite{daly_economics_1974}\\
+\cite{goodwin_five_2003}\\
+
+\2 Agricultural Sustainability
+
+\end{outline}
+
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}

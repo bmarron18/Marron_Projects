@@ -1,0 +1,19 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'TopicOutline_Agroecology_20260522.blg'
+[111] biber:340> INFO - === Mon May 25, 2026, 12:53:34
+[142] Biber.pm:419> INFO - Reading 'TopicOutline_Agroecology_20260522.bcf'
+[258] Biber.pm:979> INFO - Found 19 citekeys in bib section 0
+[283] Biber.pm:4419> INFO - Processing section 0
+[297] Biber.pm:4610> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[572] bibtex.pm:1713> INFO - LaTeX decoding ...
+[2481] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-mx/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[2966] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2966] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2966] Biber.pm:4239> INFO - Sorting list 'nyt/apasortcite//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[2966] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[3041] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[3041] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[3041] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[3041] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[3081] bbl.pm:660> INFO - Writing 'TopicOutline_Agroecology_20260522.bbl' with encoding 'UTF-8'
+[3123] bbl.pm:763> INFO - Output to TopicOutline_Agroecology_20260522.bbl

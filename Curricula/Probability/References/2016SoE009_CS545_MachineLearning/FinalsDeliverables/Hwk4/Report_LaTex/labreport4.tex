@@ -1,0 +1,187 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lab Report 4
+% CS545_MachineLearning
+% (2016SoE009)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{apacite}
+\usepackage[english]{babel}
+\usepackage{comment}
+\usepackage{multirow}
+\usepackage[all]{nowidow}
+\usepackage{longtable}
+\usepackage{etoolbox}
+\setlength{\LTcapwidth}{=6.95in} %longtable caption width goes the full textwidth 
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
+\tikzset{
+    events/.style={ellipse, draw, align=right},
+}
+
+% paragraph indent
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+% Margins
+\topmargin= -0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.95in
+\textheight=9.0in
+\headsep=0.15in %distance between header and text
+
+\linespread{1.2} % Line spacing
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{} % Top left header
+\chead{} % Top center header
+\rhead{bmarron} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+%\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setcounter{secnumdepth}{0} % Removes default section numbers
+
+   
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\hmwkClass}{Machine Learning (CS 545), Portland State University, Winter 2016} % Course/class
+\newcommand{\hmwkTitle}{A Gaussian Naive Bayes Classifier} % Assignment title
+\newcommand{\hmwkAuthorName}{Bruce Marron} % Your name
+\newcommand{\hmwkClassInstructor}{Mitchell} % Teacher/lecturer
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{2in}
+\textmd{\textbf{\hmwkTitle}}\\
+\textit{\normalsize \hmwkClass}
+\vspace{3in}
+}
+\author{\textbf{\hmwkAuthorName}}
+\date{25 February 2016} % Insert date here if you want it to appear below your name
+
+
+%----------------------------------------
+%	BEGIN DOC
+%----------------------------------------
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\clearpage\maketitle
+
+\subsection{Introduction}
+Naive Bayes classifiers are supervised learning algorithms that apply Bayes' theorem with the "naive" assumption of independence between every pair of features. That is, for a class variable $y$ and a dependent feature vector $x_1$ through $x_n$,
+
+\begin{align*}
+P(y \mid x_1, \dots, x_n) = \frac{P(y) P(x_1, \dots x_n \mid y)}{P(x_1, \dots, x_n)}\\
+\\
+P(y \mid x_1, \dots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i \mid y)}{P(x_1, \dots, x_n)}\\
+\\
+P(y \mid x_1, \dots, x_n) \propto P(y) \prod_{i=1}^{n} P(x_i \mid y)
+\end{align*}
+
+\begin{center}
+$\Downarrow$
+\end{center}
+
+\begin{center}
+$\hat{y} = \arg\max_y P(y) \prod_{i=1}^{n} P(x_i \mid y)$
+\end{center}
+
+A second common assumption when using Naive Bayes classifiers is that the likelihood of each feature is Gaussian; that is,
+\begin{align*}
+P(x_i \mid y) = \frac{1}{\sqrt{2\pi\sigma^2_y}} \exp\left(-\frac{(x_i - \mu_y)^2}{2\sigma^2_y}\right)
+\end{align*}
+
+This report documents the use of a Gaussian Naive Bayes algorithm to classify email as 'spam' or 'not spam' given a feature vector in $ \mathbb{R}^{57}$. The "Spambase" dataset was the source of raw data for generating as well as for evaluating the classifier. The Spambase data were obtained from the University of California, Irvine (UCI) Machine Learning Repository. All data processing and evaluation tasks were done in Python 2.7.11 (Anaconda 2.4.1 (32-bit)) using the integrated development environment (IDE), "Spyder". The open source, "scikit-learn" machine learning package was used as a reference for classifier code construction.\\
+
+\newpage
+
+\subsection{Data Processing}
+The raw data in Spambase contains 4601 cases of which 1813 are identified as 'spam' ('1' in Field 58) and 2788 are identified as 'not spam' ('0' in Field 58). The entire Spambase dataset was shuffled twice and then split into a training dataset (\verb|tr_d|, n=2300) and a test dataset(\verb|te_d|, n=2301). The prior probabilities for spam (=1) and not spam (=0) in the training dataset were given as,
+\begin{align*}
+P(y = 1) \ = \ 0.4070\\
+P(y = 0) \ = \ 0.5930\\
+\end{align*}
+The mean and variance for each feature ($x_1, \dots, x_{57}$) was calculated for the spam subset of \verb|tr_d| as well as for the not-spam subset of \verb|tr_d|. In instances where the variance of a feature was equal to zero, a proxy variance (=1e-10) was entered to prevent division by zero in the classifier. This resulted in a set of four, 1x57 vectors,
+\begin{verbatim}
+tr_d_mu_spam 
+tr_d_sigma_spam
+tr_d_mu_notspam 
+tr_d_sigma_notspam	
+\end{verbatim}
+
+A Naive Bayes algorithm was then applied to the test dataset \verb|te_d| and each case subsequently classified as either spam(=1) or not spam(=0). The procedures and methods used for all data processing tasks are detailed in the scripts, \verb|DataProcessing1.py| and \verb|DataProcessing2.py|.
+
+\newpage
+
+\subsection{Results and Discussion}
+The results of the Naive Bayes classification are presented in Table 1 and in Table 2. 
+
+\begin{table}[!htbp] \centering 
+  \caption{The accuracy, precision, and recall of a Naive Bayes classifier as applied to the Spambase dataset.} 
+  \label{} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ Classifier & {Accuracy} & {Precision} & {Recall}\\
+\hline \\[-1.8ex]
+Naive Bayes & 0.7245 & 0.7008 & 0.4835\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\begin{table}[!htbp] \centering 
+  \caption{The confusion matrix for a Naive Bayes classifier as applied to the Spambase dataset.} 
+  \label{} 
+\begin{tabular}{lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{Predicted} \\
+%\cline{3-4}
+\multicolumn{2}{c}{} & Spam & Not Spam\\
+%\hline \\[-1.8ex]
+\multirow{2}{*}{Actual} & Spam & 1243 & 181\\
+& Not Spam & 453 & 424\\
+\hline \\[-1.8ex]
+\end{tabular} 
+\end{table}
+
+\subsection{Conclusions}
+It is unlikely that the assumption of independence is valid for the features in the Spambase dataset because a "spammer", like any author, is expected to use and repeat certain phrases (symbol and word sequences) with high frequency. In spite of this, the classifier performed rather well. A more sophisticated version might keep the assumption of independence but relax the assumption of normality and use more feature-specific likelihood distributions. 
+
+
+%\renewcommand{\refname}{\normalfont\selectfont\small \textbf{References}} 
+%\bibliographystyle{/usr/local/share/texmf/tex/latex/apacite/apacite}
+%\bibliography{/home/bmarron//Desktop/BibTex/2016SoE009}
+
+\end{document}

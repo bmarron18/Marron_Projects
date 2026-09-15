@@ -1,0 +1,285 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: bmarron
+% Origin: 14 May 2017
+% Final:
+%
+% Project Narrative: 7-pg limit; 12-point;
+% line spacing not exceeding six lines of text per
+% vertical inch, including all figures and tables
+% One inch vertical space is 72.27pt
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}       % Document margins
+
+\usepackage{afterpage}
+\usepackage{lipsum}
+\usepackage[utf8]{inputenc}
+\usepackage{lineno}
+\usepackage{csquotes}
+\usepackage[natbibapa]{apacite}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+\usepackage{outlines}
+\usepackage{threeparttable}
+\usepackage{pgfgantt}
+\usepackage{bigfoot}
+\usepackage{multirow}
+\usepackage[sc]{mathpazo}             % Use the Palatino font and the Pazo fonts for math
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05}                     % Line spacing - Palatino needs more space between lines
+\usepackage{microtype}                % Slightly tweak font spacing for aesthetics
+\usepackage{booktabs}                 % Horizontal rules in tables
+\usepackage{float}                    % specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{paralist}                 % bullet points with less space between them
+
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}    % Custom captions under/above floats in tables or figures
+
+\usepackage{abstract}                                               % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}              % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}         % Set the abstract itself to small italic text
+
+\usepackage{titlesec}                                               % Allows customization of titles
+\renewcommand\thesection{\Roman{section}}                           % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{subsection}}                    % Arabic numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}        % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{}                    % Change the look of the subsection titles
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.25\baselineskip}                % Change spacing after section
+
+
+\usepackage{fancyhdr}                                               % Headers and footers
+%\pagestyle{fancy}                                                 % All pages have headers and footers
+\pagestyle{plain} 
+%\fancyhead[L]{AFRI}                                                                                    
+%\fancyhead[R]{\today}
+%\fancyhead[C]{Running title $\bullet$ November 2012}               % Custom header text
+\fancyfoot[C]{\thepage}    
+%\fancyfoot[RO,LE]{\thepage}                                        % Custom footer text
+
+
+
+%\usepackage{everypage}                             % Required for watermarks
+%\usepackage{draftwatermark}
+%\SetWatermarkLightness{0.95}
+%\SetWatermarkScale{0.75}                            % Set to 1.0 for default
+%\SetWatermarkText{FINAL DRAFT}                      % comment out for default (DRAFT)   
+
+%\usepackage{multicol}                                      % Used for the two-column layout of the document
+%\usepackage{hyperref}                                      % Interferes with cite.sty 
+
+
+
+
+%-------------------------------------------------------------
+% NEW COMMANDS
+%---------------------------------------------------------------------
+%This command creates a box marked ``To Do'' around text.
+%To use type \todo{  insert text here  }.
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{To Do}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt\begin{center} #1 \end{center}\end{minipage}}\vspace{5 mm}\par}
+
+
+\newcommand{\sun}{\ensuremath{\odot}}                                   % sun symbol is \sun
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% To use paragraph indents
+%\begin{myindentpar}{2em}
+% blah blah blah
+%\end {myindentpar}
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{12pt}{10pt}\selectfont\textbf{Maximin on Harm with Vectors-of-Value}} % Article title
+
+\author{
+\large
+\textsc{Bruce D. Marron} \\                     % Your name
+%\normalsize Portland State University \\       % Your institution
+\vspace{-5mm}
+}
+\date{}
+
+
+%---------------------------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+%\maketitle                % Insert title
+%\thispagestyle{plain}     % No headers and footers on this page
+%\linenumbers
+
+\subsubsection*{Introduction}
+Over the coming decades, agricultural production systems are expected to deliver increasing amounts of diverse, highly-nutritious foods to an increasingly affluent global population while simultaneously (a) reducing the environmental externalities of production; (b) reducing off-farm inputs; (c) adapting to shifting climates and intense weather events; and (d) remaining economically viable in a globalized economy. Optimizing production under this suite of constraints will require more than simply maximizing short-term yields. It will require robust, ecologically functional, climate resilient, evolutionarily adapted, and regionally-scaled agricultural production systems. In short, it will require landscape patterns that can generate the ecological processes of sustainable agriculture.
+
+The primary objective of the proposed research is the production of a simulation modeling tool for the evaluation of sustainable agriculture at the landscape scale. Specifically, we propose to build an extension, \textit{AgroEV} (\enquote*{Agricultural-Ecological Evaluation}), for use with the process-based, spatially explicit, landscape change model, LANDIS-II to estimate the long-term ecological sustainability and resiliency of agroecological landscapes. \textit{AgroEV} will incorporate the premises of landscape-scale, \textit{agricultural-ecological mutualism} (discussed below) to evaluate those land cover patterns and land management practices that potentially can generate the emergent, whole-system properties of sustainable agriculture. The goals of the proposed research are to provide scientists and decision makers with an accessible, science-based tool for the ecological assessment of agroecological landscapes, and to use \textit{AgroEV} as a modeling platform to investigate the underlying processes of \textit{agricultural-ecological mutualism}, a hypothesized route to sustainable food production systems.
+
+\subsubsection*{Need for the proposed project}
+Taken collectively, the energetic and externalized costs of conventional agriculture, a human population swelling to over 9 billion by 2050 \shortcites{godfray_food_2010}\citep{godfray_food_2010}, and the potential for global warming driven diminution of crop yields \shortcites{parry_effects_2004, zhao_drought-induced_2010}\citep{parry_effects_2004, zhao_drought-induced_2010} require sustainable intensification of food production and delivery systems; a suite of agronomic and land management practices that produce more food from the same area of land while reducing both energy inputs and negative environmental outputs \shortcites{barnosky_approaching_2012, schmidhuber_global_2007, eigenbrod_impact_2011, dodds_human_2013, rogers_facing_2008, lobell_climate_2011, wada_global_2010, tilman_forecasting_2001}\citep{barnosky_approaching_2012, schmidhuber_global_2007, eigenbrod_impact_2011, dodds_human_2013, rogers_facing_2008, lobell_climate_2011, wada_global_2010, tilman_forecasting_2001}. Sustainable intensification entails sustainable agriculture. And yet, the necessary and sufficient conditions for realizing sustainable food production systems on any given landscape are far from certain despite modern principles of agronomy, agroecology and sustainability. 
+
+Large-scale conventional agriculture provides high yields yet can reduce topsoil, create oceanic hypoxic zones, damage hydrological systems, disrupt soil food webs, increase production of greenhouse gases, and reduce genetic diversity \shortcites{pearce_blueprint_2000, pretty_policy_2001, tilman_agricultural_2002, chameides_growth_1994, horrigan_how_2002, gliessman_agroecology:_2015}\citep{pearce_blueprint_2000, pretty_policy_2001, tilman_agricultural_2002, chameides_growth_1994, horrigan_how_2002, gliessman_agroecology:_2015}. Furthermore, large-scale conventional food production systems are not appropriate under many cultural, geographic, and ecological contexts.  On the contrary,  many traditional farming systems (e.g. the traditional American family farm c. 1940), offer management practices and designs that enhance biodiversity, retain soil fertility, require fewer supplemental inputs, produce sufficient yields, and have high adaptive capacity \shortcites{altieri_agroecology_2015, nicholls_plant_2013, gliessman_agroecology:_2015}\citep{altieri_agroecology_2015, nicholls_plant_2013, gliessman_agroecology:_2015}.
+
+Ultimately, we need tools to evaluate various agricultural models at the regional scale over many decades. These tools must enable us to determine how land management decisions and land cover mosaics may provide the necessary and sufficient conditions for sustainable food production systems under the severe constraints of high population, limited resources, and regional climate change.
+
+\subsubsection*{Rationale and Significance}
+We hypothesize that generating the necessary ecological processes for sustainable agricultural production is possible by intentionally linking the soil food webs of agricultural and natural lands through agroecology-based agronomic practices and ecologically-sophisticated landscape design patterns. We embody this hypothesis under the idea of \textit{agricultural-ecological mutualism} or the set of complex, aboveground and below ground linkages and relationships that provide for mutually beneficial transfers of matter, energy, and information (genetic and otherwise \citep{schreiber_measuring_2000}) between the agriculturally- and naturally-organized components of a multi-functional landscape. We expect that there are necessary and sufficient structural elements, functional relationships, disturbance regimes, best management practices, adaptive measures, and land management activities that can create the emergent properties of sustainable agricultural systems; namely, (a) efficient nutrient retention and delivery, (b) high annual net primary productivity, (c) consistent pest and pathogen regulation, (d) rapid decomposition of wastes, (e) rapid evolutionary response, (f) rapid soil formation, and (g) fresh water purification. We expect that investigations of \textit{agricultural-ecological mutualism} can be successfully performed by evaluating agronomic practices and landscape design patterns with scenario-based simulation modeling. Lastly, we expect that the long-range improvement in and sustainability of food systems is possible if tools are available for the evaluation of whole-system management strategies and regional scale designs.
+
+In support of our hypothesis we consider the following premises. These premises are extracted from ecology, agroecology, and complexity science and collectively provide the logical construction for \textit{agricultural-ecological mutualism}.
+
+\textit{\underline{Premise 1} -- Agriculture is a landscape disturbance phenomenon.} Landscape disturbance regimes are critical to ecosystem health and landscape disturbance regimes affect the long-term delivery of ecosystem goods and services. Appropriate agricultural practices (i.e., disturbance regimes) at the landscape scale may increase ecosystem robustness, resilience, and adaptive capacity. \shortcites{swift_biodiversity_2004}\citet{swift_biodiversity_2004} provide insights into the possible structural and functional relationships among agriculture, ecosystem functioning, and ecosystems services at the landscape scale. \citet{gliessman_agroecology:_2015} explains the ecological characteristics of agroecosystems in relation to disturbance regimes, successional development, and landscape patterns.  Both \citet{swift_biodiversity_2004} and \citet{gliessman_agroecology:_2015} point to the ecological, economic, and social benefits of the successional mosaics created by traditional practices of tropical agriculture.
+
+\textit{\underline{Premise 2} -- The energetic and biochemical transformations brokered by rhizospheric fungal/bacterial/protozoa assemblages are primarily responsible for nutrient cycling.} Because rhizospheric fungal/bacterial/protozoa assemblages are the basis of soil food webs and are, in turn, fueled by the root exudates of living plants, natural successional stages have unique soil food webs. There are extensive feedback loops between aboveground and below ground biota such that the outcomes of interactions in the rhizosphere ultimately affect plant and soil community dynamics at the landscape-scale. Maximizing the nutrient retention and trophic energy capture capabilities of any given landscape requires a set of necessary and sufficient soil food webs. Such soil food webs are available given the dynamic landscape successional mosaics that can be generated by whole-system management. Only recently has evidence accumulated to suggest that plant-microbe interactions may direct nutrient management of cycling processes as well as provide critical autotrophic support \shortcites{ingham_interactions_1985, bais_role_2006}\citep{ingham_interactions_1985, bais_role_2006}. Recent advances in soil microbiology point to soil food webs as key drivers not only of biogeochemical cycles, but of above ground productivity, plant community composition, ecosystem services, and even ecological and evolutionary responses to environmental change \citep{bardgett_belowground_2014, sackett_linking_2010, lehman_soil_2015}. The idea that complex soil food webs and not decomposition networks are responsible for the bulk of plant growth promoting processes, nutrient cycling, and novel microbial ecological functions is generating new possibilities for both agricultural and ecological management at the landscape scale \shortcites{prosser_role_2007, smith_plant_2009, pedraza_plant_2009, de_vries_soil_2013, hedlund_trophic_2004, holtkamp_soil_2008, minoshima_soil_2007, rygiewicz_soil_2010, wardle_how_1999}\citep{prosser_role_2007, smith_plant_2009, pedraza_plant_2009, de_vries_soil_2013, hedlund_trophic_2004, holtkamp_soil_2008, minoshima_soil_2007, rygiewicz_soil_2010, wardle_how_1999}.
+
+\textit{\underline{Premise 3} -- Landscape-scale simulation modeling that incorporates succession and disturbance can be used to explore the aboveground biodiversity dynamics necessary to generate robust and resilient soil food webs.} Recent work strongly suggests that there are as-yet unknown quantitative links between soil food web microbial diversity, landscape spatio-temporal patterns, and ecosystem processes \shortcites{rygiewicz_soil_2010, compant_stephane_plant_2010, prosser_role_2007}\citep{rygiewicz_soil_2010, compant_stephane_plant_2010, prosser_role_2007}. These links most certainly have been overlooked in popular ecological nutrient cycle models such as CENTURY which only consider the soil organic matter biochemical transformations that result from detritus-generated C and N litter pools \citep{smith_evaluation_1997, de_vries_soil_2013, kirschbaum_modelling_2002, roose_mathematical_2008}.
+
+We take whole-system agriculture to mean those agronomic practices that target individual or population levels as well as those ecological practices aimed at community and ecosystem levels. Ideally, whole-system management links agricultural and natural components of landscapes through the mechanisms of \textit{agricultural-ecological mutualism} to create and maintain multi-functional landscapes with desirable emergent properties. In addition to conventional practices such as contour plowing and crop rotations, agroecologists have suggested multiple techniques (intercropping, covercropping, strip cropping, hedgerow and buffer vegetation, re-integration of livestock) to achieve whole-system agriculture. Underlying these practices and techniques appear to be two, fundamental assumptions which may indeed hold keys to sustainable food production systems. The first is that biodiversity should be reincorporated into agricultural systems and augmented in the surrounding landscapes. The second is that a successional mosaic can be created by tuning the disturbance regimes of agricultural practices in order to generate a later stage, below ground ecosystem before planting annual or short-lived crops aboveground. 
+
+In order to assess novel whole-system management approaches and their underlying assumptions, biological inertia, and lagged responses, all at large scales and long-durations, scenario-based simulation models are required. Scenario-based simulation models must capture the inherent complexity in the network of dynamic systems resulting from the interactions of biological, physical, and social drivers that operate at the landscape scale. Agricultural components on a landscape add additional complexities because of their inputs of matter, energy, and genetic information to the coupled, human-natural system. 
+
+We selected LANDIS-II as the appropriate landscape simulation model for this project. LANDIS-II is a well-established landscape change model with an extensible architecture that can represent dynamic communities, shifting species distributions, and diverse disturbance regimes and can facilitate the creation of custom soil, disturbance, or succession models \citep{scheller_design_2007}. LANDIS-II can simulate broad-scale landscape dynamics, being designed to simulate the interaction between spatial processes and patterns. Because of its extensible architecture, numerous extensions for LANDIS-II have been built to represent a wide-range of ecosystem processes \citep{LANDISII_2017}. These extensions, in turn, have provided LANDIS-II with the capacity to evaluate management strategies, carbon dynamics, nutrient cycling, and climate change effects across a wide variety of landscapes at various spatial and temporal resolutions. Our proposed agricultural extension expands the capacity of LANDIS-II and adds to the growing library of useful, open-source, and readily-available tools for landscape simulation modeling using LANDIS-II.
+
+\subsubsection*{Approach}
+Broadly, we propose a scenario-based simulation modeling approach for the ecological evaluation of sustainable food production systems on multi-functional agricultural-ecological landscapes. Theoretically, our approach permits the investigation of the state space of \textit{agricultural-ecological mutualism} that can engender robust, resilient, and sustainable agricultural systems at the regional scale. Operationally, our approach follows established simulation model building and testing algorithms and protocols, including verification procedures (repeated I/O testing, sensitivity analysis, strict version control) and validation procedures (qualitative ground-truthing, long-term model behavior, expected phase space trajectories) \citep{law_simulation_2006, haefner_modeling_2005, scheller_forest_2004}. Our approach makes implicit assumptions concerning the causality of various natural processes and sub-processes which must be made explicit within the model. The modeling environment of LANDIS-II offers options for both highly deterministic translations of natural processes when the causality of sub-processes are well-understood (e.g., rates of nitrification) and Monte Carlo simulation for stochastic processes (e.g., seed dispersal).
+
+Our approach requires that two functional capacities be incorporated into the model. Specifically, \textit{AgroEV} must:
+\begin{enumerate}
+  \item \textit{Evaluate the process of agriculture through the lens of agricultural-ecological patterns and designs in the context of the mechanisms of agricultural-ecological mutualism} -- The \textit{AgroEV} extension must be able to discriminate between agricultural practices (temporal and spatial designs plus management actions) based on causal ecological relationships between below ground soil food webs, phytobiomes, and aboveground net primary productivity in coupled human-natural systems. The effect of the discriminant partitions must be reflected in quantifiable outputs for scenario-based projections.
+  \item \textit{Define new algorithms for modeling and evaluating the linkage between below ground soil biodynamics and aboveground ecosystem processes that explicitly account for soil food web functionality and biodiversity.} -- \textit{AgroEV} must be able to incorporate contemporary theoretical concepts about plant-soil microbe relationships, including phytobiomes, in such a way that recent advances in rhizospheric biodynamics can be specifically incorporated while future states of empirically-derived knowledge are not excluded. We expect to use directed acyclic graphs and causal Bayesian networks for informational and observational updating, and causal models for evaluating predictions, interventions, and counterfactuals \citep{lunn_bugs_2013,jaynes_probability_2003, pearl_causality:_2000}.
+\end{enumerate}
+
+\subsubsection*{Objective and Goals}
+Our objective is to construct \textit{AgroEV}, an agricultural extension for the LANDIS-II landscape simulation model for the investigation of whole-system management of agroecological landscapes. The \textit{AgroEV} tool is explicitly designed for the assessment of the ecological response of coupled, agricultural and natural lands to various land use pattern designs and land management strategies under variable climate scenarios. The goals of the proposed research are (1) to provide scientists and decision makers (agriculturists, land use planners, and agricultural policy makers) with an accessible, science-based tool for the ecological assessment of agroecological landscapes; and (2) to use \textit{AgroEV} as a modeling platform to investigate the underlying processes of \textit{agricultural-ecological mutualism}, a hypothesized route to sustainable food production systems. Our proposed research aligns directly with the AFRI priority area (\textbf{Climate, Land Use, and Land Management}) for FY 2017 and sets the stage for future work in support of AFRI's long-term goals. This SEED grant will create a tool for analysis of the interactions between the agricultural and ecological components of a landscape that potentially can engender sustainable agriculture. The tool also will be useful for evaluating existing agricultural landscapes, such as the dry-tropical matrix of forest and farms in the Yucat\'{a}n Peninsula of Mexico.
+
+\subsubsection*{Sketch of Causal Relationships Assumed by \textit{AgroEV}}
+The explicit definition of the causal relationships currently thought to link below ground soil food webs, aboveground productivity, and sustainable food production relationships and thus define \textit{AgroEV's} current assumptions and capacities are outlined in Table~\ref{tab:bm1}. Table~\ref{tab:bm1} reveals a hierarchic assembly of mathematical objects from inputs, to functions, to functionals. The goal is a joint probability density function of soil food web classes (object $H_1$). It is expected that such a joint distribution function can (1) provide discriminants through extraction of marginals, (2) provide the basis for generating sustainability evaluation metrics (the O-series), and (3) provide the basis for constructing casual Bayesian networks. The objects, root architecture and root density and dimensionality will capture the natural (fractal) geometry of root systems and their mycorrhizal extensions. The inclusion of these components as fundamental soil structures extends earlier research that links agricultural productivity to root architecture \citep{lynch_root_1995}.  In \textit{AgroEV}, these objects entail rhizospheric density and dimensionality and therefore provide a physical structure as the basis for agricultural-ecological mutualism. A variety of Shannon diversity measures attempt to capture genetic, spatial, and temporal diversity and the depth to a compaction layer sets the lower boundary for aerobic soil food webs. Lastly, \textit{AgroEV} assumes a causal relationship between the values of the ratio of soil fungi to soil bacteria and soil food web classes. Because the fungal/bacterial ratio follows from the diversity of carbon inputs, this ratio is tied to succession.
+
+\subsubsection*{Project Timetable}
+
+\begin{ganttchart}[
+vgrid,
+title/.append style={fill=blue!40},
+title label font=\sffamily\bfseries\color{white},
+bar/.append style={fill=black, rounded corners=1pt},
+bar left shift=.15,
+bar right shift=-.15,
+bar top shift=.4,
+bar height=.2,
+bar label font=\footnotesize,
+milestone label font={\footnotesize \itshape \bfseries},
+milestone/.append style={fill=green},
+group left shift=0,
+group right shift=0,
+group peaks tip position=0,
+group peaks height=.4
+]{1}{24}
+\gantttitle{Year 1}{12}
+\gantttitle{Year 2}{12} \\
+\ganttbar{Literature Review}{1}{3} \\
+\ganttbar{Data Collection }{2}{5} \\
+\ganttbar{Functions and Functionals}{3}{7}\\
+\ganttbar{Translation to C\#}{4}{8}\\
+\ganttbar{Unit Tests 1}{7}{12} \\
+\ganttbar{LANDIS-II Interface}{11}{16}\\
+\ganttbar{Unit Tests 2}{15}{19}\\
+\ganttbar{Validations}{18}{23}\\
+\ganttmilestone{AgroEV Release}{24}
+\end{ganttchart}
+
+
+\begin{table}
+\footnotesize
+  \begin{threeparttable}[b]
+    \caption{The current input variables, functions, functionals, and output metrics for AgroEV.}
+      \label{tab:bm1}
+      \centering\captionsetup{width=.75\textwidth}
+      \setlength{\tabcolsep}{2 mm}    
+    \begin{tabular}{ll}
+    \hline \hline \\[-1.8ex]
+     Object &  Definition \\
+    \hline \\[-1.8ex]
+    Inputs \tnote{1} & $a_1$ = Cell area ($m^2$) \\
+    & $a_2$ = Plant species and life history data (spp.)\\
+    & $a_3$ = Basic soil edaphics (cell) \\
+    & $a_4$ = Basic climate data (he cell) \\
+    & $b_1$ = Biomass: below ground soil fungi and soil bacteria ($\mu g / g$ / cell)\\
+    & $b_2$ = Concentrations of $Na^{+}, \ Ca^{2+}, \ Mg^{2+}$ (meq/mL / cell)\\
+    & $b_3$ = Cation exchange capacity (meq/100g dirt / cell)\\
+    & $b_4$ = Depth to a compacted soil layer (or bedrock) (m / cell)\\
+    & $b_5$ = Applied N (kg/cell)\\
+    & $b_6$ = Applied P (kg/cell)\\
+    & $b_7$ = Applied C (kg/cell)\\
+    & $b_8$ = Root architecture (spp.)\\ 
+    Internal LANDIS-II & \\
+    Data (D-Series) \tnote{2} & $D_1$ = Species and age (cohort/cell/timestep) \\
+    & $D_2$ = Net primary productivity (cell/timestep)\\
+    & $D_3$ = Biomass: aboveground cohorts (cell/timestep)\\
+    Internal AgroEV & \\
+    Data (F-Series) \tnote{3} & $F_1$ = Sodium adsorption ratio (cell/timestep) = $f(b_2)$ = $ {\frac {Na^{+}}{\sqrt {{\tfrac {1}{2}}({Ca^{2+}+Mg^{2+}})}}}$ \\
+    & $F_2$ = Root density and dimensionality (cell/timestep) \\
+    & \ \ \ \ \ = $f(a_1 \dots a_4, b_1, b_3 \dots b_8, D_1 \dots D_3, F_1)$\\
+    & $F_3$ = Shannon diversity indices (aboveground) (cell/timestep) = $ f(D_1)$ \\
+    Internal AgroEV & \\
+    Data (G-series) \tnote{3} & $G_1$ = Rhizospheric density and dimensionality (cell/timestep) = $f(F_1 \dots F_3)$  \\
+    & $G_2$ = Diversity of carbon inputs: root exudates (cell/timestep) = $f(F_3)$ \\
+    & $G_3$ = Diversity of carbon inputs: litter (cell/timestep) = $f(b_7, D_1, F_3)$ \\
+    & $G_4$ = Biomass: below ground soil fungi and soil bacteria (cell/timestep) \\
+    & \ \ \ \ \ = $ f(D_1 \dots D_3, F_2, G_1 \dots G_3) $ \\
+    & $G_5$ = Ratio of soil fungi-to-bacteria  (cell/timestep)= $ f(G_1 \dots G_4)$ \\
+    Internal AgroEV & \\
+    Data (H-series) \tnote{3} & $H_1$ = Joint prob. dist. of soil food web classes (cell/timestep) = $ f(G_1 \dots G_5)$ \\
+    & $H_2$ = Marginal prob. dist. of a soil food web class (cell/timestep) = $ f(H_1)$ \\
+    Output AgroEV & \\
+    Data (O-Series) \tnote{4} & $O_1$ = Soil cation exchange capacity (cell/timestep) = $f(b_3, H_1)$ \\
+    & $O_2$ = Rate of topsoil formation (O-horizon and A-horizon)  = $f(H_1)$ \\
+    & $O_3$ = Shannon diversity indices (below ground) (cell/timestep) = $ f(H_1)$ \\
+    & $O_4$ = Productivity index (cell/timestep) = $ \frac{Biomass \ from \ NPP}{Biomass \ extracted}$ = $ f(D_2, D_3, H_1)$ \\
+	\hline \\[-1.8ex]
+    \end{tabular}
+    \begin{tablenotes}
+    \footnotesize 
+    \item [1] a-series are standard LANDIS-II inputs; b-series are new, AgroEV inputs 
+    \item [2] D-series are time series data internally generated by LANDIS-II 
+    \item [3] F-series, G-series, and H-series are new time series data internally generated by AgroEV
+    \item [4] O-series are metrics for evaluating agricultural-ecological mutualism and agricultural sustainability 
+    \end{tablenotes} 
+  \end{threeparttable}
+\end{table}
+
+
+\newpage
+\subsubsection*{Additional References}
+The project will have a Quality Assurance Program (QAP) \citep{usepa_qaqc_2002, ieee_qaqc_2004, 36cfr_nara_2017}.\\
+\citep{bulluck_organic_2002}
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\bibliographystyle{/usr/local/share/texmf/tex/latex/apacite/apacite}
+\bibliography{/home/bruce/Desktop/BibTex/My_Library_20170125}
+
+
+\end{document}
