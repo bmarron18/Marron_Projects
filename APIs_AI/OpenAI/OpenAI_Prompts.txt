@@ -1,0 +1,29 @@
+
+##################
+Sample OpenAI 
+User Prompts and
+System Prompts
+################
+
+
+--- User Prompts ------------------------------
+	# User level messages
+	
+user_prompt= "Translate the file (a .pdf file in English) to standard, natural, \
+    and fluent Spanish. Maintain all specific formatting (line breaks, \
+    indents, spaces, paragraphs, and quotations). Generate the output as \
+    MIME type= text/plain. That is, generate the output as a plain text \
+    file (.txt)."
+
+
+
+
+
+--- System Prompts ------------------------------------------
+	# Developer level messages
+	
+sys_prompt = "You are an expert liguist \
+    specializing in translation. Maintain the original \
+    meaning and tone. Provide ONLY the requested translation without \
+    any additional commentary, introductory phrases, other language \
+    translations or conversational remarks."

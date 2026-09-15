@@ -1,0 +1,113 @@
+Title:		SusCurrQuery01_gpt-5.5
+Project:	Practical Sustainability Now! 	
+Author:		bmarron
+Created:	23 May 2026
+Modified:	
+
+
+##########
+AI I/Os
+##########
+----------
+prompt
+
+	# User level message
+user_prompt= "Search the internet and extract data for wheat yields from the USA for the years \
+2000 - 2025. Organize this data and output the data in a .csv format"
+
+	# Developer level message 
+sys_prompt = "You are an expert agricultural researcher."
+
+----------
+output structure
+
+years			2000-2025
+country			USA
+commodity		Wheat all classes
+measure			yield
+unit			bushels per acre
+yield 			<amnts>
+source			USDA NASS Quick Stats
+
+------------
+references
+
+https://www.nass.usda.gov/Data_and_Statistics/
+USDA NASS Quick Stats
+
+
+#########
+Notes
+#########
+
+-----------
+	El Niño 2026 and Crop-Drop
+
+	* Various news reports anticipate a "godzilla" El Niño for 2026
+	* Eastern Australia is highly vulnerable, with moderate-to-strong El Niño events historically triggering 
+	  yield drops of 30 % to 46%.
+	  * Global wheat yields are anticipated to drop by an average of \(4\%\) to \(6\%\) for every \(1^{\circ }\text{C}\) increase in global mean temperatures. Overall, climate trends have already suppressed global wheat yields by roughly \(10\%\) below what they would be in a stable climate
+	* A wheat yields drop of 5%-20% is reasonable under global warming
+	* A Stanford study finds that intensifying heat and atmospheric dryness have reduced yields of the world’s 
+	  five major crops by 4–13% over the past half century.
+
+	The 2026 El Niño phenomenon is significantly disrupting global grain production by causing severe drought in key Asian and Australian agricultural hubs, while elevating risks of extreme precipitation and flooding in parts of the Americas. These climatic shifts are exacerbating food inflation and tightening grain supplies
+
+	https://joint-research-centre.ec.europa.eu/jrc-news-and-updates/raising-energy-and-fertilizer-prices-and-upcoming-el-nino-main-concerns-farming-2026-04-02_en
+
+	https://joint-research-centre.ec.europa.eu/jrc-news-and-updates/widespread-asap-forecast-warnings-crops-second-half-year-due-upcoming-el-nino-conditions-2026-05-06_en
+
+	https://news.stanford.edu/stories/2025/05/global-crop-yields-climate-change-research
+
+	https://iiasa.ac.at/news/nov-2021/global-climate-change-impacts-on-crops-expected-within-10-years
+	International Institute for Applied Systems Analysis (IIASA) | Schlossplatz 1 | A-2361 Laxenburg, Austria
+
+-------------
+	40 bushels
+
+	* 40 bushels ==> sustain 10-15 people/yr (subsistence level)
+	* The exact headcount depends entirely on how the grain is processed and dietary assumptions
+
+
+	Total Calories: With about \(1,500\text{ calories}\) per pound of wheat, \(2,400\text{ lbs}\) provides around \(3.6\text{ million calories}\).
+
+	By the Day(Caloric Minimums)At a standard requirement of \(2,000\text{ calories}\) per day, \(40\text{ bushels}\) provides \(1,800\) total daily rations.This translates to feeding 1,800 people for exactly 1 day.
+
+	By the Year (Subsistence): A person relying on a survival diet of only wheat for an entire year needs roughly \(150\text{ to }180\text{ lbs}\) of grain. Dividing the total \(2,400\text{ lbs}\) by this amount means \(40\text{ bushels}\) will feed about 13 to 16 people for one year.
+
+
+-----------------
+	US Wheat 2026
+
+
+	Wheat Supply, Demand, and Price Outlook for 2026/27 (Table 6)
+	https://www.usda.gov/sites/default/files/documents/2026AOF-grains-oilseeds-outlook.pdf
+
+The 2026/27 U.S. wheat outlook is for lower supplies, reduced total use, and virtually unchanged
+ending stocks. U.S. wheat production is projected 6 percent below 2025/26 at 1,860 million
+bushels on a reduction in harvested area and a lower yield. The NASS Winter Wheat and Canola
+Seedings report estimated winter wheat seeded area at 33.0 million acres, down less than 1
+percent from 2025. Combined spring and durum wheat plantings for 2026/27 are projected
+slightly lower than last year with area in the Northern Plains expected to shift to soybeans and
+other oilseeds. Total wheat planted area for 2026/27 is projected at 45.0 million acres, down 0.3
+million acres from last year. Harvested area is forecast lower at 36.6 million acres and is based
+on the 10-year average harvest-to-plant ratio. The all-wheat yield for 2026/27 is projected down
+5 percent from last year’s record at 50.8 bushels per acre and is based on a long-term linear
+trend. Beginning stocks are forecast increasing in 2026/27 to 931 million bushels, up 9 percent
+from the previous year. The higher beginning stocks are more than offset by a smaller crop,
+resulting in 2026/27 supplies reduced 2 percent to 2,911 million bushels.
+
+Projected 2026/27 total use at 1,978 million bushels, is lower from a year earlier but above the 5-
+year average. Domestic use is projected unchanged with minimal changes to all categories.
+Food use is projected at 969 million bushels, 2 million above 2025/26, while projected seed use
+is lower at 59 million. Feed and residual use is steady at 100 million bushels and remaining
+restrained with abundant corn supplies. U.S. wheat exports are lower at 850 million bushels with
+greater exportable supplies from Argentina and Australia expected in the first half of the 2026/27
+marketing year. Additionally, Northern Hemisphere competition is anticipated remaining
+heightened from Russia, the EU, and Canada with their collective exportable supplies expected
+to be similar to 2025/26. Despite supplies projected lower for 2026/27, reduced total use results
+in 2026/27 ending stocks nearly unchanged at 933 million bushels and the highest ending stocks
+in seven years. However, the stocks-to-use ratio of 47 percent is only modestly higher than
+2025/26, resulting in a 2026/27 wheat season-average farm price of $5.00 per bushel, slightly
+higher than last year.
+

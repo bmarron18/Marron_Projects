@@ -1,0 +1,29 @@
+```csv
+year,country,commodity,measure,unit,yield,source
+2000,USA,Wheat all classes,Yield,bushels per acre,42.0,USDA NASS Quick Stats
+2001,USA,Wheat all classes,Yield,bushels per acre,40.2,USDA NASS Quick Stats
+2002,USA,Wheat all classes,Yield,bushels per acre,35.0,USDA NASS Quick Stats
+2003,USA,Wheat all classes,Yield,bushels per acre,44.2,USDA NASS Quick Stats
+2004,USA,Wheat all classes,Yield,bushels per acre,43.2,USDA NASS Quick Stats
+2005,USA,Wheat all classes,Yield,bushels per acre,42.0,USDA NASS Quick Stats
+2006,USA,Wheat all classes,Yield,bushels per acre,38.6,USDA NASS Quick Stats
+2007,USA,Wheat all classes,Yield,bushels per acre,40.2,USDA NASS Quick Stats
+2008,USA,Wheat all classes,Yield,bushels per acre,44.9,USDA NASS Quick Stats
+2009,USA,Wheat all classes,Yield,bushels per acre,44.4,USDA NASS Quick Stats
+2010,USA,Wheat all classes,Yield,bushels per acre,46.3,USDA NASS Quick Stats
+2011,USA,Wheat all classes,Yield,bushels per acre,43.7,USDA NASS Quick Stats
+2012,USA,Wheat all classes,Yield,bushels per acre,46.3,USDA NASS Quick Stats
+2013,USA,Wheat all classes,Yield,bushels per acre,47.1,USDA NASS Quick Stats
+2014,USA,Wheat all classes,Yield,bushels per acre,43.7,USDA NASS Quick Stats
+2015,USA,Wheat all classes,Yield,bushels per acre,43.6,USDA NASS Quick Stats
+2016,USA,Wheat all classes,Yield,bushels per acre,52.7,USDA NASS Quick Stats
+2017,USA,Wheat all classes,Yield,bushels per acre,46.4,USDA NASS Quick Stats
+2018,USA,Wheat all classes,Yield,bushels per acre,47.6,USDA NASS Quick Stats
+2019,USA,Wheat all classes,Yield,bushels per acre,51.6,USDA NASS Quick Stats
+2020,USA,Wheat all classes,Yield,bushels per acre,49.7,USDA NASS Quick Stats
+2021,USA,Wheat all classes,Yield,bushels per acre,44.3,USDA NASS Quick Stats
+2022,USA,Wheat all classes,Yield,bushels per acre,46.5,USDA NASS Quick Stats
+2023,USA,Wheat all classes,Yield,bushels per acre,48.6,USDA NASS Quick Stats
+2024,USA,Wheat all classes,Yield,bushels per acre,51.2,USDA NASS Quick Stats
+2025,USA,Wheat all classes,Yield,bushels per acre,54.3,USDA NASS Quick Stats
+```

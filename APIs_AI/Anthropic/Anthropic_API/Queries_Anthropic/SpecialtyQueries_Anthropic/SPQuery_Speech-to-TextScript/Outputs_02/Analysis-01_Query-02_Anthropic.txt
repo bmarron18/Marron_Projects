@@ -1,0 +1,18 @@
+It looks like the upload didn't come through on my end — I don't see the script contents, and your message also cuts off right at "…follow this pipeline:" so I don't have the intended flow either.
+
+Could you paste (or re-attach):
+
+1. **The full script** (or at least the transcription/translation/output-writing sections).
+2. **The pipeline description** — e.g. audio input → VAD/chunking → Whisper transcription → translation model → write to `.txt`/`.srt`.
+3. **Anything relevant about the run**: the command you invoke, sample input file, and whether the output file is created-but-empty vs. never created.
+
+In the meantime, the usual culprits for a "runs clean but prints/writes nothing" transcription script are:
+
+- **Results are generated but never consumed** — e.g. a generator/iterator (like `faster-whisper`'s `segments`) is assigned but never iterated, so no work actually happens.
+- **Exceptions swallowed** by a bare `try/except: pass` or `except Exception: continue` inside the per-chunk loop.
+- **The loop never executes** — empty file list from a bad glob/path, or an audio chunker that returns zero segments (VAD threshold too aggressive, wrong sample rate).
+- **Writes go to a buffer that's never flushed/closed**, or the file handle is opened in a `with` block that's re-opened in `"w"` mode each iteration, truncating prior content.
+- **`logging` configured at a level above your messages**, or output routed to a logger with no handler.
+- **`main()` defined but never called**, or guarded by an `if __name__ == "__main__":` that isn't reached due to import-time structure.
+
+Send the code over and I'll pinpoint the exact break in the chain.

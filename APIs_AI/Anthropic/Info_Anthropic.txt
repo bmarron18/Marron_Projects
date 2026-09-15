@@ -1,0 +1,122 @@
+
+############
+Anthropic
+Claude
+#############
+
+
+
+
+INITIAL SETUP and LOGIN
+	https://platform.claude.com/
+	https://platform.claude.com/login?from=logout
+    https://platform.claude.com/docs/en/get-api-key
+
+	Sigin w/ Google (marron.bruce.mx@gmail.com)
+
+
+	api key	<== expires 20 Jan 2027
+	This key only works in the Default workspace and can’t use the Admin API.
+
+
+############
+Chat with Claude
+##################
+https://claude.ai/login
+https://claude.ai/login?from=logout
+
+Sigin w/ Google (marron.bruce.mx@gmail.com)
+
+ADVANTAGES
+    Easy upload files for analysis
+    Keeps log of chats in a project folder
+
+
+
+##############
+Claude SDK
+###############
+https://platform.claude.com/claude-code
+https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python
+
+# SDK
+	pip install anthropic
+
+# For improved async performance with aiohttp
+	pip install "anthropic[aiohttp]"
+
+
+###########
+Using Claude
+#############
+if your goal is to prevent Claude Code's agentic loop from executing terminal commands, creating local files, or installing dependencies, you can explicitly force it to operate in a "text-only/print" mode.Depending on whether you want to use the Claude Code CLI to output text or prompt the underlying Claude Agent SDK / Messages API programmatically, you can structure your setup using the workflows below.
+
+
+
+Method 2: Prompting Programmatically via the Claude Agent SDK / Messages API
+If you are developing a custom script to prompt Claude via its Developer API, you shouldn't use the standard chat interface. Instead, you can bypass the agent loop entirely by interacting with the claude_agent_sdk or the raw anthropic messages API.
+
+
+DO NOT USE!!
+Option A: Using the Claude Agent SDK (With a Custom System Prompt)
+Anthropic allows you to modify the system prompt of the Agent SDK. This strips the model of its agentic behavior and enforces standard code generation
+
+<<<python
+import asyncio
+from claude_agent_sdk import query, ClaudeAgentOptions
+
+async def generate_pure_code():
+    # Enforce strict system instructions to disable tool-use expectations
+    custom_system_prompt = """
+    You are a strict Python code generation assistant. 
+    Your ONLY purpose is to return cleanly formatted Python code text. 
+    - DO NOT assume you have access to tool-use, a bash terminal, or file operations.
+    - Provide all setup commands purely as text comments within the code block.
+    - Output raw markdown text for copy-pasting.
+    """
+
+    prompt = """
+    Create a Python speech-to-text translation script.
+    System Requirements: Python 3.11, PyAudio, OpenAI-Whisper.
+    Target: Transcribe live microphone audio to English text.
+    """
+
+    # Query the SDK with the overridden system prompt
+    async for message in query(prompt=prompt, options={"systemPrompt": custom_system_prompt}):
+        if message.type == "assistant":
+            print(message.message.content)
+
+# Run the async loop
+asyncio.run(generate_pure_code())
+>>>python
+
+
+
+USE THIS!!
+Option B: Standard Anthropic Messages API (Safest for Text-Only Outputs) 
+If you want 100% certainty that no agentic loops, background file writing, or tool calls occur, you can bypass the Claude Code framework entirely and prompt the underlying Claude Messages API using the anthropic Python package
+
+
+<<<python
+import anthropic
+
+client = anthropic.Anthropic()
+
+# Pass system requirements and formatting rules directly to the model
+response = client.messages.create(
+    model="claude-3-5-sonnet-20240620",  # Or your preferred frontier model
+    max_tokens=2048,
+    system="You are an expert Python engineer. Return ONLY valid Python code inside markdown blocks. Do not explain the code, do not use tools, and provide instructions for dependencies inside a comment block at the top of the file.",
+    messages=[
+        {
+            "role": "user",
+            "content": "System Requirements: Mac M-series, Python 3.10+, ffmpeg installed. Prompt: Generate a python script to translate audio files from Spanish to English using Faster-Whisper."
+        }
+    ]
+)
+
+print(response.content[0].text)
+>>>python
+
+
+

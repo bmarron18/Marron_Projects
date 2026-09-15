@@ -1,0 +1,41 @@
+Title:		Data Cleaning+Prep ==> SusCurrQuery01_gpt-5.5.csv
+Project:	Practical Sustainability Now! 	
+Author:		bmarron
+Created:	23 May 2026
+Modified:	
+
+
+
+
+	#Visually inspect the data:
+$ column -t -s "," SusCurrQuery01_gpt-5.5.csv > dataviz.csv
+
+
+	#KEEP ONLY columns 1 and 6:
+$ cut -d, -f1,6 SusCurrQuery01_gpt-5.5.csv > clean1.csv
+
+	#Visually inspect the data:
+$ column -t -s "," clean1.csv > dataviz.csv
+
+	#Remove header [in-place editing (-i)]
+$ sed -i '1d' clean1.csv
+
+	# #Remove Python backticks
+$ sed -i 's/`//g' clean1.csv
+
+	# Remove completely empty lines (no characters at all)
+	# but leaves an LF and a single blank line
+$ sed -i '/^$/d' clean1.csv
+
+	#Remove very last (blank) line
+$ truncate -s -1 clean1.csv
+
+
+	### Complete sequence
+$ cut -d, -f1,6 SusCurrQuery01_gpt-5.5.csv > clean1.csv &&
+sed -i '1d' clean1.csv &&
+sed -i 's/`//g' clean1.csv &&
+sed -i '/^$/d' clean1.csv &&
+truncate -s -1 clean1.csv &&
+column -t -s "," clean1.csv > dataviz.csv
+

@@ -1,0 +1,77 @@
+ #################################
+ Query_04 directly to Claude chat
+ https://claude.ai/login
+ ###############################
+
+ chat saved in Project: speech-to-text_01
+
+----------------
+Query_04
+
+How do I  select another input device?
+Available input devices:
+  [0] sof-hda-dsp: - (hw:0,0)
+  [4] sof-hda-dsp: - (hw:0,6)
+  [5] sof-hda-dsp: - (hw:0,7)
+  [7] sysdefault
+  [8] lavrate
+  [9] samplerate
+  [10] speexrate
+  [11] pipewire
+  [12] pulse
+  [13] speex
+  [14] upmix
+  [15] vdownmix
+  [17] default  <-- current default
+
+
+# Optional tuning knobs (set before running, if the defaults don't work for your mic):
+ export AUDIO_INPUT_DEVICE=2        # index or name-substring from the device list printed at startup
+
+From Pulse Audio Volume Control, my active mic is Raptor Lake=P?U?H cAVS Digital Mic oprerating in Port: Digital mic
+
+
+
+The names in that list are the raw ALSA/PortAudio endpoints, not your PulseAudio source names — so you won't see "Raptor Lake... Digital Mic" listed directly. The fix is to route through PulseAudio/PipeWire itself, since that's what pavucontrol controls and where your mic is already set as active.Start with step 1 — `pulse` is the most likely fix since it just hands off to whatever's already configured as active in pavucontrol, which you've confirmed is the Digital Mic. If the heartbeat starts moving with your voice, you're set and don't need to touch anything else.
+
+
+
+you mean change line 114
+AUDIO_INPUT_DEVICE = os.getenv("AUDIO_INPUT_DEVICE") 
+to
+AUDIO_INPUT_DEVICE = pulse
+
+Is that correct?
+
+
+Not quite — two issues with that edit:
+
+1. `pulse` needs to be a string, so it'd need quotes: `"pulse"` (as written, Python would try to treat `pulse` as a variable name and crash with a `NameError`).
+2. You don't actually need to touch the script at all. `AUDIO_INPUT_DEVICE = os.getenv("AUDIO_INPUT_DEVICE")` is designed to read an environment variable you set in the terminal *before* running the script — that's the whole point of that line, so you can change devices without editing code each time.
+
+So instead, in the same terminal session, right before you run the script:
+
+```bash
+cd ~/spyder-6/envs
+source ./ai-apis/bin/activate
+export AUDIO_INPUT_DEVICE=pulse
+python3 ~/Desktop/Anthropic_speech-to-text_translation-transcription.py
+```
+
+That `export` line sets it just for that terminal session (it'll reset if you close the terminal or open a new one — you'd need to `export` it again next time).
+
+If you'd genuinely rather have it hardcoded so you never have to `export` it, you *can* edit line 114 to:
+
+```python
+AUDIO_INPUT_DEVICE = "pulse"
+```
+
+But then you'd lose the flexibility to switch devices via env var later without editing the file again — the `export` approach is the better fit for testing which device actually works.
+
+
+IT WORKS!!
+
+
+Nice, glad it's picking up the mic now. Enjoy the live translations — and if you want to lock in `pulse` as the permanent default instead of exporting it each session, just add that `export AUDIO_INPUT_DEVICE=pulse` line to your `~/.bashrc` or to the activation script for the `ai-apis` environment, and it'll be set automatically every time.
+
+

@@ -1,0 +1,29 @@
+Looked through this carefully — the bug pattern ("runs fine, prints nothing") points to one specific culprit, plus a few secondary issues worth fixing while I'm in there.
+
+## What's actually going on
+
+**The file on your Desktop almost certainly exists with just the header line and nothing else.** Here's why: `write_pair()` and the console prints only fire from inside `worker()`, and `worker()` only runs when something lands in `work_q` — which only happens when the VAD's `speaking` flag flips to `True` in the main loop. If that never happens, the script sits in an infinite, silent, error-free loop: no exception, no output, no crash. Everything else downstream (transcription, translation, file writes) is fine and never gets exercised.
+
+Why would `speaking` never flip? Almost always one of:
+- **Wrong input device** — on Linux Mint with PulseAudio/PipeWire, the "default" input `sounddevice` grabs is sometimes a monitor/loopback source instead of your actual mic, so `rms` stays near zero forever.
+- **VAD_MARGIN too strict** (3.0×) for your mic's actual gain, so `rms` never clears `threshold`.
+
+The script gave you **zero visibility** into either possibility — no way to see live RMS numbers, no device listing, and exceptions were reduced to a bare `str(exc)` (easy to miss, no traceback).
+
+## Secondary issues fixed
+- Several startup `print()`s lacked `flush=True`, so output could sit buffered depending on how you launch it.
+- `translate()` used the Responses API (`client.responses.create`) with a `temperature` kwarg — riskier/less-documented than Chat Completions for this use case. Switched to `chat.completions.create`.
+- Unused `from anthropic import Anthropic` import — dead code, removed.
+- Exceptions now print full tracebacks instead of just the message.
+
+## What I added
+- Prints all available input devices at startup, plus an `AUDIO_INPUT_DEVICE` env var so you can pin the exact mic (`export AUDIO_INPUT_DEVICE=2` or a name substring).
+- A live heartbeat (once/sec while idle) showing current RMS vs. threshold — you'll be able to watch these numbers as you talk and immediately see whether the mic is live and whether the threshold needs adjusting.
+- `VAD_MARGIN` is now overridable via env var (`export VAD_MARGIN=1.8`) so you can tune without editing code.
+- Calibration now reports min/max/median noise levels so you can sanity-check whether the mic is picking up anything at all.Run it as before, and watch the console — with `flush=True` everywhere it'll print a device list, then a live `[heartbeat] rms=... threshold=...` line that updates once a second while idle. That single line will tell you almost immediately which failure mode you're in:
+
+- **RMS stays near 0.00000 even while you're clearly talking** → the stream isn't hearing your mic at all. Check the device list it prints at startup, find your actual mic, and set `export AUDIO_INPUT_DEVICE=<that index>` before running.
+- **RMS moves but never says "ABOVE" when you talk** → the mic works, but the threshold is too strict for its gain. Try `export VAD_MARGIN=1.8` (or lower) and re-run.
+- **It does say "ABOVE" and you still see nothing** → then it's actually reaching the API calls, and any failure there will now print a full traceback instead of a one-line message, which will tell us exactly what's wrong (auth, model name, rate limit, etc.).
+
+One more thing worth flagging: your virtual environment's `pip list` shows `openai 3.13.0` — if that's accurate, it's a version far ahead of anything I have documentation for, so I can't fully verify the `chat.completions.create` / `audio.transcriptions.create` call shapes against that specific version. If the traceback (once you get one) points at a parameter mismatch, that's the first place to look — `pip show openai` and check that library's changelog for the exact methods.

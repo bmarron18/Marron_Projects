@@ -1,0 +1,229 @@
+## First problem: I can't see your script
+
+The message contains the literal placeholder `{script_contents}` — the template variable was never substituted, so no code was actually pasted. Please paste the real file and I'll do a line‑by‑line review.
+
+In the meantime, here is a diagnosis of the *silent‑no‑output* failure mode for exactly this pipeline (it's almost always one of eight things), plus a known‑good reference implementation you can diff against.
+
+---
+
+## The 8 usual causes of "runs fine, prints nothing"
+
+| # | Bug | Symptom / how to confirm |
+|---|-----|--------------------------|
+| 1 | **VAD threshold on the wrong scale.** `sounddevice` with `dtype='float32'` gives samples in `[-1.0, 1.0]`, so speech RMS ≈ `0.01–0.1`. If your threshold is an int16-style number (`300`, `500`, `1000`), `rms > threshold` is **never** true → no utterance is ever emitted. Converse bug: threshold `0.0001` means it never detects *silence*, so the utterance never ends and never gets flushed. | Print the RMS every block. |
+| 2 | **Silence counter reset in the wrong branch / indentation.** `silence_frames = 0` placed outside the "voiced" branch resets forever → end-of-utterance never fires. | Print state transitions `SPEECH_START` / `SPEECH_END`. |
+| 3 | **Swallowed exceptions.** `try: ... except Exception: pass` (or `continue`) around the API calls in a worker thread. The OpenAI 400/401/429 error is thrown away and you see nothing. | Replace with `traceback.print_exc()`. |
+| 4 | **Raw PCM sent to the transcription endpoint.** `gpt-4o-transcribe` needs a real container (WAV/MP3/etc.), and the file object needs a **`.name` with a valid extension**. `io.BytesIO(pcm_bytes)` with no header/name → `400 Invalid file format`. | See `pcm_to_wav_file()` below. |
+| 5 | **Uncaught exception in a daemon thread.** Main thread `sleep`s forever, worker died at block 1, program looks alive but is deaf. | Wrap the worker body in try/except and print. |
+| 6 | **Wrong response parsing.** Mixing the Responses API and Chat Completions: `client.responses.create(...)` then reading `.choices[0].message.content` (or vice‑versa) → `AttributeError`, caught by #3. Also `response_format="text"` returns a **str**, not an object with `.text`. | Print `type(resp)` once. |
+| 7 | **Output file never flushed.** Opened with `open(path,"a")`, written, but you kill with Ctrl‑C → buffered data discarded, file stays empty. | `f.flush(); os.fsync(f.fileno())` after each write, or `open(..., buffering=1)`. |
+| 8 | **Wrong input device / muted source.** The stream delivers all zeros, so RMS ≈ 0 forever. On Mint check PulseAudio/PipeWire input in *Sound Settings → Input*. | `python -m sounddevice` to list devices; print the RMS meter. |
+
+Causes **1, 3 and 4** together account for the large majority of cases.
+
+---
+
+## Quick 30‑second diagnostic
+
+Drop this in front of your pipeline. If you don't see numbers moving to ~0.02–0.15 when you talk, the problem is upstream of the API (causes 1 or 8).
+
+```python
+import sounddevice as sd, numpy as np
+with sd.InputStream(samplerate=16000, channels=1, dtype='float32') as s:
+    for _ in range(200):
+        blk, _ = s.read(1600)                    # 0.1 s
+        print(f"RMS {np.sqrt(np.mean(blk**2)):.5f}", flush=True)
+```
+
+---
+
+## Reference implementation (drop-in replacement)
+
+```python
+#!/usr/bin/env python3
+"""
+Real-time EN speech -> EN text -> ES text.
+Mic (16 kHz mono) -> energy VAD -> gpt-4o-transcribe -> gpt-4.1-mini -> file + stdout.
+
+    python -m venv .venv && source .venv/bin/activate
+    pip install sounddevice numpy openai
+    export OPENAI_API_KEY=sk-...
+    python realtime_translate.py
+"""
+
+import io
+import os
+import queue
+import sys
+import threading
+import time
+import traceback
+import wave
+from datetime import datetime
+
+import numpy as np
+import sounddevice as sd
+from openai import OpenAI
+
+# ----------------------------- configuration -----------------------------
+SAMPLE_RATE      = 16_000
+CHANNELS         = 1
+BLOCK            = 1600          # 0.1 s per block
+OUTFILE          = os.path.expanduser("~/Desktop/transcripts.txt")
+
+START_RMS        = 0.020         # float32 scale! speech onset
+STOP_RMS         = 0.012         # hysteresis: below this counts as silence
+SILENCE_BLOCKS   = 8             # 0.8 s of silence ends an utterance
+MIN_SPEECH_BLOCKS= 5             # ignore < 0.5 s blips
+MAX_SPEECH_BLOCKS= 150           # force-cut at 15 s
+PREROLL_BLOCKS   = 3             # keep 0.3 s before onset
+
+TRANSCRIBE_MODEL = "gpt-4o-transcribe"
+TRANSLATE_MODEL  = "gpt-4.1-mini"
+DEBUG_METER      = True          # set False once it works
+# --------------------------------------------------------------------------
+
+client = OpenAI()                # reads OPENAI_API_KEY
+audio_q: "queue.Queue[np.ndarray]" = queue.Queue()
+stop_event = threading.Event()
+
+
+def pcm_to_wav_file(pcm_f32: np.ndarray) -> io.BytesIO:
+    """float32 [-1,1] -> in-memory 16-bit WAV with a .name the API accepts."""
+    pcm_i16 = np.clip(pcm_f32, -1.0, 1.0)
+    pcm_i16 = (pcm_i16 * 32767).astype(np.int16)
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as w:
+        w.setnchannels(CHANNELS)
+        w.setsampwidth(2)
+        w.setframerate(SAMPLE_RATE)
+        w.writeframes(pcm_i16.tobytes())
+    buf.seek(0)
+    buf.name = "utterance.wav"          # <-- critical, else 400 Invalid file
+    return buf
+
+
+def transcribe(pcm_f32: np.ndarray) -> str:
+    resp = client.audio.transcriptions.create(
+        model=TRANSCRIBE_MODEL,
+        file=pcm_to_wav_file(pcm_f32),
+        language="en",
+        response_format="text",         # returns a plain str
+    )
+    return (resp if isinstance(resp, str) else resp.text).strip()
+
+
+def translate(english: str) -> str:
+    resp = client.chat.completions.create(
+        model=TRANSLATE_MODEL,
+        temperature=0.2,
+        messages=[
+            {"role": "system",
+             "content": "Translate the user's English text into natural Spanish. "
+                        "Reply with the Spanish translation only, no commentary."},
+            {"role": "user", "content": english},
+        ],
+    )
+    return resp.choices[0].message.content.strip()
+
+
+def audio_callback(indata, frames, time_info, status):
+    if status:
+        print(f"[audio] {status}", file=sys.stderr, flush=True)
+    audio_q.put(indata[:, 0].copy())     # mono float32
+
+
+def worker(fh):
+    """VAD state machine + API calls. Runs in its own thread."""
+    preroll: list[np.ndarray] = []
+    speech:  list[np.ndarray] = []
+    in_speech = False
+    silence = 0
+    last_meter = 0.0
+
+    while not stop_event.is_set():
+        try:
+            block = audio_q.get(timeout=0.25)
+        except queue.Empty:
+            continue
+
+        rms = float(np.sqrt(np.mean(block ** 2)))
+
+        if DEBUG_METER and time.time() - last_meter > 0.5:
+            bar = "#" * int(min(rms, 0.2) * 200)
+            print(f"\rRMS {rms:.4f} {'SPEECH' if in_speech else '      '} {bar:<40}",
+                  end="", flush=True)
+            last_meter = time.time()
+
+        if not in_speech:
+            preroll.append(block)
+            if len(preroll) > PREROLL_BLOCKS:
+                preroll.pop(0)
+            if rms >= START_RMS:
+                in_speech, silence = True, 0
+                speech = preroll[:] + [block]
+                preroll = []
+        else:
+            speech.append(block)
+            silence = silence + 1 if rms < STOP_RMS else 0
+
+            if silence >= SILENCE_BLOCKS or len(speech) >= MAX_SPEECH_BLOCKS:
+                in_speech = False
+                utt, speech = np.concatenate(speech), []
+                if len(utt) >= MIN_SPEECH_BLOCKS * BLOCK:
+                    handle_utterance(utt, fh)
+                silence = 0
+
+
+def handle_utterance(pcm: np.ndarray, fh):
+    stamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        en = transcribe(pcm)
+        if not en:
+            return
+        es = translate(en)
+        print(f"\n[{stamp}] EN: {en}", flush=True)
+        print(f"[{stamp}] ES: {es}\n", flush=True)
+        fh.write(f"[{stamp}]\nEN: {en}\nES: {es}\n\n")
+        fh.flush()
+        os.fsync(fh.fileno())            # survives Ctrl-C / kill
+    except Exception:                    # never swallow silently
+        print("\n--- error while processing utterance ---", file=sys.stderr)
+        traceback.print_exc()
+
+
+def main():
+    print("Input devices:\n", sd.query_devices(), "\n", sep="")
+    os.makedirs(os.path.dirname(OUTFILE), exist_ok=True)
+
+    with open(OUTFILE, "a", encoding="utf-8") as fh:
+        fh.write(f"\n=== session {datetime.now().isoformat(timespec='seconds')} ===\n")
+        fh.flush()
+
+        t = threading.Thread(target=worker, args=(fh,), daemon=True)
+        t.start()
+
+        with sd.InputStream(samplerate=SAMPLE_RATE, channels=CHANNELS,
+                            dtype="float32", blocksize=BLOCK,
+                            callback=audio_callback):
+            print(f"Listening… writing to {OUTFILE}   (Ctrl-C to stop)", flush=True)
+            try:
+                while True:
+                    time.sleep(0.2)
+            except KeyboardInterrupt:
+                print("\nStopping…", flush=True)
+            finally:
+                stop_event.set()
+                t.join(timeout=5)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+### Tuning notes
+- Watch the RMS meter for 5 s of *room silence*, then while speaking. Set `START_RMS` ≈ 3× the noise floor and `STOP_RMS` ≈ 2×.
+- If Mint routes you to the wrong mic, pass `device="pulse"` or an index to `InputStream`.
+- Once working, set `DEBUG_METER = False`.
+
+Paste the actual script and I'll pinpoint which of the eight it is.

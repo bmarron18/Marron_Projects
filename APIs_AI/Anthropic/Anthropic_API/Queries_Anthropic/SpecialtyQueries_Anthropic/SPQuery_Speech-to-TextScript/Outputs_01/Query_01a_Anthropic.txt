@@ -1,0 +1,183 @@
+# Real‑time English → Spanish transcription/translation
+
+Below is a complete, self‑contained script. It:
+
+1. Captures mic audio continuously (`sounddevice`), splitting it into utterances with a simple energy‑based VAD.
+2. Sends each utterance to OpenAI's newest speech model **`gpt-4o-transcribe`** → English text.
+3. Translates that text to Spanish with **`gpt-4.1-mini`** (streamed for low latency).
+4. Appends **both** English and Spanish to a text file on your Desktop, and prints the Spanish to the terminal.
+
+---
+
+## `realtime_en_es.py`
+
+```python
+#!/usr/bin/env python3
+"""
+Real-time English speech -> English text -> Spanish text.
+
+Pipeline
+  mic (sounddevice)  ->  VAD segmentation  ->  gpt-4o-transcribe (EN text)
+                                           ->  gpt-4.1-mini      (ES text)
+  Outputs: ~/Desktop/transcript_<timestamp>.txt   (EN + ES)
+           terminal                               (ES, streamed)
+
+Stop with Ctrl+C.
+"""
+
+import argparse
+import io
+import os
+import queue
+import signal
+import sys
+import threading
+import time
+import wave
+from datetime import datetime
+
+import numpy as np
+import sounddevice as sd
+from openai import OpenAI
+
+# ----------------------------------------------------------------------------
+# Audio / VAD settings
+# ----------------------------------------------------------------------------
+SAMPLE_RATE   = 16_000      # Hz, mono - what the speech models expect
+FRAME_MS      = 30          # ms per captured frame
+FRAME_SAMPLES = SAMPLE_RATE * FRAME_MS // 1000     # 480 samples
+
+START_FRAMES     = 3        # consecutive loud frames needed to open a segment
+SILENCE_MS       = 700      # trailing silence that closes a segment
+MIN_SPEECH_MS    = 350      # discard blips shorter than this
+MAX_SEGMENT_S    = 20       # hard cap so we never buffer forever
+PREROLL_FRAMES   = 10       # 300 ms of audio kept before speech onset
+CALIBRATE_S      = 1.2      # noise-floor measurement at startup
+NOISE_MULTIPLIER = 3.0      # speech threshold = noise_rms * this
+MIN_THRESHOLD    = 180.0    # absolute floor (int16 RMS units)
+
+# ----------------------------------------------------------------------------
+# Models
+# ----------------------------------------------------------------------------
+STT_MODEL   = os.getenv("STT_MODEL",   "gpt-4o-transcribe")   # or gpt-4o-mini-transcribe
+TRANS_MODEL = os.getenv("TRANS_MODEL", "gpt-4.1-mini")        # or gpt-4.1 / gpt-4o
+
+SYSTEM_PROMPT = (
+    "You are a professional English-to-Spanish interpreter. "
+    "Translate the user's English text into natural, fluent, neutral Latin-American "
+    "Spanish. Preserve meaning, tone and punctuation. "
+    "Output ONLY the Spanish translation - no quotes, no notes, no explanations."
+)
+
+stop_event = threading.Event()
+
+
+# ----------------------------------------------------------------------------
+# Helpers
+# ----------------------------------------------------------------------------
+def pcm_to_wav_bytes(pcm: np.ndarray, rate: int = SAMPLE_RATE) -> bytes:
+    """Wrap int16 mono PCM in a WAV container (in memory)."""
+    buf = io.BytesIO()
+    with wave.open(buf, "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)          # int16
+        wf.setframerate(rate)
+        wf.writeframes(pcm.tobytes())
+    return buf.getvalue()
+
+
+def rms(frame: np.ndarray) -> float:
+    return float(np.sqrt(np.mean(np.square(frame.astype(np.float32)))))
+
+
+# ----------------------------------------------------------------------------
+# Thread 1: microphone capture
+# ----------------------------------------------------------------------------
+def capture_thread(frame_q: "queue.Queue[np.ndarray]", device):
+    def callback(indata, frames, time_info, status):
+        if status:
+            print(f"[audio] {status}", file=sys.stderr)
+        # indata: (frames, 1) int16
+        frame_q.put(indata[:, 0].copy())
+
+    with sd.InputStream(samplerate=SAMPLE_RATE,
+                        blocksize=FRAME_SAMPLES,
+                        device=device,
+                        channels=1,
+                        dtype="int16",
+                        callback=callback):
+        while not stop_event.is_set():
+            time.sleep(0.1)
+    frame_q.put(None)   # sentinel
+
+
+# ----------------------------------------------------------------------------
+# Thread 2: voice-activity segmentation
+# ----------------------------------------------------------------------------
+def segmenter_thread(frame_q: "queue.Queue", seg_q: "queue.Queue"):
+    # --- calibrate background noise -----------------------------------------
+    print("Calibrating background noise… stay quiet for ~1 second.")
+    noise_vals, t0 = [], time.time()
+    while time.time() - t0 < CALIBRATE_S:
+        f = frame_q.get()
+        if f is None:
+            seg_q.put(None)
+            return
+        noise_vals.append(rms(f))
+    noise_rms = float(np.median(noise_vals)) if noise_vals else 0.0
+    threshold = max(noise_rms * NOISE_MULTIPLIER, MIN_THRESHOLD)
+    print(f"Noise floor ≈ {noise_rms:.0f}  ->  speech threshold = {threshold:.0f}")
+    print("🎤  Listening (speak English). Press Ctrl+C to stop.\n")
+
+    silence_frames_needed = SILENCE_MS // FRAME_MS
+    min_speech_frames     = MIN_SPEECH_MS // FRAME_MS
+    max_frames            = MAX_SEGMENT_S * 1000 // FRAME_MS
+
+    preroll: list[np.ndarray] = []
+    buffer:  list[np.ndarray] = []
+    loud_run = 0
+    silence_run = 0
+    in_speech = False
+
+    while True:
+        f = frame_q.get()
+        if f is None:
+            break
+
+        loud = rms(f) > threshold
+
+        if not in_speech:
+            preroll.append(f)
+            if len(preroll) > PREROLL_FRAMES:
+                preroll.pop(0)
+            loud_run = loud_run + 1 if loud else 0
+            if loud_run >= START_FRAMES:
+                in_speech = True
+                buffer = preroll[:] 
+                preroll = []
+                silence_run = 0
+        else:
+            buffer.append(f)
+            silence_run = 0 if loud else silence_run + 1
+
+            if silence_run >= silence_frames_needed or len(buffer) >= max_frames:
+                if len(buffer) >= min_speech_frames:
+                    seg_q.put(np.concatenate(buffer))
+                in_speech = False
+                loud_run = 0
+                buffer = []
+
+    if in_speech and len(buffer) >= min_speech_frames:
+        seg_q.put(np.concatenate(buffer))
+    seg_q.put(None)
+
+
+# ----------------------------------------------------------------------------
+# Thread 3: transcribe + translate + write
+# ----------------------------------------------------------------------------
+def worker_thread(seg_q: "queue
+
+
+
+
+NOT ENOUGH TOKENS!!!!!

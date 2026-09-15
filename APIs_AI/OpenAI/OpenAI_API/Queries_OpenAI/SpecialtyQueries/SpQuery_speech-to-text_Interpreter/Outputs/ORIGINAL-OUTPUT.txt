@@ -1,0 +1,540 @@
+There is no generally available OpenAI model named `gpt-live-transcribe`. The supported low-latency transcription model is `gpt-4o-transcribe`. Also, transcription models preserve the spoken language rather than translating English directly to Spanish, so the working solution is:
+
+1. Stream microphone audio to `gpt-4o-transcribe`.
+2. Send each completed English utterance to `gpt-4.1-mini` for Spanish translation.
+3. Print the translation and append it to a desktop text file.
+
+## Installation
+
+Run these commands in a Linux Mint terminal using the same Python environment that Spyder uses:
+
+```bash
+    # Install audio 
+sudo apt update
+sudo apt install portaudio19-dev libportaudio2
+
+    # install into virtual environment, (ai-apis)
+cd ~/spyder-6/envs &&
+source ./ai-apis/bin/activate
+(ai-apis):$ pip install --upgrade openai sounddevice websocket-client certifi
+(ai-apis):~$ deactivate
+'''
+
+
+
+## Complete Python script
+Save this as, for example, `live_english_to_spanish.py`:
+
+
+
+```python
+#!/usr/bin/env python3
+"""
+Real-time English speech -> Spanish text.
+
+Audio is streamed from the default microphone to OpenAI's Realtime
+transcription API. Each completed English utterance is then translated
+to Spanish and:
+
+    1. Printed in the Python/Spyder console.
+    2. Appended to:
+       /home/bruce-vdb/Desktop/spanish_transcript.txt
+
+Press Enter or Ctrl+C to stop.
+"""
+
+import base64
+import getpass
+import json
+import os
+import queue
+import ssl
+import sys
+import threading
+from datetime import datetime
+from pathlib import Path
+
+import certifi
+import sounddevice as sd
+import websocket
+from openai import OpenAI
+
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+
+TRANSCRIPTION_MODEL = "gpt-4o-transcribe"
+TRANSLATION_MODEL = "gpt-4.1-mini"
+
+SAMPLE_RATE = 24_000
+CHANNELS = 1
+BLOCK_DURATION_MS = 100
+BLOCK_SIZE = int(SAMPLE_RATE * BLOCK_DURATION_MS / 1000)
+
+OUTPUT_FILE = Path("/home/bruce-vdb/Desktop/spanish_transcript.txt")
+
+REALTIME_URL = "wss://api.openai.com/v1/realtime?intent=transcription"
+
+
+# ---------------------------------------------------------------------------
+# Shared program state
+# ---------------------------------------------------------------------------
+
+stop_event = threading.Event()
+
+audio_queue = queue.Queue(maxsize=100)
+translation_queue = queue.Queue()
+
+audio_stream = None
+sender_thread = None
+translator_thread = None
+
+file_lock = threading.Lock()
+print_lock = threading.Lock()
+
+
+# ---------------------------------------------------------------------------
+# Utility functions
+# ---------------------------------------------------------------------------
+
+def get_api_key():
+    """Read the API key from the environment or prompt for it."""
+    api_key = os.environ.get("OPENAI_API_KEY")
+
+    if not api_key:
+        api_key = getpass.getpass("Enter your OpenAI API key: ").strip()
+
+    if not api_key:
+        raise RuntimeError("No OpenAI API key was provided.")
+
+    return api_key
+
+
+def prepare_output_file():
+    """Create the desktop directory and add a session heading to the file."""
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    session_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with file_lock:
+        with OUTPUT_FILE.open("a", encoding="utf-8") as file:
+            file.write("\n")
+            file.write("=" * 60 + "\n")
+            file.write(f"Translation session started: {session_time}\n")
+            file.write("=" * 60 + "\n")
+
+
+def save_and_print_spanish(spanish_text):
+    """Print translated text and append it to the desktop text file."""
+    spanish_text = spanish_text.strip()
+
+    if not spanish_text:
+        return
+
+    with print_lock:
+        print(spanish_text, flush=True)
+
+    with file_lock:
+        with OUTPUT_FILE.open("a", encoding="utf-8") as file:
+            file.write(spanish_text + "\n")
+            file.flush()
+
+
+# ---------------------------------------------------------------------------
+# Microphone handling
+# ---------------------------------------------------------------------------
+
+def microphone_callback(indata, frames, time_info, status):
+    """
+    Called by sounddevice for each microphone audio block.
+
+    This callback must remain fast, so it only places the raw PCM data
+    into a queue. A separate thread sends the data to OpenAI.
+    """
+    if status:
+        with print_lock:
+            print(f"Microphone status: {status}", file=sys.stderr)
+
+    if stop_event.is_set():
+        return
+
+    try:
+        audio_queue.put_nowait(bytes(indata))
+    except queue.Full:
+        # Dropping one block is preferable to blocking the real-time
+        # PortAudio callback.
+        with print_lock:
+            print(
+                "Warning: audio queue is full; one block was dropped.",
+                file=sys.stderr,
+            )
+
+
+def start_microphone():
+    """Start recording 24 kHz, mono, signed 16-bit PCM audio."""
+    global audio_stream
+
+    audio_stream = sd.RawInputStream(
+        samplerate=SAMPLE_RATE,
+        blocksize=BLOCK_SIZE,
+        channels=CHANNELS,
+        dtype="int16",
+        callback=microphone_callback,
+    )
+
+    audio_stream.start()
+
+
+def stop_microphone():
+    """Stop and close the microphone stream."""
+    global audio_stream
+
+    if audio_stream is not None:
+        try:
+            audio_stream.stop()
+        except Exception:
+            pass
+
+        try:
+            audio_stream.close()
+        except Exception:
+            pass
+
+        audio_stream = None
+
+
+# ---------------------------------------------------------------------------
+# Audio sender thread
+# ---------------------------------------------------------------------------
+
+def audio_sender(ws):
+    """Read microphone blocks from the queue and send them over WebSocket."""
+    while not stop_event.is_set():
+        try:
+            audio_bytes = audio_queue.get(timeout=0.2)
+        except queue.Empty:
+            continue
+
+        try:
+            encoded_audio = base64.b64encode(audio_bytes).decode("ascii")
+
+            event = {
+                "type": "input_audio_buffer.append",
+                "audio": encoded_audio,
+            }
+
+            ws.send(json.dumps(event))
+
+        except Exception as exc:
+            if not stop_event.is_set():
+                with print_lock:
+                    print(
+                        f"Audio transmission error: {exc}",
+                        file=sys.stderr,
+                    )
+            break
+
+        finally:
+            audio_queue.task_done()
+
+
+# ---------------------------------------------------------------------------
+# Translation worker
+# ---------------------------------------------------------------------------
+
+def translation_worker(openai_client):
+    """
+    Translate completed English utterances without blocking the WebSocket
+    receiver.
+    """
+    while True:
+        english_text = translation_queue.get()
+
+        try:
+            if english_text is None:
+                return
+
+            english_text = english_text.strip()
+
+            if not english_text:
+                continue
+
+            response = openai_client.responses.create(
+                model=TRANSLATION_MODEL,
+                instructions=(
+                    "Translate the user's spoken English into natural Spanish. "
+                    "Return only the Spanish translation. Do not add labels, "
+                    "quotation marks, explanations, or commentary. Preserve "
+                    "the original meaning, tone, names, numbers, and punctuation."
+                ),
+                input=english_text,
+            )
+
+            spanish_text = response.output_text.strip()
+
+            if spanish_text:
+                save_and_print_spanish(spanish_text)
+
+        except Exception as exc:
+            with print_lock:
+                print(
+                    f"Translation error: {exc}",
+                    file=sys.stderr,
+                )
+
+        finally:
+            translation_queue.task_done()
+
+
+# ---------------------------------------------------------------------------
+# WebSocket event callbacks
+# ---------------------------------------------------------------------------
+
+def on_open(ws):
+    """Configure the Realtime API transcription session."""
+    global sender_thread
+
+    session_update = {
+        "type": "session.update",
+        "session": {
+            "type": "transcription",
+            "audio": {
+                "input": {
+                    "format": {
+                        "type": "audio/pcm",
+                        "rate": SAMPLE_RATE,
+                    },
+                    "noise_reduction": {
+                        "type": "near_field",
+                    },
+                    "transcription": {
+                        "model": TRANSCRIPTION_MODEL,
+                        "language": "en",
+                        "prompt": (
+                            "The speaker is speaking English. Accurately "
+                            "transcribe names, numbers, punctuation, and "
+                            "technical terminology."
+                        ),
+                    },
+                    "turn_detection": {
+                        "type": "server_vad",
+                        "threshold": 0.5,
+                        "prefix_padding_ms": 300,
+                        "silence_duration_ms": 600,
+                    },
+                }
+            },
+        },
+    }
+
+    ws.send(json.dumps(session_update))
+
+    try:
+        start_microphone()
+    except Exception as exc:
+        with print_lock:
+            print(
+                f"Could not start the microphone: {exc}",
+                file=sys.stderr,
+            )
+        stop_event.set()
+        ws.close()
+        return
+
+    sender_thread = threading.Thread(
+        target=audio_sender,
+        args=(ws,),
+        name="audio-sender",
+        daemon=True,
+    )
+    sender_thread.start()
+
+    with print_lock:
+        print("\nListening for English speech...")
+        print("Spanish translations will appear below.")
+        print(f"Output file: {OUTPUT_FILE}")
+        print("Press Enter or Ctrl+C to stop.\n")
+
+
+def on_message(ws, message):
+    """Process messages received from the Realtime API."""
+    try:
+        event = json.loads(message)
+    except json.JSONDecodeError:
+        with print_lock:
+            print(
+                f"Received an invalid WebSocket message: {message}",
+                file=sys.stderr,
+            )
+        return
+
+    event_type = event.get("type", "")
+
+    # A completed transcript normally represents one utterance detected
+    # by server-side voice activity detection.
+    if event_type == "conversation.item.input_audio_transcription.completed":
+        transcript = event.get("transcript", "").strip()
+
+        if transcript:
+            translation_queue.put(transcript)
+
+    elif event_type == "error":
+        error_information = event.get("error", {})
+        error_message = error_information.get("message", str(error_information))
+
+        with print_lock:
+            print(
+                f"OpenAI Realtime API error: {error_message}",
+                file=sys.stderr,
+            )
+
+    elif event_type == "session.updated":
+        # Session configuration was accepted.
+        pass
+
+    elif event_type == "conversation.item.input_audio_transcription.failed":
+        error_information = event.get("error", {})
+        error_message = error_information.get(
+            "message",
+            "The audio transcription failed.",
+        )
+
+        with print_lock:
+            print(
+                f"Transcription error: {error_message}",
+                file=sys.stderr,
+            )
+
+
+def on_error(ws, error):
+    """Handle a WebSocket-level error."""
+    if not stop_event.is_set():
+        with print_lock:
+            print(f"WebSocket error: {error}", file=sys.stderr)
+
+
+def on_close(ws, status_code, close_message):
+    """Clean up after the WebSocket connection closes."""
+    stop_event.set()
+    stop_microphone()
+
+    if status_code is not None:
+        with print_lock:
+            print(
+                f"\nWebSocket closed: code={status_code}, "
+                f"message={close_message}"
+            )
+
+
+# ---------------------------------------------------------------------------
+# Stop handling
+# ---------------------------------------------------------------------------
+
+def wait_for_enter(ws):
+    """Allow Enter to stop the program in addition to Ctrl+C."""
+    try:
+        input()
+    except (EOFError, KeyboardInterrupt):
+        pass
+
+    if not stop_event.is_set():
+        stop_event.set()
+        stop_microphone()
+
+        try:
+            ws.close()
+        except Exception:
+            pass
+
+
+# ---------------------------------------------------------------------------
+# Main program
+# ---------------------------------------------------------------------------
+
+def main():
+    global translator_thread
+
+    api_key = get_api_key()
+    prepare_output_file()
+
+    openai_client = OpenAI(api_key=api_key)
+
+    translator_thread = threading.Thread(
+        target=translation_worker,
+        args=(openai_client,),
+        name="translator",
+        daemon=False,
+    )
+    translator_thread.start()
+
+    websocket.enableTrace(False)
+
+    ws = websocket.WebSocketApp(
+        REALTIME_URL,
+        header=[
+            f"Authorization: Bearer {api_key}",
+            "OpenAI-Beta: realtime=v1",
+        ],
+        on_open=on_open,
+        on_message=on_message,
+        on_error=on_error,
+        on_close=on_close,
+    )
+
+    stop_input_thread = threading.Thread(
+        target=wait_for_enter,
+        args=(ws,),
+        name="stop-input",
+        daemon=True,
+    )
+    stop_input_thread.start()
+
+    try:
+        ws.run_forever(
+            sslopt={
+                "cert_reqs": ssl.CERT_REQUIRED,
+                "ca_certs": certifi.where(),
+            },
+            ping_interval=20,
+            ping_timeout=10,
+        )
+
+    except KeyboardInterrupt:
+        with print_lock:
+            print("\nStopping...")
+
+    finally:
+        stop_event.set()
+        stop_microphone()
+
+        try:
+            ws.close()
+        except Exception:
+            pass
+
+        if sender_thread is not None and sender_thread.is_alive():
+            sender_thread.join(timeout=2)
+
+        # Process all translations already waiting in the queue, then stop
+        # the translation worker.
+        translation_queue.put(None)
+
+        if translator_thread is not None:
+            translator_thread.join()
+
+        with print_lock:
+            print(f"\nFinished. Spanish text was saved to:\n{OUTPUT_FILE}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+The output is appended to:
+
+```text
+/home/bruce-vdb/Desktop/spanish_transcript.txt
+```
+
+Translation occurs after each detected spoken phrase, normally following roughly 600 milliseconds of silence. This provides phrase-level real-time translation rather than waiting for the entire recording to finish.

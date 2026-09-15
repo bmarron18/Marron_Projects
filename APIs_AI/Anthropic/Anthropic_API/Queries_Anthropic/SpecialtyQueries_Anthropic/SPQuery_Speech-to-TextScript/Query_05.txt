@@ -1,0 +1,54 @@
+ #################################
+ Query_05 directly to Claude chat
+ https://claude.ai/login
+ ###############################
+
+ chat saved in Project: speech-to-text_01
+
+----------------
+Query_05
+
+I want to switch from OpenAI models to Google Gemini models. That is,
+
+STT_MODEL        = "gemini-3.5-transcribe-live"   # newest speech-to-text model
+#STT_MODEL        = "gpt-4o-transcribe"   # original
+TRANSLATE_MODEL  = "gemini-3.5-live-translate-preview"        # newest
+#TRANSLATE_MODEL  = "gpt-4.1-mini"        # original fast, cheap, good translations
+
+Can you revise the attached script to use these latest Google Gemini Models
+STT_MODEL        = "gemini-3.5-transcribe-live"
+TRANSLATE_MODEL  = "gemini-3.5-live-translate-preview" 
+
+--------
+Quick heads-up before I touch the code: those two model names are real, but they're not drop-in replacements for the OpenAI calls in your script.
+
+- **`gemini-3.5-transcribe-live`** is a *streaming* model — it works over a WebSocket (Google's Live API), sending audio continuously and getting back interim/final transcript events. Your script currently does the opposite: VAD buffers a whole utterance, then sends one finished WAV file for a single request/response.
+- **`gemini-3.5-live-translate-preview`** is *speech-to-speech* — audio in, translated audio out (over the same Live API/WebSocket). It doesn't take English text and return Spanish text like `gpt-4.1-mini` does. It also produces the transcript as a side output, so it could actually replace steps 3+4 of your pipeline entirely, not just step 4.
+
+So there are two very different ways to do this migration:
+
+1. **Minimal-change version** — keep your existing VAD-then-batch architecture, but use Gemini's *non-streaming* equivalents instead: `gemini-3.5-transcribe` for STT on each utterance WAV, and a regular Gemini text model (e.g. `gemini-3-flash`) for the EN→ES text translation. Same script shape, same logic, just swapped API calls.
+2. **True real-time rewrite** — drop the VAD/batching entirely and stream mic audio straight into `gemini-3.5-live-translate-preview` over a WebSocket; it does English→Spanish speech-to-speech in one continuous session, and you pull the EN and ES transcripts out of the response stream to write to your file. This is closer to what those exact model names are built for, but it's a materially different, async-based script.
+
+Which one do you want?
+
+--------
+Can you provide BOTH? That is, a revised script using VAD+batch and the appropriate Gemini models PLUS a full rewrite (a new script) using the WebSocket approach and Gemini's latest models?
+
+
+---------------
+Both make sense to have side by side — the minimal version is closer to a drop-in swap, the WebSocket version is closer to what those specific model names are actually designed for. I'll build both now.Now the full real-time WebSocket rewrite:Both scripts are ready and pass a syntax check. Key things worth knowing before you run either:
+
+**`..._batch.py`** (minimal change, same VAD+file architecture)
+- Swaps OpenAI for `google-genai`; needs `GEMINI_API_KEY` instead of `OPENAI_API_KEY`.
+- `STT_MODEL = "gemini-3.5-transcribe"` (the batch, non-streaming sibling of `-live`) transcribes each finished WAV clip.
+- Translation uses `gemini-3-flash-preview` (a normal text model), since `gemini-3.5-live-translate-preview` can't be called this way — it only exists behind the Live API.
+- Everything else (device listing, heartbeat, VAD tuning via `VAD_MARGIN`) is untouched.
+
+**`..._live.py`** (full rewrite, true streaming)
+- No VAD or buffering — mic audio streams continuously over a WebSocket into `gemini-3.5-live-translate-preview`, which does English speech → Spanish speech directly and gives you both transcripts as a side effect (`input_audio_transcription` / `output_audio_transcription`).
+- Writes the same kind of `EN:` / `ES:` text log as before, timed to the model's own turn boundaries (`turn_complete`) rather than your energy-based VAD.
+- `gemini-3.5-transcribe-live` isn't actually used — since the translate model already returns the English transcript for free, a second concurrent transcription session would be redundant. I left it referenced in a comment in case you ever want English-only transcription.
+- Optional: set `PLAY_TRANSLATED_AUDIO=1` to also hear the Spanish audio out loud through your speakers (24 kHz PCM16 output, per Google's docs).
+
+One thing I couldn't verify without your actual API key/account: whether `gemini-3.5-live-translate-preview` is enabled for your project (it was in public preview as of its announcement) — worth a quick smoke test before relying on it.

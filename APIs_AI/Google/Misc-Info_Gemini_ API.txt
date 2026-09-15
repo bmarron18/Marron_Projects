@@ -1,0 +1,240 @@
+Title:              Info for using Google APIs
+Project Desc.:		UTECA Interpretacion y Traduccion 	
+Author:             bmarron
+Origin Date:		22 Sept 2025
+Revision Date:		10 Sept 2026
+
+
+======  Gemini Chat =====================================
+
+Google AI Plus
+Get more access to AI tools to boost your productivity and creativity1
+400 GB storage²
+$1.29 per month for 3 months, $4.99/mo after
+
+Cant link an API key to Gemini chat
+
+https://gemini.google.com/app?android-min-version=301356232&ios-min-version=322.0&is_sa=1&hl=es-MX&utm_campaign=microsite_gemini_gemini_live_page&icid=microsite_gemini_gemini_live_page&utm_source=gemini&utm_medium=web&_gl=1*1labmn6*_gcl_au*ODA2ODEwMDQ3LjE3ODk0MTk2ODA.*_ga*MTMyNzc1NjQxNi4xNzg5NDE5Njgx*_ga_WC57KJ50ZZ*czE3ODk0MTk2ODAkbzEkZzAkdDE3ODk0MTk2ODAkajYwJGwwJGgw
+
+
+=========  Google AI Studio ============================
+
+Billing
+https://aistudio.google.com/billing?billing=01D4ED-4CA1A4-41985D
+
+
+======  Google Models =====================================
+
+Choosing the Right Gemini Model for Translation of Files
+
+Gemini 3.1 Pro: Best for complex, high-stakes files like legal documents, medical manuals, or technical specifications requiring deep structural nuance and multi-million-token contexts. 
+
+Gemini 3.5 Flash: Best for high-volume automated pipelines, large content localization, and standard files where speed and lower token costs are prioritized. 
+
+Translation LLM on Cloud Translation: Available via the Cloud Translation API, which provides specialized fine-tuned translation wrappers powered by Gemini for maximum natural fluency
+
+
+
+##############
+Google Gemini
+##############
+https://ai.google.dev/gemini-api/docs
+https://ai.google.dev/gemini-api/docs/models#gemini-3
+
+This guide introduces all the models available through the Gemini API.
+
+STABLE
+https://ai.google.dev/gemini-api/docs/models#gemini-3-stable
+    gemini-3.8-flash
+    gemini-3.7-flash
+    gemini-3.5-transcribe
+    gemini-3.5-transcribe-live
+
+PREVIEW
+https://ai.google.dev/gemini-api/docs/models#gemini-3-preview
+    gemini-3.5-live-translate-preview
+
+
+
+
+
+#############
+Google Live API
+(translation)
+###############
+https://ai.google.dev/gemini-api/docs/live-api
+https://ai.google.dev/gemini-api/docs/live-api/get-started-sdk
+https://ai.google.dev/gemini-api/docs/live-api/session-management
+https://colab.research.google.com/github/google-gemini/cookbook/blob/main/quickstarts/Get_started_LiveAPI.ipynb
+
+
+https://ai.google.dev/gemini-api/docs/live-api/live-translate
+
+https://aistudio.google.com/case-studies/toonsutra-2
+https://aistudio.google.com/case-studies
+
+
+
+=========   Google Agents ===========================
+################
+Google Antigravity Agent
+####################
+
+Antigravity Agent Preview is available via an API key. Link an API key to get started. A general-purpose autonomous agent running in a remote, Google-hosted Linux environment.
+
+
+############
+Google Gemini API
+##################
+
+Gemini API libraries
+https://ai.google.dev/gemini-api/docs/libraries
+
+
+Gemini Developer API
+https://ai.google.dev/gemini-api/docs
+
+
+This file provides curated prompts to help generative AI models like 
+Gemini and Claude produce code using the latest Gemini APIs.
+https://github.com/googleapis/python-genai/blob/main/codegen_instructions.md
+
+
+Gemini API Coding Guidelines (Python)
+https://github.com/googleapis/python-genai/blob/main/codegen_instructions.md
+
+Document understanding (Gemini)
+https://ai.google.dev/gemini-api/docs/document-processing
+
+HTML-to-pdf
+https://stackoverflow.com/questions/23359083/how-to-convert-webpage-into-pdf-by-using-python
+
+
+
+###################
+Doc MIME Types 
+##################
+The most comprehensive list of MIME types is maintained by the 
+Internet Assigned Numbers Authority (IANA). 
+
+
+Text:
+    text/plain: Plain text files (.txt) 
+    text/csv: Comma-separated values files (.csv) 
+    text/html: HyperText Markup Language files (.html, .htm)
+    text/x-tex: Various common LaTex files (.tex, .cls, .sty)
+
+Image:
+    image/jpeg: JPEG image files (.jpeg, .jpg) 
+    image/png: Portable Network Graphics files (.png) 
+    image/gif: Graphics Interchange Format files (.gif) 
+    image/svg+xml: Scalable Vector Graphics files (.svg) 
+
+Audio:
+    audio/mpeg: MPEG audio files (.mp3) 
+
+Video:
+    video/mp4: MP4 video files (.mp4) 
+    video/webm: WebM video files (.webm) 
+
+Application:
+    application/pdf: Portable Document Format files (.pdf) 
+    application/json: JavaScript Object Notation files (.json) 
+    application/zip: ZIP compressed archive files (.zip) 
+    application/octet-stream: A general-purpose type for unspecified binary data 
+    *application/vnd.openxmlformats-officedocument.wordprocessingml.document (.docx)
+
+
+    * Gemini gave me a .json file when this mime type was requested
+
+
+
+############
+API Key
+############
+ # Manage API Keys
+https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
+
+# NB. shell configuration files ( .bashrc, .zshrc, or .bash_profile)
+	==> I have ~/.bashrc
+
+    1. write key in .bashrc file at /home/bmarron
+$ echo "export GEMINI_API_KEY='my-key'" >> ~/.bashrc
+
+    2. update shell with new variable
+$ source ~/.bashrc
+
+    3. check  ~/.bashrc file
+    [should have ==> export GEMINI_API_KEY="AIzaSxxxxxx" as the last entry]
+    
+$ notepadqq ./.bashrc
+
+    4. confirm you have set the API key correctly
+$ echo $GEMINI_API_KEY
+
+    5. Re-start Spyder and check that Python finds the key
+import os
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+
+
+    6. call the key in scripts
+import os
+from google import genai
+
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=gemini_api_key) 
+
+
+#############
+Uploading files
+###############
+
+	# watch file name for uploaded INPUT_FILE 
+        # ==> strictly alpha! 
+        # ==> NO dashes or underline (won't upload to Gemini)
+
+
+--- python -------------------------------------------------
+#--- Read and process file to be translated (file UPLOADED) ---
+>>>
+uploadedfile = client.files.upload(
+    file=input_filepath,
+    config=dict(mime_type='text/plain')
+    )
+<<<
+----------------------------------------
+
+
+################
+Google CloudShell
+###################
+https://docs.cloud.google.com/shell/docs/using-cloud-shell
+
+'''
+Doing simple excerpt translations in  with the Standard NMT model
+  Login to Google (marron,bruce,mx@gmail,com)
+  Login to Google Cloud Console
+  Activate Google Cloud Shell
+  Click Activate Cloud Shell at the top of the Google Cloud console.
+
+Cloud Shell access
+  https://console.cloud.google.com/welcome?project=my-project-uteca1
+'''
+
+
+Project name
+    My Project-UTECA1
+Project number
+    735387290281
+Project ID
+    my-project-uteca1
+
+
+'''
+ Go to Cloud Hub for better visibility
+This dashboard is no longer updated and will shut down in 2027. 
+Cloud Hub offers a more comprehensive view across health, security, 
+cost, optimization, and other data about your projects and applications. 
+
+marron_bruce_mx@cloudshell:~ (my-project-uteca1)$ 
+'''
