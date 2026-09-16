@@ -5,8 +5,6 @@ Claude
 #############
 
 
-
-
 INITIAL SETUP and LOGIN
 	https://platform.claude.com/
 	https://platform.claude.com/login?from=logout
