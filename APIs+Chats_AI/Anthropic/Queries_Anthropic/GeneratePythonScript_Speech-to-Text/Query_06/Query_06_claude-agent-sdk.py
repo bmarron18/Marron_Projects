@@ -55,12 +55,13 @@ INPUT_FILE_03 = "diagram.png"
 input_f3 = Path(os.path.join(doc_dir, INPUT_FILE_03))
 '''
 
+
     # plain-text files
-INPUT_FILE_01 = "architecture_notes.txt"
+INPUT_FILE_01 = "Gemini_speech-to-text_live_01.py"
 input_f1 = Path(os.path.join(doc_dir, INPUT_FILE_01))
 
     # plain-text files
-INPUT_FILE_02 = "architecture_notes.txt"
+INPUT_FILE_02 = "Gemini_speech-to-text_live_02.py"
 input_f2 = Path(os.path.join(doc_dir, INPUT_FILE_02))
 
 
@@ -76,9 +77,9 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 #========= Upload files for review ===========================
    # File type must match MIME type in the files_to_review [list]
 files_to_review = [
-    (input_f1, "application/pdf"),
+    (input_f1, "text/plain"),
     (input_f2, "text/plain"),
-    (input_f3, "image/png"),
+#    (input_f3, "image/png"),
 ]
 
 uploaded = []
@@ -111,17 +112,31 @@ for filename, file_id, mime_type in uploaded:
 content_blocks.append({
     "type": "text",
     "text": (
-        "Please review these files together. Summarize each one, "
-        "flag inconsistencies between them, and note anything that "
-        "needs follow-up."
+        "Please review these files together. They both attempt to generate a script \
+        for the following pipeline: \
+        1. Microphone audio is streamed continuously, in small chunks, straight \
+        into a persistent WebSocket session with Gemini's Live API. \
+        2. gemini-3.5-live-translate-preview does speech-to-speech translation on \
+        that stream directly -- there is no separate detect an utterance, then call \
+        STT, then call a translator pipeline. The model itself decides where sentences \
+        begin/end (via its own built-in VAD) and streams back translated Spanish audio \
+        continuously, a few seconds behind the speaker. \
+        3. Because input_audio_transcription / output_audio_transcription are enabled \
+        in the session config, the model also streams back the English and Spanish \
+        TEXT transcripts alongside the Spanish audio, so we can still keep a running \
+        EN/ES text. \
+        4. (Optional) The translated Spanish audio can also be played back through \
+        your speakers in real time -- set PLAY_TRANSLATED_AUDIO=1. \
+        Analyze why neither script functions correctly and then, taking the best of both \
+        scripts, write a new revised script that incorporates the recommended changes."
     ),
 })
 
 
 #======== Send everything in one query (Messages request) ==================
 response = client.messages.create(
-    model="claude-sonnet-4-6",  # or another current model id
-    max_tokens=2048,
+    model="claude-opus-5",  # or another current model id
+    max_tokens=16384,
     messages=[{"role": "user", "content": content_blocks}],
 )
 
