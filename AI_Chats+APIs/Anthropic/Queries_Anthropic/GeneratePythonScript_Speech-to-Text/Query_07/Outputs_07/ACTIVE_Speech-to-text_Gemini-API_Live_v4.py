@@ -1,0 +1,730 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 17 14:40:19 2026
+
+@author: bruce-vdb, Claude Opus 5
+"""
+
+
+from __future__ import annotations
+
+import argparse
+import asyncio
+import contextlib
+import os
+import queue
+import signal
+import sys
+import threading
+import time
+import traceback
+from datetime import datetime
+from pathlib import Path
+from typing import Callable, Iterable
+
+try:
+    import numpy as np
+    import sounddevice as sd
+except Exception as exc:                                     # pragma: no cover
+    print(f"FATAL: audio stack unavailable ({exc}).\n"
+          "       pip install sounddevice numpy   (and: sudo apt install libportaudio2)",
+          file=sys.stderr)
+    raise SystemExit(3)
+
+try:
+    from google import genai
+    from google.genai import types
+except Exception as exc:                                     # pragma: no cover
+    print(f"FATAL: google-genai not importable ({exc}).\n"
+          "       pip install -U google-genai", file=sys.stderr)
+    raise SystemExit(3)
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+IN_RATE       = 16_000      # Hz required by the Live API input contract
+OUT_RATE      = 24_000      # Hz returned by the Live API (PCM16 mono)
+CHANNELS      = 1
+CHUNK_MS      = 100         # mic chunk streamed upstream
+MIC_QUEUE_MAX = 40          # ~4 s backlog per session, then drop oldest
+IDLE_FLUSH_S  = 1.5         # commit a transcript line after this much silence
+
+TARGET_LANG = os.getenv("TARGET_LANG", "es-US")
+SOURCE_LANG = os.getenv("SOURCE_LANG", "en-US")
+API_VERSION = os.getenv("GENAI_API_VERSION", "v1beta")
+
+# Real, currently-served Live API models, most capable first.
+# Override with TRANSLATE_MODEL / TRANSCRIBE_MODEL (comma-separated is allowed).
+TRANSLATE_MODELS = [
+    m.strip() for m in os.getenv(
+        "TRANSLATE_MODEL",
+        "gemini-live-2.5-flash-preview,"
+        "gemini-2.5-flash-preview-native-audio-dialog,"
+        "gemini-2.0-flash-live-001",
+    ).split(",") if m.strip()
+]
+TRANSCRIBE_MODELS = [
+    m.strip() for m in os.getenv(
+        "TRANSCRIBE_MODEL",
+        "gemini-live-2.5-flash-preview,"
+        "gemini-2.0-flash-live-001",
+    ).split(",") if m.strip()
+]
+
+INTERPRETER_PROMPT = (
+    "You are a simultaneous interpreter. Render every English utterance you "
+    "hear into natural, spoken Latin-American Spanish, immediately and "
+    "completely. Do not answer questions, do not comment, do not add, omit or "
+    "summarise anything, and never speak English. Output only the Spanish "
+    "interpretation of what the speaker said."
+)
+SILENT_PROMPT = (
+    "You are a silent transcription endpoint. Never produce any output of any "
+    "kind. Do not reply, acknowledge, or comment."
+)
+
+CHUNK_FRAMES = int(IN_RATE * CHUNK_MS / 1000)
+
+
+def log_note(msg: str) -> None:
+    print(f"[{datetime.now():%H:%M:%S}] {msg}", flush=True)
+
+
+# ---------------------------------------------------------------------------
+# Defensive SDK feature detection
+# ---------------------------------------------------------------------------
+def _T(name: str):
+    return getattr(types, name, None)
+
+
+def _make(name: str, **kwargs):
+    """types.<name>(**kwargs), silently dropping kwargs this SDK rejects."""
+    cls = _T(name)
+    if cls is None:
+        return None
+    kw = dict(kwargs)
+    while True:
+        try:
+            return cls(**kw)
+        except Exception as exc:                 # pydantic ValidationError / TypeError
+            bad = _offending_key(exc, kw)
+            if bad is None:
+                return None
+            kw.pop(bad)
+
+
+def _offending_key(exc: Exception, kwargs: dict) -> str | None:
+    text = str(exc)
+    for key in list(kwargs):
+        if key in text:
+            return key
+    return None
+
+
+def build_live_config(**kwargs) -> types.LiveConnectConfig:
+    """LiveConnectConfig that tolerates unknown/unsupported keys."""
+    kw = {k: v for k, v in kwargs.items() if v is not None}
+    while True:
+        try:
+            return types.LiveConnectConfig(**kw)
+        except Exception as exc:
+            bad = _offending_key(exc, kw)
+            if bad is None:
+                raise
+            log_note(f"[config] this google-genai build rejects '{bad}' -> dropped")
+            kw.pop(bad)
+
+
+# ---------------------------------------------------------------------------
+# Transcript log: incremental console streaming + timestamped file lines
+# ---------------------------------------------------------------------------
+class TranscriptLog:
+    def __init__(self, path: Path, mode: str):
+        self.path = path
+        self._lock = threading.Lock()
+        self._buf: dict[str, str] = {}
+        self._touched: dict[str, float] = {}
+        self._last_tag: str | None = None
+        self.lines = 0
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            f"Gemini Live session  mode={mode}  "
+            f"{SOURCE_LANG} -> {TARGET_LANG}  "
+            f"started {datetime.now():%Y-%m-%d %H:%M:%S}\n\n",
+            encoding="utf-8",
+        )
+
+    def feed(self, tag: str, text: str) -> None:
+        if not text:
+            return
+        with self._lock:
+            if self._last_tag != tag:
+                sys.stdout.write(f"\n{tag}  ")
+                self._last_tag = tag
+            sys.stdout.write(text)
+            sys.stdout.flush()
+            self._buf[tag] = self._buf.get(tag, "") + text
+            self._touched[tag] = time.monotonic()
+
+    def flush(self, tags: Iterable[str] | None = None) -> None:
+        with self._lock:
+            for tag in list(tags if tags is not None else self._buf.keys()):
+                line = self._buf.pop(tag, "").strip()
+                self._touched.pop(tag, None)
+                if not line:
+                    continue
+                stamp = datetime.now().strftime("%H:%M:%S")
+                with self.path.open("a", encoding="utf-8") as fh:
+                    fh.write(f"[{stamp}] {tag}: {line}\n")
+                self.lines += 1
+            self._last_tag = None
+
+    def flush_idle(self) -> None:
+        now = time.monotonic()
+        with self._lock:
+            stale = [t for t, ts in self._touched.items() if now - ts >= IDLE_FLUSH_S]
+        if stale:
+            self.flush(stale)
+
+
+async def idle_flusher(log: TranscriptLog, stop: asyncio.Event) -> None:
+    try:
+        while not stop.is_set():
+            await asyncio.sleep(0.4)
+            log.flush_idle()
+    except asyncio.CancelledError:
+        pass
+
+
+# ---------------------------------------------------------------------------
+# Microphone: one capture stream fanned out to N bounded asyncio queues
+# ---------------------------------------------------------------------------
+def resolve_device(spec: str | None):
+    if spec is None or str(spec).strip() == "":
+        return None
+    spec = str(spec).strip()
+    try:
+        return int(spec)
+    except ValueError:
+        return spec
+
+
+class MicBroadcaster:
+    def __init__(self, device, loop: asyncio.AbstractEventLoop):
+        self._loop = loop
+        self._subs: list[asyncio.Queue[bytes]] = []
+        self._dropped = 0
+        self.frames = 0
+        self.peak = 0
+        self.device = device
+        self.rate, self._resample = self._negotiate_rate(device)
+        blocksize = int(self.rate * CHUNK_MS / 1000)
+        self.stream = sd.InputStream(
+            samplerate=self.rate,
+            channels=CHANNELS,
+            dtype="int16",
+            blocksize=blocksize,
+            device=device,
+            callback=self._callback,
+        )
+
+    @staticmethod
+    def _negotiate_rate(device) -> tuple[int, bool]:
+        """Prefer 16 kHz; otherwise capture native and resample linearly."""
+        try:
+            sd.check_input_settings(device=device, channels=CHANNELS,
+                                    dtype="int16", samplerate=IN_RATE)
+            return IN_RATE, False
+        except Exception:
+            info = (sd.query_devices(device, kind="input") if device is not None
+                    else sd.query_devices(kind="input"))
+            native = int(info["default_samplerate"])
+            log_note(f"[audio] device refuses {IN_RATE} Hz; capturing at {native} Hz "
+                     f"and resampling to {IN_RATE} Hz")
+            return native, True
+
+    def subscribe(self) -> asyncio.Queue[bytes]:
+        q: asyncio.Queue[bytes] = asyncio.Queue(maxsize=MIC_QUEUE_MAX)
+        self._subs.append(q)
+        return q
+
+    def _callback(self, indata, frames, time_info, status):      # noqa: ANN001
+        if status:
+            print(f"\n[audio] {status}", file=sys.stderr, flush=True)
+        mono = indata[:, 0]
+        self.frames += len(mono)
+        if len(mono):
+            self.peak = max(self.peak, int(np.abs(mono).max()))
+        if self._resample:
+            n_out = max(1, int(round(len(mono) * IN_RATE / self.rate)))
+            src = np.linspace(0.0, 1.0, num=len(mono), endpoint=False)
+            dst = np.linspace(0.0, 1.0, num=n_out, endpoint=False)
+            mono = np.interp(dst, src, mono.astype(np.float32)).astype(np.int16)
+        payload = mono.copy().tobytes()
+        try:
+            self._loop.call_soon_threadsafe(self._fanout, payload)
+        except RuntimeError:
+            pass                                  # loop already closed on shutdown
+
+    def _fanout(self, payload: bytes) -> None:
+        for q in self._subs:
+            if q.full():                          # bounded: drop oldest, keep latency low
+                with contextlib.suppress(asyncio.QueueEmpty):
+                    q.get_nowait()
+                    self._dropped += 1
+            with contextlib.suppress(asyncio.QueueFull):
+                q.put_nowait(payload)
+
+    def __enter__(self):
+        self.stream.start()
+        dev = self.device if self.device is not None else "default"
+        log_note(f"[audio] capturing from {dev!r} at {self.rate} Hz, "
+                 f"{CHUNK_MS} ms chunks")
+        return self
+
+    def __exit__(self, *exc):
+        with contextlib.suppress(Exception):
+            self.stream.stop()
+            self.stream.close()
+        if self._dropped:
+            log_note(f"[audio] dropped {self._dropped} chunks under backpressure")
+        log_note(f"[audio] captured {self.frames / self.rate:.1f} s, "
+                 f"peak amplitude {self.peak}/32767")
+        if self.peak < 200:
+            log_note("[audio] WARNING: input was essentially silent — wrong device "
+                     "or muted mic? Run with --list-devices.")
+
+
+# ---------------------------------------------------------------------------
+# Speaker playback on a worker thread (never block the event loop)
+# ---------------------------------------------------------------------------
+class Speaker:
+    def __init__(self, rate: int = OUT_RATE):
+        self.rate = rate
+        self._q: queue.Queue[bytes | None] = queue.Queue(maxsize=200)
+        self._thread = threading.Thread(target=self._run, name="speaker", daemon=True)
+
+    def __enter__(self):
+        self._thread.start()
+        return self
+
+    def __exit__(self, *exc):
+        with contextlib.suppress(Exception):
+            self._q.put_nowait(None)
+        self._thread.join(timeout=3)
+
+    def _run(self) -> None:
+        try:
+            with sd.RawOutputStream(samplerate=self.rate, channels=1,
+                                    dtype="int16") as out:
+                while True:
+                    item = self._q.get()
+                    if item is None:
+                        break
+                    out.write(item)
+        except Exception:
+            print("\n[speaker] playback thread failed:", file=sys.stderr)
+            traceback.print_exc()
+
+    def play(self, pcm: bytes) -> None:
+        with contextlib.suppress(queue.Full):
+            self._q.put_nowait(pcm)              # drop audio rather than add latency
+
+    def reset(self) -> None:
+        """On 'interrupted', discard stale audio so it is not played over new speech."""
+        while True:
+            try:
+                self._q.get_nowait()
+            except queue.Empty:
+                return
+
+
+# ---------------------------------------------------------------------------
+# Session config fragments
+# ---------------------------------------------------------------------------
+def _resumption(handle: str | None):
+    return _make("SessionResumptionConfig", handle=handle)
+
+
+def _compression():
+    sliding = _make("SlidingWindow")
+    return _make("ContextWindowCompressionConfig", sliding_window=sliding)
+
+
+def _vad():
+    aad = _make("AutomaticActivityDetection",
+                disabled=False,
+                prefix_padding_ms=200,
+                silence_duration_ms=700)
+    return _make("RealtimeInputConfig", automatic_activity_detection=aad)
+
+
+def _instruction(text: str):
+    return types.Content(role="user", parts=[types.Part(text=text)])
+
+
+def translate_config(handle: str | None) -> types.LiveConnectConfig:
+    """
+    EN speech -> ES speech.  response_modalities must be AUDIO for this model,
+    so the EN/ES *text* comes from the two transcription configs:
+      input_audio_transcription  -> English (what you said)
+      output_audio_transcription -> Spanish (what the model said)
+    """
+    return build_live_config(
+        response_modalities=["AUDIO"],
+        input_audio_transcription=_make("AudioTranscriptionConfig"),
+        output_audio_transcription=_make("AudioTranscriptionConfig"),
+        speech_config=_make("SpeechConfig", language_code=TARGET_LANG),
+        system_instruction=_instruction(INTERPRETER_PROMPT),
+        realtime_input_config=_vad(),
+        context_window_compression=_compression(),
+        session_resumption=_resumption(handle),
+        temperature=0.0,
+    )
+
+
+def transcribe_config(handle: str | None) -> types.LiveConnectConfig:
+    """Transcription-only English session (no translation, no spoken reply)."""
+    return build_live_config(
+        response_modalities=["TEXT"],
+        input_audio_transcription=_make("AudioTranscriptionConfig"),
+        system_instruction=_instruction(SILENT_PROMPT),
+        realtime_input_config=_vad(),
+        context_window_compression=_compression(),
+        session_resumption=_resumption(handle),
+        temperature=0.0,
+    )
+
+
+# ---------------------------------------------------------------------------
+# SDK compatibility shim for sending audio
+# ---------------------------------------------------------------------------
+async def send_audio(session, pcm: bytes) -> None:
+    mime = f"audio/pcm;rate={IN_RATE}"
+    if hasattr(session, "send_realtime_input"):
+        blob = _make("Blob", data=pcm, mime_type=mime)
+        if blob is not None:
+            await session.send_realtime_input(audio=blob)
+            return
+        await session.send_realtime_input(audio={"data": pcm, "mime_type": mime})
+        return
+    await session.send(input={"data": pcm, "mime_type": mime})    # legacy SDKs
+
+
+# ---------------------------------------------------------------------------
+# Session worker: send/receive + auto-reconnect with session resumption
+# ---------------------------------------------------------------------------
+_MODEL_ERRORS = ("not_found", "404", "was not found", "is not supported",
+                 "not supported for", "unsupported model")
+
+
+class SessionWorker:
+    def __init__(
+        self,
+        name: str,
+        models: list[str],
+        config_builder: Callable[[str | None], types.LiveConnectConfig],
+        client: genai.Client,
+        mic: MicBroadcaster,
+        log: TranscriptLog,
+        stop: asyncio.Event,
+        speaker: Speaker | None,
+        input_tag: str | None,
+        output_tag: str | None,
+    ):
+        self.name = name
+        self.models = list(models)
+        self._mi = 0
+        self.config_builder = config_builder
+        self.client = client
+        self.q = mic.subscribe()
+        self.log = log
+        self.stop = stop
+        self.speaker = speaker
+        self.input_tag = input_tag
+        self.output_tag = output_tag
+        self.handle: str | None = None
+        self.reconnects = 0
+        self._reconnect_now = False
+
+    # -- upstream ---------------------------------------------------------
+    async def _send(self, session) -> None:
+        while not self.stop.is_set():
+            try:
+                chunk = await asyncio.wait_for(self.q.get(), timeout=0.25)
+            except asyncio.TimeoutError:
+                continue
+            await send_audio(session, chunk)
+
+    # -- downstream -------------------------------------------------------
+    def _handle(self, msg) -> None:
+        upd = getattr(msg, "session_resumption_update", None)
+        if upd is not None and getattr(upd, "resumable", False) and getattr(upd, "new_handle", None):
+            self.handle = upd.new_handle
+
+        if getattr(msg, "go_away", None) is not None:
+            left = getattr(msg.go_away, "time_left", None)
+            log_note(f"[{self.name}] server GoAway (time_left={left}); will reconnect")
+            self._reconnect_now = True
+
+        sc = getattr(msg, "server_content", None)
+        if sc is None:
+            return
+
+        if self.input_tag:
+            it = getattr(sc, "input_transcription", None)
+            if it is not None and getattr(it, "text", None):
+                self.log.feed(self.input_tag, it.text)
+
+        if self.output_tag:
+            ot = getattr(sc, "output_transcription", None)
+            if ot is not None and getattr(ot, "text", None):
+                self.log.feed(self.output_tag, ot.text)
+
+        if getattr(sc, "interrupted", False) and self.speaker:
+            self.speaker.reset()
+
+        if self.speaker is not None:
+            data = getattr(msg, "data", None)
+            if data:
+                self.speaker.play(data)
+            else:
+                mt = getattr(sc, "model_turn", None)
+                for part in (getattr(mt, "parts", None) or []):
+                    inline = getattr(part, "inline_data", None)
+                    if inline is not None and getattr(inline, "data", None):
+                        self.speaker.play(inline.data)
+
+        if getattr(sc, "turn_complete", False) or getattr(sc, "generation_complete", False):
+            self.log.flush()
+
+    async def _recv(self, session) -> None:
+        async for msg in session.receive():
+            self._handle(msg)
+            if self._reconnect_now or self.stop.is_set():
+                return
+
+    # -- supervisor -------------------------------------------------------
+    async def run(self) -> None:
+        backoff = 1.0
+        while not self.stop.is_set():
+            model = self.models[self._mi]
+            self._reconnect_now = False
+            try:
+                cfg = self.config_builder(self.handle)
+                async with self.client.aio.live.connect(model=model, config=cfg) as session:
+                    log_note(f"[{self.name}] connected: {model}"
+                             + (" (resumed)" if self.handle else ""))
+                    backoff = 1.0
+                    sender = asyncio.create_task(self._send(session),
+                                                 name=f"{self.name}-send")
+                    try:
+                        await self._recv(session)
+                    finally:
+                        sender.cancel()
+                        with contextlib.suppress(BaseException):
+                            await sender
+            except asyncio.CancelledError:
+                raise
+            except Exception as exc:
+                if self.stop.is_set():
+                    break
+                text = f"{type(exc).__name__}: {exc}"
+                log_note(f"[{self.name}] session error: {text}")
+                low = text.lower()
+                if any(k in low for k in _MODEL_ERRORS) and self._mi + 1 < len(self.models):
+                    self._mi += 1
+                    log_note(f"[{self.name}] model rejected -> falling back to "
+                             f"{self.models[self._mi]}")
+                    self.handle = None
+                    continue
+                if "api key" in low or "unauthenticated" in low or "permission" in low:
+                    log_note(f"[{self.name}] credential problem — aborting this session")
+                    self.stop.set()
+                    break
+                self.reconnects += 1
+                await asyncio.sleep(backoff)
+                backoff = min(backoff * 2, 15.0)
+            else:
+                if not self.stop.is_set():
+                    self.reconnects += 1
+                    log_note(f"[{self.name}] stream closed; reconnecting")
+                    await asyncio.sleep(0.5)
+        self.log.flush()
+        log_note(f"[{self.name}] stopped after {self.reconnects} reconnect(s)")
+
+
+# ---------------------------------------------------------------------------
+# Diagnostics
+# ---------------------------------------------------------------------------
+def list_devices() -> int:
+    print(sd.query_devices())
+    try:
+        din, dout = sd.default.device
+        print(f"\ndefault input index : {din}\ndefault output index: {dout}")
+    except Exception:
+        pass
+    print("\nPick a name or index, then:  --device 3   or   --device pulse")
+    return 0
+
+
+async def check(client: genai.Client, models: list[str]) -> int:
+    print("google-genai :", getattr(genai, "__version__", "unknown"))
+    print("api_version  :", API_VERSION)
+    ok = 0
+    try:
+        names = []
+        for m in client.models.list():
+            n = getattr(m, "name", "") or ""
+            if "live" in n or "native-audio" in n:
+                names.append(n.removeprefix("models/"))
+        print("live-capable models visible to this key:")
+        for n in sorted(set(names)) or ["  (none reported)"]:
+            print("   ", n)
+    except Exception as exc:
+        print(f"models.list() failed: {type(exc).__name__}: {exc}")
+
+    for model in models:
+        try:
+            cfg = build_live_config(response_modalities=["TEXT"])
+            async with client.aio.live.connect(model=model, config=cfg):
+                print(f"connect OK   : {model}")
+                ok += 1
+                break
+        except Exception as exc:
+            print(f"connect FAIL : {model}  ->  {type(exc).__name__}: {exc}")
+    return 0 if ok else 1
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(
+        description="Live EN->ES speech translation / transcription (Gemini Live API).")
+    p.add_argument("--mode", choices=("translate", "transcribe", "dual"),
+                   default=os.getenv("MODE", "translate"),
+                   help="translate: EN+ES from one session (default). "
+                        "transcribe: EN only. dual: two sessions (2x quota).")
+    p.add_argument("--device", default=os.getenv("AUDIO_INPUT_DEVICE"),
+                   help="input device index or name (see --list-devices)")
+    p.add_argument("--play-audio", action="store_true",
+                   default=os.getenv("PLAY_TRANSLATED_AUDIO", "0") == "1",
+                   help="play the Spanish audio through the speakers")
+    p.add_argument("--duration", type=float, default=float(os.getenv("DURATION", "0")),
+                   help="stop automatically after N seconds (0 = run until Ctrl-C)")
+    p.add_argument("--out-dir", default=os.getenv("TRANSCRIPT_DIR",
+                                                  str(Path.home() / "Desktop")))
+    p.add_argument("--list-devices", action="store_true")
+    p.add_argument("--check", action="store_true",
+                   help="verify key, SDK, model reachability, then exit")
+    return p.parse_args(argv)
+
+
+async def async_main(args: argparse.Namespace, api_key: str) -> int:
+    client = genai.Client(api_key=api_key,
+                          http_options={"api_version": API_VERSION})
+
+    if args.check:
+        return await check(client, TRANSLATE_MODELS + TRANSCRIBE_MODELS)
+
+    loop = asyncio.get_running_loop()
+    stop = asyncio.Event()
+
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        with contextlib.suppress(NotImplementedError, AttributeError, ValueError):
+            loop.add_signal_handler(sig, stop.set)
+
+    out_file = (Path(args.out_dir).expanduser()
+                / f"live_translation_{datetime.now():%Y%m%d_%H%M%S}.txt")
+    log = TranscriptLog(out_file, args.mode)
+
+    device = resolve_device(args.device)
+    try:
+        mic = MicBroadcaster(device, loop)
+    except Exception as exc:
+        print(f"FATAL: cannot open audio input {device!r}: "
+              f"{type(exc).__name__}: {exc}\n"
+              "       run with --list-devices to see valid choices",
+              file=sys.stderr)
+        return 4
+
+    speaker_cm = Speaker(OUT_RATE) if args.play_audio else contextlib.nullcontext()
+
+    print("=" * 72)
+    print(f"  Gemini Live  |  mode={args.mode}  |  {SOURCE_LANG} -> {TARGET_LANG}")
+    print(f"  transcript  : {out_file}")
+    print(f"  audio out   : {'on' if args.play_audio else 'off'}"
+          f"   |  duration: {args.duration or 'until Ctrl-C'}")
+    print("  Speak English. Ctrl-C to stop.")
+    print("=" * 72, flush=True)
+
+    with mic, speaker_cm as speaker:
+        workers: list[SessionWorker] = []
+        if args.mode in ("translate", "dual"):
+            workers.append(SessionWorker(
+                "translate", TRANSLATE_MODELS, translate_config, client, mic, log,
+                stop, speaker if args.play_audio else None,
+                input_tag=None if args.mode == "dual" else "EN",
+                output_tag="ES",
+            ))
+        if args.mode in ("transcribe", "dual"):
+            workers.append(SessionWorker(
+                "transcribe", TRANSCRIBE_MODELS, transcribe_config, client, mic, log,
+                stop, None, input_tag="EN", output_tag=None,
+            ))
+
+        tasks = [asyncio.create_task(w.run(), name=w.name) for w in workers]
+        tasks.append(asyncio.create_task(idle_flusher(log, stop), name="flusher"))
+        if args.duration and args.duration > 0:
+            async def timer() -> None:
+                with contextlib.suppress(asyncio.CancelledError):
+                    await asyncio.sleep(args.duration)
+                    log_note("[main] duration reached")
+                    stop.set()
+            tasks.append(asyncio.create_task(timer(), name="timer"))
+
+        waiter = asyncio.create_task(stop.wait(), name="stop")
+        try:
+            await asyncio.wait([waiter, *tasks], return_when=asyncio.FIRST_COMPLETED)
+        except asyncio.CancelledError:
+            stop.set()
+        finally:
+            stop.set()
+            for t in tasks + [waiter]:
+                t.cancel()
+            await asyncio.gather(*tasks, waiter, return_exceptions=True)
+
+    log.flush()
+    print()
+    log_note(f"[main] {log.lines} transcript line(s) written to {out_file}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+
+    if args.list_devices:
+        return list_devices()
+
+    api_key = (os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "").strip()
+    if not api_key:
+        print("FATAL: no API key. Set one of:\n"
+              "       export GEMINI_API_KEY='...'\n"
+              "       export GOOGLE_API_KEY='...'", file=sys.stderr)
+        return 2
+
+    try:
+        return asyncio.run(async_main(args, api_key))
+    except KeyboardInterrupt:
+        print("\n[main] interrupted", flush=True)
+        return 130
+    except Exception:
+        print("\nFATAL: unhandled exception:", file=sys.stderr)
+        traceback.print_exc()
+        return 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -7,11 +7,13 @@ Run Sequence
 
 <<<bash
  
-  cd ~/spyder-6/envs && source ./ai-apis/bin/activate
+  cd ~/spyder-6/envs && source ./ai-apis/bin/activate &&
   echo $GEMINI_API_KEY
+
   export GEMINI_API_KEY='...'
-  export AUDIO_INPUT_DEVICE=pulse 
-  export PLAY_TRANSLATED_AUDIO=1
+  
+  export AUDIO_INPUT_DEVICE=pulse &&
+  export PLAY_TRANSLATED_AUDIO=0 &&
   python3 ~/Desktop/ACTIVE-SCRIPT_Speech-to-text_Gemini-API_Live.py
   
   deactivate
