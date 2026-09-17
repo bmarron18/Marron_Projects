@@ -23,7 +23,7 @@ Chat with Claude
 https://claude.ai/login
 https://claude.ai/login?from=logout
 
-Sigin w/ Google (marron.bruce.mx@gmail.com)
+Signin w/ Google (marron.bruce.mx@gmail.com)
 
 ADVANTAGES
     Easy upload files for analysis
@@ -49,12 +49,45 @@ Using Claude
 #############
 if your goal is to prevent Claude Code's agentic loop from executing terminal commands, creating local files, or installing dependencies, you can explicitly force it to operate in a "text-only/print" mode.Depending on whether you want to use the Claude Code CLI to output text or prompt the underlying Claude Agent SDK / Messages API programmatically, you can structure your setup using the workflows below.
 
+-----------
+Prompting Programmatically via the Claude Agent SDK / Messages API
+    * custom script to prompt Claude via its Developer API? don't use the standard chat interface. 
+    * bypass the agent loop entirely by interacting with the claude_agent_sdk or the raw anthropic 
+      messages API.
 
 
-Method 2: Prompting Programmatically via the Claude Agent SDK / Messages API
-If you are developing a custom script to prompt Claude via its Developer API, you shouldn't use the standard chat interface. Instead, you can bypass the agent loop entirely by interacting with the claude_agent_sdk or the raw anthropic messages API.
+---------------
+USE THIS!!
+Standard Anthropic Messages API (Safest for Text-Only Outputs) 
+    * 100% certainty that no agentic loops, background file writing, or tool calls occur
+    * bypass the Claude Code framework entirely and prompt the underlying Claude Messages API using the 
+      anthropic Python SDK package
 
 
+<<<python
+import anthropic
+
+client = anthropic.Anthropic()
+
+    # Pass system requirements and formatting rules directly to the model
+response = client.messages.create(
+    model="claude-3-5-sonnet-20240620",  # Or your preferred frontier model
+    max_tokens=2048,
+    system="You are an expert Python engineer. Return ONLY valid Python code inside markdown blocks. Do not explain the code, do not use tools, and provide instructions for dependencies inside a comment block at the top of the file.",
+    messages=[
+        {
+            "role": "user",
+            "content": "System Requirements: Mac M-series, Python 3.10+, ffmpeg installed. Prompt: Generate a python script to translate audio files from Spanish to English using Faster-Whisper."
+        }
+    ]
+)
+
+print(response.content[0].text)
+>>>python
+
+
+
+-----------------
 DO NOT USE!!
 Option A: Using the Claude Agent SDK (With a Custom System Prompt)
 Anthropic allows you to modify the system prompt of the Agent SDK. This strips the model of its agentic behavior and enforces standard code generation
@@ -86,34 +119,6 @@ async def generate_pure_code():
 
 # Run the async loop
 asyncio.run(generate_pure_code())
->>>python
-
-
-
-USE THIS!!
-Option B: Standard Anthropic Messages API (Safest for Text-Only Outputs) 
-If you want 100% certainty that no agentic loops, background file writing, or tool calls occur, you can bypass the Claude Code framework entirely and prompt the underlying Claude Messages API using the anthropic Python package
-
-
-<<<python
-import anthropic
-
-client = anthropic.Anthropic()
-
-# Pass system requirements and formatting rules directly to the model
-response = client.messages.create(
-    model="claude-3-5-sonnet-20240620",  # Or your preferred frontier model
-    max_tokens=2048,
-    system="You are an expert Python engineer. Return ONLY valid Python code inside markdown blocks. Do not explain the code, do not use tools, and provide instructions for dependencies inside a comment block at the top of the file.",
-    messages=[
-        {
-            "role": "user",
-            "content": "System Requirements: Mac M-series, Python 3.10+, ffmpeg installed. Prompt: Generate a python script to translate audio files from Spanish to English using Faster-Whisper."
-        }
-    ]
-)
-
-print(response.content[0].text)
 >>>python
 
 

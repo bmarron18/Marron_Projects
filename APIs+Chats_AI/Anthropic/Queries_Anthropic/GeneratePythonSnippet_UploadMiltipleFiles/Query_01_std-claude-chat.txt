@@ -1,0 +1,135 @@
+ #################################
+ Query_01 directly to Claude chat
+ https://claude.ai/login
+ ###############################
+
+ chat saved in Project: general-queries
+
+----------------
+Query_01
+
+I want send multiple files for Claude review using the Claude agent API interface using the anthropic SDK. Please provide the Python code snippet for this task.
+
+
+-------------
+Here's a Python snippet using the Anthropic SDK's Files API to upload multiple files once and reference them all in a single review request:
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from env
+
+# 1. Upload each file once — you get back a file_id you can reuse
+#    across as many Messages requests as you like.
+files_to_review = [
+    ("report_q3.pdf", "application/pdf"),
+    ("architecture_notes.txt", "text/plain"),
+    ("diagram.png", "image/png"),
+]
+
+uploaded = []
+for filename, mime_type in files_to_review:
+    with open(filename, "rb") as f:
+        result = client.files.upload(file=(filename, f, mime_type))
+    uploaded.append((filename, result.id, mime_type))
+    print(f"Uploaded {filename} -> {result.id}")
+
+# 2. Build the content blocks for the message.
+#    - PDFs and .txt/.md/.csv (text/plain) use a "document" block
+#    - images use an "image" block
+content_blocks = []
+for filename, file_id, mime_type in uploaded:
+    if mime_type.startswith("image/"):
+        content_blocks.append({
+            "type": "image",
+            "source": {"type": "file", "file_id": file_id},
+        })
+    else:
+        content_blocks.append({
+            "type": "document",
+            "source": {"type": "file", "file_id": file_id},
+            "title": filename,
+        })
+
+# Put the instruction text last (or first) alongside the file blocks
+content_blocks.append({
+    "type": "text",
+    "text": (
+        "Please review these files together. Summarize each one, "
+        "flag inconsistencies between them, and note anything that "
+        "needs follow-up."
+    ),
+})
+
+# 3. Send everything in one Messages request
+response = client.messages.create(
+    model="claude-sonnet-4-6",  # or another current model id
+    max_tokens=2048,
+    messages=[{"role": "user", "content": content_blocks}],
+)
+
+for block in response.content:
+    if block.type == "text":
+        print(block.text)
+```
+
+A few notes on this:
+
+- **File types**: `.pdf` and plain-text files (`.txt`, `.md`, `.csv`) go in `document` blocks; images (`jpeg`, `png`, `gif`, `webp`) go in `image` blocks. Binary formats like `.docx`/`.xlsx` aren't accepted directly — convert them to PDF or plain text first.
+
+- **Files API is out of beta** now, so no `anthropic-beta` header or `client.beta.files` namespace is needed — plain `client.files.upload(...)` works.
+
+- **Reuse**: since each `file_id` persists (until you delete it or it expires), you don't need to re-upload for follow-up questions in later requests — just reference the same `file_id` again.
+
+- **Size limits**: 500 MB per file, 1 TB per org; there's also a combined request-size ceiling worth being aware of if you're sending many large files in a single call, so batching heavy reviews across a couple of requests can help if you hit a `413`.
+
+- **Cleanup**: call `client.files.delete(file_id)` when you're done if you don't want them sitting in workspace storage.
+
+Want me to adapt this into a small CLI script that takes a folder of files as input?
+
+
+---------------
+How can I use the call, client.files.delete(file_id) to delete all file IDs?
+
+----------------
+Two common cases — deleting the ones you just uploaded in this session, or deleting *every* file currently in your workspace:
+
+**1. Delete just the files you uploaded in this run** (reusing the `uploaded` list from before):
+
+```python
+for filename, file_id, mime_type in uploaded:
+    client.files.delete(file_id)
+    print(f"Deleted {filename} ({file_id})")
+```
+
+**2. Delete every file in the workspace** — list them all (the SDK auto-paginates) and delete each:
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+for file in client.files.list():
+    client.files.delete(file.id)
+    print(f"Deleted {file.filename} ({file.id})")
+```
+
+A couple of things worth knowing:
+
+- `client.files.list()` returns an iterator that auto-paginates for you, so the loop above will walk through all pages, not just the first 20.
+- Deletion is permanent — there's no recovery, so if you only want to clear files older than some age or matching a name pattern, filter on `file.created_at` / `file.filename` before calling delete.
+- If a `file_id` doesn't exist (already deleted, expired, etc.), the call raises a `NotFoundError` — worth wrapping in a `try/except` if you're deleting in bulk and don't want one bad ID to stop the loop:
+
+```python
+from anthropic import NotFoundError
+
+for file in client.files.list():
+    try:
+        client.files.delete(file.id)
+        print(f"Deleted {file.filename}")
+    except NotFoundError:
+        print(f"Already gone: {file.id}")
+```
+
+
+
