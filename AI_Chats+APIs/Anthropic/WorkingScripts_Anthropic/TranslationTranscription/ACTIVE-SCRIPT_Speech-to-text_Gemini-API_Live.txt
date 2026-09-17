@@ -1,0 +1,61 @@
+
+
+Run in a real terminal (strongly preferred over the Spyder console)
+
+-------------------------------------------------------------------
+Run Sequence
+
+<<<bash
+ 
+  cd ~/spyder-6/envs && source ./ai-apis/bin/activate
+  echo $GEMINI_API_KEY
+  export GEMINI_API_KEY='...'
+  export AUDIO_INPUT_DEVICE=pulse 
+  export PLAY_TRANSLATED_AUDIO=1
+  python3 ~/Desktop/ACTIVE-SCRIPT_Speech-to-text_Gemini-API_Live.py
+  
+  deactivate
+>>>bash
+
+Stop with Ctrl+C.
+
+
+
+-----------------------------
+"""
+live_en_es.py -- continuous real-time English speech -> Spanish speech + EN/ES text
+using Google's Gemini Live API (persistent bidirectional WebSocket).
+
+Pipeline
+--------
+  1. One microphone capture stream, chunked every CHUNK_MS, fanned out to one or
+     two persistent Live API sessions.
+  2. gemini-3.5-live-translate-preview performs speech-to-speech translation on
+     the stream directly (its own built-in VAD decides utterance boundaries) and
+     streams Spanish PCM back a few seconds behind the speaker.
+  3. input_audio_transcription / output_audio_transcription make the same session
+     also stream back EN / ES *text*, which is logged with timestamps.
+  4. MODE=dual additionally runs gemini-3.5-transcribe-live as a dedicated,
+     lower-latency English transcriber on the same audio.
+  5. PLAY_TRANSLATED_AUDIO=1 plays the Spanish audio out of your speakers, on a
+     worker thread (never on the event loop).
+
+Environment
+-----------
+  GEMINI_API_KEY           required
+  MODE                     dual | translate | transcribe        (default: dual)
+  AUDIO_INPUT_DEVICE       index or name substring (e.g. "pulse")
+  PLAY_TRANSLATED_AUDIO    1 to hear the Spanish audio           (default: 0)
+  TARGET_LANG              BCP-47 target, e.g. es / es-US        (default: es-US)
+  TRANSLATE_MODEL          override translate model id
+  TRANSCRIBE_MODEL         override transcribe model id
+  GENAI_API_VERSION        v1beta | v1alpha                      (default: v1beta)
+  TRANSCRIPT_DIR           output directory                      (default: ~/Desktop)
+  LIST_DEVICES             1 to just list audio devices and exit
+
+Install
+-------
+  sudo apt install -y portaudio19-dev
+  pip install --upgrade google-genai sounddevice numpy
+  
+"""

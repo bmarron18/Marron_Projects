@@ -1,0 +1,178 @@
+ #################################
+ Query_02 directly to Claude chat
+ https://claude.ai/login
+ ###############################
+
+ chat saved in Project: general-queries
+
+----------------
+Query_02
+Sonnet 5 High
+
+Please analyze the attached Python script and resolve the following errors:
+
+TypeError                                 Traceback (most recent call last)
+File ~/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/GeneratePythonScript_Speech-to-Text/Query_06/Query_06_claude-agent-sdk.py:89
+     87 for filename, mime_type in files_to_review:
+     88     with open(filename, "rb") as f:
+---> 89         result = client.files.upload(file=(filename, f, mime_type))
+     90     uploaded.append((filename, result.id, mime_type))
+     91     print(f"Uploaded {filename} -> {result.id}")
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/anthropic/resources/files.py:279, in Files.upload(self, file, expires_in_seconds, workspace_id, extra_headers, extra_query, extra_body, timeout)
+    275 # It should be noted that the actual Content-Type header that will be
+    276 # sent to the server will contain a `boundary` parameter, e.g.
+    277 # multipart/form-data; boundary=---abc--
+    278 extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+--> 279 return self._post(
+    280     "/v1/files",
+    281     body=maybe_transform(body, file_upload_params.FileUploadParams),
+    282     files=files,
+    283     options=make_request_options(
+    284         extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+    285     ),
+    286     cast_to=FileMetadata,
+    287 )
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/anthropic/_base_client.py:1509, in SyncAPIClient.post(self, path, cast_to, body, content, options, files, stream, stream_cls)
+   1505     raise TypeError("Passing both `files` and `content` is not supported")
+   1506 opts = FinalRequestOptions.construct(
+   1507     method="post", url=path, json_data=body, content=content, files=to_httpx_files(files), **options
+   1508 )
+-> 1509 return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/anthropic/_base_client.py:1135, in SyncAPIClient.request(self, cast_to, options, stream, stream_cls)
+   1133 try:
+   1134     if chain is None:
+-> 1135         response, prepared = self._attempt_request(
+   1136             model_copy(input_options), stream=stream, retries_taken=retries_taken
+   1137         )
+   1138         if response.is_success:
+   1139             return self._process_response(
+   1140                 cast_to=cast_to,
+   1141                 options=prepared,
+   (...)   1145                 retries_taken=retries_taken,
+   1146             )
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/anthropic/_base_client.py:1275, in SyncAPIClient._attempt_request(self, options, stream, retries_taken)
+   1265 """Prepare, build and send a single HTTP attempt.
+   1266 
+   1267 Returns the response regardless of its status code, along with the prepared
+   (...)   1271 `APIConnectionError`).
+   1272 """
+   1273 options = self._prepare_options(options)
+-> 1275 request = self._build_request(options, retries_taken=retries_taken)
+   1276 self._prepare_request(request)
+   1278 kwargs: HttpxSendArgs = {}
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/anthropic/_base_client.py:606, in BaseClient._build_request(self, options, retries_taken)
+    603     kwargs.pop("data", None)
+    605 # TODO: report this error to httpx
+--> 606 return self._client.build_request(  # pyright: ignore[reportUnknownMemberType]
+    607     headers=headers,
+    608     timeout=self.timeout if isinstance(options.timeout, NotGiven) else options.timeout,
+    609     method=options.method,
+    610     url=prepared_url,
+    611     # the `Query` type that we use is incompatible with qs'
+    612     # `Params` type as it needs to be typed as `Mapping[str, object]`
+    613     # so that passing a `TypedDict` doesn't cause an error.
+    614     # https://github.com/microsoft/pyright/issues/3526#event-6715453066
+    615     params=self.qs.stringify(cast(Mapping[str, Any], params)) if params else None,
+    616     **kwargs,
+    617 )
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_client.py:360, in BaseClient.build_request(self, method, url, content, data, files, json, params, headers, cookies, timeout, extensions)
+    358     timeout = self.timeout if isinstance(timeout, UseClientDefault) else Timeout(timeout)
+    359     extensions = dict(**extensions, timeout=timeout.as_dict())
+--> 360 return Request(
+    361     method,
+    362     url,
+    363     content=content,
+    364     data=data,
+    365     files=files,
+    366     json=json,
+    367     params=params,
+    368     headers=headers,
+    369     cookies=cookies,
+    370     extensions=extensions,
+    371 )
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_models.py:423, in Request.__init__(self, method, url, params, headers, cookies, content, data, files, json, stream, extensions)
+    421 if stream is None:
+    422     content_type: str | None = self.headers.get("content-type")
+--> 423     headers, stream = encode_request(
+    424         content=content,
+    425         data=data,
+    426         files=files,
+    427         json=json,
+    428         boundary=get_multipart_boundary_from_content_type(
+    429             content_type=content_type.encode(self.headers.encoding) if content_type else None
+    430         ),
+    431     )
+    432     self._prepare(headers)
+    433     self.stream = stream
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_content.py:209, in encode_request(content, data, files, json, boundary)
+    207     return encode_content(content)
+    208 elif files:
+--> 209     return encode_multipart_data(data or {}, files, boundary)
+    210 elif data:
+    211     return encode_urlencoded_data(data)
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_content.py:155, in encode_multipart_data(data, files, boundary)
+    151 def encode_multipart_data(
+    152     data: RequestData, files: RequestFiles, boundary: bytes | None
+    153 ) -> tuple[dict[str, str], MultipartStream]:
+    154     multipart = MultipartStream(data=data, files=files, boundary=boundary)
+--> 155     headers = multipart.get_headers()
+    156     return headers, multipart
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_multipart.py:273, in MultipartStream.get_headers(self)
+    272 def get_headers(self) -> dict[str, str]:
+--> 273     content_length = self.get_content_length()
+    274     content_type = self.content_type
+    275     if content_length is None:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_multipart.py:259, in MultipartStream.get_content_length(self)
+    256 length = 0
+    258 for field in self.fields:
+--> 259     field_length = field.get_length()
+    260     if field_length is None:
+    261         return None
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_multipart.py:157, in FileField.get_length(self)
+    156 def get_length(self) -> int | None:
+--> 157     headers = self.render_headers()
+    159     if isinstance(self.file, (str, bytes)):
+    160         return len(headers) + len(to_bytes(self.file))
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_multipart.py:178, in FileField.render_headers(self)
+    173 parts = [
+    174     b"Content-Disposition: form-data; ",
+    175     _format_form_param("name", self.name),
+    176 ]
+    177 if self.filename:
+--> 178     filename = _format_form_param("filename", self.filename)
+    179     parts.extend([b"; ", filename])
+    180 for header_name, header_value in self.headers.items():
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_multipart.py:39, in _format_form_param(name, value)
+     36 def replacer(match: typing.Match[str]) -> str:
+     37     return _HTML5_FORM_ENCODING_REPLACEMENTS[match.group(0)]
+---> 39 value = _HTML5_FORM_ENCODING_RE.sub(replacer, value)
+     40 return f'{name}="{value}"'.encode()
+
+TypeError: expected string or bytes-like object, got 'PosixPath'
+
+Incorporate all recommended changes and rewrite the script.
+
+
+
+-------------
+The traceback points to one root cause: `client.files.upload()` is being passed a `pathlib.Path` object as the filename in the `(filename, file, mime_type)` tuple. The underlying `httpx` multipart encoder needs the filename to be a plain `str`, not a `Path` — hence `TypeError: expected string or bytes-like object, got 'PosixPath'`. The same `Path`-where-`str`-is-expected mistake also lurks in the `"title": filename` line when building the `document` content block.
+
+Fixing both spots (using `.name` to get a plain string basename) resolves it.Root cause: `client.files.upload()` (and the `document` block's `title`) were being passed `pathlib.Path` objects where the underlying httpx multipart encoder needs a plain `str`. `Path.__str__` works fine most places, but the multipart filename-header formatter calls a regex `.sub()` directly on the value, which only accepts `str`/`bytes` — a `Path` fails there, producing exactly the traceback you saw.
+
+Fix applied in both spots: use `filename.name` (the basename as a real string) instead of the `Path` object itself, while still using the original `Path` for `open()` and for local bookkeeping/printing. Everything else in the script (model id, content-block structure, cleanup loop) was already correct, so I left it untouched.
+
+

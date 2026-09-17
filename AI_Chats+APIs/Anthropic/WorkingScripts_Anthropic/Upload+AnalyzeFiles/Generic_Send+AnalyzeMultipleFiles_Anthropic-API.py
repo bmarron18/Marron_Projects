@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Sep 16 18:27:38 2026
-
+Revised  17 Sep 2026 09:20:33 AM CST
 @author: bruce-vdb, Claude Sonnet 5
 """
 
@@ -10,8 +10,7 @@ Created on Wed Sep 16 18:27:38 2026
 # %%
 
 
-import anthropic
-from openai import OpenAI
+from anthropic import Anthropic
 from pathlib import Path
 import os
 
@@ -32,6 +31,8 @@ output_f = Path(os.path.join(doc_dir, OUTPUT_FILE))
        # ==> MIME "application/pdf"
    # Accepts plain-text files (.txt, .md, .csv, .py) 
        # ==> MIME "text/plain"
+   # Accepts plain-text files (.csv) 
+       # ==> MIME "text/csv"
    # Accepts image files (.jpeg, .png, .gif, .webp) 
        # ==> MIME "image/jpeg"
        # ==> MIME "image/png"
@@ -41,7 +42,7 @@ output_f = Path(os.path.join(doc_dir, OUTPUT_FILE))
     # Comment out uneeded file types
 
 
-'''
+
     # .pdf file
 INPUT_FILE_01 = "report_q3.pdf"
 input_f1 = Path(os.path.join(doc_dir, INPUT_FILE_01))
@@ -53,22 +54,15 @@ input_f2 = Path(os.path.join(doc_dir, INPUT_FILE_02))
     # image file
 INPUT_FILE_03 = "diagram.png"
 input_f3 = Path(os.path.join(doc_dir, INPUT_FILE_03))
-'''
 
-
-    # plain-text files
-INPUT_FILE_01 = "Gemini_speech-to-text_live_01.py"
-input_f1 = Path(os.path.join(doc_dir, INPUT_FILE_01))
-
-    # plain-text files
-INPUT_FILE_02 = "Gemini_speech-to-text_live_02.py"
-input_f2 = Path(os.path.join(doc_dir, INPUT_FILE_02))
 
 
 
 #========= Client for billing ===========================
     # API_KEY is saved as an ENV VARIABLE on home computer
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = Anthropic(
+    api_key=os.environ.get("ANTHROPIC_API_KEY"),
+)
 
 
     # 1. Upload each file once — you get back a file_id you can reuse
@@ -77,15 +71,19 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 #========= Upload files for review ===========================
    # File type must match MIME type in the files_to_review [list]
 files_to_review = [
-    (input_f1, "text/plain"),
+    (input_f1, "application/pdf"),
     (input_f2, "text/plain"),
-#    (input_f3, "image/png"),
+    (input_f3, "image/png"),
 ]
 
 uploaded = []
 for filename, mime_type in files_to_review:
     with open(filename, "rb") as f:
-        result = client.files.upload(file=(filename, f, mime_type))
+        # NOTE: the httpx multipart encoder requires a plain str filename,
+        # not a pathlib.Path -- passing `filename` directly raises
+        # "TypeError: expected string or bytes-like object, got 'PosixPath'".
+        # `filename.name` gives the basename as a str (e.g. "script.py").
+        result = client.files.upload(file=(filename.name, f, mime_type))
     uploaded.append((filename, result.id, mime_type))
     print(f"Uploaded {filename} -> {result.id}")
 
@@ -104,7 +102,8 @@ for filename, file_id, mime_type in uploaded:
         content_blocks.append({
             "type": "document",
             "source": {"type": "file", "file_id": file_id},
-            "title": filename,
+            # same fix: title must be a str, not a Path
+            "title": filename.name,
         })
 
 #========== User prompt =================================
@@ -128,7 +127,9 @@ content_blocks.append({
         4. (Optional) The translated Spanish audio can also be played back through \
         your speakers in real time -- set PLAY_TRANSLATED_AUDIO=1. \
         Analyze why neither script functions correctly and then, taking the best of both \
-        scripts, write a new revised script that incorporates the recommended changes."
+        scripts, write a new revised script that incorporates the recommended changes.\
+        The new revised script should use the models 1. gemini-3.5-transcribe-live (transcription) \
+        and 2. gemini-3.5-live-translate-preview (translation) in any combination. "
     ),
 })
 

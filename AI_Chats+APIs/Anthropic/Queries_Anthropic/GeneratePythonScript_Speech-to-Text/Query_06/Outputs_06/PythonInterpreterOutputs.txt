@@ -1,0 +1,10 @@
+
+
+%runcell -i 0 /home/bruce-vdb/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/GeneratePythonScript_Speech-to-Text/Query_06/Query_06_claude-agent-sdk.py
+Out[1]: '\nCreated on Wed Sep 16 18:27:38 2026\nrevised: Thu 17 Sep 2026 09:20:33 AM CST\n@author: bruce-vdb, Claude Sonnet 5\n'
+
+%runcell -i 1 /home/bruce-vdb/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/GeneratePythonScript_Speech-to-Text/Query_06/Query_06_claude-agent-sdk.py
+Uploaded /home/bruce-vdb/Desktop/Gemini_speech-to-text_live_01.py -> file_01CDHCcSBvmfDVrdFSJimFg2
+Uploaded /home/bruce-vdb/Desktop/Gemini_speech-to-text_live_02.py -> file_01MfLxLPeDANmkhhRdfEqAzp
+Deleted /home/bruce-vdb/Desktop/Gemini_speech-to-text_live_01.py (file_01CDHCcSBvmfDVrdFSJimFg2)
+Deleted /home/bruce-vdb/Desktop/Gemini_speech-to-text_live_02.py (file_01MfLxLPeDANmkhhRdfEqAzp)

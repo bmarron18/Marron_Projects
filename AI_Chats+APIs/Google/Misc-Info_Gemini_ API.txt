@@ -53,7 +53,8 @@ https://ai.google.dev/gemini-api/docs/models#gemini-3-stable
 PREVIEW
 https://ai.google.dev/gemini-api/docs/models#gemini-3-preview
     gemini-3.5-live-translate-preview
-
+    gemini-3.1-pro-preview
+    
 
 
 
