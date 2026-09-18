@@ -1,0 +1,41 @@
+
+
+
+Usage
+-----
+<<<bash
+    cd ~/spyder-6/envs && 
+    source ./ai-apis/bin/activate
+ 
+    python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py --list-devices
+    python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py --check
+    python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py --device pulse
+    python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py --device pulse --play-audio --duration 120
+    python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py --mode transcribe        # EN only, no translation
+    python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py
+
+deactivate
+
+Stop with Ctrl+C.
+>>>bash
+
+
+-----------
+ERROR 
+(ai-apis) bruce-vdb@brucevdb-HP-Laptop-15-fd0xxx:~/spyder-6/envs$ python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v6.py --check
+google-genai : 2.23.0
+api_version  : v1beta
+live-capable models visible to this key:
+    gemini-2.5-flash-native-audio-latest
+    gemini-2.5-flash-native-audio-preview-09-2025
+    gemini-2.5-flash-native-audio-preview-12-2025
+    gemini-3.1-flash-live-preview
+    gemini-3.5-live-translate-preview
+    gemini-3.5-transcribe-live
+    gemini-3.8-live
+    gemini-3.8-live-extended-thinking
+connect FAIL : gemini-live-2.5-flash-preview  ->  APIError: 1008 None. models/gemini-live-2.5-flash-preview is not found for API version v1beta, or is not supported for bidiGenerateContent. Call
+connect FAIL : gemini-2.5-flash-preview-native-audio-dialog  ->  APIError: 1008 None. models/gemini-2.5-flash-preview-native-audio-dialog is not found for API version v1beta, or is not supported for bidiGenera
+connect FAIL : gemini-2.0-flash-live-001  ->  APIError: 1008 None. models/gemini-2.0-flash-live-001 is not found for API version v1beta, or is not supported for bidiGenerateContent. Call Mod
+connect FAIL : gemini-live-2.5-flash-preview  ->  APIError: 1008 None. models/gemini-live-2.5-flash-preview is not found for API version v1beta, or is not supported for bidiGenerateContent. Call
+connect FAIL : gemini-2.0-flash-live-001  ->  APIError: 1008 None. models/gemini-2.0-flash-live-001 is not found for API version v1beta, or is not supported for bidiGenerateContent. Call Mod

@@ -1,0 +1,44 @@
+Live English -> Spanish session started 2026-09-17 20:28:23
+
+[20:28:35] EN: Okay, let's see if this is a functional
+[20:28:35] ES: Está bien, veamos si esto funciona.
+
+[20:28:40] EN: Okay, bye! Good luck!
+[20:28:40] ES: ¡Bueno, adiós! ¡Buena suerte!
+
+[20:28:43] EN: It seems to be working
+[20:28:43] ES: Parece que está funcionando.
+
+[20:28:47] EN: Although it's
+[20:28:47] ES: Aunque es
+
+[20:28:50] EN: It's very, very slow.
+[20:28:50] ES: Es muy, muy lento.
+
+[20:28:54] EN: However,
+[20:28:54] ES: Sin embargo,
+
+[20:28:58] EN: That's not a bad thing.
+[20:28:58] ES: Eso no es algo malo.
+
+[20:29:00] EN: Because
+[20:29:00] ES: Porque
+
+[20:29:03] EN: We can test the concatenation
+[20:29:03] ES: Podemos probar la concatenación.
+
+[20:29:05] EN: using awk and sed
+[20:29:05] ES: usando awk y sed
+
+[20:29:08] EN: scripts
+[20:29:08] ES: guiones
+
+[20:29:09] EN: Okay
+[20:29:09] ES: Está bien
+
+[20:29:11] EN: Thank you so much.
+[20:29:11] ES: Muchas gracias.
+
+[20:29:19] EN: context:
+[20:29:19] ES: contexto:
+

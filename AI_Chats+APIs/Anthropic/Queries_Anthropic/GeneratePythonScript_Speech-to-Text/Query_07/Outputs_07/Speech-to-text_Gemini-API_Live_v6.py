@@ -623,7 +623,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 async def async_main(args: argparse.Namespace, api_key: str) -> int:
-    client = genai.Client(api_key=api_key,
+    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"),
                           http_options={"api_version": API_VERSION})
 
     if args.check:

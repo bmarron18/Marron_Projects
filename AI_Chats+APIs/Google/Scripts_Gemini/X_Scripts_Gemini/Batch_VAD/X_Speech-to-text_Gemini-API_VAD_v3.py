@@ -1,79 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Revised: added diagnostics to fix "runs fine, prints nothing" issue.
+Revised: migrated from OpenAI to Google Gemini models (batch/VAD version).
 
 @author: bruce-vdb
 """
-
-# %%
-
-'''
-Update pip and check packages installed in virtual environment (ai-apis)
-
-<<< bash
-cd ~/spyder-6/envs &&
-source ./ai-apis/bin/activate
-(ai-apis) pip install --upgrade pip &&
-pip list
-(ai-apis) deactivate
->>>bash
-
-'''
-
-# %%
-
-'''
-    # Run script in (ai-apis) virtual environment
-<<< bash
-cd ~/spyder-6/envs &&
-source ./ai-apis/bin/activate
-export AUDIO_INPUT_DEVICE=pulse
-(ai-apis) python3 ~/Desktop/OpenAI_speech-to-text_translation-transcription.py
-
-(ai-apis) deactivate
->>>bash
-
-    # Optional tuning knobs (set before running, if the defaults don't work
-    # for your mic):
-    export AUDIO_INPUT_DEVICE=2        # index or name-substring from the
-                                        # device list printed at startup
-    export VAD_MARGIN=2.0              # lower = more sensitive to speech
-'''
-
-# %%
-
-"""
-Real-time English speech -> English text -> Spanish text.
-
-Pipeline
-  1. Microphone capture (sounddevice, 16 kHz mono)
-  2. Energy-based voice-activity detection chops the stream into utterances
-  3. Each utterance -> OpenAI  gpt-4o-transcribe        (English text)
-  4. English text   -> OpenAI  gpt-4.1-mini             (Spanish text)
-  5. Both texts appended to a file on the Desktop; Spanish also printed.
-
-Stop with Ctrl+C.
-
-DIAGNOSTICS ADDED IN THIS REVISION
------------------------------------
-If you previously got "runs fine, prints nothing", it's almost certainly
-because the VAD never detected speech (wrong input device picked up, or the
-threshold was too strict for your mic's gain) -- the script would then sit
-in a perfectly silent, error-free loop forever, since transcription/
-translation/file-writing all live downstream of VAD detection.
-
-This version:
-  * Lists available input devices at startup (and lets you pin one via the
-    AUDIO_INPUT_DEVICE env var).
-  * Prints a live RMS-vs-threshold heartbeat once a second while idle, so
-    you can literally watch the numbers and confirm the mic is live.
-  * Lets you tune sensitivity via the VAD_MARGIN env var without editing
-    code.
-  * Prints full tracebacks on errors instead of a bare exception message.
-"""
-
-# %%
 
 import io
 import os
@@ -88,7 +19,8 @@ from pathlib import Path
 import numpy as np
 import sounddevice as sd
 import soundfile as sf
-from openai import OpenAI
+from google import genai
+from google.genai import types
 
 # ----------------------------------------------------------------------------
 # Configuration
@@ -113,8 +45,8 @@ VAD_MARGIN = float(os.getenv("VAD_MARGIN", "3.0"))
 # (e.g. "USB"). Leave unset to use the system default.
 AUDIO_INPUT_DEVICE = os.getenv("AUDIO_INPUT_DEVICE")
 
-STT_MODEL        = "gpt-4o-transcribe"   # newest speech-to-text model
-TRANSLATE_MODEL  = "gpt-4.1-mini"        # fast, cheap, good translations
+STT_MODEL        = "gemini-3.5-transcribe"       # batch (non-streaming) STT
+TRANSLATE_MODEL  = "gemini-3-flash-preview"      # fast text-to-text translation
 SOURCE_LANG      = "en"
 
 DESKTOP   = Path("/home/bruce-vdb/Desktop")
@@ -127,8 +59,7 @@ MAX_BLOCKS     = max(1, MAX_UTTERANCE_MS // BLOCK_MS)
 
 
 # API_KEY is saved as an ENV VARIABLE on home computer
-openai_api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=openai_api_key)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 audio_q: "queue.Queue[np.ndarray]" = queue.Queue()         # mic -> VAD
@@ -194,47 +125,46 @@ def resolve_input_device():
 
 
 # ----------------------------------------------------------------------------
-# OpenAI calls
+# Gemini calls
 # ----------------------------------------------------------------------------
-def pcm_to_wav_bytes(pcm: np.ndarray) -> io.BytesIO:
+def pcm_to_wav_bytes(pcm: np.ndarray) -> bytes:
     buf = io.BytesIO()
     sf.write(buf, pcm, SAMPLE_RATE, format="WAV", subtype="PCM_16")
-    buf.seek(0)
-    buf.name = "utterance.wav"          # the SDK uses the extension as a hint
-    return buf
+    return buf.getvalue()
 
 
 def transcribe(pcm: np.ndarray) -> str:
-    resp = client.audio.transcriptions.create(
+    wav_bytes = pcm_to_wav_bytes(pcm)
+    response = client.models.generate_content(
         model=STT_MODEL,
-        file=pcm_to_wav_bytes(pcm),
-        language=SOURCE_LANG,
-        response_format="text",
-        prompt="Transcribe verbatim. Do not translate.",
+        contents=[
+            types.Part.from_bytes(data=wav_bytes, mime_type="audio/wav"),
+            "Transcribe verbatim. Do not translate.",
+        ],
+        config=types.GenerateContentConfig(
+            audio_transcription_config=types.AudioTranscriptionConfig(
+                language_codes=[SOURCE_LANG],
+            ),
+        ),
     )
-    return (resp if isinstance(resp, str) else resp.text).strip()
+    return (response.text or "").strip()
 
 
 def translate(text: str) -> str:
-    # Chat Completions is used here (rather than the Responses API) for
-    # broad compatibility and simpler, well-documented error behavior.
-    resp = client.chat.completions.create(
+    response = client.models.generate_content(
         model=TRANSLATE_MODEL,
-        temperature=0.2,
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "You are a professional translator. Translate the user's "
-                    "English text into natural, fluent Latin-American Spanish. "
-                    "Output ONLY the Spanish translation: no notes, quotes, or "
-                    "explanations."
-                ),
-            },
-            {"role": "user", "content": text},
-        ],
+        contents=text,
+        config=types.GenerateContentConfig(
+            temperature=0.2,
+            system_instruction=(
+                "You are a professional translator. Translate the user's "
+                "English text into natural, fluent Latin-American Spanish. "
+                "Output ONLY the Spanish translation: no notes, quotes, or "
+                "explanations."
+            ),
+        ),
     )
-    return resp.choices[0].message.content.strip()
+    return (response.text or "").strip()
 
 
 # ----------------------------------------------------------------------------
@@ -275,8 +205,8 @@ def audio_callback(indata, frames, time_info, status):   # noqa: ANN001
 # Main loop: capture + VAD segmentation
 # ----------------------------------------------------------------------------
 def main() -> None:
-    if not os.getenv("OPENAI_API_KEY"):
-        sys.exit("OPENAI_API_KEY is not set.  export OPENAI_API_KEY='sk-...'")
+    if not os.getenv("GEMINI_API_KEY"):
+        sys.exit("GEMINI_API_KEY is not set.  export GEMINI_API_KEY='...'")
 
     DESKTOP.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text(
@@ -412,4 +342,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-# %%
+

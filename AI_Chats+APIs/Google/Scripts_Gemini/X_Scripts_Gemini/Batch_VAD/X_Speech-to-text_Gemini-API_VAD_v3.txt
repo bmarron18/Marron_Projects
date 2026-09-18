@@ -1,0 +1,84 @@
+
+
+
+'''
+Update pip and check packages installed in virtual environment (ai-apis)
+
+<<< bash
+cd ~/spyder-6/envs &&
+source ./ai-apis/bin/activate
+(ai-apis) pip install --upgrade pip &&
+pip install --upgrade google-genai &&
+pip list
+(ai-apis) deactivate
+>>>bash
+
+'''
+
+# %%
+
+'''
+    # Run script in (ai-apis) virtual environment
+<<< bash
+cd ~/spyder-6/envs &&
+source ./ai-apis/bin/activate
+
+export AUDIO_INPUT_DEVICE=pulse &&
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_VAD_v3.py
+
+(ai-apis) deactivate
+>>>bash
+
+    # Optional tuning knobs (set before running, if the defaults don't work
+    # for your mic):
+    export AUDIO_INPUT_DEVICE=2        # index or name-substring from the
+                                        # device list printed at startup
+    export VAD_MARGIN=2.0              # lower = more sensitive to speech
+'''
+
+# %%
+
+"""
+Real-time English speech -> English text -> Spanish text.
+
+Pipeline (unchanged from the OpenAI version)
+  1. Microphone capture (sounddevice, 16 kHz mono)
+  2. Energy-based voice-activity detection chops the stream into utterances
+  3. Each utterance -> Gemini 3.5 Transcribe (batch)     (English text)
+  4. English text    -> Gemini text model                (Spanish text)
+  5. Both texts appended to a file on the Desktop; Spanish also printed.
+
+Stop with Ctrl+C.
+
+WHY NOT gemini-3.5-live-translate-preview HERE
+-------------------------------------------------
+That model is a speech-to-speech (audio-in / audio-out) model that only runs
+over Google's Live API (a persistent WebSocket session) -- it does not take
+finished English text and hand back Spanish text via a normal request. It is
+not a drop-in swap for the OpenAI gpt-4.1-mini text-translation call used in
+this batch/VAD-based script.
+
+If you want the true "latest Gemini live" architecture (continuous
+streaming, no VAD chunking, speech-to-speech translation), use the
+companion script:
+    Gemini_speech-to-text_translation-transcription_live.py
+which streams the mic directly into gemini-3.5-live-translate-preview over
+a WebSocket.
+
+This script instead keeps your original VAD-then-batch design and swaps in
+the closest Gemini equivalents:
+  * gemini-3.5-transcribe   -- batch (non-streaming) speech-to-text
+  * a regular Gemini text model (gemini-3-flash-preview by default) for the
+    EN -> ES text translation step, called the normal generate_content way.
+
+DIAGNOSTICS CARRIED OVER FROM THE PREVIOUS REVISION
+-----------------------------------------------------
+  * Lists available input devices at startup (and lets you pin one via the
+    AUDIO_INPUT_DEVICE env var).
+  * Prints a live RMS-vs-threshold heartbeat once a second while idle, so
+    you can literally watch the numbers and confirm the mic is live.
+  * Lets you tune sensitivity via the VAD_MARGIN env var without editing
+    code.
+  * Prints full tracebacks on errors instead of a bare exception message.
+"""
+

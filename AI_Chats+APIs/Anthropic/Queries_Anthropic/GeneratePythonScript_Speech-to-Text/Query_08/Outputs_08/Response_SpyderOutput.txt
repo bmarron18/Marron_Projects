@@ -1,0 +1,9 @@
+
+
+%runcell -i 1 /home/bruce-vdb/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/GeneratePythonScript_Speech-to-Text/Query_08/Query_08_claude-sdk.py
+Uploaded /home/bruce-vdb/Desktop/Speech-to-text_Gemini-API_Live_v6.py -> file_01BKqr3xVxEamxqSTNWrVTsv
+Uploaded /home/bruce-vdb/Desktop/Errors.txt -> file_014RqsbFTkrU7du48QrcuHZ9
+
+Deleted /home/bruce-vdb/Desktop/Speech-to-text_Gemini-API_Live_v6.py (file_01BKqr3xVxEamxqSTNWrVTsv)
+Deleted /home/bruce-vdb/Desktop/Errors.txt (file_014RqsbFTkrU7du48QrcuHZ9)
+

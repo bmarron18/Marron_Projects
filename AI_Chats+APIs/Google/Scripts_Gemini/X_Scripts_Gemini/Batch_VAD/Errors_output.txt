@@ -1,0 +1,37 @@
+(ai-apis) bruce-vdb@brucevdb-HP-Laptop-15-fd0xxx:~/spyder-6/envs$ export AUDIO_INPUT_DEVICE=pulse &&
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_VAD_v3.py
+Available input devices:
+  [0] sof-hda-dsp: - (hw:0,0)
+  [4] sof-hda-dsp: - (hw:0,6)
+  [5] sof-hda-dsp: - (hw:0,7)
+  [7] sysdefault
+  [8] lavrate
+  [9] samplerate
+  [10] speexrate
+  [11] pipewire
+  [12] pulse
+  [13] speex
+  [14] upmix
+  [15] vdownmix
+  [17] default  <-- current default
+Using device [12] pulse (matched 'pulse')
+Input device : pulse
+Transcript   : /home/bruce-vdb/Desktop/live_translation_20260917_203832.txt
+VAD_MARGIN   : 3.0
+Calibrating background noise, stay quiet for a second...
+Calibration levels -> min 0.00003  median 0.03464  max 0.06930
+Noise floor 0.03464 -> speech threshold 0.10391
+Listening. Speak English.  Ctrl+C to stop.
+
+Direct use of automatic function calling (AFC) in Models.generate_content is not recommended. Instead, we recommend to use AFC in Chat.send_message. Similarly, direct use of AFC in Models.generate_content_stream is not recommended. Instead, we recommend to use AFC in Chat.send_message_stream.
+Warning: there are non-text parts in the response: ['audio_transcription'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+[info] Utterance produced no usable transcription (silence/noise?)
+[info] Utterance produced no usable transcription (silence/noise?)
+[info] Utterance produced no usable transcription (silence/noise?)
+[info] Utterance produced no usable transcription (silence/noise?)
+[info] Utterance produced no usable transcription (silence/noise?)
+^Ceartbeat] rms=0.03343  threshold=0.11454  below
+Stopping...
+[info] Utterance produced no usable transcription (silence/noise?)
+Done. Transcript saved to /home/bruce-vdb/Desktop/live_translation_20260917_203832.txt
+

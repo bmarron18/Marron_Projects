@@ -1,0 +1,68 @@
+
+# %%
+
+'''
+Update pip and check packages installed in virtual environment (ai-apis)
+
+<<< bash
+cd ~/spyder-6/envs &&
+source ./ai-apis/bin/activate
+(ai-apis) pip install --upgrade pip &&
+pip list
+(ai-apis) deactivate
+>>>bash
+
+'''
+
+# %%
+
+'''
+    # Run script in (ai-apis) virtual environment
+<<< bash
+cd ~/spyder-6/envs &&
+source ./ai-apis/bin/activate
+
+export AUDIO_INPUT_DEVICE=pulse &&
+python3 ~/Desktop/A_Speech-to-text_OpenAI-AP_VAD_v2.py
+
+(ai-apis) deactivate
+>>>bash
+
+    # Optional tuning knobs (set before running, if the defaults don't work
+    # for your mic):
+    export AUDIO_INPUT_DEVICE=2        # index or name-substring from the
+                                        # device list printed at startup
+    export VAD_MARGIN=2.0              # lower = more sensitive to speech
+'''
+
+# %%
+
+"""
+Real-time English speech -> English text -> Spanish text.
+
+Pipeline
+  1. Microphone capture (sounddevice, 16 kHz mono)
+  2. Energy-based voice-activity detection chops the stream into utterances
+  3. Each utterance -> OpenAI  gpt-4o-transcribe        (English text)
+  4. English text   -> OpenAI  gpt-4.1-mini             (Spanish text)
+  5. Both texts appended to a file on the Desktop; Spanish also printed.
+
+Stop with Ctrl+C.
+
+DIAGNOSTICS ADDED IN THIS REVISION
+-----------------------------------
+If you previously got "runs fine, prints nothing", it's almost certainly
+because the VAD never detected speech (wrong input device picked up, or the
+threshold was too strict for your mic's gain) -- the script would then sit
+in a perfectly silent, error-free loop forever, since transcription/
+translation/file-writing all live downstream of VAD detection.
+
+This version:
+  * Lists available input devices at startup (and lets you pin one via the
+    AUDIO_INPUT_DEVICE env var).
+  * Prints a live RMS-vs-threshold heartbeat once a second while idle, so
+    you can literally watch the numbers and confirm the mic is live.
+  * Lets you tune sensitivity via the VAD_MARGIN env var without editing
+    code.
+  * Prints full tracebacks on errors instead of a bare exception message.
+"""
