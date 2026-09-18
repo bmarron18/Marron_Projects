@@ -1,0 +1,13 @@
+
+
+%runcell -i 1 /home/bruce-vdb/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/GeneratePythonScript_Speech-to-Text/Query_09/Query_09_claude-sdk.py
+
+Uploaded /home/bruce-vdb/Desktop/X_Speech-to-text_Gemini-API_Live_v1.6.py -> file_01PKiXksQkdaeAs3DHnB977b
+Uploaded /home/bruce-vdb/Desktop/RunLog.txt -> file_014as6RvTCRun9BSk3eoghsf
+
+Pass 1: stop_reason = end_turn, output tokens = 24192
+
+Response written to /home/bruce-vdb/Desktop/Response_Anthropic.txt
+
+Deleted /home/bruce-vdb/Desktop/X_Speech-to-text_Gemini-API_Live_v1.6.py (file_01PKiXksQkdaeAs3DHnB977b)
+Deleted /home/bruce-vdb/Desktop/RunLog.txt (file_014as6RvTCRun9BSk3eoghsf)

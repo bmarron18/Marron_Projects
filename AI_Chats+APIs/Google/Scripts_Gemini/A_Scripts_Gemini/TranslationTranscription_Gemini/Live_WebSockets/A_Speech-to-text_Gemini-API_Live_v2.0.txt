@@ -1,0 +1,32 @@
+
+-------------
+Update pip and check packages installed in virtual environment (ai-apis)
+
+
+-------------
+<<< bash
+    cd ~/spyder-6/envs && 
+    source ./ai-apis/bin/activate &&
+    python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --check
+    
+    python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --device pulse &&
+    python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py
+
+deactivate
+
+Stop with Ctrl+C.
+>>>
+
+----------------
+OPTIONS
+# 1. short bounded run, explicit device (your default index 17 / "pulse" both work) <== DO NOT USE ALSA
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --list-devices
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --device pulse --duration 30
+
+# 2. with Spanish audio playback
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --play-audio
+
+# 3. Transcribe EN only, no translation
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --mode transcribe
+
+

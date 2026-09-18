@@ -1,11 +1,36 @@
-Title:              Info for using Google APIs
-Project Desc.:		UTECA Interpretacion y Traduccion 	
-Author:             bmarron
-Origin Date:		22 Sept 2025
-Revision Date:		10 Sept 2026
+
+##################
+Google AI Studio
+#################
+
+https://aistudio.google.com/
+
+    signin automatic when logged into 
+    marron.bruce.mx@gmail.com
+
+PROJECT
+    Imported in AI Studio 
+        01D4ED-4CA1A4-41985D
 
 
-======  Gemini Chat =====================================
+BILLING
+    https://aistudio.google.com/billing?billing=01D4ED-4CA1A4-41985D
+
+
+USAGE
+    https://aistudio.google.com/usage?timeRange=last-28-days
+
+
+###########
+Costs
+##########
+
+$1.61 USD for use of all models during Speech-to-Text build
+
+
+###########
+Gemini Chat
+###########
 
 Google AI Plus
 Get more access to AI tools to boost your productivity and creativity1
@@ -17,26 +42,9 @@ Cant link an API key to Gemini chat
 https://gemini.google.com/app?android-min-version=301356232&ios-min-version=322.0&is_sa=1&hl=es-MX&utm_campaign=microsite_gemini_gemini_live_page&icid=microsite_gemini_gemini_live_page&utm_source=gemini&utm_medium=web&_gl=1*1labmn6*_gcl_au*ODA2ODEwMDQ3LjE3ODk0MTk2ODA.*_ga*MTMyNzc1NjQxNi4xNzg5NDE5Njgx*_ga_WC57KJ50ZZ*czE3ODk0MTk2ODAkbzEkZzAkdDE3ODk0MTk2ODAkajYwJGwwJGgw
 
 
-=========  Google AI Studio ============================
-
-Billing
-https://aistudio.google.com/billing?billing=01D4ED-4CA1A4-41985D
-
-
-======  Google Models =====================================
-
-Choosing the Right Gemini Model for Translation of Files
-
-Gemini 3.1 Pro: Best for complex, high-stakes files like legal documents, medical manuals, or technical specifications requiring deep structural nuance and multi-million-token contexts. 
-
-Gemini 3.5 Flash: Best for high-volume automated pipelines, large content localization, and standard files where speed and lower token costs are prioritized. 
-
-Translation LLM on Cloud Translation: Available via the Cloud Translation API, which provides specialized fine-tuned translation wrappers powered by Gemini for maximum natural fluency
-
-
 
 ##############
-Google Gemini
+Google Gemini Models
 ##############
 https://ai.google.dev/gemini-api/docs
 https://ai.google.dev/gemini-api/docs/models#gemini-3
@@ -54,6 +62,17 @@ PREVIEW
 https://ai.google.dev/gemini-api/docs/models#gemini-3-preview
     gemini-3.5-live-translate-preview
     gemini-3.1-pro-preview
+
+
+TRANSLATION
+Gemini 3.1 Pro
+    Best for complex, high-stakes files like legal documents, medical manuals, or technical specifications requiring deep structural nuance and multi-million-token contexts. 
+
+Gemini 3.5 Flash
+    Best for high-volume automated pipelines, large content localization, and standard files where speed and lower token costs are prioritized. 
+
+Translation LLM on Cloud Translation
+    Available via the Cloud Translation API, which provides specialized fine-tuned translation wrappers powered by Gemini for maximum natural fluency
     
 
 
@@ -76,7 +95,7 @@ https://aistudio.google.com/case-studies
 
 
 
-=========   Google Agents ===========================
+
 ################
 Google Antigravity Agent
 ####################

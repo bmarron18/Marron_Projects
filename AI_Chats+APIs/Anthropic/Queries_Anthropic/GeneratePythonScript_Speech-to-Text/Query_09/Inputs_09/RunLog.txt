@@ -1,0 +1,101 @@
+
+RUN LOG
+-----------
+(ai-apis) bruce-vdb@brucevdb-HP-Laptop-15-fd0xxx:~/spyder-6/envs$ python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v1.5b.py --list-devices
+   0 sof-hda-dsp: - (hw:0,0), ALSA (2 in, 2 out)
+   1 sof-hda-dsp: HDMI 1 (hw:0,3), ALSA (0 in, 2 out)
+   2 sof-hda-dsp: HDMI 2 (hw:0,4), ALSA (0 in, 2 out)
+   3 sof-hda-dsp: HDMI 3 (hw:0,5), ALSA (0 in, 2 out)
+   4 sof-hda-dsp: - (hw:0,6), ALSA (2 in, 0 out)
+   5 sof-hda-dsp: - (hw:0,7), ALSA (2 in, 0 out)
+   6 sof-hda-dsp: - (hw:0,31), ALSA (0 in, 2 out)
+   7 sysdefault, ALSA (128 in, 128 out)
+   8 lavrate, ALSA (128 in, 128 out)
+   9 samplerate, ALSA (128 in, 128 out)
+  10 speexrate, ALSA (128 in, 128 out)
+  11 pipewire, ALSA (64 in, 64 out)
+  12 pulse, ALSA (32 in, 32 out)
+  13 speex, ALSA (1 in, 1 out)
+  14 upmix, ALSA (8 in, 8 out)
+  15 vdownmix, ALSA (6 in, 6 out)
+  16 dmix, ALSA (0 in, 2 out)
+* 17 default, ALSA (64 in, 64 out)
+
+default input index : 17
+default output index: 17
+
+Pick a name or index, then:  --device 3   or   --device pulse
+(ai-apis) bruce-vdb@brucevdb-HP-Laptop-15-fd0xxx:~/spyder-6/envs$ python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v1.5b.py --check
+google-genai : 2.23.0
+api versions : v1beta, v1alpha
+
+live-capable models visible to this key (v1beta):
+    gemini-3.5-transcribe
+    gemini-3.5-transcribe-live
+    gemini-2.5-flash-native-audio-latest
+    gemini-2.5-flash-native-audio-preview-09-2025
+    gemini-2.5-flash-native-audio-preview-12-2025
+    gemini-3.1-flash-live-preview
+    gemini-3.8-live
+    gemini-3.8-live-extended-thinking
+    gemini-robotics-er-2-streaming-preview
+    gemini-3.5-live-translate-preview
+    lyria-realtime-exp
+
+live-capable models visible to this key (v1alpha):
+    gemini-3.5-transcribe
+    gemini-3.5-transcribe-live
+    gemini-2.5-flash-native-audio-latest
+    gemini-2.5-flash-native-audio-preview-09-2025
+    gemini-2.5-flash-native-audio-preview-12-2025
+    gemini-3.1-flash-live-preview
+    gemini-3.8-live
+    gemini-3.8-live-extended-thinking
+    gemini-robotics-er-2-streaming-preview
+    gemini-3.5-live-translate-preview
+    lyria-realtime-exp
+
+-- translate candidates (AUDIO out) --
+connect OK   : gemini-3.5-live-translate-preview  (v1beta, AUDIO)
+
+-- transcribe candidates (TEXT out) --
+connect OK   : gemini-3.5-transcribe-live  (v1beta, TEXT)
+
+TRANSLATE_MODEL  ->  gemini-3.5-live-translate-preview
+TRANSCRIBE_MODEL ->  gemini-3.5-transcribe-live
+(ai-apis) bruce-vdb@brucevdb-HP-Laptop-15-fd0xxx:~/spyder-6/envs$ python3 ~/Desktop/Speech-to-text_Gemini-API_Live_v1.5b.py
+========================================================================
+  Gemini Live  |  mode=translate  |  en-US -> es-US
+  translate   : gemini-3.5-live-translate-preview
+  transcript  : /home/bruce-vdb/Desktop/live_translation_20260918_094406.txt
+  audio out   : off   |  duration: until Ctrl-C
+  Speak English. Ctrl-C to stop.
+========================================================================
+[09:44:06] [audio] capturing from 'default' at 16000 Hz, 100 ms chunks
+[09:44:07] [audio] captured 0.1 s, peak amplitude 0/32767
+[09:44:07] [audio] WARNING: input was essentially silent — wrong device or muted mic? Run with --list-devices.
+
+FATAL: unhandled exception:
+Traceback (most recent call last):
+  File "/home/bruce-vdb/Desktop/Speech-to-text_Gemini-API_Live_v1.5b.py", line 952, in main
+    return asyncio.run(async_main(args, api_key))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/bruce-vdb/Desktop/Speech-to-text_Gemini-API_Live_v1.5b.py", line 893, in async_main
+    all_workers = asyncio.create_task(
+                  ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/tasks.py", line 420, in create_task
+    task = loop.create_task(coro)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 458, in create_task
+    task = tasks.Task(coro, loop=self, name=name, context=context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: a coroutine was expected, got <_GatheringFuture pending>

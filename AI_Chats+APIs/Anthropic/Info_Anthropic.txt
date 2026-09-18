@@ -17,6 +17,24 @@ INITIAL SETUP and LOGIN
 	This key only works in the Default workspace and can’t use the Admin API.
 
 
+
+BILLING ETC
+    https://platform.claude.com/login?from=logout
+    https://platform.claude.com/dashboard
+
+################
+Costs to Build
+#################
+
+$3.58 USD to build
+    A_Template_AnalyzeMultipleFiles_Anthropic-API_v2.0.py
+    A_Template_AnalyzeMultipleFiles_Anthropic-API_v3.0.py
+    A_Speech-to-text_Gemini-API_Live_v2.0.py
+    A_Speech-to-text_OpenAI-AP_VAD_v2.0.py
+
+(includes all queries to claude-chat and claude-sdk)
+
+
 ############
 Chat with Claude
 ##################
