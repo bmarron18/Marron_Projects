@@ -1,0 +1,38 @@
+MARKED-UP COMPARISON
+A = A_Gemini_BraveNewWorld_spanish.txt    B = B_OpenAi_BraveNewWorld_spanish.txt
+[-text only in A-]   {+text only in B+}   [-A wording-]{+B wording+}
+Paragraph breaks come from either text. Text is shown as normalized.
+
+Capítulo [-Dieciocho-]{+dieciocho+}
+
+LA puerta estaba entreabierta; entraron. [-'¡John!'-]{+- ¡John!+} Del cuarto de baño llegó un sonido
+desagradable y característico. [-'¿Pasa algo?',-]{+- ¿Te pasa algo? -+} llamó Helmholtz. No hubo
+respuesta. El [-sonido-] desagradable {+sonido+} se [-repitió,-]{+repitió+} dos veces;
+[-hubo-]{+después,+} silencio. [-Luego,-]{+Entonces,+} con un clic, la puerta del cuarto de baño se
+abrió y, muy pálido, [-salió-]{+apareció+} el Salvaje. [-'Oye',-]{+- Pero, John -+} exclamó
+Helmholtz [-solícito, '¡*sí*-]{+solícitamente - , ¡sí+} que [-pareces enfermo, John!'
+'¿Has-]{+tienes mal aspecto! - ¿Has+} comido algo que te haya sentado [-mal?',-]{+mal? -+} preguntó
+Bernard. El Salvaje asintió. [-'Comí civilización.' '¿Qué?' 'Me-]{+- Me comí la civilización. -
+¿Qué? - Me+} envenenó; [-fui mancillado.-]{+me mancilló.+} Y [-luego', añadió,-]{+luego - añadió+}
+en [-un tono-]{+voz+} más [-bajo, 'comí-]{+baja - , me comí+} mi propia [-maldad.' 'Sí,-]{+maldad. -
+Sí,+} pero ¿qué {+es+} exactamente...? Quiero decir, hace un [-momento estabas...'
+'Ahora-]{+momento... - Ahora+} estoy [-purificado',-]{+purificado -+} dijo el [-Salvaje. 'Bebí un
+poco de-]{+Salvaje - . Bebí+} mostaza [-y-]{+con+} agua [-tibia.'-]{+caliente.+} Los [-demás se le
+quedaron mirando con asombro. '¿Quieres-]{+otros lo miraron atónitos. - ¿Quieres+} decir que lo
+[-hacías a propósito?',-]{+hiciste adrede? -+} preguntó Bernard. [-'Así-]{+- Eso+} es [-como-]{+lo
+que hacen siempre+} los indios [-se purifican siempre.'-]{+para purificarse. -+} Se sentó y,
+suspirando, se pasó la mano por la [-frente. 'Descansaré-]{+frente - . Descansaré+} unos [-minutos',
+dijo. 'Estoy-]{+minutos - dijo - . Estoy+} bastante [-cansado.' 'Bueno,-]{+cansado. - Bueno,+} no me
+[-sorprende',-]{+extraña -+} dijo Helmholtz. Tras un silencio, [-'Hemos venido a despedirnos',
+continuó-]{+añadió+} en otro [-tono. 'Nos vamos ma- ñana-]{+tono - : Hemos venido a despedirnos. Nos
+marchamos mañana+} por la [-mañana.' 'Sí,-]{+mañana. - Sí,+} nos [-vamos mañana',-]{+marchamos
+mañana -+} dijo Bernard, en cuyo rostro el Salvaje [-notó-]{+observó+} una nueva expresión de
+[-resuelta resignación. 'Y-]{+decidida resignación - . Y,+} por cierto, [-John',-]{+John -+}
+continuó, inclinándose hacia delante en [-su-]{+la+} silla y poniendo una mano sobre la rodilla del
+[-Salvaje, 'quiero-]{+Salvaje - , quiero+} decirte cuánto [-siento-]{+lamento+} todo lo que pasó
+[-ayer.'-]{+ayer. -+} Se [-sonrojó. 'Qué avergonzado',-]{+ruborizó - . Qué avergonzado estoy -+}
+prosiguió, {+pese+} a [-pesar del temblor-]{+la inseguridad+} de su [-voz, 'qué realmente...'-]{+voz
+- , de verdad...+} El Salvaje lo interrumpió y, tomándole la mano, [-afectuosamente-]{+se+} la
+[-apretó.-]{+estrechó afectuosamente.+}
+
+188

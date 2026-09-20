@@ -1,0 +1,14 @@
+
+
+
+
+%runcell -i 1 /home/bruce-vdb/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/TranslateTextDocs_MutipleFiles/Query_01/Query_01_claude-sdk.py
+Uploaded /home/bruce-vdb/Desktop/A_Translation_pdf-files_Gemini-API_v1.0.py -> file_01Cb3mbYiALVWNTpss1LfnKA
+Uploaded /home/bruce-vdb/Desktop/A_Translation_pdf-files_OpenAI-API_v1.0.py -> file_01CxErqPWE5uKh7UHypginJ5
+
+Pass 1: stop_reason = end_turn, output tokens = 24107
+
+Response written to /home/bruce-vdb/Desktop/Response_Anthropic.txt
+
+Deleted /home/bruce-vdb/Desktop/A_Translation_pdf-files_Gemini-API_v1.0.py (file_01Cb3mbYiALVWNTpss1LfnKA)
+Deleted /home/bruce-vdb/Desktop/A_Translation_pdf-files_OpenAI-API_v1.0.py (file_01CxErqPWE5uKh7UHypginJ5)

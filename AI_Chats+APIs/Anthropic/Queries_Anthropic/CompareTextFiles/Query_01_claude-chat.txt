@@ -1,0 +1,238 @@
+ #################################
+ Query_01 directly to Claude chat
+ https://claude.ai/login
+ ###############################
+
+ chat saved in Project: general-queries
+
+----------------
+Query_01
+
+I want to compare the contents of two text (.txt) files. Write a bash script using awk, sed, and/or native Linux
+command line functions that does the following: 1. compares sequence of symbols in the two texts; 2. provides
+a table of the differences between the two texts. The texts will be placed in ~/Desktop/compare_files and the output file .txt file should be sent to ~/Desktop/comparison_made
+
+
+----------------
+I've written the script and tested it in a sandbox with sample files. It compares two `.txt` files symbol by symbol and writes a report with a table of the differences.
+
+To use it:
+
+```bash
+chmod +x compare_texts.sh
+./compare_texts.sh
+```
+
+It picks up the two `.txt` files in `~/Desktop/compare_files` (it stops with an error if there aren't exactly two). It saves the report to `~/Desktop/comparison_made/comparison_<A>_vs_<B>_<timestamp>.txt`, creating both folders if they're missing.
+
+The report has three parts:
+
+1. **Summary:** file sizes, line counts, number of differing symbols and a similarity percentage. If the files are identical, it says so and stops.
+2. **Difference table:** lines are paired by number and symbols by column. Each difference gets a row like this:
+
+   ```
+   LINE     COL      SYMBOL IN A    SYMBOL IN B
+   2        17       f              [SPACE]
+   2        20       (none)         x
+   5        all      (20 symbols)   (no line)
+   ```
+
+   Spaces, tabs and carriage returns are shown as `[SPACE]`, `[TAB]` and `[CR]`.
+3. **Line diff:** the standard `diff` output, which lines text up properly when something was inserted or deleted.
+
+The position-by-position table is literal. If a word is inserted early in a line, everything after it shows as different. Section 3 is there to show what actually changed in that case.
+
+On Ubuntu, the default `awk` is `mawk`, which works on bytes rather than characters. The script prefers `gawk` when it's installed (`sudo apt install gawk`) so accented letters count as one symbol. Without it, the script still works, but a character like `é` shows up as two bytes (`[0xC3]` `[0xA9]`).
+
+The table is capped at 5,000 rows to keep the report readable. You can change `MAX_ROWS` at the top of the script.
+
+
+
+--------------
+Hmm... the script freezes (see screenshot) and returns no output. Can you please analyze the first proposed script and provide a revised script
+
+
+-----------------------
+I've written a revised script, `compare_texts_v2.sh`. The screenshot didn't come through on my side, so I couldn't see where it stopped. Please re-attach it if v2 still misbehaves.
+
+**What I think went wrong in v1**
+
+I couldn't reproduce the freeze. My sandbox only has `mawk`, where v1 ran instantly even on 2.6 MB files with long, accented lines. So this is a diagnosis, not a confirmed cause, and there are three likely culprits:
+
+1. **Quadratic slowdown in gawk.** v1 read every symbol with its own `substr(line, j, 1)` call. In gawk's UTF-8 mode, that call has to walk the string from the start whenever the line contains a non-ASCII character. On a long line with accents (a whole paragraph or a whole file on one line), the time grows with the square of the line length, so it can take minutes or longer.
+2. **No progress output.** v1 printed nothing until the very end, so a slow run looked exactly like a hang.
+3. **Unbounded work in the other steps.** It held both files fully in memory and ran `diff` with no time limit. A 2.6 MB test produced a 2 MB `diff` section, because whole long lines were printed twice.
+
+**What changed in v2**
+
+- **Linear time:** each line is split into symbols once, with `split(line, chars, "")`, and the files are read side by side one line at a time, so nothing is held in memory.
+- **Progress messages:** it prints "Step 1/3, 2/3, 3/3" and a running line count for big files, so you can see where it is.
+- **Safeguards:** `diff` gets a 120-second limit, and its output in the report is capped at 2,000 lines. Diff lines are cut to 300 symbols. All of these limits are variables at the top of the script.
+
+In my sandbox, v2 finished a 2.6 MB long-line test in under a second and a 21 MB, 400,000-line test in about half a second. I couldn't test it with gawk, since it isn't installed there, so the gawk path is untested. Run it the same way:
+
+```bash
+chmod +x compare_texts_v2.sh
+./compare_texts_v2.sh
+```
+
+If it stalls again, the last `[HH:MM:SS] Step …` line on screen (and the sizes of your two files) will show which step is slow. You can stop a stuck run with Ctrl+C.
+
+
+------------------
+This second version works great! Can we modify it slightly ....instead of Table 2 providing symbol level differences, can it list word choice and phrase differences? Perhaps by using the LINE DIFF (alignment-aware) diagnosis as in Table 3
+
+-------------------
+I've written `compare_texts_v3.sh`, where Table 2 now lists word and phrase differences instead of symbol-level ones. I tested it on small samples and on files up to 6.5 MB, and it finished in a few seconds. It's a separate file, so v2 is untouched. You run it the same way.
+
+**How Table 2 works**
+
+Both texts are split into words, and the two word lists are aligned with `diff`, as Table 3 aligns lines. A phrase that was inserted or deleted shows up as one row rather than shifting everything after it. Each row is a block of consecutive differing words. Here's a sample:
+
+```
+#   TYPE       LINE A  LINE B  WORDS  TEXT IN A                    TEXT IN B
+1   CHANGED    1       1       1/1    brown                        red
+2   CHANGED    1       1       1/1    jumps                        leaps
+5   ONLY IN B  ~2      2       0/3    -                            mucho frío y
+6   ONLY IN A  3       ~2      8/0    This sentence is only in...  -
+```
+
+- **TYPE:** `CHANGED` means the wording differs. `ONLY IN A` means the words were removed in B, and `ONLY IN B` means they were added.
+- **LINE:** the line number in each text. `~2` marks the spot near line 2 where the other text has no words.
+- **WORDS:** how many words are in the block in A and in B. `1/1` is a single word swap, and larger counts are phrases.
+
+Section 1 now reports word counts, the number of difference blocks and a word-level similarity percentage. It still gives the position of the first differing symbol, and Table 3 (the line diff) is unchanged.
+
+**Two optional switches**
+
+By default, `dog.` and `dog!` count as different words, and so do `Fox` and `fox`. For a comparison of word choice only, you can turn that off from the command line:
+
+```bash
+IGNORE_CASE=1 IGNORE_PUNCT=1 ./compare_texts_v3.sh
+```
+
+`IGNORE_PUNCT` ignores punctuation at the start and end of words. The report header records which options were used. If the files differ only in spacing, case or punctuation, Table 2 says so instead of showing an empty table.
+
+- **gawk vs. mawk:** as before, `gawk` (`sudo apt install gawk`) gives full character handling. With plain `awk`, accented letters still work inside words, but the column alignment can shift slightly on accented text. Case-folding and punctuation stripping then only apply to plain ASCII, so `IGNORE_CASE` won't fold accented capitals. I only tested with `mawk`, so I haven't run the gawk path.
+- **Cut-off text:** phrases longer than 60 symbols are cut with "..." in the table (`MAX_PHRASE_WIDTH` at the top of the script). The table also stops at 5,000 rows and says how many blocks it left out.
+
+
+----------------
+this is excellent! I am using the comparison to compare translations. Would you recommend any other changes/additions for translation comparison?
+
+
+
+-----------------
+Yes, there are a few additions that would matter for translations. These are the ones I'd rank highest.
+
+1. **Normalize the text before comparing.** This is the biggest source of false differences. Accented letters can be stored in two ways (é as one character, or e plus a combining accent). Text copied from Word or PDFs also mixes straight and curly quotes, different dashes, non-breaking spaces and hyphenated line breaks. All of these show up as "differences" even though the wording is identical. A short pre-processing step (Unicode NFC via `perl`, plus a few `sed` replacements) would remove that noise.
+
+2. **Context around each difference.** Each row could include a few words before and after, so you can see where the change sits without opening the text. When you're reviewing hundreds of rows, this saves the most time.
+
+3. **Paragraph or sentence numbers instead of line numbers.** If the two translations wrap lines differently, "LINE" is meaningless. Numbering by paragraph (blank-line separated) or by sentence would let you find each difference in either document.
+
+4. **A TSV or CSV export of the table.** Opened in a spreadsheet, it lets you add your own columns, such as "synonym / grammar / omission / mistranslation" and "which is better". The script can only show that *jumps* became *leaps*. It can't tell whether that's a style choice or an error, so the classification has to come from you (or from an LLM, if you pasted the table into a chat).
+
+5. **A flag for risky differences.** Blocks containing digits, dates or capitalized words (names, places) can be marked separately, since a change there is more likely to be an actual mistranslation than a stylistic one.
+
+Lower priority but useful:
+
+- **A vocabulary comparison:** words used by only one translator, and how often each uses common terms ("however" vs. "but"). This shows each translator's habits, such as literal vs. free.
+- **Style statistics:** average sentence length, length ratio between the two texts, and vocabulary richness.
+- **An inline marked-up version of the text** (`[-old-]{+new+}`, or colored HTML), which reads more naturally than a table.
+- **Detection of moved phrases.** A phrase that was reordered currently appears as one removal plus one addition, and translations reorder often.
+
+Are you comparing two translations of the same source into one language, or a source text against its translation? The second case needs different tools, because there is no shared vocabulary to align, so I'd want to know before building any of this. Tell me which of the items you'd like and I'll add them.
+
+
+----------------
+Wow! Let's add all five of the highest ranking additions as well as *A vocabulary comparison and *Style statistics and *An inline marked-up version of the text ([-old-]{+new+}) from the lower priority recommendations
+
+------------------------
+You hit your 5-hour message limit.
+Reset after 4 hrs
+
+
+---------------------
+I've written `compare_texts_v4.sh` with all eight additions. I tested it on translation-style samples and on files up to 6.7 MB (1.2 million words), which took under 10 seconds. It's a new file, so v2 and v3 are untouched. You run it the same way:
+
+```bash
+chmod +x compare_texts_v4.sh
+./compare_texts_v4.sh
+```
+
+Each run now writes three files to `~/Desktop/comparison_made`, sharing one name:
+
+- `…_<time>.txt` is the report.
+- `…_differences.tsv` has every difference, with empty CATEGORY and NOTES columns for you to fill in. It starts with a BOM so Excel reads accents correctly.
+- `…_marked.txt` is the text with differences marked inline, for example `[-brown-]{+red+}`.
+
+**How the additions work**
+
+- **Normalization:** both texts are cleaned the same way before comparing. Accents are unified, curly quotes, guillemets, dashes and non-breaking spaces are made consistent, and ligatures and line endings are fixed. A test with decomposed accents, curly quotes and non-breaking spaces produced no false differences. Rejoining hyphenated line breaks is off by default, because it can wrongly join a real hyphen like "well-\nknown". Turn it on with `FIX_HYPHENATION=1`.
+- **Locations:** `LOC A` and `LOC B` show paragraph.sentence, so `3.2` means paragraph 3, sentence 2. Paragraphs are detected automatically from blank lines, or one per line if there are none.
+- **Context:** each row is followed by a line showing the words just before and after the block, for example `in context: sat | their houses`.
+- **Risk flags:** `NUM` marks a block containing digits, and `NAME` marks a capitalized word inside a sentence. In the test, the changed year (1985 → 1958), the changed quantity (300 → 30) and the name spelling (María → Maria) were all flagged.
+- **Sections 4 and 5:**
+  - **Style statistics:** average sentence and word length, vocabulary size, commas per 100 words and similar figures for both texts.
+  - **Vocabulary:** words used by only one translation, and shared words one translator uses noticeably more, adjusted for the texts' different lengths.
+
+Section numbering is otherwise unchanged: 2 is the word/phrase table and 3 is the line diff.
+
+**Limits to know about**
+
+- I assumed both files are translations into the same language, since you didn't say otherwise.
+- I couldn't test the `gawk` path, because it isn't installed in my sandbox. Everything ran under `mawk`. With `mawk`, capitalized accented names like "Ángel" aren't recognized by the `NAME` flag, but everything else works.
+- Sentence detection is a heuristic. It handles `Dr.`, `Sr.` and `¿…?` correctly in my tests, but treat sentence counts as estimates.
+- The vocabulary lists treat each inflected form as a separate word (walk / walked), and the script can't tell a synonym from a mistranslation. That judgment is yours, which is what the CATEGORY column is for.
+- In the marked-up text, a word ending in `-` followed by the closing mark looks like `--]`. That's cosmetic.
+
+Two switches you may want: `IGNORE_CASE=1` and `IGNORE_PUNCT=1`, used on the command line as before. `NORMALIZE=0` turns off the cleanup, and `CONTEXT_WORDS=10` widens the context.
+
+
+------------
+almost....running v4 produced this error
+bruce-vdb@brucevdb-HP-Laptop-15-fd0xxx:~/Desktop/Marron_Projects/AI_Chats+APIs/Anthropic/Queries_Anthropic/CompareTextFiles/Output_01$ chmod +x compare_texts_v4.sh &&  ./compare_texts_v4.sh
+[19:53:50] Looking for .txt files in /home/bruce-vdb/Desktop/compare_files
+[19:53:50] File A: A_Gemini_BraveNewWorld_spanish.txt (1817 bytes)
+[19:53:50] File B: B_OpenAi_BraveNewWorld_spanish.txt (1880 bytes)
+[19:53:50] Step 1/7: normalizing typography (NORMALIZE=1)...
+[19:53:51] Step 2/7: splitting texts into words (paragraphs: A=blank, B=blank)...
+gawk: cmd. line:46: error: Unmatched [, [^, [:, [., or [=: /[][.!?)"\047/
+
+------------
+I've fixed the error and updated `compare_texts_v4.sh` in place. Please run it again.
+
+**What went wrong.** The sentence-detection code contained a character pattern, `[][.!?)"']`, that `mawk` accepts but `gawk` rejects. Inside square brackets, `[.` starts a special collating symbol in `gawk`, hence "Unmatched [". My sandbox only has `mawk`, so I never hit it. You have `gawk` installed, which is the better setup for accented text, and you were the first to run this script under it. The fix was to drop the stray `[` from that pattern.
+
+**Other patterns.** I couldn't run `gawk` itself, so I checked every other pattern in the script with GNU `grep`, which uses the same regex engine family, and none of them raised an error. Something else that only `gawk` objects to could still turn up. If it does, paste the error line and I'll fix it.
+
+**Dialogue handling.** Since you're comparing Spanish translations, I also tried dialogue with dashes, like `—¿Qué pasa? —preguntó el Director.` A stand-alone dash after a sentence end used to hide the start of the next sentence and throw off the paragraph.sentence numbers. Numbering is now correct on that test text.
+
+After the fix, the earlier test cases still pass and the large-file timings are unchanged (3 to 8 seconds).
+
+---------------
+excellent! is there a way to see color differences in the _marked.txt file?
+
+
+-------------------
+A plain `.txt` file can't hold color, so I added a colored version. `compare_texts_v4.sh` now writes a fourth file, `…_marked.html`, next to the others. Double-click it, or open it in a web browser, to see the text with the differences highlighted:
+
+- **Red, struck through:** wording that is only in A.
+- **Green, underlined:** wording that is only in B.
+- **A red word followed by a green one:** the wording changed from A to B.
+
+The page keeps your paragraph breaks, reflows the text to the window width, and follows your system's light or dark mode. A legend at the top shows which file is which. I tested it on a sample that included `&`, `<` and `>` characters, and they display correctly. The whole test suite still passes, and the HTML step adds negligible time.
+
+If you'd rather see color in the terminal, you can convert the existing `_marked.txt` without rerunning anything:
+
+```bash
+sed -e 's/-\]{+/\x1b[0m\x1b[32m/g' -e 's/\[-/\x1b[31;9m/g' \
+    -e 's/-\]/\x1b[0m/g' -e 's/{+/\x1b[32m/g' -e 's/+}/\x1b[0m/g' \
+    comparison_..._marked.txt | less -R
+```
+
+I checked this one-liner's output codes, but I haven't seen how it looks in a real terminal window. The HTML file is the cleaner option, so I'd use that. The `.txt` version is still written as before.
+
+
+

@@ -1,0 +1,52 @@
+﻿#	TYPE	FLAGS	LOC_A	LOC_B	LINES_A	LINES_B	WORDS_A	WORDS_B	TEXT_A	TEXT_B	CONTEXT_BEFORE	CONTEXT_AFTER	CATEGORY	NOTES
+1	CHANGED	NAME	1.1	1.1	1	1	1	1	Dieciocho	dieciocho	Capítulo	LA puerta estaba entreabierta; entraron. '¡John!'		
+2	CHANGED		2.2	2.1-2.2	4	4	1	2	'¡John!'	- ¡John!	Dieciocho LA puerta estaba entreabierta; entraron.	Del cuarto de baño llegó un		
+3	CHANGED		2.4	2.3-2.4	6	6	2	5	'¿Pasa algo?',	- ¿Te pasa algo? -	llegó un sonido desagradable y característico.	llamó Helmholtz. No hubo respuesta. El		
+4	ONLY IN A		2.6	~2.6	7	~7	1	0	sonido		llamó Helmholtz. No hubo respuesta. El	desagradable se repitió, dos veces; hubo		
+5	ONLY IN B		~2.6	2.6	~7	7	0	1		sonido	No hubo respuesta. El sonido desagradable	se repitió, dos veces; hubo silencio.		
+6	CHANGED		2.6	2.6	7	7	1	1	repitió,	repitió	hubo respuesta. El sonido desagradable se	dos veces; hubo silencio. Luego, con		
+7	CHANGED		2.6	2.6	8	8	1	1	hubo	después,	sonido desagradable se repitió, dos veces;	silencio. Luego, con un clic, la		
+8	CHANGED		2.7	2.7	8	8	1	1	Luego,	Entonces,	se repitió, dos veces; hubo silencio.	con un clic, la puerta del		
+9	CHANGED		2.7	2.7	9	9	1	1	salió	apareció	baño se abrió y, muy pálido,	el Salvaje. 'Oye', exclamó Helmholtz solícito,		
+10	CHANGED	NAME	2.8	2.7-2.8	10	10	1	4	'Oye',	- Pero, John -	y, muy pálido, salió el Salvaje.	exclamó Helmholtz solícito, '¡*sí* que pareces		
+11	CHANGED		2.8	2.8	10	10	2	4	solícito, '¡*sí*	solícitamente - , ¡sí	salió el Salvaje. 'Oye', exclamó Helmholtz	que pareces enfermo, John!' '¿Has comido		
+12	CHANGED	NAME	2.8-2.9	2.8-2.9	10-11	10-12	4	5	pareces enfermo, John!' '¿Has	tienes mal aspecto! - ¿Has	'Oye', exclamó Helmholtz solícito, '¡*sí* que	comido algo que te haya sentado		
+13	CHANGED		2.9	2.9	11	12	1	2	mal?',	mal? -	comido algo que te haya sentado	preguntó Bernard. El Salvaje asintió. 'Comí		
+14	CHANGED		2.11-2.13	2.10-2.13	13-15	14-16	4	9	'Comí civilización.' '¿Qué?' 'Me	- Me comí la civilización. - ¿Qué? - Me	mal?', preguntó Bernard. El Salvaje asintió.	envenenó; fui mancillado. Y luego', añadió,		
+15	CHANGED		2.13	2.13	15	16	2	2	fui mancillado.	me mancilló.	asintió. 'Comí civilización.' '¿Qué?' 'Me envenenó;	Y luego', añadió, en un tono		
+16	CHANGED		2.14	2.14	15	16	2	3	luego', añadió,	luego - añadió	'¿Qué?' 'Me envenenó; fui mancillado. Y	en un tono más bajo, 'comí		
+17	CHANGED		2.14	2.14	15	16	2	1	un tono	voz	fui mancillado. Y luego', añadió, en	más bajo, 'comí mi propia maldad.'		
+18	CHANGED		2.14	2.14	16	16-17	2	5	bajo, 'comí	baja - , me comí	luego', añadió, en un tono más	mi propia maldad.' 'Sí, pero ¿qué		
+19	CHANGED		2.14-2.15	2.14-2.15	16-17	17-18	2	3	maldad.' 'Sí,	maldad. - Sí,	tono más bajo, 'comí mi propia	pero ¿qué exactamente...? Quiero decir, hace		
+20	ONLY IN B		~2.15	2.15	~17	18	0	1		es	mi propia maldad.' 'Sí, pero ¿qué	exactamente...? Quiero decir, hace un momento		
+21	CHANGED		2.16-2.17	2.16-2.17	17-18	18-19	3	3	momento estabas...' 'Ahora	momento... - Ahora	¿qué exactamente...? Quiero decir, hace un	estoy purificado', dijo el Salvaje. 'Bebí		
+22	CHANGED		2.17	2.17	18	19	1	2	purificado',	purificado -	hace un momento estabas...' 'Ahora estoy	dijo el Salvaje. 'Bebí un poco		
+23	CHANGED	NAME	2.17-2.18	2.17-2.18	18	19	5	4	Salvaje. 'Bebí un poco de	Salvaje - . Bebí	estabas...' 'Ahora estoy purificado', dijo el	mostaza y agua tibia.' Los demás		
+24	CHANGED		2.18	2.18	18	19	1	1	y	con	Salvaje. 'Bebí un poco de mostaza	agua tibia.' Los demás se le		
+25	CHANGED		2.18	2.18	19	20	1	1	tibia.'	caliente.	un poco de mostaza y agua	Los demás se le quedaron mirando		
+26	CHANGED		2.19-2.20	2.19-2.20	20	21-22	8	6	demás se le quedaron mirando con asombro. '¿Quieres	otros lo miraron atónitos. - ¿Quieres	de mostaza y agua tibia.' Los	decir que lo hacías a propósito?',		
+27	CHANGED		2.20	2.20	21	22	3	3	hacías a propósito?',	hiciste adrede? -	con asombro. '¿Quieres decir que lo	preguntó Bernard. 'Así es como los		
+28	CHANGED		2.21	2.20-2.21	22	23	1	2	'Así	- Eso	lo hacías a propósito?', preguntó Bernard.	es como los indios se purifican		
+29	CHANGED		2.21	2.21	22	23	1	4	como	lo que hacen siempre	a propósito?', preguntó Bernard. 'Así es	los indios se purifican siempre.' Se		
+30	CHANGED		2.21	2.21	22	23	3	3	se purifican siempre.'	para purificarse. -	Bernard. 'Así es como los indios	Se sentó y, suspirando, se pasó		
+31	CHANGED		2.22-2.23	2.22-2.23	23	24	2	4	frente. 'Descansaré	frente - . Descansaré	se pasó la mano por la	unos minutos', dijo. 'Estoy bastante cansado.'		
+32	CHANGED		2.23-2.24	2.23-2.24	24	25	3	6	minutos', dijo. 'Estoy	minutos - dijo - . Estoy	mano por la frente. 'Descansaré unos	bastante cansado.' 'Bueno, no me sorprende',		
+33	CHANGED		2.24-2.25	2.24-2.25	24-25	25-26	2	3	cansado.' 'Bueno,	cansado. - Bueno,	'Descansaré unos minutos', dijo. 'Estoy bastante	no me sorprende', dijo Helmholtz. Tras		
+34	CHANGED		2.25	2.25	25	26	1	2	sorprende',	extraña -	'Estoy bastante cansado.' 'Bueno, no me	dijo Helmholtz. Tras un silencio, 'Hemos		
+35	CHANGED	NAME	2.26	2.26	25-26	26	5	1	'Hemos venido a despedirnos', continuó	añadió	sorprende', dijo Helmholtz. Tras un silencio,	en otro tono. 'Nos vamos ma-		
+36	CHANGED	NAME	2.26-2.27	2.26-2.27	26-27	27	5	10	tono. 'Nos vamos ma- ñana	tono - : Hemos venido a despedirnos. Nos marchamos mañana	venido a despedirnos', continuó en otro	por la mañana.' 'Sí, nos vamos		
+37	CHANGED		2.27-2.28	2.27-2.28	27-28	28-29	2	3	mañana.' 'Sí,	mañana. - Sí,	'Nos vamos ma- ñana por la	nos vamos mañana', dijo Bernard, en		
+38	CHANGED		2.28	2.28	28	29	2	3	vamos mañana',	marchamos mañana -	ñana por la mañana.' 'Sí, nos	dijo Bernard, en cuyo rostro el		
+39	CHANGED		2.28	2.28	29	30	1	1	notó	observó	Bernard, en cuyo rostro el Salvaje	una nueva expresión de resuelta resignación.		
+40	CHANGED		2.28-2.29	2.28-2.29	29	30	3	5	resuelta resignación. 'Y	decidida resignación - . Y,	Salvaje notó una nueva expresión de	por cierto, John', continuó, inclinándose hacia		
+41	CHANGED	NAME	2.29	2.29	30	31	1	2	John',	John -	de resuelta resignación. 'Y por cierto,	continuó, inclinándose hacia delante en su		
+42	CHANGED		2.29	2.29	30	31	1	1	su	la	John', continuó, inclinándose hacia delante en	silla y poniendo una mano sobre		
+43	CHANGED	NAME	2.29	2.29	31	32	2	4	Salvaje, 'quiero	Salvaje - , quiero	una mano sobre la rodilla del	decirte cuánto siento todo lo que		
+44	CHANGED		2.29	2.29	32	33	1	1	siento	lamento	rodilla del Salvaje, 'quiero decirte cuánto	todo lo que pasó ayer.' Se		
+45	CHANGED		2.29	2.29	32	33	1	2	ayer.'	ayer. -	cuánto siento todo lo que pasó	Se sonrojó. 'Qué avergonzado', prosiguió, a		
+46	CHANGED		2.30-2.31	2.30-2.31	32-33	33-34	3	7	sonrojó. 'Qué avergonzado',	ruborizó - . Qué avergonzado estoy -	todo lo que pasó ayer.' Se	prosiguió, a pesar del temblor de		
+47	ONLY IN B		~2.31	2.31	~33	34	0	1		pese	ayer.' Se sonrojó. 'Qué avergonzado', prosiguió,	a pesar del temblor de su		
+48	CHANGED		2.31	2.31	33	34	3	2	pesar del temblor	la inseguridad	Se sonrojó. 'Qué avergonzado', prosiguió, a	de su voz, 'qué realmente...' El		
+49	CHANGED		2.31	2.31	33-34	34	3	5	voz, 'qué realmente...'	voz - , de verdad...	a pesar del temblor de su	El Salvaje lo interrumpió y, tomándole		
+50	CHANGED		2.32	2.32	35	35	1	1	afectuosamente	se	lo interrumpió y, tomándole la mano,	la apretó. 188		
+51	CHANGED		2.32	2.32	36	35-36	1	2	apretó.	estrechó afectuosamente.	y, tomándole la mano, afectuosamente la	188		

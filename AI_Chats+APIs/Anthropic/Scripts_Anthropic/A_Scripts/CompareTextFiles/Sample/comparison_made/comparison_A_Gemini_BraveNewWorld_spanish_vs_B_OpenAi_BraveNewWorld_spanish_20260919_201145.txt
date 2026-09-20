@@ -1,0 +1,310 @@
+TEXT COMPARISON REPORT
+Generated : 2026-09-19 20:11:45
+File A    : A_Gemini_BraveNewWorld_spanish.txt
+File B    : B_OpenAi_BraveNewWorld_spanish.txt
+Options   : normalize = 1, fix hyphenation = 0, ignore case = 0, ignore punctuation = 0
+Also written (same folder):
+  comparison_A_Gemini_BraveNewWorld_spanish_vs_B_OpenAi_BraveNewWorld_spanish_20260919_201145_differences.tsv   all differences, for a spreadsheet
+  comparison_A_Gemini_BraveNewWorld_spanish_vs_B_OpenAi_BraveNewWorld_spanish_20260919_201145_marked.txt   text with inline marks [-old-]{+new+}
+  comparison_A_Gemini_BraveNewWorld_spanish_vs_B_OpenAi_BraveNewWorld_spanish_20260919_201145_marked.html   the same in color (open in a web browser)
+
+=== 1. SUMMARY ===
+Size of A (bytes / chars)  : 1817 / 1757
+Size of B (bytes / chars)  : 1880 / 1748
+Lines in A / in B          : 38 / 38
+Words in A                 : 257
+Words in B                 : 303
+Difference blocks          : 51
+  changed (word/phrase)    : 47
+  only in A (removed)      : 1
+  only in B (added)        : 3
+  flagged NUM (digits)     : 0
+  flagged NAME (capitals)  : 8
+Words affected in A / in B : 101 / 147
+Word-level similarity      : 55.71 %
+
+RESULT: the two files DIFFER (first differing symbol: byte 11, line 1).
+
+=== 2. WORD AND PHRASE DIFFERENCES ===
+Words from both texts are aligned, so an inserted or deleted phrase is
+listed once. Each row is one block of consecutive differing words.
+  TYPE   CHANGED = wording differs; ONLY IN A = removed in B; ONLY IN B = added in B
+  FLAGS  NUM = the block contains digits (numbers, dates);
+         NAME = it contains a capitalized word inside a sentence (likely a name).
+         Check these first: they are the likeliest real mistranslations.
+  LOC    paragraph.sentence in each text (3.2 = paragraph 3, sentence 2);
+         ~3.2 = the spot near there where the other text has no words
+  WORDS  number of words in the block in A / in B
+  in context: the words just before | and after the block
+
+#      TYPE       FLAGS     LOC A       LOC B       WORDS   TEXT IN A                                          TEXT IN B
+------ ---------- --------- ----------- ----------- ------- -------------------------------------------------- --------------------------------------------------
+1      CHANGED    NAME      1.1         1.1         1/1     Dieciocho                                          dieciocho
+       in context: Capítulo | LA puerta estaba entreabierta; entraron. '¡John!'
+2      CHANGED    -         2.2         2.1-2.2     1/2     '¡John!'                                           - ¡John!
+       in context: Dieciocho LA puerta estaba entreabierta; entraron. | Del cuarto de baño llegó un
+3      CHANGED    -         2.4         2.3-2.4     2/5     '¿Pasa algo?',                                     - ¿Te pasa algo? -
+       in context: llegó un sonido desagradable y característico. | llamó Helmholtz. No hubo respuesta. El
+4      ONLY IN A  -         2.6         ~2.6        1/0     sonido                                             -
+       in context: llamó Helmholtz. No hubo respuesta. El | desagradable se repitió, dos veces; hubo
+5      ONLY IN B  -         ~2.6        2.6         0/1     -                                                  sonido
+       in context: No hubo respuesta. El sonido desagradable | se repitió, dos veces; hubo silencio.
+6      CHANGED    -         2.6         2.6         1/1     repitió,                                           repitió
+       in context: hubo respuesta. El sonido desagradable se | dos veces; hubo silencio. Luego, con
+7      CHANGED    -         2.6         2.6         1/1     hubo                                               después,
+       in context: sonido desagradable se repitió, dos veces; | silencio. Luego, con un clic, la
+8      CHANGED    -         2.7         2.7         1/1     Luego,                                             Entonces,
+       in context: se repitió, dos veces; hubo silencio. | con un clic, la puerta del
+9      CHANGED    -         2.7         2.7         1/1     salió                                              apareció
+       in context: baño se abrió y, muy pálido, | el Salvaje. 'Oye', exclamó Helmholtz solícito,
+10     CHANGED    NAME      2.8         2.7-2.8     1/4     'Oye',                                             - Pero, John -
+       in context: y, muy pálido, salió el Salvaje. | exclamó Helmholtz solícito, '¡*sí* que pareces
+11     CHANGED    -         2.8         2.8         2/4     solícito, '¡*sí*                                   solícitamente - , ¡sí
+       in context: salió el Salvaje. 'Oye', exclamó Helmholtz | que pareces enfermo, John!' '¿Has comido
+12     CHANGED    NAME      2.8-2.9     2.8-2.9     4/5     pareces enfermo, John!' '¿Has                      tienes mal aspecto! - ¿Has
+       in context: 'Oye', exclamó Helmholtz solícito, '¡*sí* que | comido algo que te haya sentado
+13     CHANGED    -         2.9         2.9         1/2     mal?',                                             mal? -
+       in context: comido algo que te haya sentado | preguntó Bernard. El Salvaje asintió. 'Comí
+14     CHANGED    -         2.11-2.13   2.10-2.13   4/9     'Comí civilización.' '¿Qué?' 'Me                   - Me comí la civilización. - ¿Qué? - Me
+       in context: mal?', preguntó Bernard. El Salvaje asintió. | envenenó; fui mancillado. Y luego', añadió,
+15     CHANGED    -         2.13        2.13        2/2     fui mancillado.                                    me mancilló.
+       in context: asintió. 'Comí civilización.' '¿Qué?' 'Me envenenó; | Y luego', añadió, en un tono
+16     CHANGED    -         2.14        2.14        2/3     luego', añadió,                                    luego - añadió
+       in context: '¿Qué?' 'Me envenenó; fui mancillado. Y | en un tono más bajo, 'comí
+17     CHANGED    -         2.14        2.14        2/1     un tono                                            voz
+       in context: fui mancillado. Y luego', añadió, en | más bajo, 'comí mi propia maldad.'
+18     CHANGED    -         2.14        2.14        2/5     bajo, 'comí                                        baja - , me comí
+       in context: luego', añadió, en un tono más | mi propia maldad.' 'Sí, pero ¿qué
+19     CHANGED    -         2.14-2.15   2.14-2.15   2/3     maldad.' 'Sí,                                      maldad. - Sí,
+       in context: tono más bajo, 'comí mi propia | pero ¿qué exactamente...? Quiero decir, hace
+20     ONLY IN B  -         ~2.15       2.15        0/1     -                                                  es
+       in context: mi propia maldad.' 'Sí, pero ¿qué | exactamente...? Quiero decir, hace un momento
+21     CHANGED    -         2.16-2.17   2.16-2.17   3/3     momento estabas...' 'Ahora                         momento... - Ahora
+       in context: ¿qué exactamente...? Quiero decir, hace un | estoy purificado', dijo el Salvaje. 'Bebí
+22     CHANGED    -         2.17        2.17        1/2     purificado',                                       purificado -
+       in context: hace un momento estabas...' 'Ahora estoy | dijo el Salvaje. 'Bebí un poco
+23     CHANGED    NAME      2.17-2.18   2.17-2.18   5/4     Salvaje. 'Bebí un poco de                          Salvaje - . Bebí
+       in context: estabas...' 'Ahora estoy purificado', dijo el | mostaza y agua tibia.' Los demás
+24     CHANGED    -         2.18        2.18        1/1     y                                                  con
+       in context: Salvaje. 'Bebí un poco de mostaza | agua tibia.' Los demás se le
+25     CHANGED    -         2.18        2.18        1/1     tibia.'                                            caliente.
+       in context: un poco de mostaza y agua | Los demás se le quedaron mirando
+26     CHANGED    -         2.19-2.20   2.19-2.20   8/6     demás se le quedaron mirando con asombro. '¿Qui... otros lo miraron atónitos. - ¿Quieres
+       in context: de mostaza y agua tibia.' Los | decir que lo hacías a propósito?',
+27     CHANGED    -         2.20        2.20        3/3     hacías a propósito?',                              hiciste adrede? -
+       in context: con asombro. '¿Quieres decir que lo | preguntó Bernard. 'Así es como los
+28     CHANGED    -         2.21        2.20-2.21   1/2     'Así                                               - Eso
+       in context: lo hacías a propósito?', preguntó Bernard. | es como los indios se purifican
+29     CHANGED    -         2.21        2.21        1/4     como                                               lo que hacen siempre
+       in context: a propósito?', preguntó Bernard. 'Así es | los indios se purifican siempre.' Se
+30     CHANGED    -         2.21        2.21        3/3     se purifican siempre.'                             para purificarse. -
+       in context: Bernard. 'Así es como los indios | Se sentó y, suspirando, se pasó
+31     CHANGED    -         2.22-2.23   2.22-2.23   2/4     frente. 'Descansaré                                frente - . Descansaré
+       in context: se pasó la mano por la | unos minutos', dijo. 'Estoy bastante cansado.'
+32     CHANGED    -         2.23-2.24   2.23-2.24   3/6     minutos', dijo. 'Estoy                             minutos - dijo - . Estoy
+       in context: mano por la frente. 'Descansaré unos | bastante cansado.' 'Bueno, no me sorprende',
+33     CHANGED    -         2.24-2.25   2.24-2.25   2/3     cansado.' 'Bueno,                                  cansado. - Bueno,
+       in context: 'Descansaré unos minutos', dijo. 'Estoy bastante | no me sorprende', dijo Helmholtz. Tras
+34     CHANGED    -         2.25        2.25        1/2     sorprende',                                        extraña -
+       in context: 'Estoy bastante cansado.' 'Bueno, no me | dijo Helmholtz. Tras un silencio, 'Hemos
+35     CHANGED    NAME      2.26        2.26        5/1     'Hemos venido a despedirnos', continuó             añadió
+       in context: sorprende', dijo Helmholtz. Tras un silencio, | en otro tono. 'Nos vamos ma-
+36     CHANGED    NAME      2.26-2.27   2.26-2.27   5/10    tono. 'Nos vamos ma- ñana                          tono - : Hemos venido a despedirnos. Nos marcha...
+       in context: venido a despedirnos', continuó en otro | por la mañana.' 'Sí, nos vamos
+37     CHANGED    -         2.27-2.28   2.27-2.28   2/3     mañana.' 'Sí,                                      mañana. - Sí,
+       in context: 'Nos vamos ma- ñana por la | nos vamos mañana', dijo Bernard, en
+38     CHANGED    -         2.28        2.28        2/3     vamos mañana',                                     marchamos mañana -
+       in context: ñana por la mañana.' 'Sí, nos | dijo Bernard, en cuyo rostro el
+39     CHANGED    -         2.28        2.28        1/1     notó                                               observó
+       in context: Bernard, en cuyo rostro el Salvaje | una nueva expresión de resuelta resignación.
+40     CHANGED    -         2.28-2.29   2.28-2.29   3/5     resuelta resignación. 'Y                           decidida resignación - . Y,
+       in context: Salvaje notó una nueva expresión de | por cierto, John', continuó, inclinándose hacia
+41     CHANGED    NAME      2.29        2.29        1/2     John',                                             John -
+       in context: de resuelta resignación. 'Y por cierto, | continuó, inclinándose hacia delante en su
+42     CHANGED    -         2.29        2.29        1/1     su                                                 la
+       in context: John', continuó, inclinándose hacia delante en | silla y poniendo una mano sobre
+43     CHANGED    NAME      2.29        2.29        2/4     Salvaje, 'quiero                                   Salvaje - , quiero
+       in context: una mano sobre la rodilla del | decirte cuánto siento todo lo que
+44     CHANGED    -         2.29        2.29        1/1     siento                                             lamento
+       in context: rodilla del Salvaje, 'quiero decirte cuánto | todo lo que pasó ayer.' Se
+45     CHANGED    -         2.29        2.29        1/2     ayer.'                                             ayer. -
+       in context: cuánto siento todo lo que pasó | Se sonrojó. 'Qué avergonzado', prosiguió, a
+46     CHANGED    -         2.30-2.31   2.30-2.31   3/7     sonrojó. 'Qué avergonzado',                        ruborizó - . Qué avergonzado estoy -
+       in context: todo lo que pasó ayer.' Se | prosiguió, a pesar del temblor de
+47     ONLY IN B  -         ~2.31       2.31        0/1     -                                                  pese
+       in context: ayer.' Se sonrojó. 'Qué avergonzado', prosiguió, | a pesar del temblor de su
+48     CHANGED    -         2.31        2.31        3/2     pesar del temblor                                  la inseguridad
+       in context: Se sonrojó. 'Qué avergonzado', prosiguió, a | de su voz, 'qué realmente...' El
+49     CHANGED    -         2.31        2.31        3/5     voz, 'qué realmente...'                            voz - , de verdad...
+       in context: a pesar del temblor de su | El Salvaje lo interrumpió y, tomándole
+50     CHANGED    -         2.32        2.32        1/1     afectuosamente                                     se
+       in context: lo interrumpió y, tomándole la mano, | la apretó. 188
+51     CHANGED    -         2.32        2.32        1/2     apretó.                                            estrechó afectuosamente.
+       in context: y, tomándole la mano, afectuosamente la | 188
+
+=== 3. LINE DIFF (alignment-aware) ===
+'<' = line only in A (or changed, A version), '>' = line only in B
+
+1c1
+< Capítulo Dieciocho
+---
+> Capítulo dieciocho
+3,4c3,4
+<     LA puerta estaba entreabierta; entraron.
+<     '¡John!'
+---
+> LA puerta estaba entreabierta; entraron.
+>      - ¡John!
+6,36c6,36
+<     '¿Pasa algo?', llamó Helmholtz.
+<     No hubo respuesta. El sonido desagradable se repitió, dos veces;
+< hubo silencio. Luego, con un clic, la puerta del cuarto de baño se abrió
+< y, muy pálido, salió el Salvaje.
+<     'Oye', exclamó Helmholtz solícito, '¡*sí* que pareces enfermo, John!'
+<     '¿Has comido algo que te haya sentado mal?', preguntó
+< Bernard.
+<     El Salvaje asintió. 'Comí civilización.'
+<     '¿Qué?'
+<     'Me envenenó; fui mancillado. Y luego', añadió, en un tono más
+< bajo, 'comí mi propia maldad.'
+<     'Sí, pero ¿qué exactamente...? Quiero decir, hace un momento estabas...'
+<     'Ahora estoy purificado', dijo el Salvaje. 'Bebí un poco de mostaza y
+< agua tibia.'
+<     Los demás se le quedaron mirando con asombro. '¿Quieres decir
+< que lo hacías a propósito?', preguntó Bernard.
+<     'Así es como los indios se purifican siempre.' Se sentó
+< y, suspirando, se pasó la mano por la frente. 'Descansaré unos
+< minutos', dijo. 'Estoy bastante cansado.'
+<     'Bueno, no me sorprende', dijo Helmholtz. Tras un silencio, 'Hemos
+< venido a despedirnos', continuó en otro tono. 'Nos vamos ma-
+< ñana por la mañana.'
+<     'Sí, nos vamos mañana', dijo Bernard, en cuyo rostro el
+< Salvaje notó una nueva expresión de resuelta resignación. 'Y
+< por cierto, John', continuó, inclinándose hacia delante en su silla y
+< poniendo una mano sobre la rodilla del Salvaje, 'quiero decirte cuánto
+< siento todo lo que pasó ayer.' Se sonrojó. 'Qué
+< avergonzado', prosiguió, a pesar del temblor de su voz,
+< 'qué realmente...'
+<     El Salvaje lo interrumpió y, tomándole la mano, afectuosamente
+< la apretó.
+---
+>      - ¿Te pasa algo?  - llamó Helmholtz.
+>     No hubo respuesta. El desagradable sonido se repitió dos veces;
+> después, silencio. Entonces, con un clic, la puerta del cuarto de baño se
+> abrió y, muy pálido, apareció el Salvaje.
+>      - Pero, John  - exclamó Helmholtz solícitamente - , ¡sí que tienes mal
+> aspecto!
+>      - ¿Has comido algo que te haya sentado mal?  - preguntó Bernard.
+>     El Salvaje asintió.
+>      - Me comí la civilización.
+>      - ¿Qué?
+>      - Me envenenó; me mancilló. Y luego  - añadió en voz más baja - ,
+> me comí mi propia maldad.
+>      - Sí, pero ¿qué es exactamente...? Quiero decir, hace un momento...
+>      - Ahora estoy purificado  - dijo el Salvaje - . Bebí mostaza con agua
+> caliente.
+>     Los otros lo miraron atónitos.
+>      - ¿Quieres decir que lo hiciste adrede?  - preguntó Bernard.
+>      - Eso es lo que hacen siempre los indios para purificarse.  - Se sentó
+> y, suspirando, se pasó la mano por la frente - . Descansaré unos
+> minutos  - dijo - . Estoy bastante cansado.
+>      - Bueno, no me extraña  - dijo Helmholtz. Tras un silencio, añadió
+> en otro tono - : Hemos venido a despedirnos. Nos marchamos mañana
+> por la mañana.
+>      - Sí, nos marchamos mañana  - dijo Bernard, en cuyo rostro el
+> Salvaje observó una nueva expresión de decidida resignación - . Y,
+> por cierto, John  - continuó, inclinándose hacia delante en la silla y
+> poniendo una mano sobre la rodilla del Salvaje - , quiero decirte cuánto
+> lamento todo lo que pasó ayer.  - Se ruborizó - . Qué avergonzado
+> estoy  - prosiguió, pese a la inseguridad de su voz - , de verdad...
+>     El Salvaje lo interrumpió y, tomándole la mano, se la estrechó
+> afectuosamente.
+38c38
+<                                        188
+---
+>                               188
+
+=== 4. STYLE STATISTICS ===
+Words here exclude stand-alone punctuation marks. Sentences are detected by
+punctuation, so treat sentence figures as estimates.
+Different/total words depends on text length, so compare it only for texts
+of similar length.
+
+                                             TEXT A         TEXT B     B vs A
+                                     -------------- -------------- ----------
+Words                                           257            257      +0.0%
+Paragraphs                                        3              3      +0.0%
+Sentences                                        34             34      +0.0%
+Words per paragraph                            85.7           85.7      +0.0%
+Words per sentence (average)                    7.6            7.6      +0.0%
+Longest sentence (words)                         29             29      +0.0%
+Word length (average, symbols)                 4.87           4.96      +1.8%
+Different words used                            161            156      -3.1%
+Different / total words (%)                    62.6           60.7      -3.1%
+Words used only once (% of diff.)              71.4           69.9      -2.2%
+Commas per 100 words                          14.01           7.78     -44.4%
+
+=== 5. VOCABULARY COMPARISON ===
+Words are compared in lower case without surrounding punctuation. Each
+inflected form counts as a separate word (walk / walked / walking).
+
+--- Words used by only one translation (top 30 by frequency) ---
+ONLY IN A                     COUNT     ONLY IN B                     COUNT
+---------------------------- ------     ---------------------------- ------
+vamos                             2     marchamos                         2
+apretó                            1     adrede                            1
+asombro                           1     apareció                          1
+así                               1     aspecto                           1
+bajo                              1     atónitos                          1
+como                              1     baja                              1
+demás                             1     caliente                          1
+enfermo                           1     decidida                          1
+estabas                           1     después                           1
+fui                               1     entonces                          1
+hacías                            1     eso                               1
+le                                1     estrechó                          1
+ma                                1     extraña                           1
+mancillado                        1     hacen                             1
+mirando                           1     hiciste                           1
+notó                              1     inseguridad                       1
+oye                               1     lamento                           1
+pareces                           1     mancilló                          1
+pesar                             1     miraron                           1
+poco                              1     observó                           1
+propósito                         1     otros                             1
+purifican                         1     para                              1
+quedaron                          1     pese                              1
+realmente                         1     purificarse                       1
+resuelta                          1     ruborizó                          1
+salió                             1     solícitamente                     1
+siento                            1     tienes                            1
+solícito                          1     verdad                            1
+sonrojó                           1                                        
+sorprende                         1                                        
+
+--- Shared words used noticeably more in one text (top 30) ---
+EXPECTED = how often B would use the word if it used it at A's rate,
+given the length of the two texts. Words appearing 6+ times in total only.
+
+WORD                          COUNT A  COUNT B EXPECTED B   B - EXP.
+---------------------------- -------- -------- ---------- ----------
+la                                  8       11        8.0       +3.0
+me                                  2        5        2.0       +3.0
+lo                                  3        5        3.0       +2.0
+un                                  6        4        6.0       -2.0
+del                                 4        3        4.0       -1.0
+que                                 4        5        4.0       +1.0
+qué                                 4        3        4.0       -1.0
+se                                  7        6        7.0       -1.0
+y                                   8        7        8.0       -1.0
+bernard                             3        3        3.0       +0.0
+de                                  5        5        5.0       +0.0
+dijo                                4        4        4.0       +0.0
+el                                  6        6        6.0       +0.0
+en                                  4        4        4.0       +0.0
+helmholtz                           3        3        3.0       +0.0
+john                                3        3        3.0       +0.0
+mano                                3        3        3.0       +0.0
+por                                 3        3        3.0       +0.0
+salvaje                             6        6        6.0       +0.0
+sí                                  3        3        3.0       +0.0

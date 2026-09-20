@@ -35,6 +35,17 @@ $3.58 USD to build
 (includes all queries to claude-chat and claude-sdk)
 
 
+
+Your Anthropic Console (API) account and your Claude.ai chat account are separate systems,
+    Claude Chat Account (claude.ai): 
+        *Used for the consumer/web chat interface, mobile apps, and team/enterprise workspaces.Anthropic
+        *5 hr limit then refresh
+        *can upgrade
+    Console Account (console.anthropic.com): 
+        *Used by developers to generate API keys, manage prepaid billing credits, and build custom applications.
+        *Prepaid credits
+
+
 ############
 Chat with Claude
 ##################
