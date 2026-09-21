@@ -1,0 +1,68 @@
+							LECTURE 01 
+
+Docente:		Bruce D. Marron
+Course: 		Sustainability Now!
+Section:		Std Concepts and Frameworks for Sustainability
+			
+
+
+-----------
+Why Systems Analysis?
+
+------------
+Complex Adaptive Systems
+
+	CAS are composed of diverse, interconnected, semi-autonomous parts that learn and change through experience. These systems undergo continuous adaptation, self-organization, and emergent behavior as they interact with their environment.
+
+	Complex:
+		numerous interdependent agents (components) interacting in relationships that are often non-linear... small changes can create massive, disproportionate effects, making precise, long-term predictions difficult
+
+	Adaptive: 
+		agents can learn, mutate, and update their behavior based on past experiences and environmental feedback
+
+	System:
+		an entity defined by energetic and informational flows that operate across various boundaries at various spatio-temporal scales
+
+
+	CAS are are self-organized entities that use information and energy to create feedback loops. This allows for the emergence of unique and resilient behaviors ..... micro-level interactions can shape macro-level patterns
+
+	Emergence: 
+		Globally coherent structures and patterns (like a flock of birds or market trends) emerge from simple local rules, not from central command.
+
+	Self-Organization: 
+		The system automatically reorganizes its internal structure to cope with external changes without outside intervention.
+
+	Feedback Loops:
+		Actions in the system loop back to cause new actions. Positive loops amplify changes, while negative loops dampen changes.
+
+	Resilience:
+		CAS have features (e.g., redundancy and modularity) that allow the entity to withstand damage or disruptions without collapsing.
+
+
+	CAS = Life!!
+
+--------------
+Sustainability
+
+
+
+
+------------
+Resilience
+
+Pressures Behind Leaving the Gold Standard (1971)
+
+* Depleted Gold Reserves: Massive foreign dollar holdings—fueled by overseas spending and foreign aid—led European central banks to redeem dollars for U.S. gold faster than gold entered the treasury. 
+
+* Speculative Attacks: International currency speculators aggressively bet against the dollar in the summer of 1971, threatening complete exhaustion of America's gold supply. 
+
+* Stagflation and Competition: Surging domestic inflation, sluggish job growth, and rising economic competition from rebuilding European economies and Japan strained the Bretton Woods System. Nixon responded with the Nixon Shock, freezing wages and prices alongside closing the gold window.
+
+
+------------
+
+
+
+
+
+

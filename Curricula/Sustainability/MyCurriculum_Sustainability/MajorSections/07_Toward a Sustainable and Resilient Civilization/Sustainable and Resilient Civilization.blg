@@ -1,0 +1,19 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Sustainable and Resilient Civilization.blg'
+[113] biber:340> INFO - === Thu Jun 11, 2026, 21:06:53
+[136] Biber.pm:419> INFO - Reading 'Sustainable and Resilient Civilization.bcf'
+[248] Biber.pm:979> INFO - Found 1 citekeys in bib section 0
+[273] Biber.pm:4419> INFO - Processing section 0
+[287] Biber.pm:4610> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[571] bibtex.pm:1713> INFO - LaTeX decoding ...
+[2560] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-mx/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[2742] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2742] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2742] Biber.pm:4239> INFO - Sorting list 'nyt/apasortcite//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[2742] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[2754] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2755] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2755] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[2755] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[2759] bbl.pm:660> INFO - Writing 'Sustainable and Resilient Civilization.bbl' with encoding 'UTF-8'
+[2763] bbl.pm:763> INFO - Output to Sustainable and Resilient Civilization.bbl

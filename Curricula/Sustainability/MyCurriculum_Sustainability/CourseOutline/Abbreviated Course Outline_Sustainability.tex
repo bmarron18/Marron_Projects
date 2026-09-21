@@ -1,0 +1,374 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: bmarron
+% Created: 22 May 2026
+% Modified:
+%
+% 12-point; 1in margins
+% One inch vertical space is 72.27pt
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}       % Document margins
+
+\usepackage{afterpage}
+%\usepackage{datetime2}               % specialty date formats
+\usepackage{lipsum}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+
+
+\usepackage{lineno}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+
+\usepackage{outlines}
+
+
+\usepackage{threeparttable}
+\usepackage{pgfgantt}                 % simple gantt charts
+\usepackage{bigfoot}
+\usepackage{multirow}
+\usepackage{microtype}                % Slightly tweak font spacing for aesthetics
+\usepackage{booktabs}                 % Horizontal rules in tables
+\usepackage{float}                    % specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{paralist}                 % bullet points with less space between them
+\usepackage[hang, 
+            small,
+            labelfont=bf,
+            up,
+            textfont=it,up]{caption}    % Custom captions under/above floats in tables or figures
+
+\usepackage[sc]{mathpazo}             % Use the Palatino font and the Pazo fonts for math
+\linespread{1.05}                     % global setting - Palatino needs more space
+\usepackage{setspace}
+%\doublespacing                       % global setting
+
+\usepackage{abstract}                                               % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}              % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}         % Set the abstract itself to small italic text
+
+\usepackage{titlesec}                                               % Allows customization of titles
+\renewcommand\thesection{\Roman{section}}                           % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{subsection}}                    % Arabic numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}        % Change the look of the section titles
+\titleformat{\subsection}[block]{\large\underline}{\thesubsection}{1em}{}                    % Change the look of the subsection titles
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.25\baselineskip}            % Change spacing after section
+
+
+\usepackage{fancyhdr}                                              % Headers and footers
+\pagestyle{fancy}                                                 % All pages have headers and footers
+%\pagestyle{plain}                                                  % globally set to "plain"
+%\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\fancyhead[L]{Sustainability Now!}                                                                                    
+\fancyhead[R]{Universidad del Medio Ambiente}
+%\fancyhead[C]{}                                                   % Custom header text
+\fancyfoot[C]{\thepage}    
+%\fancyfoot[RO,LE]{\thepage}                                        % Custom footer text
+
+
+
+\usepackage{everypage}                             % Required for watermarks
+\usepackage{draftwatermark}                        % Watermarks or not
+\SetWatermarkLightness{0.95}
+\SetWatermarkScale{0.75}                            % Set to 1.0 for default
+%\SetWatermarkText{FINAL DRAFT}                      % comment out for default (DRAFT)   
+
+%\usepackage{multicol}                                      % Used for the two-column layout of the document
+%\usepackage{hyperref}                                      % Interferes with cite.sty 
+
+
+
+
+%-------------------------------------------------------------
+% NEW COMMANDS
+%---------------------------------------------------------------------
+%This command creates a box marked ``To Do'' around text.
+%To use: 
+% type \todo{  insert text here  }.
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{To Do}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt\begin{center} #1 \end{center}\end{minipage}}\vspace{5 mm}\par}
+
+% This command makes a sun symbol
+% To use:
+% Type \sun
+\newcommand{\sun}{\ensuremath{\odot}}                                   
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% This command creates a custom indent
+% To use:
+%\begin{myindentpar}{2em}
+% blah blah blah
+%\end {myindentpar}
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{14pt}{10pt}
+                    \selectfont \textbf{Course Outline}   % Article title
+                    \vspace{-7mm}
+      } 
+
+\author{
+     \normalsize Bruce D. Marron \\                     % Name in “small caps”
+%     \normalsize FOR 803-001 \\
+%     \vspace{-9mm}
+%      \normalsize North Carolina State University      % Institution or Class ID
+     \vspace{-5mm}
+}
+\date{\normalsize \today}
+
+
+
+%---------------------------------------------------------------------------------------
+% HELPFUL
+%----------------------------------------------------------------------------------------
+
+%\enquote*{text}                                 % single quotes
+%\shortcites{citation}\cite{citation}           % gives Authors et al.
+% Yucat\'{a}n                                    % accents
+%\includegraphics[width=6.0in, height=5in, page=2]{graphics/Problems1.pdf}              % pdf
+%\includegraphics[width=0.35\textwidth, height=0.6\textheight]{graphics/fig1}           % pdf
+%\thispagestyle{plain}                          % headers/footers included page or not (default =TRUE except for 1st)
+
+%\begin{outlines}
+%\end{outlines}
+
+%---------------------------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+
+\begin{singlespacing}
+\maketitle                                      % insert title or not
+\end{singlespacing}
+\thispagestyle{fancy}                           % headers/footers included or not (default=FALSE for first pg)
+%\linenumbers                                    % line numbers for document or not
+
+%%%%%%%%%%%% DOC TEXT %%%%%%%%%%%%%%%%%%
+
+%-----------------------
+\section{Introduction}
+%-----------------------
+
+\large
+\begin{flushleft}
+\textit{The State of the World and Human Civilization: Year 2027}
+\end{flushleft}
+
+\normalsize
+\begin{outline}[enumerate]
+\1 We Live in the Anthropocene
+
+\1 State of the Earth: Year 2027
+\2 The Atmosphere 
+\2 The Hydrosphere 
+\2 The Cryosphere
+\2 The Biosphere
+\2 The Lithosphere
+
+\1 State of the Humans: Year 2027
+\2 Current Societal Organizing Principles 
+\2 Current Technology
+\2 Current Population
+
+\1 State of Human Civilization: Year 2027
+\2 Globalized
+\2 Weaponized
+\2 Distracted
+\2 Fragile
+\end{outline}
+
+\pagebreak
+
+\large
+\begin{flushleft}
+\textit{Opportunities for Planetary Stewardship}
+\end{flushleft}
+
+\normalsize
+\begin{outline}[enumerate]
+\1 Stewardship as an Existential Imperative for Sustainability
+
+\1 The Critical Earth Systems Coupled to Human Welfare
+\2 Global Climate System
+\2 Terrestrial Ecosystems
+\2 Aquatic Ecosystems
+
+\1 The Critical Production and Delivery Systems Coupled to Human Welfare
+\2 Systems for Existential Human Needs 
+\2 Systems for Higher Human Needs 
+\2 Systems for Human Innovation 
+
+\1 External Opportunities for Stewardship of Critical Systems
+\2 Re-vamping Existing Systems
+\2 Creating New Systems
+
+\1 Internal Opportunities for Stewardship of Critical Systems
+\2 Developing Creativity
+\2 Developing Intuition
+\2 Caring for Mind, Body, and Spirit
+
+\end{outline}
+
+
+
+%-------------------
+\section{Approaches}
+%-------------------
+
+\large
+\begin{flushleft}
+\textit{Systems Analysis}
+\end{flushleft}
+
+\normalsize
+
+\begin{outline}[enumerate]
+\1 Fundamentals of Systems
+\2 Definitions
+\2 Systems Thinking
+\2 Systems Science
+
+\1 Fundamentals of Complexity
+\2 Definitions
+\2 Complex Adaptive Systems
+\2 Wicked Problems
+
+\1 Fundamentals of Scale 
+\2 Spatial Scales
+\2 Temporal Scales
+\end{outline}
+
+
+\large
+\begin{flushleft}
+\textit{Data Analytics and Predictive Models}
+\end{flushleft}
+
+\normalsize
+\begin{outline}[enumerate]
+\1 Probability and Statistical Models
+\1 Agent-Based Models
+\1 Imaginative Scenario Models
+\end{outline}
+
+
+%-----------------
+\section{Topics}
+%------------------
+
+\large
+\begin{flushleft}
+\textit{Standard Concepts and Frameworks of Sustainability}
+\end{flushleft}
+
+\normalsize
+
+\begin{outline}[enumerate]
+\1 Standard Concepts of Sustainability
+\2 Brundtland Commission
+\2 UN Sustainable Development Goals
+\2 Marshall and Toffel\\
+
+\1 Standard Frameworks for Sustainability 
+\2 Ecological Sustainability
+\2 Social Sustainability
+\2 Economic Sustainability
+\2 Agricultural Sustainability
+
+\1 Standard Concepts of Resilience
+\2 Robustness
+\2 Rebounding Capacity
+\2 Adaptability
+\end{outline}
+
+\large
+\begin{flushleft}
+\textit{Toward a Sustainable and Resilient Biosphere}
+\end{flushleft}
+
+\normalsize
+
+\begin{outline}[enumerate]
+\1 Stewardship of the Global Climate System
+\2 Necessary and Sufficient Conditions
+\2 Best-Case Scenarios
+
+\1 Stewardship of Terrestrial Ecosystems
+\2 Necessary and Sufficient Conditions
+\2 Best-Case Scenarios
+
+\1 Stewardship of Aquatic Ecosystems
+\2 Necessary and Sufficient Conditions
+\2 Best-Case Scenarios
+\end{outline}
+
+\large
+\begin{flushleft}
+\textit{Toward a Sustainable and Resilient Civilization}
+\end{flushleft}
+
+\normalsize
+
+\begin{outline}[enumerate]
+\1 Stewardship of Systems for Existential Human Needs
+\2 Necessary and Sufficient Conditions
+\2 Best-Case Scenarios
+
+\1 Stewardship of Systems for Higher Human Needs
+\2 Necessary and Sufficient Conditions
+\2 Best-Case Scenarios
+
+\1 Stewardship of Systems for Human Innovation
+\2 Necessary and Sufficient Conditions
+\2 Best-Case Scenarios
+\end{outline}
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}

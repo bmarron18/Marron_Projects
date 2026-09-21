@@ -1,0 +1,865 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/apasortcite//global/global}
+    \entry{ashby_introduction_1955}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b1388f998f71950ba2182c5d8dd99cf1}{%
+           family={Ashby},
+           familyi={A\bibinitperiod},
+           given={William\bibnamedelima Ross},
+           giveni={W\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{fullhash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{bibnamehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{authorbibnamehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{authornamehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{authorfullhash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{An introduction to cybernetics}
+      \field{year}{1955}
+    \endentry
+    \entry{barabasi_scale-free_2009}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=15bacd7ddfc866c5dd96976d4b0244d5}{%
+           family={Barabási},
+           familyi={B\bibinitperiod},
+           given={Albert-László},
+           giveni={A\bibinithyphendelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{fullhash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{bibnamehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{authorbibnamehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{authornamehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{authorfullhash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{science}
+      \field{number}{5939}
+      \field{shorttitle}{Scale-free networks}
+      \field{title}{Scale-free networks: a decade and beyond}
+      \field{urlday}{22}
+      \field{urlmonth}{6}
+      \field{urlyear}{2016}
+      \field{volume}{325}
+      \field{year}{2009}
+      \field{urldateera}{ce}
+      \field{pages}{412\bibrangedash 413}
+      \range{pages}{2}
+      \verb{file}
+      \verb [PDF] from donarmstrong.com:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/JSPXX7M8/Barabási - 2009 - Scale-free networks a decade and beyond.pdf:application/pdf;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/242SZP47/412.html:text/html
+      \endverb
+    \endentry
+    \entry{barabasi_scale-free_2003}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=15bacd7ddfc866c5dd96976d4b0244d5}{%
+           family={Barabási},
+           familyi={B\bibinitperiod},
+           given={Albert-László},
+           giveni={A\bibinithyphendelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2266c9c1f7f84136a89c448586226962}{%
+           family={Bonabeau},
+           familyi={B\bibinitperiod},
+           given={Eric},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{fullhash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{bibnamehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{authorbibnamehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{authornamehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{authorfullhash}{b0c15dc5b710f985019f1623e5955df5}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific American}
+      \field{number}{5}
+      \field{title}{Scale-free networks}
+      \field{urlday}{22}
+      \field{urlmonth}{6}
+      \field{urlyear}{2016}
+      \field{volume}{288}
+      \field{year}{2003}
+      \field{urldateera}{ce}
+      \field{pages}{50\bibrangedash 59}
+      \range{pages}{10}
+      \verb{file}
+      \verb Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/2SQZ7R89/cat.inist.fr.html:text/html
+      \endverb
+    \endentry
+    \entry{bertalanffy_general_1984}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5e7c577cccad14de3622ea2323899a5b}{%
+           family={Bertalanffy},
+           familyi={B\bibinitperiod},
+           given={Ludwig\bibnamedelima von},
+           giveni={L\bibinitperiod\bibinitdelim v\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {English}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Braziller}%
+      }
+      \strng{namehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{fullhash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{bibnamehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{authorbibnamehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{authornamehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{authorfullhash}{5e7c577cccad14de3622ea2323899a5b}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-8076-0452-6 978-0-8076-0452-6 0-8076-0453-4 978-0-8076-0453-3}
+      \field{title}{General system theory}
+      \field{year}{1984}
+    \endentry
+    \entry{cover_elements_2006}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=580c0a728e5d4fa1c7d94fe9932dcd57}{%
+           family={Cover},
+           familyi={C\bibinitperiod},
+           given={T.\bibnamedelimi M.},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e6518a9e085a3ee5221c27f5d8f826dc}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={Joy\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Hoboken, N.J}%
+      }
+      \list{publisher}{1}{%
+        {Wiley-Interscience}%
+      }
+      \strng{namehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{fullhash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{bibnamehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{authorbibnamehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{authornamehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{authorfullhash}{7bdd19343f610ed4120378adbcffe5a6}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd ed}
+      \field{isbn}{0-471-24195-4 978-0-471-24195-9}
+      \field{title}{Elements of information theory}
+      \field{year}{2006}
+      \keyw{Information theory}
+    \endentry
+    \entry{crutchfield_chaos_1986}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=16ed952287195c400130c2085023d95f}{%
+           family={Crutchfield},
+           familyi={C\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b680fed984c713c56f8e5ac5cefbfbeb}{%
+           family={Farmer},
+           familyi={F\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=37d537be635089670a31092805a56092}{%
+           family={Packard},
+           familyi={P\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a3f896a275f902fd913abce767f5c399}{%
+           family={Shaw},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5ddf39101c26512d696c95f2f8d2ad34}
+      \strng{fullhash}{54d2057fe1d378c5abb61121893fe042}
+      \strng{bibnamehash}{54d2057fe1d378c5abb61121893fe042}
+      \strng{authorbibnamehash}{54d2057fe1d378c5abb61121893fe042}
+      \strng{authornamehash}{5ddf39101c26512d696c95f2f8d2ad34}
+      \strng{authorfullhash}{54d2057fe1d378c5abb61121893fe042}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Scientific American 225 (6): 46-57}
+      \field{shorttitle}{Chaos {Scientific} {American} 225 (6)}
+      \field{title}{Chaos}
+      \field{year}{1986}
+    \endentry
+    \entry{lendaris_systemness_1986}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=8e63aba47562c3a8291e44c40c998b12}{%
+           family={Lendaris},
+           familyi={L\bibinitperiod},
+           given={G.\bibnamedelimi G.},
+           giveni={G\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{fullhash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{bibnamehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{authorbibnamehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{authornamehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{authorfullhash}{8e63aba47562c3a8291e44c40c998b12}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Systems, Man and Cybernetics, IEEE Transactions on}
+      \field{number}{4}
+      \field{shorttitle}{On systemness and the problem solver}
+      \field{title}{On systemness and the problem solver: {Tutorial} comments}
+      \field{urlday}{5}
+      \field{urlmonth}{12}
+      \field{urlyear}{2012}
+      \field{volume}{16}
+      \field{year}{1986}
+      \field{urldateera}{ce}
+      \field{pages}{603\bibrangedash 610}
+      \range{pages}{8}
+    \endentry
+    \entry{meadows_thinking_2008}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=5d32ade98fc7c135649f5b031217ca73}{%
+           family={Meadows},
+           familyi={M\bibinitperiod},
+           given={Donella\bibnamedelima H.},
+           giveni={D\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=96395f69ca03260fe9873344ecf7959a}{%
+           family={Wright},
+           familyi={W\bibinitperiod},
+           given={Diana},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {White River Junction, Vt}%
+      }
+      \list{publisher}{1}{%
+        {Chelsea Green Pub}%
+      }
+      \strng{namehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{fullhash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{bibnamehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{authorbibnamehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{authornamehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{authorfullhash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{978-1-60358-055-7}
+      \field{note}{OCLC: 225871309}
+      \field{shorttitle}{Thinking in systems}
+      \field{title}{Thinking in systems: a primer}
+      \field{year}{2008}
+      \keyw{Critical thinking,Decision making,Economic aspects Simulation methods,Economic development,Environmental aspects Simulation methods,Environmental education,Pollution,Population,Simulation methods,Social sciences,Sustainable development,System analysis}
+    \endentry
+    \entry{nicolis_exploring_1989}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=76ce7e3ff5f046fb8edb8027f74154fe}{%
+           family={Nicolis},
+           familyi={N\bibinitperiod},
+           given={G},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4a27c9d00244021da5fc207ea2620f6e}{%
+           family={Prigogine},
+           familyi={P\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {English}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {W.H. Freeman}%
+      }
+      \strng{namehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{fullhash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{bibnamehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{authorbibnamehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{authornamehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{authorfullhash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{0-7167-1859-6 978-0-7167-1859-8 0-7167-1860-X 978-0-7167-1860-4}
+      \field{shorttitle}{Exploring complexity}
+      \field{title}{Exploring complexity : an introduction}
+      \field{year}{1989}
+    \endentry
+    \entry{senge_fifth_2006}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9e47cd4bb4992d7c77036784c2005c30}{%
+           family={Senge},
+           familyi={S\bibinitperiod},
+           given={Peter\bibnamedelima M},
+           giveni={P\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {English}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Doubleday/Currency}%
+      }
+      \strng{namehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{fullhash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{bibnamehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{authorbibnamehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{authornamehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{authorfullhash}{9e47cd4bb4992d7c77036784c2005c30}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{"In The Fifth Discipline, Peter Senge describes how companies can rid themselves of the learning "disabilities" that threaten their productivity and success by adopting the strategies of learning organizations - ones in which new and expansive patterns of thinking are nurtured, collective aspiration is set free, and people are continually learning how to create results they truly desire." "The revised and updated Currency edition of this business classic contains over one hundred pages of new material based on interviews with dozens of practitioners at companies like BP, Unilever, Intel, Ford, HP, Saudi Aramco, and organizations like Roca, Oxfam, and The World Bank. It features a new Foreword about the success Peter Senge has achieved with learning organizations since the book's inception, as well as new chapters on Impetus (getting started), Strategies, Leaders' New Work, Systems Citizens, and Frontiers for the Future."–BOOK JACKET.}
+      \field{isbn}{0-385-51725-4 978-0-385-51725-6 0-385-51782-3 978-0-385-51782-9}
+      \field{shorttitle}{The fifth discipline}
+      \field{title}{The fifth discipline : the art and practice of the learning organization}
+      \field{year}{2006}
+    \endentry
+    \entry{simon_sciences_1996}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=09c462602325128c408aa39c70c6ae62}{%
+           family={Simon},
+           familyi={S\bibinitperiod},
+           given={Herbert\bibnamedelima A.},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Cambridge, Mass}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{fullhash}{09c462602325128c408aa39c70c6ae62}
+      \strng{bibnamehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{authorbibnamehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{authornamehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{authorfullhash}{09c462602325128c408aa39c70c6ae62}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd ed}
+      \field{isbn}{0-262-69191-4}
+      \field{title}{The sciences of the artificial}
+      \field{year}{1996}
+      \keyw{Philosophy,Science}
+    \endentry
+  \enddatalist
+  \datalist[entry]{nyt/global//global/global}
+    \entry{ashby_introduction_1955}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=b1388f998f71950ba2182c5d8dd99cf1}{%
+           family={Ashby},
+           familyi={A\bibinitperiod},
+           given={William\bibnamedelima Ross},
+           giveni={W\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{fullhash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{bibnamehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{authorbibnamehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{authornamehash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \strng{authorfullhash}{b1388f998f71950ba2182c5d8dd99cf1}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{An introduction to cybernetics}
+      \field{year}{1955}
+    \endentry
+    \entry{barabasi_scale-free_2009}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=15bacd7ddfc866c5dd96976d4b0244d5}{%
+           family={Barabási},
+           familyi={B\bibinitperiod},
+           given={Albert-László},
+           giveni={A\bibinithyphendelim L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{fullhash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{bibnamehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{authorbibnamehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{authornamehash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \strng{authorfullhash}{15bacd7ddfc866c5dd96976d4b0244d5}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{science}
+      \field{number}{5939}
+      \field{shorttitle}{Scale-free networks}
+      \field{title}{Scale-free networks: a decade and beyond}
+      \field{urlday}{22}
+      \field{urlmonth}{6}
+      \field{urlyear}{2016}
+      \field{volume}{325}
+      \field{year}{2009}
+      \field{urldateera}{ce}
+      \field{pages}{412\bibrangedash 413}
+      \range{pages}{2}
+      \verb{file}
+      \verb [PDF] from donarmstrong.com:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/JSPXX7M8/Barabási - 2009 - Scale-free networks a decade and beyond.pdf:application/pdf;Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/242SZP47/412.html:text/html
+      \endverb
+    \endentry
+    \entry{barabasi_scale-free_2003}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=15bacd7ddfc866c5dd96976d4b0244d5}{%
+           family={Barabási},
+           familyi={B\bibinitperiod},
+           given={Albert-László},
+           giveni={A\bibinithyphendelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2266c9c1f7f84136a89c448586226962}{%
+           family={Bonabeau},
+           familyi={B\bibinitperiod},
+           given={Eric},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{fullhash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{bibnamehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{authorbibnamehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{authornamehash}{b0c15dc5b710f985019f1623e5955df5}
+      \strng{authorfullhash}{b0c15dc5b710f985019f1623e5955df5}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific American}
+      \field{number}{5}
+      \field{title}{Scale-free networks}
+      \field{urlday}{22}
+      \field{urlmonth}{6}
+      \field{urlyear}{2016}
+      \field{volume}{288}
+      \field{year}{2003}
+      \field{urldateera}{ce}
+      \field{pages}{50\bibrangedash 59}
+      \range{pages}{10}
+      \verb{file}
+      \verb Snapshot:/home/bmarron/.mozilla/firefox/vmro2bq5.default/zotero/storage/2SQZ7R89/cat.inist.fr.html:text/html
+      \endverb
+    \endentry
+    \entry{bertalanffy_general_1984}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5e7c577cccad14de3622ea2323899a5b}{%
+           family={Bertalanffy},
+           familyi={B\bibinitperiod},
+           given={Ludwig\bibnamedelima von},
+           giveni={L\bibinitperiod\bibinitdelim v\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {English}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Braziller}%
+      }
+      \strng{namehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{fullhash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{bibnamehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{authorbibnamehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{authornamehash}{5e7c577cccad14de3622ea2323899a5b}
+      \strng{authorfullhash}{5e7c577cccad14de3622ea2323899a5b}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-8076-0452-6 978-0-8076-0452-6 0-8076-0453-4 978-0-8076-0453-3}
+      \field{title}{General system theory}
+      \field{year}{1984}
+    \endentry
+    \entry{cover_elements_2006}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=580c0a728e5d4fa1c7d94fe9932dcd57}{%
+           family={Cover},
+           familyi={C\bibinitperiod},
+           given={T.\bibnamedelimi M.},
+           giveni={T\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e6518a9e085a3ee5221c27f5d8f826dc}{%
+           family={Thomas},
+           familyi={T\bibinitperiod},
+           given={Joy\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Hoboken, N.J}%
+      }
+      \list{publisher}{1}{%
+        {Wiley-Interscience}%
+      }
+      \strng{namehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{fullhash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{bibnamehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{authorbibnamehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{authornamehash}{7bdd19343f610ed4120378adbcffe5a6}
+      \strng{authorfullhash}{7bdd19343f610ed4120378adbcffe5a6}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2nd ed}
+      \field{isbn}{0-471-24195-4 978-0-471-24195-9}
+      \field{title}{Elements of information theory}
+      \field{year}{2006}
+      \keyw{Information theory}
+    \endentry
+    \entry{crutchfield_chaos_1986}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=16ed952287195c400130c2085023d95f}{%
+           family={Crutchfield},
+           familyi={C\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b680fed984c713c56f8e5ac5cefbfbeb}{%
+           family={Farmer},
+           familyi={F\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=37d537be635089670a31092805a56092}{%
+           family={Packard},
+           familyi={P\bibinitperiod},
+           given={N.},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a3f896a275f902fd913abce767f5c399}{%
+           family={Shaw},
+           familyi={S\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5ddf39101c26512d696c95f2f8d2ad34}
+      \strng{fullhash}{54d2057fe1d378c5abb61121893fe042}
+      \strng{bibnamehash}{54d2057fe1d378c5abb61121893fe042}
+      \strng{authorbibnamehash}{54d2057fe1d378c5abb61121893fe042}
+      \strng{authornamehash}{5ddf39101c26512d696c95f2f8d2ad34}
+      \strng{authorfullhash}{54d2057fe1d378c5abb61121893fe042}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Scientific American 225 (6): 46-57}
+      \field{shorttitle}{Chaos {Scientific} {American} 225 (6)}
+      \field{title}{Chaos}
+      \field{year}{1986}
+    \endentry
+    \entry{lendaris_systemness_1986}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=8e63aba47562c3a8291e44c40c998b12}{%
+           family={Lendaris},
+           familyi={L\bibinitperiod},
+           given={G.\bibnamedelimi G.},
+           giveni={G\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{fullhash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{bibnamehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{authorbibnamehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{authornamehash}{8e63aba47562c3a8291e44c40c998b12}
+      \strng{authorfullhash}{8e63aba47562c3a8291e44c40c998b12}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{journaltitle}{Systems, Man and Cybernetics, IEEE Transactions on}
+      \field{number}{4}
+      \field{shorttitle}{On systemness and the problem solver}
+      \field{title}{On systemness and the problem solver: {Tutorial} comments}
+      \field{urlday}{5}
+      \field{urlmonth}{12}
+      \field{urlyear}{2012}
+      \field{volume}{16}
+      \field{year}{1986}
+      \field{urldateera}{ce}
+      \field{pages}{603\bibrangedash 610}
+      \range{pages}{8}
+    \endentry
+    \entry{meadows_thinking_2008}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=5d32ade98fc7c135649f5b031217ca73}{%
+           family={Meadows},
+           familyi={M\bibinitperiod},
+           given={Donella\bibnamedelima H.},
+           giveni={D\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=96395f69ca03260fe9873344ecf7959a}{%
+           family={Wright},
+           familyi={W\bibinitperiod},
+           given={Diana},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {White River Junction, Vt}%
+      }
+      \list{publisher}{1}{%
+        {Chelsea Green Pub}%
+      }
+      \strng{namehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{fullhash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{bibnamehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{authorbibnamehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{authornamehash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \strng{authorfullhash}{f765c0d038a39303b3b09163fdeb0e7f}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{978-1-60358-055-7}
+      \field{note}{OCLC: 225871309}
+      \field{shorttitle}{Thinking in systems}
+      \field{title}{Thinking in systems: a primer}
+      \field{year}{2008}
+      \keyw{Critical thinking,Decision making,Economic aspects Simulation methods,Economic development,Environmental aspects Simulation methods,Environmental education,Pollution,Population,Simulation methods,Social sciences,Sustainable development,System analysis}
+    \endentry
+    \entry{nicolis_exploring_1989}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=76ce7e3ff5f046fb8edb8027f74154fe}{%
+           family={Nicolis},
+           familyi={N\bibinitperiod},
+           given={G},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4a27c9d00244021da5fc207ea2620f6e}{%
+           family={Prigogine},
+           familyi={P\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {English}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {W.H. Freeman}%
+      }
+      \strng{namehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{fullhash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{bibnamehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{authorbibnamehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{authornamehash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \strng{authorfullhash}{bc1774906565de2b29b7b71a42b5e5a7}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{isbn}{0-7167-1859-6 978-0-7167-1859-8 0-7167-1860-X 978-0-7167-1860-4}
+      \field{shorttitle}{Exploring complexity}
+      \field{title}{Exploring complexity : an introduction}
+      \field{year}{1989}
+    \endentry
+    \entry{senge_fifth_2006}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9e47cd4bb4992d7c77036784c2005c30}{%
+           family={Senge},
+           familyi={S\bibinitperiod},
+           given={Peter\bibnamedelima M},
+           giveni={P\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {English}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Doubleday/Currency}%
+      }
+      \strng{namehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{fullhash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{bibnamehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{authorbibnamehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{authornamehash}{9e47cd4bb4992d7c77036784c2005c30}
+      \strng{authorfullhash}{9e47cd4bb4992d7c77036784c2005c30}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{"In The Fifth Discipline, Peter Senge describes how companies can rid themselves of the learning "disabilities" that threaten their productivity and success by adopting the strategies of learning organizations - ones in which new and expansive patterns of thinking are nurtured, collective aspiration is set free, and people are continually learning how to create results they truly desire." "The revised and updated Currency edition of this business classic contains over one hundred pages of new material based on interviews with dozens of practitioners at companies like BP, Unilever, Intel, Ford, HP, Saudi Aramco, and organizations like Roca, Oxfam, and The World Bank. It features a new Foreword about the success Peter Senge has achieved with learning organizations since the book's inception, as well as new chapters on Impetus (getting started), Strategies, Leaders' New Work, Systems Citizens, and Frontiers for the Future."–BOOK JACKET.}
+      \field{isbn}{0-385-51725-4 978-0-385-51725-6 0-385-51782-3 978-0-385-51782-9}
+      \field{shorttitle}{The fifth discipline}
+      \field{title}{The fifth discipline : the art and practice of the learning organization}
+      \field{year}{2006}
+    \endentry
+    \entry{simon_sciences_1996}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=09c462602325128c408aa39c70c6ae62}{%
+           family={Simon},
+           familyi={S\bibinitperiod},
+           given={Herbert\bibnamedelima A.},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Cambridge, Mass}%
+      }
+      \list{publisher}{1}{%
+        {MIT Press}%
+      }
+      \strng{namehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{fullhash}{09c462602325128c408aa39c70c6ae62}
+      \strng{bibnamehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{authorbibnamehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{authornamehash}{09c462602325128c408aa39c70c6ae62}
+      \strng{authorfullhash}{09c462602325128c408aa39c70c6ae62}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3rd ed}
+      \field{isbn}{0-262-69191-4}
+      \field{title}{The sciences of the artificial}
+      \field{year}{1996}
+      \keyw{Philosophy,Science}
+    \endentry
+  \enddatalist
+  \missing{mitchell_complexity_2009}
+  \missing{zwick_elements_2014}
+\endrefsection
+\endinput
+

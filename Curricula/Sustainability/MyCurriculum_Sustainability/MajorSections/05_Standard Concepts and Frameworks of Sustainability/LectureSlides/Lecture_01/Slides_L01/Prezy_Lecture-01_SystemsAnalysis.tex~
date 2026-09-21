@@ -1,0 +1,169 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Derived from "Metropolis" (beamerthememetropolis)
+%
+% May need to run 
+% 1) LaTex -> PDF
+% 2) LaTex -> DVI -> PDF
+% 3) LaTex -> DVI -> PS -> PDF
+% 4) XeTex -> PDF
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%
+% BEAMER CHOICES
+%%%%%%%%%%%%%%%%%%%
+
+\documentclass{beamer}
+\mode<presentation>{\usetheme{metropolis}}
+
+
+%%%%%%%%%%%
+% PACKAGES
+%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsthm}                           % Required for theorem environments
+\usepackage{bm}                               % Required for bold math symbols (used in the footer of the slides)
+\usepackage{graphicx}                         % Required for including images in figures
+\usepackage{booktabs}                         % Required for horizontal rules in tables
+\usepackage{multicol}                         % Required for creating multiple columns in slides
+\setlength{\columnsep}{0.1mm}
+
+
+\usepackage{microtype}                        % Better typography
+%\usepackage{tocstyle}                         % Required for customizing the table of contents
+\usepackage{caption}
+\captionsetup{labelformat=empty,labelsep=none}
+\usepackage{mathtools}
+\usepackage{subcaption}
+\usepackage{nicefrac}
+\usepackage{csquotes}
+
+\usepackage{enumitem}	                        %spread enumeration over multiple slides
+\usepackage{pdfpages}
+\usepackage{tikz}  
+\usepackage[absolute, overlay]{textpos}      %position textblocks (absolute) on the page
+\setlength{\TPHorizModule}{\textwidth}
+\setlength{\TPVertModule}{\textwidth}
+
+
+\usepackage{appendixnumberbeamer}
+\usepackage{booktabs}
+\usepackage{xspace}
+ \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE AND BEAMER OPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Sustainability Now! \\
+Systems Analysis 01}
+%\subtitle{(or why common sense makes sense) }
+\date{\today}
+\author{Bruce D. Marron}
+%\institute{Dynamic Ecosystems and Landscapes Lab; North Carolina State University}
+\titlegraphic{
+\begin{tikzpicture}[overlay]
+  \node[anchor=south west] at (0,-8.5) {\includegraphics[scale= 0.35]{graphics/UMA_Logo.png}}; 
+ \end{tikzpicture}
+ }
+
+%---------------OPTIONALS-------------------------------------------------------
+% (optional, use only with lots of authors)
+%\author[Author, Another] {F.~Author\inst{1} \and S.~Another\inst{2}}
+
+% \institute[Universities of Somewhere and Elsewhere] 
+% {  \inst{1}%
+%  Department of Computer Science\\
+%  University of Somewhere
+%  \and
+%  \inst{2}%
+%  Department of Theoretical Philosophy\\
+%  University of Elsewhere
+%  }
+
+% (optional, should be abbreviation of conference name)
+%\date[CFP 2003] {Conference on Fabulous Presentations, 2003}
+
+% This is only inserted into the PDF information catalog. Can be left out. 
+%\subject{Theoretical Computer Science}
+
+
+% the table of contents pops up at the beginning of each subsection
+%\AtBeginSubsection[]                                     
+% {
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+% }
+
+
+% uncover everything in a step-wise fashion
+%\beamerdefaultoverlayspecification{<+->}              
+%-----------------------------------------------------------------------------------------------------
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% SPECIALTY NEW COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+% Arrow over vector
+\newcommand{\amsvect}{%
+  \mathpalette {\overarrow@\vectfill@}}
+\def\vectfill@{\arrowfill@\relbar\relbar{\raisebox{-3.81pt}[\p@][\p@]{$\mathord\mathchar"017E$}}}
+
+
+% Nice-looking fractions
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+
+
+
+
+%#############
+%  SLIDES
+%#############
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%
+% SECTION 01
+%%%%%%%%%%%%%%%%%%%%
+\section{Why Systems Analysis?}
+
+%Slide-------------------------------------------------------------------
+\begin{frame}
+\large \textit{Sustainability is a set of concepts translated to direct actions across multiple,
+interlinked complex adaptive systems (CAS).}\\
+\vspace{5 mm}
+\large \textit{Traditional reductionist science is not so helpful when managing the behavior of complex adaptive systems.}\\
+\vspace{6 mm}
+\large \textit{"The whole is greater than the sum of the parts"}
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%
+%END OF DOC
+%%%%%%%%%%%%%%%%%
+\end{document}

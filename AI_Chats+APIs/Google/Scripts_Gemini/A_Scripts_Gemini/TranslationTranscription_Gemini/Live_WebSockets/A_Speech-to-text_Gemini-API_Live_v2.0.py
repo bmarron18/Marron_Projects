@@ -2,32 +2,49 @@
 # -*- coding: utf-8 -*-
 
 """
+A_Speech-to-text_Gemini-API_Live_v2.0.py
 Live EN -> ES speech translation / transcription via the Gemini Live API.
 
-v1.7 — bug-fix release over v1.6/v1.5b.
+Created: 18 Sept 2026
+@author: bruce-vdb, claude-opus-5
 
-Fixed in this revision
-----------------------
-1.  FATAL: `asyncio.create_task(asyncio.gather(...))` raised
-        TypeError: a coroutine was expected, got <_GatheringFuture pending>
-    gather() returns a Future, not a coroutine.  Replaced with a real
-    coroutine wrapper; asyncio.wait() now only ever receives Tasks.
-2.  Mic queues are now subscribed BEFORE the capture stream starts, so no
-    leading audio is fanned out to zero subscribers.
-3.  Added a config-degradation ladder: if the server rejects an optional
-    config field (temperature / systemInstruction / speechConfig / ...),
-    that field is dropped and the SAME model is retried, instead of
-    falling into an endless reconnect-with-backoff loop or rotating off a
-    working model.
-4.  Field-rejection errors are no longer misclassified as model errors.
-5.  Model discovery filters out non-bidi "live-looking" ids
-    (lyria-realtime-exp, robotics streaming, gemini-3.5-transcribe, ...).
-6.  Each session worker flushes only its own transcript tags.
-7.  Speaker shutdown can no longer lose its stop sentinel.
-8.  Mic-level monitor warns while running if the input stays silent.
-9.  --check now also probes the real session configs.
+UPDATE AND LIST INSTALLED PACKAGES
+-------------
+<<< bash
+    cd ~/spyder-6/envs && 
+    source ./ai-apis/bin/activate &&
+    python3 -m pip install --upgrade pip
 
-@author: bruce-vdb, Claude Opus 5
+    pip list
+>>>
+
+RUN SCRIPT FROM DESKTOP
+-------------
+<<< bash
+    cd ~/spyder-6/envs && 
+    source ./ai-apis/bin/activate &&
+    python3 ~/Desktop/A_Speech-to-text_Gemini-API_Live_v2.0.py --check
+    
+    python3 ~/Desktop/A_Speech-to-text_Gemini-API_Live_v2.0.py --device pulse &&
+    python3 ~/Desktop/A_Speech-to-text_Gemini-API_Live_v2.0.py
+
+deactivate
+>>>
+
+Stop with Ctrl+C.
+
+----------------
+OPTIONS
+# 1. short bounded run, explicit device (your default index 17 / "pulse" both work) <== DO NOT USE ALSA
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --list-devices
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --device pulse --duration 30
+
+# 2. with Spanish audio playback
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --play-audio
+
+# 3. Transcribe EN only, no translation
+python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --mode transcribe
+
 """
 
 from __future__ import annotations

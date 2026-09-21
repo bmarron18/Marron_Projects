@@ -9,7 +9,7 @@ Created on Sat Sep 19 12:22:40 2026
 Batch document translation with the Google Gemini API.
 ======================================================
 
-Features
+FEATURES
 --------
 * Translates **many** documents in one run (explicit file list, one or more
   directories, or the configured default input directory).
@@ -22,7 +22,7 @@ Features
   and are deleted again as soon as the translation is finished.
 * Per-file error isolation, retry with exponential back-off, run summary.
 
-Defaults
+DEFAULTS
 ---------
 DEFAULT_MODEL = "gemini-3.1-pro-preview"
 DEFAULT_INPUT_DIR = Path.home() / "Desktop" / "to_translate"
@@ -32,25 +32,25 @@ DEFAULT_TARGET_LANGUAGE = "Spanish"
 DEFAULT_OUTPUT_FORMAT = "txt"
 
 
-Run script in Spyder (no command line):
+RUN IN SPYDER (no command line): TO FIX!!
 -------------
     * *Run* (f5)                        <== defaults
-    *  type in Ipython Console
-        -- main([])                     <== defaults
-        -- main(["-t", "German"])       <== w/ toggles
+    * Set toggles (Ctrl + F6),  then *Run*
+        --dry-run           <== w/ toggles
+        -- -t German        <== w/ toggles
 
 
-Run script from command line
+RUN FROM COMMAND LINE
 -------------
 cd ~/spyder-6/envs && 
 source ./ai-apis/bin/activate
 (ai-apis) $ pip install --upgrade genai
    
-(ai-apis) $ python3  ~/Desktop/translate_docs_gemini_v2.0.py               <== use defaults
-(ai-apis) $ python3  ~/Desktop/translate_docs_gemini_v2.0.py --dry-run     <== show the plan only
+(ai-apis) $ python3  ~/Desktop/A_translate_docs_gemini_v2.0.py               <== use defaults
+(ai-apis) $ python3  ~/Desktop/A_translate_docs_gemini_v2.0.py --dry-run     <== show the plan only
 
 
-Toggles
+TOGGLES
 ---------------
 see 'Command-line interface' in script for optional toggles
 For example, 

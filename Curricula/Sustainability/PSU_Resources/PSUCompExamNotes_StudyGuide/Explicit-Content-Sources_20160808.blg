@@ -1,0 +1,37 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Explicit-Content-Sources_20160808.blg'
+[105] biber:340> INFO - === Sun May 31, 2026, 21:19:26
+[127] Biber.pm:419> INFO - Reading 'Explicit-Content-Sources_20160808.bcf'
+[246] Biber.pm:979> INFO - Found 109 citekeys in bib section 0
+[271] Biber.pm:4419> INFO - Processing section 0
+[284] Biber.pm:4610> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[555] bibtex.pm:1713> INFO - LaTeX decoding ...
+[2418] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-mx/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[3713] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[3713] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[3713] Biber.pm:4239> INFO - Sorting list 'nyt/apasortcite//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[3713] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[4015] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[4016] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[4016] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[4016] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[4191] bbl.pm:660> INFO - Writing 'Explicit-Content-Sources_20160808.bbl' with encoding 'UTF-8'
+[4359] bbl.pm:763> INFO - Output to Explicit-Content-Sources_20160808.bbl
+[4359] Biber.pm:131> WARN - ISBN '0-385-51725-4 978-0-385-51725-6 0-385-51782-3 978-0-385-51782-9' in entry 'senge_fifth_2006' is invalid - run biber with '--validate_datamodel' for details.
+[4359] Biber.pm:131> WARN - ISBN '0-8076-0452-6 978-0-8076-0452-6 0-8076-0453-4 978-0-8076-0453-3' in entry 'bertalanffy_general_1984' is invalid - run biber with '--validate_datamodel' for details.
+[4359] Biber.pm:131> WARN - ISBN '978-0-19-512441-5 0-19-512441-3' in entry 'mitchell_complexity:_2009' is invalid - run biber with '--validate_datamodel' for details.
+[4359] Biber.pm:131> WARN - ISBN '0-7167-1859-6 978-0-7167-1859-8 0-7167-1860-X 978-0-7167-1860-4' in entry 'nicolis_exploring_1989' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '0-471-24195-4 978-0-471-24195-9' in entry 'cover_elements_2006' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '0-387-25011-5 0-387-25012-3' in entry 'haefner_modeling_2005' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-1-55963-600-1 978-1-55963-601-8' in entry 'ford_modeling_1999' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-0-387-92299-7 0-387-92299-7 978-0-387-92407-6 0-387-92407-8' in entry 'hoff_first_2009' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-0-691-13673-8 978-0-691-13674-5' in entry 'railsback_agent-based_2012' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-1-4221-2103-0 1-4221-2103-8' in entry 'beinhocker_origin_2007' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-0-521-14350-9 978-0-521-19430-3' in entry 'dale_spatial_2014' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-3-7643-5000-0 978-0-8176-5000-1' in entry 'gianinazzi_impact_1994' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-1-55963-862-3 978-1-55963-863-0' in entry 'harris_survey_2001' is invalid - run biber with '--validate_datamodel' for details.
+[4360] Biber.pm:131> WARN - ISBN '978-1-85383-682-4 978-1-85383-515-5' in entry 'pearce_blueprint_2000' is invalid - run biber with '--validate_datamodel' for details.
+[4361] Biber.pm:131> WARN - ISBN '0-385-72027-0 978-0-385-72027-4' in entry 'sen_development_2000' is invalid - run biber with '--validate_datamodel' for details.
+[4361] Biber.pm:131> WARN - ISBN '978-1-59726-040-4 978-1-59726-039-8' in entry 'millennium_ecosystem_assessment_program_ecosystems_2005' is invalid - run biber with '--validate_datamodel' for details.
+[4361] Biber.pm:131> WARN - I didn't find a database entry for 'zwick_elements_2014' (section 0)
+[4361] Biber.pm:133> INFO - WARNINGS: 17

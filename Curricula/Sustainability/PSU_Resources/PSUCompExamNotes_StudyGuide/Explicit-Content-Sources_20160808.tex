@@ -1,0 +1,334 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Detailed Topics Outline for Comps (w/ Refs)
+% Comps Exams
+% (2016SoE016)
+% Rev: 08 Aug 2016
+% Final: 08 Aug 2016
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage{lastpage} % Required to determine the last page for the footer
+\usepackage{extramarks} % Required for headers and footers
+\usepackage{graphicx} % Required to insert images
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\usepackage{comment}
+\usepackage[all]{nowidow}
+\usepackage{csquotes}
+\usepackage{tikz}
+%\usepackage{draftwatermark}
+%\SetWatermarkLightness{0.80}
+%\SetWatermarkScale{4}
+\usepackage{everypage}
+\usepackage{outlines}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+%\usepackage{natbib}
+%\usepackage{cite}
+
+
+% Margins
+\topmargin= -0.25in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.95in
+\textheight=9.0in
+\headsep=0.35in %distance between header and text
+
+% Line spacing
+\linespread{1.2} 
+
+% Signature macro
+\newcommand*{\SignatureAndDate}[1]{
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}
+}
+
+% Set up the header and footer
+\pagestyle{fancy}
+\lhead{} % Top left header
+\chead{} % Top center header
+\rhead{\footnotesize {Marron Comprehensive Exams: Explicit Content Sources}} % Top right header
+\lfoot{\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{Page\ \thepage\ of\ \pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+
+%Misc
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+\setcounter{secnumdepth}{0} % Removes default section numbers
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{5mm}
+\textmd{\textbf{Comprehensive Exams: \\
+Explicit Content Sources}}\\
+\normalsize {Bruce D. Marron}\\
+\textit{\normalsize {Earth, Environment, and Society Ph.D. Program\\
+School of the Environment, Portland State University}}\\
+}
+\date{}
+%----------------------------------------
+%	BEGIN DOC
+%----------------------------------------
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\clearpage\maketitle
+%\nobibliography*
+
+\subsubsection{Subject Area 1: Systems Thinking (Dr. Wayne Wakeland)}
+\begin{outline}[enumerate]
+\1 Foundations of Systems Thinking
+\2 Topic Selections
+\3 Concepts and Perspectives of Systems
+\4 \cite{meadows_thinking_2008} \textbf{[pp.1-203]}
+\4 \cite{senge_fifth_2006} \textbf{[pp. 163-187; 343-349]}
+\4 \cite{lendaris_systemness_1986}
+\4 \cite{bertalanffy_general_1984} \textbf{[pp. 3-88])}
+\4 \cite{zwick_elements_2014} \textbf{[pp. 60-71])}
+\4 \cite{ashby_introduction_1955} \textbf{[pp. 86-117, 195-224])}
+\3 Organization and Attributes of Systems
+\4 \cite{simon_sciences_1996} \textbf{[pp. 169-216])}
+\4 \cite{barabasi_scale-free_2003}
+\4 \cite{barabasi_scale-free_2009}
+\4 \cite{crutchfield_chaos_1986}
+\4 \cite{mitchell_complexity:_2009} \textbf{[pp. 94-111; 169-185]}
+\4 \cite{nicolis_exploring_1989} \textbf{[pp. 5-44; 183-192; 217-242]}
+\4 \cite{cover_elements_2006} \textbf{[pp. 1-30; 34-35; 57-60]}
+\end{outline}
+
+
+
+\newpage
+\subsubsection{Subject Area 2: Systems Modeling (Dr. Wayne Wakeland)}
+\begin{outline}[enumerate]
+\1 Foundations of Systems Modeling
+\2 Topic Selections
+\3 Model Typologies
+\4 \cite{haefner_modeling_2005} \textbf{[pp. 3-15; 49-54]}
+\4 \cite{gilbert_simulation_2005} \textbf{[pp. 1-14]}
+\4 \cite{law_simulation_2006} \textbf{[pp. 1-6]}
+
+\3 Modeling Process: Formulation, Verification, Validation, Selection
+\4 Haefner (2005) \textbf{[pp. 17-30; 144-175]}
+\4 Gilbert (2005) \textbf{[pp. 15-27]}
+\4 \cite{santner_design_2003} \textbf{[pp. 1-17; 199-203]}
+\4 Law (2006) \textbf{[pp. 243-273]}
+
+\3 Model Behavior: Sensitivity Analysis, Error Analysis, Stability Analysis, Chaos
+\4 Santner (2003) \textbf{[pp. 189-199]}
+\4 Haefner (2005) \textbf{[pp.178-213]}
+\4 Haefner (2005) \textbf{[pp. 356-388]}
+\4 \cite{may_thresholds_1977}
+\4 \cite{may_simple_1976}
+
+\3 Experimental Design for Simulation Modeling
+\4 Santner (2003) \textbf{[pp. 121-187]}
+
+\1 Foundations of Model Archetypes
+\2 Topic Selections
+\3 Qualitative Graphical Models
+\4 \cite{ford_modeling_1999} \textbf{[pp. 69-95; 97-100]}
+\4 Haefner (2005) \textbf{[pp. 32-49]}
+
+\3 Probability Models: Bayesian DAGs; Markov Models; Hidden Markov Models; State Space Models
+\4 \cite{hoff_first_2009} \textbf{[pp. 13-104; 125-207]}
+\4 \cite{lunn_bugs_2013}  \textbf{[pp. 1-119; 137-177; 219-250]}
+\4 \cite{alpaydin_introduction_2014} \textbf{[pp. 387-484]}
+\4 \cite{zucchini_hidden_2009} \textbf{[pp. 3-74; 103-112; 135-235]}
+\4 \cite{fink_markov_2014} \textbf{[pp. 107-123]}
+\4 Haefner (2005) \textbf{[pp. 215-231]}
+\4 \cite{shumway_time_2011} \textbf{[pp. 319-378]}
+
+\3 Quantitative Compartment and Transport Models: Systems Dynamics and Time Series Regression Models
+\4 \cite{luenberger_introduction_1979} \textbf{[pp. 132-178; 224-248; 316-356]}
+\4 \cite{lay_linear_2012} \textbf{[pp. 301-309}
+\4 Haefner (2005) \textbf{[pp. 215-231]}
+\4 Gilbert (2005) \textbf{[pp. 28-45]}
+\4 Shumway (2011) \textbf{[pp. 47-153]}
+
+\3 Quantitative Particle Models: Agent-Based Models
+\4 \cite{railsback_agent-based_2012} \textbf{[pp. 35-45; 227-306]}
+\4 \cite{gilbert_agent-based_2008}
+\4 \cite{resnick_turtles_1994}
+\4 \cite{epstein_growing_1996} \textbf{[pp. 153-178]}
+\4 Gilbert (2005) \textbf{[pp. 172-215]}
+
+\3 Quantitative Stochastic Models: Discrete Systems (Queuing) Models
+\4 \cite{kelton_simulation_2010} \textbf{[pp. 202-228]}
+\4 Law (2006) \textbf{[pp. 6-32; 79-83; 275-353; 370-380; 471-477; 485-541; 669-671; 685-712 ]}
+\end{outline}
+
+
+
+\newpage
+\subsubsection{Subject Area 3: Ecology (Dr. Robert Scheller)}
+\begin{outline}[enumerate]
+\1 Fundamentals of Ecology 
+\2 Topic Selections
+\3 Biology
+\4 \cite{curtis_biology_1983} \textbf{[pp. 49-75; 157-232]}
+
+\3 Ecology
+\4 \cite{curtis_biology_1983} \textbf{[pp. 951-993]}
+\4 \cite{weier_botany:_1982} \textbf{[pp. 347-371]}
+\4 \cite{odum_strategy_1969}
+\4 \cite{hairston_community_1960}
+\4 \cite{cardinale_biodiversity_2012}
+\4 \cite {estes_trophic_2011}
+\4 \cite{wiens_niche_2010}
+
+\3 Evolution
+\4 \cite{ehrlich_differentiation_1969}
+\4 \cite{alleaume-benharira_geographical_2006}
+\4 \cite{jay_gould_punctuated_1993}
+\4 \cite{kauffman_origins_1993} \textbf{[pp. 3-120; 173-286]}
+\4 \cite{beinhocker_origin_2007} \textbf{[pp. 187-217]}
+\4 \cite{feng_epigenetic_2010}
+
+
+\1 Foundations of Landscape Ecology
+\2 Topic Selections
+\3 Historical Development
+\4 \cite{solnetsev_natural_1948}
+\4 \cite{troll_geographic_1950}
+\4 \cite{watt_pattern_1947}
+\4 \cite{wiens_allerton_2008}
+
+\3 Ecological Landscapes: Scales and Patterns
+\4 \cite{turner_effects_1989}
+\4 \cite{wu_effects_2004}
+\4 \cite{legendre_spatial_1989}
+\4 \cite{wiens_spatial_1989}
+
+\3 Ecological Landscapes: Dynamics and Processes
+\4 \cite{turner_disturbance_2010}
+\4 \cite{turner_landscape_1989}
+\4 \cite{peterjohn_nutrient_1984}
+\4 \cite{wegner_movements_1979}
+\4 \cite{walker_use_2010}
+\4 \cite{wiens_population_1976}
+
+\3 Measuring and Modeling Ecological Landscapes
+\4 \cite{dale_spatial_2014} \textbf{(TBD)}
+\4 \cite{naveh_biocybernetic_1987}
+\4 \cite{lefkovitch_spatial_1985}
+\4 \cite{scheller_ecological_2007}
+\4 \cite{scheller_robert_m._landscape_2013}
+\4 \cite{scheller_design_2007}
+
+
+\1 Foundations of Agroecology
+\2 Topic Selections
+\3 Concepts and Rationales
+\4 \cite{tilman_agricultural_2002}
+\4 \cite{godfray_food_2010}
+\4 \cite{gliessman_agroecology:_2015} \textbf{[pp. 3-34; 301-344]}
+\4 \cite{wolfe_crop_2000}
+\4 \cite{beus_conventional_1990}
+\4 \cite{rosset_multiple_2000}
+\4 \cite{thompson_agrarian_2010}
+
+\3 Biotics and Abiotics
+\4 \cite{schmidt_persistence_2011}
+\4 \cite{gliessman_agroecology:_2015} \textbf{[pp. 35-142]}
+
+\3 Agroecological Interactions
+\4 \cite{gliessman_agroecology:_2015} \textbf{[pp. 143-298]}
+\4 \cite{gianinazzi_impact_1994}
+\4 \cite{schnitzer_soil_2011}
+\4 \cite{smith_plant_2009}
+\4 \cite {van_der_putten_plantsoil_2013}
+
+\3 Milpa Culture
+\4 \cite{jimenez-osornio_agrodiversidad_1999}
+\4 \cite{toledo_uso_2008}
+\4 \cite{benjamin_carbon_2001}
+\4 \cite {dahlin_reconstructing_2005}
+\end{outline}
+
+
+\newpage
+\subsubsection{Subject Area 4: Sustainability (Dr. Vivek Shandas)}
+\begin{outline}[enumerate]
+\1 Foundations of Sustainability
+\2 Topic Selections
+\3 Fundamental Concepts
+\4 \cite{harris_survey_2001} \textbf{[pp. xxvii-xxxvii]}
+\4 \cite{marshall_framing_2005}
+
+\3 Ecological Sustainability
+\4 \cite{pearce_blueprint_2000} \textbf{[pp. 102-129]}
+\4 \cite{folke_regime_2004}
+\4 \cite{schnaiberg_treadmill_2002}
+
+\3 Social Sustainability
+\4 \cite{sen_development_2000}\textbf{[pp. 111-159]}
+\4 \cite{pastor_environmental_2007}
+\4 \cite{miringoff_growing_1996}
+\4 \cite{oecd_well-being_2001}
+\4 \cite{berbes-blazquez_towards_2016}
+
+\3 Economic Sustainability
+\4 \cite{pearce_blueprint_2000} \textbf{[pp. 1-50; 157-209]}
+\4 \cite{costanza_natural_1992}
+\4 \cite{daly_economics_1974}
+\4 \cite{goodwin_five_2003}
+
+
+\1 Foundations of Ecosystem Services
+\2 Topic Selections
+\3 Ecosystem Services: Definitions and Metrics
+\4 \cite{millennium_ecosystem_assessment_program_ecosystems_2005} \textbf{[pp. ]}
+\4 \cite{wallace_classification_2007}
+\4 \cite{nelson_modeling_2009}
+\4 \cite{costanza_value_1997}
+\4 \cite{kremen_managing_2005}
+\4 \cite{muradian_reconciling_2010}
+\4 \cite{niemela_using_2010}
+\4 \cite{norgaard_ecosystem_2010}
+
+\3 Global Ecosystem Health and Ecosystem Service Delivery
+\4 \cite{zhao_drought-induced_2010}
+\4 \cite{hoegh-guldberg_impact_2010}
+\4 \cite{lobell_climate_2011}
+\4 \cite{dodds_human_2013}
+\4 \cite{rogers_facing_2008}
+\4 \cite{eigenbrod_impact_2011}
+\end{outline}
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}
