@@ -31,36 +31,56 @@ DEFAULT_SOURCE_LANGUAGE = "English"
 DEFAULT_TARGET_LANGUAGE = "Spanish"
 DEFAULT_OUTPUT_FORMAT = "txt"
 
+UPDATE AND LIST INSTALLED PACKAGES
+-------------
+<<< bash
+    cd ~/spyder-6/envs && 
+    source ./ai-apis/bin/activate &&
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade genai
 
-RUN IN SPYDER (no command line): TO FIX!!
+    pip list
+>>>
+
+RUN IN SPYDER ==> TO FIX!!
 -------------
     * *Run* (f5)                        <== defaults
     * Set toggles (Ctrl + F6),  then *Run*
         --dry-run           <== w/ toggles
-        -- -t German        <== w/ toggles
+         -t German        <== w/ toggles
 
 
-RUN FROM COMMAND LINE
--------------
-cd ~/spyder-6/envs && 
-source ./ai-apis/bin/activate
-(ai-apis) $ pip install --upgrade genai
-   
-(ai-apis) $ python3  ~/Desktop/A_translate_docs_gemini_v2.0.py               <== use defaults
-(ai-apis) $ python3  ~/Desktop/A_translate_docs_gemini_v2.0.py --dry-run     <== show the plan only
+RUN SCRIPT FROM DESKTOP
+------------------
+On Desktop
+    * folder 'to_trnslate' with files  <== for multiple files
+    * single MIME file                  <== for a single file
+    * copy of this script
+
+<<<bash
+    cd ~/spyder-6/envs && 
+    source ./ai-apis/bin/activate
+
+        # show the plan only
+    python3  ~/Desktop/A_translate_docs_gemini_v2.0.py --dry-run
+    
+        # translate multiple files, multiple MOME types
+    python3  ~/Desktop/A_translate_docs_gemini_v2.0.py               <== multiple files, defaults
+
+       # translate just one file, a .pdf
+   python3 ~/Desktop/A_translate_docs_gemini_v2.0.py ~/Desktop/*.pdf                <== defaults
+   python3 ~/Desktop/A_translate_docs_gemini_v2.0.py ~/Desktop/*.pdf -t French      <== English-French
+>>>
 
 
 TOGGLES
 ---------------
-see 'Command-line interface' in script for optional toggles
+see 'Command-line interface' in script below for optional toggles
 For example, 
-
-        # translate just one file to French
-    python3 translate_docs_gemini_v2.0.py ~/Desktop/*.pdf -t French
     
         #change name of input directory, change name of output directory, change output file type
-    python3 translate_docs_gemini_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f md
-    python translate_docs_openai_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f html
+    python3 ~/Desktop/A_translate_docs_gemini_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f md
+    python ~/Desktop/A_translate_docs_openai_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f html
     
 """
 

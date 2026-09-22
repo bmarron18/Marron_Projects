@@ -13,12 +13,14 @@ UPDATE AND LIST INSTALLED PACKAGES
 <<< bash
     cd ~/spyder-6/envs && 
     source ./ai-apis/bin/activate &&
-    python3 -m pip install --upgrade pip
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade genai
 
     pip list
 >>>
 
 RUN SCRIPT FROM DESKTOP
+(copy of script on Desktop)
 -------------
 <<< bash
     cd ~/spyder-6/envs && 
@@ -33,8 +35,9 @@ deactivate
 
 Stop with Ctrl+C.
 
-----------------
+
 OPTIONS
+----------------
 # 1. short bounded run, explicit device (your default index 17 / "pulse" both work) <== DO NOT USE ALSA
 python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --list-devices
 python3 ~/Desktop/X_Speech-to-text_Gemini-API_Live_v2.0.py --device pulse --duration 30
