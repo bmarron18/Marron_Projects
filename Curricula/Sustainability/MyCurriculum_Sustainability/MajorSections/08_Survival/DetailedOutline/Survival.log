@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  24 SEP 2026 11:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  24 SEP 2026 11:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"Abbreviated Course Outline_Sustainability.tex"
-(./Abbreviated Course Outline_Sustainability.tex
+**Survival.tex
+(./Survival.tex
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
 (/usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
@@ -1188,8 +1188,8 @@ LaTeX Font Info:    Trying to load font information for T1+pplx on input line 1
  (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pplx.fd
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
-(./Abbreviated Course Outline_Sustainability.aux)
-\openout1 = `"Abbreviated Course Outline_Sustainability.aux"'.
+(./Survival.aux)
+\openout1 = `Survival.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 174.
 LaTeX Font Info:    ... okay on input line 174.
@@ -1279,13 +1279,12 @@ File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout3 = `"Abbreviated Course Outline_Sustainability.bcf"'.
+\openout3 = `Survival.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file '"Abbreviated Course Outline_Sustainability".bb
-l' found.
+Package biblatex Info: ... file 'Survival.bbl' found.
 
-(./Abbreviated Course Outline_Sustainability.bbl)
+(./Survival.bbl)
 Package biblatex Info: Reference section=0 on input line 174.
 Package biblatex Info: Reference segment=0 on input line 174.
 
@@ -1351,9 +1350,6 @@ File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 Package babel Info: Main language set to 'english'.
-Package microtype Info: Character `029' is missing
-(microtype)             in font `T1/pplx/m/sc/14.4'.
-(microtype)             Ignoring protrusion settings for this character.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1367,71 +1363,31 @@ ocal/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 ]
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+LaTeX Warning: Empty bibliography on input line 235.
 
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 307--308
-
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[3]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[4]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 14.49998pt, for example:
-(fancyhdr)                \setlength{\headheight}{14.49998pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
-
-[5]
-
-LaTeX Warning: Empty bibliography on input line 415.
-
-(./Abbreviated Course Outline_Sustainability.aux)
+(./Survival.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
  ***********
-Package logreq Info: Writing requests to '"Abbreviated Course Outline_Sustainab
-ility".run.xml'.
-\openout1 = `"Abbreviated Course Outline_Sustainability.run.xml"'.
+Package logreq Info: Writing requests to 'Survival.run.xml'.
+\openout1 = `Survival.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33225 strings out of 467099
- 664950 string characters out of 5408266
- 1728824 words of memory out of 5000000
- 61959 multiletter control sequences out of 15000+600000
- 651527 words of font info for 99 fonts, out of 8000000 for 9000
+ 33164 strings out of 467099
+ 663500 string characters out of 5408266
+ 1723693 words of memory out of 5000000
+ 61941 multiletter control sequences out of 15000+600000
+ 639380 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 107i,12n,108p,1040b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/
-local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
-exlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/
-2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Abbreviated Course Outline_Sustainability.pdf" (5 pages, 740
-98 bytes).
+ 107i,12n,108p,1005b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr
+/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on Survival.pdf (1 page, 33246 bytes).
 PDF statistics:
- 44 PDF objects out of 1000 (max. 8388607)
- 28 compressed objects within 1 object stream
+ 22 PDF objects out of 1000 (max. 8388607)
+ 14 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 38925 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 20493 words of extra memory for PDF output out of 20736 (max. 10000000)
 

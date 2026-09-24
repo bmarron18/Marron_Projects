@@ -1,8 +1,9 @@
-[0] Config.pm:307> INFO - This is Biber 2.19
-[0] Config.pm:310> INFO - Logfile is 'Abbreviated Course Outline_Sustainability.blg'
-[35] biber:340> INFO - === Thu Sep  3, 2026, 20:47:13
-[42] Biber.pm:419> INFO - Reading 'Abbreviated Course Outline_Sustainability.bcf'
-[75] Utils.pm:399> ERROR - Error: Found biblatex control file version 3.11, expected version 3.10.
-This means that your biber (2.19) and biblatex (3.21) versions are incompatible.
-See compat matrix in biblatex or biber PDF documentation.
-[75] Biber.pm:136> INFO - ERRORS: 1
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'Abbreviated Course Outline_Sustainability.blg'
+[33] biber:342> INFO - === Thu Sep 24, 2026, 11:20:47
+[40] Biber.pm:421> INFO - Reading 'Abbreviated Course Outline_Sustainability.bcf'
+[78] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[87] bbl.pm:676> INFO - Writing 'Abbreviated Course Outline_Sustainability.bbl' with encoding 'UTF-8'
+[87] bbl.pm:779> INFO - Output to Abbreviated Course Outline_Sustainability.bbl
+[87] Biber.pm:132> WARN - The file 'Abbreviated Course Outline_Sustainability.bcf' does not contain any citations!
+[87] Biber.pm:134> INFO - WARNINGS: 1

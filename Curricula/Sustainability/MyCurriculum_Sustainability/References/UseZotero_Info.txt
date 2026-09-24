@@ -1,0 +1,96 @@
+
+
+
+*	All references are in Zotero!!
+*	Use Tags to organize docs INSTEAD of Collections
+*	Search Tags at bottom of left-hand column
+
+
+##############
+Open Zotero
+#############
+
+$ cd /opt/Zotero
+$ ./zotero
+
+
+############
+Zotero
+############
+https://www.zotero.org/user/login
+https://www.zotero.org/bmarron/
+
+
+	#sync w/ online library
+User ID:	bmarron
+password:	bd147eceM#
+
+
+PAID $20 02 Sept 2026 for 2 GB storage
+
+
+	#onsite library
+~/Zotero/zotero.sqlite: The primary SQL database file containing your collection structures, item metadata, notes, and tags.
+
+~/Zotero/storage/: A folder containing nested, 8-character randomly named subfolders (e.g., N7SMB24A) that store your actual local PDF attachments, snapshots, and images.
+
+
+
+
+#############
+Install
+Zotero for Linux
+##################
+https://www.zotero.org/download/
+
+Zotero 10 for Linux
+Zotero-10.0.1_linux-x86_64.tar.xz
+
+
+For Ubuntu and other distros that support .desktop files, the tarball includes a .desktop file that can be used to add Zotero to the launcher:
+
+    *Move the extracted directory to a location of your choice (e.g., /opt/zotero).
+$ sudo mv Zotero_linux-x86_64 /opt/Zotero
+
+
+    *Run the set_launcher_icon script from a terminal to update the .desktop file for that location. .desktop files require absolute paths for icons, so set_launcher_icon replaces the icon path with the current location of the icon based on where you’ve placed the directory.
+$ chmod +x set_launcher_icon
+$ ./set_launcher_icon
+
+    *Symlink zotero.desktop into ~/.local/share/applications/
+$ ln -s /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop
+
+Zotero should then appear either in your launcher or in the applications list when you click the grid icon (“Show Applications”), from which you can drag it to the launcher.
+
+
+
+###########
+Add Zotero to Firefox
+################
+
+Go to the Zotero Download Page if you have not installed the connector yet, and click Install Connector for Firefox. 
+	https://www.zotero.org/download/
+
+Click Add or Allow when Firefox prompts you to permit the extension.
+
+Click the Extensions button (shaped like a puzzle piece) in the top-right corner of the Firefox toolbar.
+
+Find the Zotero icon in the drop-down list.Click the gear icon next to Zotero and select Pin to Toolbar.
+
+
+############
+Sync Zotero from
+Zotero.org
+##############
+
+open Zotero
+	==> Settings
+		==> Account
+		[login to account; remeber device]
+
+Zotero for Linux has been connected to your account.
+You can now close this page and return to Zotero. 
+
+https://www.zotero.org/user/login/
+
+Clic on "recycle" icon in upper right hand corner to sync / monitor sync

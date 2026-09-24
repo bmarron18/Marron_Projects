@@ -1,9 +1,9 @@
-PWD /home/bruce-vdb/Desktop/Marron_Projects/Curricula/Sustainability/MyCurriculum_Sustainability/CourseOutline
+PWD /home/bruce-vdb/Desktop/Marron_Projects/Curricula/Sustainability/MyCurriculum_Sustainability/MajorSections/08_Survival/DetailedOutline
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT Abbreviated Course Outline_Sustainability.tex
-OUTPUT Abbreviated Course Outline_Sustainability.log
+INPUT Survival.tex
+OUTPUT Survival.log
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/size12.clo
@@ -420,10 +420,10 @@ INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pplx.fd
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pplx.fd
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/t1pplx.fd
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm
-INPUT ./Abbreviated Course Outline_Sustainability.aux
-INPUT ./Abbreviated Course Outline_Sustainability.aux
-INPUT Abbreviated Course Outline_Sustainability.aux
-OUTPUT Abbreviated Course Outline_Sustainability.aux
+INPUT ./Survival.aux
+INPUT ./Survival.aux
+INPUT Survival.aux
+OUTPUT Survival.aux
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/american-apa.lbx
@@ -441,12 +441,12 @@ INPUT /usr/local/share/texmf/tex/latex/biblatex/latex/lbx/american.lbx
 INPUT /usr/local/share/texmf/tex/latex/biblatex/latex/lbx/english.lbx
 INPUT /usr/local/share/texmf/tex/latex/biblatex/latex/lbx/english.lbx
 INPUT /usr/local/share/texmf/tex/latex/biblatex/latex/lbx/english.lbx
-OUTPUT Abbreviated Course Outline_Sustainability.bcf
-INPUT Abbreviated Course Outline_Sustainability.bbl
-INPUT ./Abbreviated Course Outline_Sustainability.bbl
-INPUT ./Abbreviated Course Outline_Sustainability.bbl
-INPUT ./Abbreviated Course Outline_Sustainability.bbl
-INPUT Abbreviated Course Outline_Sustainability.bbl
+OUTPUT Survival.bcf
+INPUT Survival.bbl
+INPUT ./Survival.bbl
+INPUT ./Survival.bbl
+INPUT ./Survival.bbl
+INPUT Survival.bbl
 INPUT /usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -465,13 +465,9 @@ INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplb9e.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplrc9e.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri9e.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm
-OUTPUT Abbreviated Course Outline_Sustainability.pdf
+OUTPUT Survival.pdf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplr9e.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmr.tfm
@@ -480,20 +476,11 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplr9e.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmr.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplb9e.vf
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmb.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplrc9e.vf
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplrc8r.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr8r.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplri9e.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmri.tfm
-INPUT Abbreviated Course Outline_Sustainability.aux
-INPUT Abbreviated Course Outline_Sustainability.run.xml
-OUTPUT Abbreviated Course Outline_Sustainability.run.xml
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb
+INPUT Survival.aux
+INPUT Survival.run.xml
+OUTPUT Survival.run.xml
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb
