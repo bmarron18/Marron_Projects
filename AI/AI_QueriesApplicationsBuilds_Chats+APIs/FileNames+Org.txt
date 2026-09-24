@@ -1,0 +1,37 @@
+
+
+########
+Queries
+########
+
+Name folder as 'QueryType_Description_TaskType'
+
+
+	QueryTypes			
+	---------					
+	Build_
+	Data_
+	Info_
+
+
+	TaskTypes
+	---------
+	_Analytic
+	_Translation
+	_Transcription
+	_Snippet
+
+###########
+Scripts
+###########
+
+	ScriptType
+	----------
+	A_
+	X_
+
+
+	ScriptLanguage
+	--------------
+	Py
+	Bash

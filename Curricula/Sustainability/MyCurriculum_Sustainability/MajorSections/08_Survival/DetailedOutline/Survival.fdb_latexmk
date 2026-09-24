@@ -1,11 +1,11 @@
 # Fdb version 4
-["biber Survival"] 1790269478.02837 "Survival.bcf" "Survival.bbl" "Survival" 1790269867.67205 0
-  "Survival.bcf" 1790269867.51469 133407 b9542947e353646677ad03326b3398a4 "pdflatex"
+["biber Survival"] 1790269478.02837 "Survival.bcf" "Survival.bbl" "Survival" 1790278523.31138 0
+  "Survival.bcf" 1790278523.10162 133407 b9542947e353646677ad03326b3398a4 "pdflatex"
   (generated)
   "Survival.bbl"
   "Survival.blg"
   (rewritten before read)
-["pdflatex"] 1790269866.79607 "Survival.tex" "Survival.pdf" "Survival" 1790269867.67234 0
+["pdflatex"] 1790278522.31503 "Survival.tex" "Survival.pdf" "Survival" 1790278523.31186 0
   "/usr/local/share/texmf/tex/latex/biblatex/latex/bbx/standard.bbx" 1756502253.24981 25680 409c3f3d570418bc545e8065bebd0688 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.cfg" 1756502253.24981 69 249fa6df04d948e51b6d5c67bea30c42 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.def" 1756502253.24981 96838 ffbc2c4ed45b0b76660254a85df40e90 ""
@@ -22,15 +22,19 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr8r.tfm" 1136768653 2796 d37c29814a6717720ee1a7c9a0b2c3b8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9e.tfm" 1136768653 6952 02ad5d201b346d62c53c35f081142949 ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplrc8r.tfm" 1136768653 3528 0711c6c96865155bce7256fa14ac59b1 ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplrc9e.tfm" 1136768653 11504 0aee68a3cffe19441de3ef8908532348 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri8r.tfm" 1136768653 2720 70000d5e623e601132eab3cded5b819b ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri9e.tfm" 1136768653 4636 04bb79b19bf5315ced00732a1dac5509 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1136768653 1288 655e228510b4c2a1abe905c368440826 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmr.tfm" 1136768653 1032 7fa31d93ecd4cbdfac02c7a1ebc6facc ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmri.tfm" 1136768653 1148 56b0fdf7ca3f800294e968f64cfdcb87 ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb" 1546638885 62231 6fa2851364e6117779162ea79cb96ef4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb" 1136849748 52665 661b1e6b26edb5f50dd491f8a701cb57 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb" 1136849748 50022 90249cba7e3e4e9845f80328d6f9bd13 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplr9e.vf" 1136768653 2296 bb1ff9494546688194a48c9b41b39dac ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplrc9e.vf" 1136768653 2476 9ee0dbbdd2dd550350b23d6a93c7c1af ""
   "/usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplri9e.vf" 1136768653 2296 c260490d12463c5a352580ede007bb93 ""
   "/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2026/texmf-dist/tex/generic/babel-english/english.ldf" 1496785618 7008 9ff5fdcc865b01beca2b0fe4a46231d4 ""
@@ -198,10 +202,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788581441 5609353 13863466be7e2f3222bf573e23e6e97d ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1788581470 3658238 4e535c84a4e2b98eb209584d747fd9b2 ""
   "/usr/local/texlive/2026/texmf.cnf" 1788631954.43217 490 bda3fb63e318ca41966f63cd33cd8534 ""
-  "Survival.aux" 1790269867.51369 285 f9d0e537961380744476bc88f8d84acd "pdflatex"
+  "Survival.aux" 1790278523.09962 382 4564a27db7007ea557b01d6b4e375061 "pdflatex"
   "Survival.bbl" 1790269478.60634 466 76d65a242ec496c9b4361af646ff12cb "biber Survival"
-  "Survival.run.xml" 1790269867.51711 2477 0df4810b840b99cbe296d2523fa2249d "pdflatex"
-  "Survival.tex" 1790269866.67669 8228 ee378aba0b5804896c012c0eb122a4f1 ""
+  "Survival.run.xml" 1790278523.10262 2477 0df4810b840b99cbe296d2523fa2249d "pdflatex"
+  "Survival.tex" 1790278521.23124 8303 c65320e61d061dc482a8bed11e4b87e0 ""
   (generated)
   "Survival.aux"
   "Survival.bcf"
