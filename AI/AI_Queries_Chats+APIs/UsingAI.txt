@@ -1,0 +1,15 @@
+
+USE
+	* Anthropic Claude for coding
+	* OpenAI Astra for data and analytics research
+	* Google Gemini for translation
+
+
+
+plotnine
+---------
+
+Yes, an AI model like GPT-5.5 can absolutely provide code for the Python equivalent of R's ggplot2. Since ggplot2 is an R package, it cannot be run natively in Python. Instead, GPT-5.5 (or any advanced coding model) will write code for plotnine, which is the leading Python implementation of R's "Grammar of Graphics" and behaves almost exactly like ggplot2
+
+Yes, GPT-4 or later versions (including GPT-4o and advanced reasoning models) are highly capable of analyzing CSV data and generating working plotnine code in Python. GPT uses its data analysis capabilities to examine the structure of your CSV. By understanding your column names and data types, it can write a Python script that reads the file using pandas and builds a plot using plotnine (a Python implementation of R's popular ggplot2).
+
