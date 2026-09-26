@@ -1,0 +1,128 @@
+
+
+###############
+Account
+###############
+Login ChatGPT
+	https://auth.openai.com/log-in     
+
+Login API
+    https://platform.openai.com/home
+    https://auth.openai.com/log-in
+
+    sign in with Google
+        marron.bruce.mx@gmail.com
+
+Current API Key
+    another3    Active  
+
+OpenAI has two basic APIs
+	Responses API	             <== USE THIS ONE!
+	Chat Completions API
+
+################
+Models
+#################
+https://developers.openai.com/api/docs/models
+
+Flagship models
+    gpt-6-astra
+    gpt-5.6-sol
+    gpt-5.6-terra
+
+
+Specialized models
+    gpt-live-transcribe
+        Low-latency speech-to-text model for realtime transcription
+        https://developers.openai.com/api/docs/models/gpt-live-transcribe
+
+
+https://cookbook.openai.com
+https://platform.openai.com/docs/api-reference/responses
+
+
+########
+Pricing
+Credits
+########
+https://platform.openai.com/settings/organization/billing/overview
+
+My Costs
+    https://platform.openai.com/usage
+
+Billing / Add Credits (Pay as you go)
+    https://platform.openai.com/settings/organization/billing/overview
+
+    OpenAI API usage credit $20.00  25Sept2026
+
+############
+API Key
+############
+ # Manage API Key
+https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
+# NB. shell configuration files ( .bashrc, .zshrc, or .bash_profile)
+# I have ~/.bashrc
+
+    # in Linux creates a .bash_profile file at /home/bmarron
+$ echo "export GEMINI_API_KEY='my-key'" >> ~/.bashrc
+$ echo "export OPENAI_API_KEY='my-key'" >> ~/.bashrc
+
+    # update shell with new variable
+$ source ~/.bashrc
+
+    # check  ~/.bashrc file
+    # should have ==> export OPENAI_API_KEY="sk-proj-xxxxxxxxxx" as \ 
+    # the last entry
+    
+$ subl ./.bashrc
+
+    # confirm you have set the API key correctly
+$ echo $OPENAI_API_KEY
+
+    # check Python finds the key
+    # DONT USE ==> os.environment["OPENAI_API_KEY"]
+
+import os
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+
+    # call the key in scripts
+import os
+from openai import OpenAI
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=openai_api_key)
+
+
+--- ./bashrc --------------------------------------------------
+# >>> Added by Spyder >>>
+alias spyder=/home/bmarron/.local/spyder-6/envs/spyder-runtime/bin/spyder
+alias uninstall-spyder=/home/bmarron/.local/spyder-6/uninstall-spyder.sh
+# <<< Added by Spyder <<<
+
+export OPENAI_API_KEY="sk-proj-L8VWXMFYMPxxxxxxxxxx"
+------------------------------------------------------------------------------
+
+
+#############
+Vector Stores
+###############
+https://platform.openai.com/docs/api-reference/vector-stores
+
+Vector stores power semantic search for the Retrieval API and the file_search tool in the Responses and Assistants APIs. A vector store is a collection of processed files can be used by the file_search tool.
+
+
+###########
+Notes
+##########
+*	reasoning models perform better and demonstrate higher intelligence when used with the Responses API. If you're building any text generation app, we recommend using the Responses API over the older Chat Completions API. 
+
+
+*	Only models that support both text and image inputs, such as gpt-4o, gpt-4o-mini, or o1, can accept PDF files as input o/w need to upload files to the Vector Storage Library
+
+You can upload multiple files, each less than 10 MB. The total content limit across all files in a single API request is 32 MB.
+
+
+
+
+

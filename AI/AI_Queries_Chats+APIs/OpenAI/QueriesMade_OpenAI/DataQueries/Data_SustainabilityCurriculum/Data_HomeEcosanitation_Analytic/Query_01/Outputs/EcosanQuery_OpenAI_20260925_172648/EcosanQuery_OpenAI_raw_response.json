@@ -1,0 +1,1362 @@
+{
+  "id": "resp_0500885f0f7254b2006ab701e618e487d1b2da1e48a6b43be6",
+  "created_at": 1790378470.0,
+  "error": null,
+  "incomplete_details": null,
+  "instructions": "You are an expert in bacterial and fungal decomposition techniques and ecological engineering designs. Use web search to find and verify sources; cite only sources you have actually located. When a file, chart, table, or script would be useful, create it with the code interpreter and save it as a file so the user can download it.",
+  "metadata": {},
+  "model": "gpt-6-astra",
+  "object": "response",
+  "output": [
+    {
+      "id": "ws_0500885f0f7254b2006ab701e969c487d19ef91d3aebe82ec1",
+      "action": {
+        "type": "search",
+        "queries": [
+          "WHO urine storage 6 months 20 C excreta reuse guidelines volume 1.5 litres",
+          "review microbial inoculants composting manure fungal bacterial inoculation pathogen inactivation open access",
+          "Eawag compendium sanitation urine diversion dehydration toilet double vault composting"
+        ],
+        "query": "WHO urine storage 6 months 20 C excreta reuse guidelines volume 1.5 litres",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/TwoXPreppers/comments/13d4oir"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/department/sandec/publications/compendium/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.sciencedirect.com/science/article/pii/S2949736125001502"
+          },
+          {
+            "type": "url",
+            "url": "https://iris.who.int/bitstream/handle/10665/78265/9241546824_eng.pdf?+isAllowed=y&sequence=1"
+          },
+          {
+            "type": "url",
+            "url": "https://sswm.info/sanitation-systems/sanitation-systems/system-4%3A-waterless-system-with-urine-diversion"
+          },
+          {
+            "type": "url",
+            "url": "https://iris.who.int/bitstream/handle/10665/171753/9789241549240_eng.pdf?sequence=1"
+          },
+          {
+            "type": "url",
+            "url": "https://www.susana.org/downloads?documentID=54072"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/fileadmin/Domain1/Abteilungen/sandec/schwerpunkte/sesp/CLUES/Compendium_1st/Compendium-Final.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/research/humanwelfare/wastewater/projects/autarky/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.intechopen.com/chapters/1129564"
+          },
+          {
+            "type": "url",
+            "url": "https://bdd.pseau.org/outils/ouvrages/eawag_wsscc_compendium_of_sanitation_systems_and_technologies_lowres2014.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.scribd.com/document/87060237/WHO-Guidelines-for-the-Safe-Use-of-Waste-Water-Excreta-and-Greywater"
+          },
+          {
+            "type": "url",
+            "url": "https://bdd.pseau.org/outils/ouvrages/malteser_international_wash_guidelines_for_field_practitioners_part_2_sanitation_2012.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://doi.org/10.1111/j.0032-0862.2004.01059.x"
+          },
+          {
+            "type": "url",
+            "url": "https://sswm.info/sswm-solutions-bop-markets/affordable-wash-services-and-products/affordable-technologies-sanitation/dehydration-vaults"
+          },
+          {
+            "type": "url",
+            "url": "https://journals.asm.org/doi/10.1128/microbiolspec.pfs-0010-2015"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/info/portal/news/news-archive/archive-detail/reinventing-the-toilet/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/department/eng/main-focus/source-separation-urine-treatment/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.mdpi.com/2073-4395/12/1/198"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/2409.07376"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Composting_toilet"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Urine-diverting_dry_toilet"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/1404.5210"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Urine_diversion"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Dry_toilet"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Compost"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/1404.5208"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Reuse_of_human_excreta"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/1404.5212"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/Permaculture/comments/1i6291c"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/196ld24"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/Permaculture/comments/tz7n6e"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/fermentation/comments/1shmj39/has_anyone_here_fermented_bacteria_for_garden_or/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/NoTillGrowery/comments/115m8ur"
+          }
+        ]
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab701ee506087d1913f3fb83c3ec16b",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab701f0fbac87d187b96c7f6b38fef4",
+      "action": {
+        "type": "search",
+        "queries": [
+          "site.epa.gov biosolids composting 55 degrees 3 days 15 days five turnings",
+          "site.frontiersin.org composting cow manure Bacillus subtilis Trichoderma inoculation",
+          "site.pmc.ncbi.nlm.nih.gov human feces urine characteristics Rose Parker Jefferson Cartmell 2015",
+          "site.eawag.ch urine alkaline dehydration nitrogen recovery fertilizer"
+        ],
+        "query": "site.epa.gov biosolids composting 55 degrees 3 days 15 days five turnings",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/2409.07376"
+          },
+          {
+            "type": "url",
+            "url": "https://www.epa.gov/sites/default/files/documents/handbook2.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.epa.gov/sites/default/files/2018-12/documents/plain-english-guide-part503-biosolids-rule.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/department/eng/projects/aurin-fertilisers-from-urine"
+          },
+          {
+            "type": "url",
+            "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1017HWO.TXT"
+          },
+          {
+            "type": "url",
+            "url": "https://www.novaquatis.eawag.ch/arbeitspakete/nova4/index_EN.html"
+          },
+          {
+            "type": "url",
+            "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=2000GDXC.txt"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/info/portal/news/news-detail/aus-urin-wird-fluessigduenger/"
+          },
+          {
+            "type": "url",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26246784/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/research/humanwelfare/wastewater/projects/autarky/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/de/abteilung/eng/schwerpunkte/trennung-dezentralisierung/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/de/abteilung/eng/projekte/vuna-naehrstoffrueckgewinnung-aus-urin/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.novaquatis.eawag.ch/arbeitspakete/nova6/index_EN-print%3D1.html"
+          },
+          {
+            "type": "url",
+            "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10053DF.TXT"
+          },
+          {
+            "type": "url",
+            "url": "https://www.novaquatis.eawag.ch/publikationen/eawag_news_E.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://19january2021snapshot.epa.gov/sites/static/files/documents/handbook2.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/info/portal/news/news-detail/pdf/?cHash=3fb4bb7f0f7874a2e621f38df6213814&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=103484"
+          },
+          {
+            "type": "url",
+            "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=10001529.TXT"
+          },
+          {
+            "type": "url",
+            "url": "https://library.eawag.ch/eawag-publications/EAWAGnews/46E%281999%29.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/1f29bd2"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/13tmz5d"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/1ey1zwk"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/1kbf439"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/166cnlh"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Urine"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Reuse_of_human_excreta"
+          },
+          {
+            "type": "url",
+            "url": "https://zh.wikipedia.org/wiki/%E4%BA%BA%E9%A1%9E%E6%8E%92%E6%B3%84%E7%89%A9%E7%9A%84%E5%86%8D%E5%88%A9%E7%94%A8"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/1ldcj7t"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Human_feces"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Human_composting"
+          }
+        ]
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab701f6807887d199a1dc7c61e366a4",
+      "action": {
+        "type": "search",
+        "queries": [
+          "compost cow manure inoculation Bacillus Trichoderma study site.frontiersin.org",
+          "compost manure fungal bacterial consortium inoculation study site.mdpi.com",
+          "human excreta composting thermophilic household pathogen SOIL Haiti study open access",
+          "urine fertilizer practical guidance Rich Earth Institute pharmaceuticals handbook"
+        ],
+        "query": "compost cow manure inoculation Bacillus Trichoderma study site.frontiersin.org",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/1gzijyz"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/farmer-guide-to-fertilizing-with-urine/"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/research-results/pharmaceutical-study/"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/rethinking-urine/farming/"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/wp-content/uploads/2026/02/Farmer-Guide_V1.1_Interactive_021726.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/our-work/research/"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/research-publications/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full"
+          },
+          {
+            "type": "url",
+            "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.frontiersin.org/journals/environmental-science/articles/10.3389/fenvs.2025.1705344/full"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4416818/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.susana.org/downloads?documentID=2644"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/"
+          },
+          {
+            "type": "url",
+            "url": "https://ggi.org.uk/location/final-report-saint-marie-haiti-2010/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.sciencedirect.com/science/article/pii/S0956053X25007251"
+          },
+          {
+            "type": "url",
+            "url": "https://www.researchgate.net/publication/269600263_Thermophilic_co-composting_of_human_wastes_in_Haiti"
+          },
+          {
+            "type": "url",
+            "url": "https://www.haiti-now.org/wp-content/uploads/2021/02/Complete-Guide-PDF.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.susana.org/_resources/documents/default/2-1624-preneta.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/vegetablegardening/comments/1cwgb50"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Reuse_of_human_excreta"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Sustainable_Organic_Integrated_Livelihoods"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Rich_Earth_Institute"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/Cutflowers/comments/1cphyop"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/2411.04148"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/UrbanHomestead/comments/gpa8w6"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/VAGardening/comments/1cpg02j"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/2409.07376"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/Permaculture/comments/18rnye1"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/1404.5210"
+          },
+          {
+            "type": "url",
+            "url": "https://fr.wikipedia.org/wiki/Urinofertilisant"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Urine-diverting_dry_toilet"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Composting_toilet"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/composting/comments/n7lv02"
+          }
+        ]
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab701fe0d7c87d187c59684f787a8f7",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab701fe86a487d18ad91aae8aef225d",
+      "action": {
+        "type": "open_page",
+        "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full"
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab702001cd487d182c0484c47702819",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab702010cb887d18c0b640ffd892b2b",
+      "action": {
+        "type": "search",
+        "queries": [
+          "Pleurotus ostreatus inoculation manure composting study open access",
+          "Phanerochaete chrysosporium cattle manure composting inoculation study lignin",
+          "site.eawag.ch Faecal Sludge Management systems approach implementation operation book 2014",
+          "site.pmc.ncbi.nlm.nih.gov/articles/PMC4500995 128 1.42"
+        ],
+        "query": "Pleurotus ostreatus inoculation manure composting study open access",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-O/part-503/appendix-Appendix%20B%20to%20Part%20503"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/department/sandec/publications/fsm-book/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/fileadmin/Domain1/Abteilungen/sandec/publikationen/EWM/Book/FSM_Ch0_Table_of_Contents.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.eawag.ch/en/department/sandec/publications/fs-methods-book/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.ircwash.org/resources/faecal-sludge-management-systems-approach-implementation-and-operation"
+          },
+          {
+            "type": "url",
+            "url": "https://www.sciencedirect.com/science/article/abs/pii/S0960852409010311"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10890702/"
+          },
+          {
+            "type": "url",
+            "url": "https://bdd.pseau.org/outils/ouvrages/eawag_faecal_sludge_management_highlights_and_exercises_2019.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://doi.org/10.1016/j.jenvman.2021.114088"
+          },
+          {
+            "type": "url",
+            "url": "https://www.dora.lib4ri.ch/eawag/islandora/object/eawag%3A21626/datastream/PDF/Englund-2019-Faecal_sludge_management._Highlights_and_exercises-%28published_version%29.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/25567055/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.researchgate.net/publication/286206068_Preliminary_study_on_the_application_of_phanerochaete_chrysosporium_in_composting_of_lignin_waste"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13304193/"
+          },
+          {
+            "type": "url",
+            "url": "https://wiki.bitter.house/content/mdwiki_en_all_2024-06/A/Fecal_sludge_management"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9433973/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.tandfonline.com/doi/pdf/10.1080/21655979.2023.2185945"
+          },
+          {
+            "type": "url",
+            "url": "https://studiesinfungi.org/pdf/SIF_5_1_18.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://pdfs.semanticscholar.org/3332/53c3dd70d87ac56904c72d8a01a9740e27ff.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Fecal_sludge_management"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Lignin"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Lignin-modifying_enzyme"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Phanerochaete"
+          },
+          {
+            "type": "url",
+            "url": "https://arxiv.org/abs/2409.07376"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/MushroomGrowers/comments/14k6w9u"
+          },
+          {
+            "type": "url",
+            "url": "https://www.reddit.com/r/MushroomGrowers/comments/fjcdhj"
+          }
+        ]
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab70208d35c87d1a57628d09a5781d6",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab70209a51087d1adf9affeff9acf91",
+      "action": {
+        "type": "open_page",
+        "url": "https://richearthinstitute.org/farmer-guide-to-fertilizing-with-urine/"
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7020c554c87d19d8719469441a564",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7021787c487d18e95c1b80b761d2c",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab7021dfcd487d1aee1f2f752c258fe",
+      "action": {
+        "type": "search",
+        "queries": [
+          "\"Inoculation of cattle manure with microbial agents\" \"Bacillus\"",
+          "\"The Characterization of Feces and Urine\" \"128\" \"1.42\"",
+          "site.richearthinstitute.org pasteurization 80 90 seconds"
+        ],
+        "query": "\"Inoculation of cattle manure with microbial agents\" \"Bacillus\"",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/publications/home-use-guide/"
+          },
+          {
+            "type": "url",
+            "url": "https://doi.org/10.1080/10643389.2014.1000761"
+          },
+          {
+            "type": "url",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/26246784/"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/"
+          },
+          {
+            "type": "url",
+            "url": "https://springerlink.fh-diploma.de/chapter/10.1007/978-981-16-7711-3_10"
+          },
+          {
+            "type": "url",
+            "url": "https://link.springer.com/article/10.1007/s44408-025-00046-6"
+          },
+          {
+            "type": "url",
+            "url": "https://scispace.com/pdf/the-characterization-of-feces-and-urine-a-review-of-the-48jlbpxv0z.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://en.wikipedia.org/wiki/Sewage"
+          },
+          {
+            "type": "url",
+            "url": "https://zh.wikipedia.org/wiki/%E7%94%9F%E6%B4%BB%E6%B1%A1%E6%B0%B4"
+          },
+          {
+            "type": "url",
+            "url": "https://risos-apa-production-public.s3.amazonaws.com/DOH/2005%20PMO-FINAL.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://link.springer.com/article/10.1007/s00248-025-02513-4"
+          },
+          {
+            "type": "url",
+            "url": "https://link.springer.com/article/10.1007/s43615-026-00972-6"
+          },
+          {
+            "type": "url",
+            "url": "https://artefacts-discovery.researcher.life/full_text/DA-2/04/04b7c63f3fda3e9e9d8e8443d26390c9/full_text/6be9fb643edf538825061ac8990e136c.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.sigaa.ufra.edu.br/sigaa/public/programa/defesas.jsf?id=106&lc=pt_BR"
+          },
+          {
+            "type": "url",
+            "url": "https://doi.org/10.1080/21655979.2023.2185945"
+          },
+          {
+            "type": "url",
+            "url": "https://www.plantnutrifert.org/en/article/Y2024/I8/1568"
+          },
+          {
+            "type": "url",
+            "url": "https://niti-dbim-dev.inroad.in/node/2214"
+          },
+          {
+            "type": "url",
+            "url": "https://dc.statelibrary.sc.gov/bitstreams/af06bfe5-4b18-45f4-a3c5-f7fa211e5a70/download"
+          },
+          {
+            "type": "url",
+            "url": "https://www.tandfonline.com/doi/pdf/10.1080/21655979.2023.2185945"
+          },
+          {
+            "type": "url",
+            "url": "https://www.tandfonline.com/doi/full/10.1080/23311932.2025.2472244?needAccess=true&scroll=top"
+          },
+          {
+            "type": "url",
+            "url": "https://catalogimages.wiley.com/images/db/pdf/9780813817460.excerpt.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/25567055/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-O/part-503/appendix-Appendix%20B%20to%20Part%20503"
+          }
+        ]
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032cedfc87d1a0c7a1697deff3f6",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab7032ceea087d19f00a1c1317afd91",
+      "action": {
+        "type": "search",
+        "queries": [
+          "\"Inoculation of cattle manure with microbial agents\" Wang 2020 doi"
+        ],
+        "query": "\"Inoculation of cattle manure with microbial agents\" Wang 2020 doi",
+        "sources": [
+          {
+            "type": "url",
+            "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/"
+          },
+          {
+            "type": "url",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/32154041/"
+          },
+          {
+            "type": "url",
+            "url": "https://www.researchgate.net/publication/339414969_Inoculation_of_cattle_manure_with_microbial_agents_increases_efficiency_and_promotes_maturity_in_composting"
+          },
+          {
+            "type": "url",
+            "url": "https://openurl.ebsco.com/contentitem/gcd%3A141881056?crl=f&id=ebsco%3Agcd%3A141881056&jrnl=2190572X&sid=ebsco%3Aplink%3Acrawler-gcd"
+          },
+          {
+            "type": "url",
+            "url": "https://openalex.org/W3008316040"
+          },
+          {
+            "type": "url",
+            "url": "https://openurl.ebsco.com/c/t4a2lo/results?bquery=AU+Wang%2C+Xitao&link_origin=&searchDescription=Wang%2C+Xitao&sid=ebsco%3Aocu%3Arecord"
+          },
+          {
+            "type": "url",
+            "url": "https://openurl.ebsco.com/results?bquery=AU+WU+Yanyan&page=1&sid=ebsco%3Aocu_results%3Acache"
+          },
+          {
+            "type": "url",
+            "url": "https://pubs.acs.org/doi/10.1021/acsomega.3c05442?goto=supporting-info"
+          },
+          {
+            "type": "url",
+            "url": "https://ouci.dntb.gov.ua/en/works/7XqK1JY4/"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10600912/"
+          },
+          {
+            "type": "url",
+            "url": "https://bioresources.cnr.ncsu.edu/wp-content/uploads/2023/03/BioRes_18_2_3089_Zhan_XCWGFYYLS_Effects_High_Temp_Pretreatm_Inoculation_Aerob_Compost_22207.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://smic.in.ua/index.php/journal/article/view/550"
+          },
+          {
+            "type": "url",
+            "url": "https://www.nutri2cycle.eu/wp-content/uploads/2023/10/Manure-biostabilization-by-efective-microorganisms-as-a-way.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://www.tandfonline.com/doi/full/10.1080/23311932.2025.2472244?needAccess=true&scroll=top"
+          },
+          {
+            "type": "url",
+            "url": "https://d-nb.info/1257681419/34"
+          },
+          {
+            "type": "url",
+            "url": "https://www.jeeng.net/pdf-213609-135451?filename=135451.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://assets-eu.researchsquare.com/files/rs-1541181/v1/3d398c2c-74eb-4ed8-b505-dede1512a1e1.pdf"
+          },
+          {
+            "type": "url",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/25567055/"
+          },
+          {
+            "type": "url",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/"
+          },
+          {
+            "type": "url",
+            "url": "https://richearthinstitute.org/publications/home-use-guide/"
+          }
+        ]
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032cfd0487d1a6d98e19025393dc",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "msg_0500885f0f7254b2006ab7032cfd8c87d192754bbfc1b6e5a7",
+      "content": [
+        {
+          "annotations": [],
+          "text": "The key design issue is separating fast decomposition from reliable sanitization. I’m developing a batch-based concept with separate urine storage, insulated feces composting, and a later fungal-curing stage, while checking which inoculation benefits have actually been demonstrated—and whether they transfer to a three-adult household.",
+          "type": "output_text",
+          "logprobs": []
+        }
+      ],
+      "role": "assistant",
+      "status": "completed",
+      "type": "message",
+      "phase": "commentary"
+    },
+    {
+      "id": "ci_0500885f0f7254b2006ab7032cfe7c87d18570b8e03d208e65",
+      "code": "from pathlib import Path\nprint(Path('/home/oai/skills/pdfs/skill.md').read_text())\n",
+      "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+      "outputs": [],
+      "status": "completed",
+      "type": "code_interpreter_call"
+    },
+    {
+      "id": "ci_0500885f0f7254b2006ab7032d08d087d19ced8bb7029efdac",
+      "code": "from pathlib import Path\nskill_path = Path(\"/home/oai/skills/pdfs/skill.md\")\nskill_instructions = skill_path.read_text() if skill_path.exists() else None\nprint(\"Preparing the downloadable concept diagram and design brief.\")\n",
+      "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+      "outputs": [],
+      "status": "completed",
+      "type": "code_interpreter_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d0aa887d18934d2b63e2b8747",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab7032d0b4487d1b6b55251f796cc13",
+      "action": {
+        "type": "open_page",
+        "url": "https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf"
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d0f2087d19689fc2c57c4e1d8",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ws_0500885f0f7254b2006ab7032d0fbc87d18ac360e84de578a0",
+      "action": {
+        "type": "open_page",
+        "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full"
+      },
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d146487d19f332579516f986c",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d151887d19f61feddc097e644",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ci_0500885f0f7254b2006ab7032d15c887d18ba51d5f8e59c568",
+      "code": "from pathlib import Path\nfrom xml.sax.saxutils import escape\nimport math\n\nout = Path(\"/mnt/data\")\nout.mkdir(exist_ok=True)\n\n# Original process-flow drawing; dimensions and performance are conceptual.\nW, H = 1500, 1130\nparts = [f'''<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{W}\" height=\"{H}\" viewBox=\"0 0 {W} {H}\">\n<defs><marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"10\" refX=\"8\" refY=\"3\" orient=\"auto\">\n<path d=\"M0,0 L8,3 L0,6 Z\" fill=\"#526777\"/></marker></defs>\n<rect width=\"1500\" height=\"1130\" fill=\"#f7faf9\"/>\n<style>text{{font-family:Arial,sans-serif;fill:#17332f}}\n.title{{font-size:34px;font-weight:700}} .sub{{font-size:19px;fill:#526777}}\n.head{{font-size:22px;font-weight:700}} .body{{font-size:19px}}\n.small{{font-size:17px;fill:#526777}}</style>''']\n\ndef text(x, y, content, css=\"body\"):\n    parts.append(f'<text x=\"{x}\" y=\"{y}\" class=\"{css}\">{escape(content)}</text>')\n\ndef box(x, y, w, h, title, lines, fill=\"#ffffff\", stroke=\"#b4c6bf\"):\n    parts.append(f'<rect x=\"{x}\" y=\"{y}\" width=\"{w}\" height=\"{h}\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"2\"/>')\n    text(x+20, y+34, title, \"head\")\n    for i, line in enumerate(lines):\n        text(x+20, y+65+i*27, line)\n\ndef arrow(coords, dashed=False):\n    d = \"M \" + \" L \".join(f\"{x},{y}\" for x,y in coords)\n    dash = ' stroke-dasharray=\"8 6\"' if dashed else \"\"\n    parts.append(f'<path d=\"{d}\" fill=\"none\" stroke=\"#526777\" stroke-width=\"3\"{dash} marker-end=\"url(#arrow)\"/>')\n\ntext(45, 55, \"THREE-ADULT ECOSAN • CONCEPTUAL TREATMENT TRAIN\", \"title\")\ntext(45, 87, \"Separate nutrients at source. Treat closed batches. Release only after verification.\", \"sub\")\n\nbox(530,115,440,125,\"WATERLESS DIVERTING TOILET\",\n    [\"Gravity separation; dedicated vent\", \"Urine: design 6 L/day | feces: 0.6 kg/day\"], \"#e3eee9\")\narrow([(600,240),(600,273),(290,273),(290,305)])\narrow([(900,240),(900,273),(1110,273),(1110,305)])\ntext(115,288,\"URINE LINE\", \"small\")\ntext(870,288,\"FECES + PAPER LINE\", \"small\")\n\nbox(45,305,560,155,\"ISOLATED URINE BATCH TANKS\",\n    [\"6 × 500 L nominal; 450 L working each\",\n     \"Date, level and temperature records\",\n     \"No top-ups after a batch is closed\"], \"#fff3d5\", \"#ccb77f\")\nbox(790,305,665,155,\"COVERED COLLECTION + CO-COMPOST FEED\",\n    [\"Local straw / shavings + wet kitchen / garden residues\",\n     \"Plan 4–8 L/day total mix; confirm with household data\",\n     \"Three 700 L bins: filling / active / spare-turning\"], \"#e8eee0\")\narrow([(325,460),(325,500)])\narrow([(1110,460),(1110,500)])\nbox(45,500,560,175,\"URINE HYGIENIZATION GATE  [3,11]\",\n    [\"Storage: ≥6 months at ≥20°C after closure\",\n     \"Cold climate: validated solar/waste-heat pasteurizer\",\n     \"80°C for ≥90 seconds at the coldest point\",\n     \"Cold storage alone does not meet the warm criterion\"], \"#fff3d5\", \"#ccb77f\")\nbox(790,500,665,175,\"INSULATED AEROBIC BATCH TREATMENT  [4,5]\",\n    [\"Target 50–60% moisture; controlled low-power air\",\n     \"Bacterial starter: screened compost strains (trial)\",\n     \"Validate ≥55°C for ≥72 h throughout the batch\",\n     \"Cold spots or missing records → HOLD / REPROCESS\"], \"#e8eee0\")\narrow([(325,675),(325,755)])\narrow([(1110,675),(1110,715)])\nbox(790,715,665,155,\"COOLING + FUNGAL CURING  [7–10]\",\n    [\"Only after verified heat treatment; no fresh feces\",\n     \"Screened fungal starter below its temperature limit\",\n     \"4 × 600 L curing bins; allow ~6 months initially\"], \"#e8eee0\")\nbox(45,755,560,115,\"PRODUCT A • LIQUID FERTILIZER\",\n    [\"Release only after treatment gate passes\",\n     \"Soil-test-based dose; incorporate, do not spray\"], \"#d7e9df\")\narrow([(1110,870),(1110,910)])\nbox(790,910,665,115,\"PRODUCT B • MATURE SOIL AMENDMENT\",\n    [\"Process records + stability + accredited-lab testing\",\n     \"Food-garden use only if locally permitted and verified\"], \"#d7e9df\")\nbox(45,910,560,115,\"CONTAIN ALL SIDE STREAMS\",\n    [\"Leachate / dirty rinse → untreated batch before heat\",\n     \"Exhaust → odor biofilter → outdoor vent\"], \"#e7edf0\")\narrow([(735,565),(680,565),(680,950),(605,950)], dashed=True)\narrow([(790,565),(735,565)], dashed=True)\n\ntext(45,1070,\"Design allowances, not validated performance: ~50–150 Wh/day electricity (no heating); ~12–18 m² service area.\", \"small\")\ntext(45,1097,\"No flush water. Handwashing still needs safe water. References [1–12] and limitations are in the accompanying brief.\", \"small\")\nparts.append(\"</svg>\")\nsvg_path = out / \"ecosan_concept.svg\"\nsvg_path.write_text(\"\\n\".join(parts))\n\nimport cairosvg\npng_path = out / \"ecosan_concept.png\"\ncairosvg.svg2png(url=str(svg_path), write_to=str(png_path))\n\n# A compact, paginated PDF brief with explicit source identifiers.\nfrom reportlab.platypus import (\n    SimpleDocTemplate, Paragraph, Spacer, PageBreak, Image, Table, TableStyle\n)\nfrom reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle\nfrom reportlab.lib import colors\nfrom reportlab.lib.enums import TA_LEFT\nfrom reportlab.lib.pagesizes import A4\n\nstyles = getSampleStyleSheet()\nstyles.add(ParagraphStyle(name=\"BriefTitle\", fontName=\"Helvetica-Bold\", fontSize=23,\n                         leading=27, textColor=colors.HexColor(\"#17332f\"), spaceAfter=15))\nstyles.add(ParagraphStyle(name=\"BriefH\", fontName=\"Helvetica-Bold\", fontSize=13,\n                         leading=17, textColor=colors.HexColor(\"#245749\"), spaceBefore=12, spaceAfter=7))\nstyles.add(ParagraphStyle(name=\"BriefBody\", fontSize=10, leading=14, spaceAfter=8))\nstyles.add(ParagraphStyle(name=\"BriefSmall\", fontSize=8.5, leading=11, spaceAfter=7))\nstory = []\ndef p(t, style=\"BriefBody\"):\n    story.append(Paragraph(t, styles[style]))\ndef h(t): p(t,\"BriefH\")\ndef page(): story.append(PageBreak())\n\np(\"Home-scale ecosanitation<br/>Three-adult conceptual design\", \"BriefTitle\")\np(\"Research/design brief • 25 September 2026 • Concept only, not construction approval\", \"BriefSmall\")\np(\"<b>Recommendation:</b> use a waterless urine-diverting toilet, isolated urine-treatment batches, insulated aerobic co-composting, and a separate fungal-curing stage. Recover two products: a nitrogen-rich liquid fertilizer and a stabilized organic soil amendment. [1–5]\")\np(\"<b>Important limitation:</b> no located study validates this complete home-scale combination as a rapid, year-round, low-energy sanitizer. Specialized inoculants are a potentially useful enhancement, not the pathogen-control barrier. Soil-like appearance and odor are not proof of safety. [5,7–10]\")\nstory.append(Image(str(png_path), width=490, height=490*H/W))\nh(\"System boundary\")\np(\"Includes the toilet, contained collection, urine storage or pasteurization, solids treatment, curing, exhaust control, contaminated-liquid capture, and nutrient-use planning. It excludes whole-house greywater treatment. Safe handwashing water remains essential. Carbon-rich residues, some co-feed, maintenance, and external laboratory verification are required; this is not a sealed or maintenance-free ecosystem. [1,2]\")\npage()\n\np(\"1 | Design basis and equipment\", \"BriefTitle\")\np(\"All sizes below are engineering allowances for an initial prototype, not published performance specifications. Measure actual household inputs for at least two weeks before final sizing. Excretion varies substantially with diet and fluid intake. [6]\")\nrows = [\n[\"Item\", \"Concept allowance\"],\n[\"Urine design flow\", \"6 L/day total; 2,190 L/year\"],\n[\"Wet feces design flow\", \"0.6 kg/day total; 219 kg/year; allow peaks\"],\n[\"Total solids co-compost feed\", \"4–8 L/day including paper, cover and co-feed\"],\n[\"Primary batch vessels\", \"3 × 700 L nominal; ~450 L working each\"],\n[\"Batch filling interval\", \"Up to 56 days; 8 × 56 = 448 L maximum\"],\n[\"Curing capacity\", \"4 × 600 L nominal; ~500 L working each\"],\n[\"Urine storage\", \"6 × 500 L nominal; 450 L usable each = 2,700 L\"],\n[\"Routine electrical allowance\", \"50–150 Wh/day = 18–55 kWh/year; no heating\"],\n[\"Service-area allowance\", \"Approximately 12–18 m², excluding garden and toilet\"],\n]\ntable_data = [[Paragraph(escape(c), styles[\"BriefSmall\"]) for c in row] for row in rows]\ntab = Table(table_data, colWidths=[185,305])\ntab.setStyle(TableStyle([\n    (\"BACKGROUND\",(0,0),(-1,0),colors.HexColor(\"#e3eee9\")),\n    (\"GRID\",(0,0),(-1,-1),0.4,colors.HexColor(\"#c7d3cd\")),\n    (\"VALIGN\",(0,0),(-1,-1),\"TOP\"),(\"TOPPADDING\",(0,0),(-1,-1),6),\n    (\"BOTTOMPADDING\",(0,0),(-1,-1),5)\n]))\nstory.append(tab)\nh(\"Physical arrangement\")\np(\"Use a roofed, flood-protected service enclosure with an impermeable, curbed work surface and spill capture. Separate dirty collection tools and raw-material access from cured-product handling. Fit pest-proof lids, screened vents, accessible cleanouts, and temperature-compatible vessel liners. Use sound reclaimed materials only when their former contents are known to be nonhazardous. [1,2]\")\np(\"Route urine by gravity through accessible, continuously sloped plumbing into individually valved tanks. Keep tanks covered, compatible with urine, and equipped with engineered pressure equalization and overflow containment; never use a pressure-tight improvised heated vessel. Put each batch's closing date and treatment status on its valve.\")\np(\"For feces, use a direct chute into the filling bin where layout permits, or small reusable transfer containers. Use local chopped straw, leaves and untreated shavings rather than peat or imported coir. Include wet kitchen/green residues as needed; do not assume feces alone will sustain the heat requirement. The 4–8 L/day allowance must include all co-feeds. [1,2,7]\")\nh(\"Capacity check\")\np(\"An eight-week, 448 L maximum batch fits a 450 L working volume. One vessel fills while another completes active treatment; the third permits turning or quarantining a failed batch. At one batch every eight weeks, four 500 L working curing bins accommodate roughly six months without relying on volume shrinkage. If treatment stalls or input exceeds design, stop transfer and use reserved containment or an authorized backup service.\")\npage()\n\np(\"2 | Treatment and microbial strategy\", \"BriefTitle\")\nh(\"A. Insulated aerobic co-composting\")\np(\"At batch closure, adjust porosity and moisture; use 50–60% moisture and initial C:N around 25–30:1 as commissioning targets, not a fixed scoop recipe. Use a perforated aeration floor, condensate/leachate capture, insulated walls and lid, and low-power controlled airflow. Record multiple temperatures, including the center, wall zones and base. [2,5]\")\np(\"Plan 4–8 weeks of active treatment after closure as a trial target, not a guaranteed completion time. Refill the next vessel, never the closed treatment batch. Collection time must not be counted as a validated closed-batch hygiene hold.\")\nh(\"B. Bacterial and fungal inoculation: separate roles\")\np(\"<b>Early phase:</b> trial a documented, screened compost inoculant containing cellulolytic/proteolytic bacteria such as suitable <i>Bacillus subtilis</i> strains. A verified mature compost starter is the lower-input baseline. Organism names alone do not establish strain safety or efficacy; do not culture raw feces or copy unscreened research consortia. [7,8]\")\np(\"<b>Cooling phase:</b> after verified heat treatment, trial a screened lignocellulose-degrading fungal inoculant. <i>Phanerochaete chrysosporium</i> is a research candidate, not a proven off-the-shelf home-sanitation product. Introduce only below the supplier's strain-specific temperature limit; a conservative trial ceiling is 35–40°C. Its primary target is the plant-fiber fraction. [9]\")\np(\"<b>Evidence:</b> a 2020 cattle-manure experiment improved decomposition and maturity but did not significantly shorten composting time. A 2026 experiment supports phase-specific consortia. A 2015 drum experiment found post-thermophilic fungal addition more effective than initial addition, but used agricultural waste rather than household feces. [7–9]\")\np(\"Do not apply a universal inoculum dose or promise a percentage acceleration: the substrates, strains and test conditions differ. Compare sequential matched batches against a no-specialized-inoculant baseline, measuring temperature, stabilization time and handling effort. Keep all batches under the same sanitation requirements.\")\nh(\"C. Pathogen-control gate\")\np(\"As a process benchmark, U.S. Part 503 specifies at least 55°C for three days for in-vessel/aerated-static composting; the windrow benchmark is at least 55°C for 15 days with five turnings. These are not automatic authorization or Class A certification for a DIY toilet. [4]\")\np(\"Validate the entire batch, not just a hot center: use cold-spot mapping, calibrated logging and a demonstrated mixing/aeration method. If any zone fails, retain and reprocess the batch; extending calendar age alone is not equivalent. Keep dirty rinse water and leachate upstream of the validated heat step. [5]\")\nh(\"D. Curing\")\np(\"Initially allow approximately six months of separate, covered curing after successful active treatment. This is a design reserve, not a pathogen guarantee. Maintain aeration and enough moisture for maturation; prevent recontamination. Require process verification, stability/maturity assessment and accredited-laboratory testing before release. [2,5,10]\")\npage()\n\np(\"3 | Urine, energy and garden use\", \"BriefTitle\")\nh(\"Urine: choose a climate-appropriate treatment route\")\np(\"<b>Warm-storage route:</b> hold each closed batch for at least six months at 20°C or warmer, consistent with WHO's larger-system guidance. Its stated urine-mixture conditions include pH at least 8.8 and nitrogen at least 1 g/L; heavy fecal contamination invalidates the simple assumption. Do not acidify this treatment stream. The clock starts after the last addition. [3]\")\np(\"Six tanks with 450 L working capacity hold 2,700 L. At 6 L/day, a tank fills in 75 days. A conservative capacity allowance for 182 days of treatment, 180 days without application, and a 75-day fill interval is 6 × (182 + 180 + 75) = 2,622 L. Verify the actual climate and agricultural calendar; calendar capacity is not proof of adequate temperature.\")\np(\"<b>Cold-climate alternative:</b> use an engineered, validated solar-thermal or waste-heat pasteurization module. Rich Earth reports 80°C for 90 seconds for its urine process. Verify the coldest liquid location and prevent contamination afterward. This concept does not prescribe building a pressure vessel. [11]\")\np(\"The ideal heat to raise 6 L/day from 20°C to 80°C is 6 × 4.18 × 60 / 3,600 = <b>0.418 kWh thermal/day</b>, before losses and without heat recovery. Electric resistance heating would add about 153 kWh/year before losses. Thus low-electricity cold-climate operation requires a reliable non-electric heat source, heat recovery, or a revised operating plan.\")\nh(\"Resource budget\")\np(\"A sample electrical budget is 2 W continuous ventilation + a 10 W blower for four hours/day + 0.5 W logging = 100 Wh/day, or 36.5 kWh/year. This is only a preliminary load budget: verify airflow and pressure against the compost and biofilter, and include winter ventilation heat loss. Solar PV and storage must be sized for local winter conditions.\")\np(\"Use zero flush water. Rainwater can supply process-moisture adjustments and suitable equipment washing, with contaminated rinse captured upstream of treatment. Do not use untreated rainwater as a substitute for safe handwashing water. Count any cleaning, supplemental heat and irrigation demand explicitly. [1,2]\")\nh(\"Fertilizer release and use\")\np(\"Compost release requires successful process records plus stability/maturity checks and locally required pathogen testing. A germination test is a phytotoxicity check, not a pathogen test. During commissioning, do not use feces-derived compost on edible crops. Obtain local approval before any food-garden use. [2,5]\")\np(\"Apply qualified urine to soil at a nutrient-based rate, not a disposal rate; avoid foliage and promptly incorporate it. Use soil testing and crop nutrient demand. For raw-eaten crops, WHO advises at least a month between urine application and harvest. Watch salt accumulation, especially under arid or greenhouse conditions. [3,11]\")\np(\"Illustration only: at an assumed measured urine concentration of 6 g N/L, 1,640 L/year contains 9.84 kg N. At 10 g N/m²/year that corresponds to about 984 m² before other fertilizers and losses. A small vegetable bed may therefore be unable to absorb all three adults' nutrients. Secure sufficient planted area or an authorized outlet.\")\np(\"Do not claim removal of all pharmaceuticals, PFAS or other persistent chemicals. Nutrient recovery and pathogen reduction are not complete chemical purification. Advanced urine systems exist, but their energy, consumable and maintenance demands need separate evaluation. [11,12]\")\npage()\n\np(\"4 | Evidence, limits and next steps\", \"BriefTitle\")\nh(\"Why this configuration\")\np(\"Source separation avoids mixing the main liquid nutrient stream into the solids process. Batch operation makes treatment age traceable. Insulation and co-feeds address heat loss and low fecal loading. A distinct cooling/curing stage allows fungal activity without relying on fungi for sanitation. These are design inferences assembled from sanitation guidance and manure studies, not a tested integrated product. [1–10]\")\nh(\"Alternatives not selected as the baseline\")\np(\"<b>Dehydration vaults:</b> useful for low-water containment but not synonymous with rapid composting. <b>Anaerobic digestion:</b> adds gas handling and still requires a hygienization plan. <b>Worms or fermentation alone:</b> do not replace a validated pathogen barrier. <b>Urine concentration:</b> alkaline dehydration and nitrification-based recovery are promising, but add process control or consumables beyond simple storage. [1,2,12]\")\nh(\"Operational fail-safes\")\np(\"Keep children and animals out; use dedicated gloves/tools and avoid dusty handling. Cover each new fecal deposit, inspect tank levels and drainage, and review logged temperatures. Service air passages and odor media before restriction becomes severe. A biofilter controls odor; it is not a validated sterilizer. [1,2]\")\np(\"A failed temperature hold, overflow, uncertain batch identity, severe fecal contamination of urine, pest ingress, or laboratory failure triggers HOLD. Retain material in protected containment and follow an approved retreatment or disposal route. Never drain untreated leachate or overflow to the garden.\")\nh(\"Commissioning decisions\")\np(\"1. Obtain local sanitation and land-application requirements.<br/>\"\n  \"2. Measure inputs and confirm all co-feed availability year-round.<br/>\"\n  \"3. Establish winter heat balance and urine-treatment route.<br/>\"\n  \"4. Have an experienced sanitation engineer validate containment, air delivery and cold spots.<br/>\"\n  \"5. Agree on sampling and release criteria with an accredited laboratory.<br/>\"\n  \"6. Run baseline batches before evaluating specialized inoculants.<br/>\"\n  \"7. Confirm enough land and crop demand for both liquid and solid products.\")\nh(\"What the design can and cannot promise\")\np(\"It provides a coherent low-water, low-electricity process architecture for three adults, with preliminary capacity allowances. It cannot honestly promise garden-ready fertilizer in days, complete chemical removal, zero outside inputs, or year-round hygienization in every climate. If local biomass, heat or land are insufficient, change those constraints or use a shared/authorized treatment service.\")\npage()\n\np(\"5 | Located references\", \"BriefTitle\")\nrefs = [\n(\"1\", \"Tilley, E. et al. (2014). <i>Compendium of Sanitation Systems and Technologies</i>, 2nd revised ed. Eawag/Sandec. Free official manual; separation, collection and treatment-chain options.\",\n \"https://www.eawag.ch/en/department/sandec/publications/compendium/\"),\n(\"2\", \"Strande, L., Ronteltap, M. &amp; Brdjanovic, D., eds. (2014). <i>Faecal Sludge Management: Systems Approach for Implementation and Operation.</i> IWA/Eawag. Free textbook, especially treatment mechanisms, end use and operations.\",\n \"https://www.eawag.ch/en/department/sandec/publications/fsm-book/\"),\n(\"3\", \"WHO (2006). <i>Guidelines for the Safe Use of Wastewater, Excreta and Greywater</i>, Vol. 4, <i>Excreta and Greywater Use in Agriculture.</i> Tables 5.2–5.3; storage conditions and exposure barriers.\",\n \"https://iris.who.int/bitstream/handle/10665/78265/9241546824_eng.pdf\"),\n(\"4\", \"U.S. eCFR. <i>40 CFR Part 503, Appendix B: Pathogen Treatment Processes.</i> Official regulatory process benchmarks; not a DIY approval.\",\n \"https://www.ecfr.gov/current/title-40/chapter-I/subchapter-O/part-503/appendix-Appendix%20B%20to%20Part%20503\"),\n(\"5\", \"U.S. EPA. <i>Pathogens and Vector Attraction in Sewage Sludge.</i> Official guidance; whole-mass temperature monitoring, cold spots and release verification.\",\n \"https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1017HWO.TXT\"),\n(\"6\", \"Rose, C., Parker, A., Jefferson, B. &amp; Cartmell, E. (2015). <i>The Characterization of Feces and Urine: A Review of the Literature to Inform Advanced Treatment Technology.</i> 45:1827–1879. DOI: 10.1080/10643389.2014.1000761. Open-access characterization review.\",\n \"https://pubmed.ncbi.nlm.nih.gov/26246784/\"),\n(\"7\", \"Li, J. et al. (2020). <i>Inoculation of cattle manure with microbial agents increases efficiency and promotes maturity in composting.</i> 3 Biotech 10:128. DOI: 10.1007/s13205-020-2127-4. Open-access primary experiment.\",\n \"https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/\"),\n(\"8\", \"Li, H., Zeng, W., Huang, J. &amp; Tan, S. (2026). <i>Enhancing cow manure composting via staged inoculation of functional microbial consortia.</i> Frontiers in Microbiomes 5:1855343. Published 11 August 2026. DOI: 10.3389/frmbi.2026.1855343. Open-access primary experiment.\",\n \"https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full\"),\n(\"9\", \"Varma, V. S., Ramu, K. &amp; Kalamdhad, A. S. (2015). <i>Carbon decomposition by inoculating Phanerochaete chrysosporium during drum composting of agricultural waste.</i> Environmental Science and Pollution Research 22:7851–7858. DOI: 10.1007/s11356-014-3989-y. Public abstract reviewed; open full text not verified.\",\n \"https://pubmed.ncbi.nlm.nih.gov/25567055/\"),\n(\"10\", \"Piceno, Y. M. et al. (2017). <i>Bacterial community structure transformed after thermophilically composting human waste in Haiti.</i> PLOS ONE 12:e0177626. DOI: 10.1371/journal.pone.0177626. Open-access primary human-excreta study.\",\n \"https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/\"),\n(\"11\", \"Rich Earth Institute (2026). <i>Urine My Garden: Gardener Guide to Fertilizing with Urine.</i> Open practitioner guidance; collection, treatment, application and salts.\",\n \"https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf\"),\n(\"12\", \"Eawag. <i>Blue Diversion Autarky – Wastewater Treatment off the Grid.</i> Official research project and linked publications, including <i>On-site urine treatment combining Ca(OH)2 dissolution and dehydration with ambient air</i> (2021), Water Research X 13:100124, DOI: 10.1016/j.wroa.2021.100124.\",\n \"https://www.eawag.ch/en/research/humanwelfare/wastewater/projects/autarky/\")\n]\nfor num, citation, url in refs:\n    p(f'<b>[{num}]</b> {citation} <link href=\"{escape(url, {chr(34): \"&quot;\"})}\" color=\"#245749\">Source</link>', \"BriefSmall\")\n\npdf_path = out / \"ecosan_design_brief.pdf\"\ndef footer(canvas, doc):\n    canvas.setStrokeColor(colors.HexColor(\"#c7d3cd\"))\n    canvas.line(45,40,A4[0]-45,40)\n    canvas.setFont(\"Helvetica\",8)\n    canvas.setFillColor(colors.HexColor(\"#526777\"))\n    canvas.drawString(45,27,\"Three-adult ecosan | Conceptual design — validation required\")\n    canvas.drawRightString(A4[0]-45,27,str(doc.page))\n\ndoc = SimpleDocTemplate(str(pdf_path), pagesize=A4, leftMargin=45, rightMargin=45,\n                        topMargin=42, bottomMargin=54)\ndoc.build(story,onFirstPage=footer,onLaterPages=footer)\nprint(\"Created: ecosan_design_brief.pdf, ecosan_concept.svg, ecosan_concept.png\")\n",
+      "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+      "outputs": [],
+      "status": "completed",
+      "type": "code_interpreter_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d16d087d1a2fa868f8f51011e",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ci_0500885f0f7254b2006ab7032d177887d184b3fcba22bf3654",
+      "code": "from pathlib import Path\nprint(list(Path(\"/mnt/data\").glob(\"*\")))\nimport fitz\nd=fitz.open(\"/mnt/data/ecosan_design_brief.pdf\")\nlen(d), [(i+1,len(p.get_text()), p.get_text()[:55]) for i,p in enumerate(d)]\n",
+      "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+      "outputs": [],
+      "status": "completed",
+      "type": "code_interpreter_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d189087d1b1325d8b06335ec7",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "ci_0500885f0f7254b2006ab7032d193c87d1af3a94625f7f808d",
+      "code": "from PIL import Image\ndisplay(Image.open(\"/mnt/data/ecosan_concept.png\").resize((1000,753)))\ndisplay(Image.frombytes(\"RGB\", [d[3].get_pixmap().width,d[3].get_pixmap().height], d[3].get_pixmap().samples))\n",
+      "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+      "outputs": [],
+      "status": "completed",
+      "type": "code_interpreter_call"
+    },
+    {
+      "id": "rs_0500885f0f7254b2006ab7032d1aa087d1af46a647ece9a0c5",
+      "summary": [],
+      "type": "reasoning",
+      "content": [],
+      "encrypted_content": null,
+      "status": null
+    },
+    {
+      "id": "msg_0500885f0f7254b2006ab7032da83887d1927f2909ba6f00b9",
+      "content": [
+        {
+          "annotations": [
+            {
+              "end_index": 766,
+              "start_index": 668,
+              "title": "Compendium - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai"
+            },
+            {
+              "end_index": 1563,
+              "start_index": 1465,
+              "title": "Compendium - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai"
+            },
+            {
+              "end_index": 1898,
+              "start_index": 1805,
+              "title": "Inoculation of cattle manure with microbial agents increases efficiency and promotes maturity in composting - PMC",
+              "type": "url_citation",
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/?utm_source=openai"
+            },
+            {
+              "end_index": 2316,
+              "start_index": 2206,
+              "title": "Frontiers | Enhancing cow manure composting via staged inoculation of functional microbial consortia",
+              "type": "url_citation",
+              "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full"
+            },
+            {
+              "end_index": 2745,
+              "start_index": 2675,
+              "title": "Carbon decomposition by inoculating Phanerochaete chrysosporium during drum composting of agricultural waste - PubMed",
+              "type": "url_citation",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/25567055/"
+            },
+            {
+              "end_index": 3061,
+              "start_index": 2986,
+              "title": "Bacterial community structure transformed after thermophilically composting human waste in Haiti - PMC",
+              "type": "url_citation",
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/"
+            },
+            {
+              "end_index": 3963,
+              "start_index": 3875,
+              "title": "The Characterization of Feces and Urine: A Review of the Literature to Inform Advanced Treatment Technology - PubMed",
+              "type": "url_citation",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/26246784/?utm_source=openai"
+            },
+            {
+              "end_index": 5661,
+              "start_index": 5563,
+              "title": "Compendium - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai"
+            },
+            {
+              "end_index": 6819,
+              "start_index": 6691,
+              "title": "WHO GUIDELINES FOR THE",
+              "type": "url_citation",
+              "url": "https://iris.who.int/bitstream/handle/10665/78265/9241546824_eng.pdf?+isAllowed=y&sequence=1&utm_source=openai"
+            },
+            {
+              "end_index": 7476,
+              "start_index": 7353,
+              "title": "Urine My Garden 2026 Plain Text",
+              "type": "url_citation",
+              "url": "https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf"
+            },
+            {
+              "end_index": 8230,
+              "start_index": 8134,
+              "title": "Faecal Sludge Management (FSM) Book - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai"
+            },
+            {
+              "end_index": 8787,
+              "start_index": 8691,
+              "title": "Faecal Sludge Management (FSM) Book - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai"
+            },
+            {
+              "end_index": 9475,
+              "start_index": 9382,
+              "title": "Inoculation of cattle manure with microbial agents increases efficiency and promotes maturity in composting - PMC",
+              "type": "url_citation",
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/?utm_source=openai"
+            },
+            {
+              "end_index": 9907,
+              "start_index": 9837,
+              "title": "Carbon decomposition by inoculating Phanerochaete chrysosporium during drum composting of agricultural waste - PubMed",
+              "type": "url_citation",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/25567055/"
+            },
+            {
+              "end_index": 10613,
+              "start_index": 10490,
+              "title": "eCFR :: Appendix B to Part 503, Title 40 -- Pathogen Treatment Processes",
+              "type": "url_citation",
+              "url": "https://www.ecfr.gov/current/title-40/chapter-I/subchapter-O/part-503/appendix-Appendix%20B%20to%20Part%20503"
+            },
+            {
+              "end_index": 10880,
+              "start_index": 10805,
+              "title": "Pathogens and Vector Attraction in Sewage Sludge",
+              "type": "url_citation",
+              "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1017HWO.TXT"
+            },
+            {
+              "end_index": 11519,
+              "start_index": 11423,
+              "title": "Faecal Sludge Management (FSM) Book - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai"
+            },
+            {
+              "end_index": 12223,
+              "start_index": 12125,
+              "title": "Compendium - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai"
+            },
+            {
+              "end_index": 12617,
+              "start_index": 12494,
+              "title": "Urine My Garden 2026 Plain Text",
+              "type": "url_citation",
+              "url": "https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf"
+            },
+            {
+              "end_index": 13683,
+              "start_index": 13568,
+              "title": "Rich Earth Institute : Pharmaceuticals",
+              "type": "url_citation",
+              "url": "https://richearthinstitute.org/research-results/pharmaceutical-study/?utm_source=openai"
+            },
+            {
+              "end_index": 14394,
+              "start_index": 14296,
+              "title": "Compendium - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai"
+            },
+            {
+              "end_index": 14690,
+              "start_index": 14594,
+              "title": "Faecal Sludge Management (FSM) Book - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai"
+            },
+            {
+              "end_index": 14978,
+              "start_index": 14850,
+              "title": "WHO GUIDELINES FOR THE",
+              "type": "url_citation",
+              "url": "https://iris.who.int/bitstream/handle/10665/78265/9241546824_eng.pdf?+isAllowed=y&sequence=1&utm_source=openai"
+            },
+            {
+              "end_index": 15214,
+              "start_index": 15139,
+              "title": "Pathogens and Vector Attraction in Sewage Sludge",
+              "type": "url_citation",
+              "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1017HWO.TXT"
+            },
+            {
+              "end_index": 15532,
+              "start_index": 15444,
+              "title": "The Characterization of Feces and Urine: A Review of the Literature to Inform Advanced Treatment Technology - PubMed",
+              "type": "url_citation",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/26246784/?utm_source=openai"
+            },
+            {
+              "end_index": 15819,
+              "start_index": 15749,
+              "title": "Inoculation of cattle manure with microbial agents increases efficiency and promotes maturity in composting - PubMed",
+              "type": "url_citation",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/32154041/"
+            },
+            {
+              "end_index": 16136,
+              "start_index": 16026,
+              "title": "Frontiers | Enhancing cow manure composting via staged inoculation of functional microbial consortia",
+              "type": "url_citation",
+              "url": "https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full"
+            },
+            {
+              "end_index": 16455,
+              "start_index": 16385,
+              "title": "Carbon decomposition by inoculating Phanerochaete chrysosporium during drum composting of agricultural waste - PubMed",
+              "type": "url_citation",
+              "url": "https://pubmed.ncbi.nlm.nih.gov/25567055/"
+            },
+            {
+              "end_index": 16744,
+              "start_index": 16669,
+              "title": "Bacterial community structure transformed after thermophilically composting human waste in Haiti - PMC",
+              "type": "url_citation",
+              "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/"
+            },
+            {
+              "end_index": 17069,
+              "start_index": 16946,
+              "title": "Urine My Garden 2026 Plain Text",
+              "type": "url_citation",
+              "url": "https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf"
+            },
+            {
+              "end_index": 17317,
+              "start_index": 17211,
+              "title": "Blue Diversion Autarky – Wastewater Treatment off the Grid - Eawag",
+              "type": "url_citation",
+              "url": "https://www.eawag.ch/en/research/humanwelfare/wastewater/projects/autarky/?utm_source=openai"
+            },
+            {
+              "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+              "end_index": 0,
+              "file_id": "cfile_6ab7032d3ef88191bf6e6f6b91cfe441",
+              "filename": "cfile_6ab7032d3ef88191bf6e6f6b91cfe441.png",
+              "start_index": 0,
+              "type": "container_file_citation"
+            },
+            {
+              "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+              "end_index": 0,
+              "file_id": "cfile_6ab7032d419881919555e704c9f49e33",
+              "filename": "cfile_6ab7032d419881919555e704c9f49e33.png",
+              "start_index": 0,
+              "type": "container_file_citation"
+            },
+            {
+              "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+              "end_index": 1053,
+              "file_id": "cfile_6ab7032d9f5881919f7206e5b632612e",
+              "filename": "ecosan_design_brief.pdf",
+              "start_index": 1012,
+              "type": "container_file_citation"
+            },
+            {
+              "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+              "end_index": 1120,
+              "file_id": "cfile_6ab7032d9f18819191b18a08285b2a85",
+              "filename": "ecosan_concept.svg",
+              "start_index": 1084,
+              "type": "container_file_citation"
+            },
+            {
+              "container_id": "cntr_6ab701e76eb88190975e373317b294f108d2e5e91c6a3753",
+              "end_index": 3394,
+              "file_id": "cfile_6ab7032d9f3881919d9e445d5d0bf055",
+              "filename": "ecosan_concept.png",
+              "start_index": 3358,
+              "type": "container_file_citation"
+            }
+          ],
+          "text": "## Recommended concept\n\nI recommend a **waterless, urine-diverting toilet connected to two separate treatment lines**:\n\n- **Urine:** contained batch storage—or validated solar/waste-heat pasteurization—producing a liquid fertilizer.\n- **Feces:** insulated aerobic co-composting, followed by a separate fungal-curing stage, producing a mature soil amendment.\n\nThis combines established ecosanitation principles with an **experimental, staged microbial-inoculation enhancement**. The crucial distinction is that **accelerated decomposition is not the same as reliable sanitization**: inoculants must not replace verified treatment conditions and product-quality checks. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai))\n\nThe design below is a complete **conceptual treatment chain**, not a construction-ready or validated appliance. Its dimensions and resource budgets are preliminary engineering allowances.\n\n**Downloads:** [Six-page design brief with references](sandbox:/mnt/data/ecosan_design_brief.pdf) · [Scalable process diagram](sandbox:/mnt/data/ecosan_concept.svg)\n\n## 1. What the literature supports\n\nThe most useful findings from the reviewed material are:\n\n- **Source separation is the sound starting point.** Eawag’s sanitation manuals describe separate collection, treatment, and reuse pathways rather than treating a toilet alone as a complete sanitation system. That approach informs the design here. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai))\n- **Microbial inoculation can help, but does not consistently shorten processing time.** A controlled cattle-manure study improved organic-matter degradation and compost maturity, yet found no significant reduction in total composting time. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/?utm_source=openai))\n- **Stage-specific inoculation is promising.** A study published on **August 11, 2026**, investigated different microbial consortia for successive cow-manure composting stages. It supports testing staged inoculation—not assuming that one “effective microorganisms” mixture will work throughout the process. ([frontiersin.org](https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full))\n- **Fungi belong principally in the cooler, fiber-degrading stage.** An agricultural-waste drum experiment found that adding *Phanerochaete chrysosporium* after the thermophilic phase improved decomposition more than adding it initially. This is relevant to straw and woody cover material, but is not validation of a household human-feces treatment process. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/25567055/))\n- **Cold spots are a major sanitation weakness.** Research on human-excreta composting in Haiti identified cooler pile corners and emphasized redistribution and extended processing. A hot center alone is insufficient evidence of treatment. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/))\n\n**Design implication:** prioritize containment, batch identity, insulation, moisture, airflow, and temperature verification. Treat specialized inoculants as a measurable improvement to that foundation.\n\n## 2. Graphical conceptual design\n\n![Conceptual three-adult ecosanitation treatment system](sandbox:/mnt/data/ecosan_concept.png)\n\n*Original schematic. Numbered references correspond to the downloadable brief. Sizes and operating budgets are proposed allowances, not demonstrated performance.*\n\n## 3. Preliminary sizing for three adults\n\nPublished excretion measurements vary substantially with diet and fluid intake. For preliminary sizing, I use **6 L/day of urine and 0.6 kg/day of wet feces for the household**, rather than sizing tightly around average values. Measure actual inputs before final design. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/26246784/?utm_source=openai))\n\n| Component | Proposed allowance |\n|---|---|\n| Toilet | One waterless urine-diverting fixture with dedicated ventilation |\n| Urine capacity | Six 500-L tanks, each limited to approximately 450 L working volume |\n| Primary solids vessels | Three insulated 700-L vessels, approximately 450 L working volume each |\n| Curing vessels | Four 600-L vessels, approximately 500 L working volume each |\n| Total co-compost feed | Initially budget 4–8 L/day, including feces, paper, cover material, and co-feed |\n| Batch collection interval | Up to eight weeks; 8 L/day × 56 days = 448 L |\n| Electricity | Preliminary target: 50–150 Wh/day, **excluding heating** |\n| Service area | Approximately 12–18 m², excluding the toilet and nutrient-receiving garden |\n\nThe three primary vessels serve as **filling, active treatment, and spare/turning capacity**. The curing vessels provide approximately six months of residence capacity without depending on an assumed volume reduction.\n\nThe urine tanks are intentionally substantial: long treatment residence and seasonal restrictions on fertilizer application require storage. Faster validated urine treatment could reduce this footprint.\n\n## 4. Written treatment design\n\n### A. Collection and containment\n\nUse a roofed, flood-protected service enclosure with an impermeable, curbed floor, spill capture, pest exclusion, and separate access for untreated material and finished products. Route urine by gravity through accessible plumbing; keep feces in covered, ventilated containment. These choices follow the complete-service-chain approach in sanitation guidance. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai))\n\nMy proposed implementation would include:\n\n- Individually isolated urine tanks with level indicators and batch labels.\n- A direct feces chute where practical, or small reusable transfer containers.\n- Dedicated tools for untreated and treated material.\n- A contained sump for dirty rinse water and leachate.\n- Outdoor exhaust, with an odor biofilter that is **not credited as a pathogen barrier**.\n\n**No untreated liquid should drain into the garden.** Return contaminated liquids only to material that will subsequently undergo the complete treatment process.\n\n### B. Urine treatment\n\n**Lowest-electricity route: warm batch storage.** WHO’s larger-system guidance specifies at least six months at 20°C for its broadest crop-use category, with stated urine-mixture conditions and additional application precautions. The residence period begins **after the last addition**, not when tank filling starts. Heavy fecal contamination requires reassessment. Do not acidify urine while relying on this alkaline-storage treatment route. ([iris.who.int](https://iris.who.int/bitstream/handle/10665/78265/9241546824_eng.pdf?+isAllowed=y&sequence=1&utm_source=openai))\n\nFor this design:\n\n- Six tanks provide **2,700 L usable capacity**.\n- At 6 L/day, each tank takes **75 days** to fill.\n- Label each tank with its closing date and verified treatment conditions.\n- Do not continually top up a tank that is undergoing treatment.\n\n**Cold-climate alternative:** install an engineered solar-thermal or waste-heat pasteurization module. Rich Earth Institute reports treating urine at **80°C for 90 seconds**; a household adaptation would need cold-point verification and protection against recontamination. ([richearthinstitute.org](https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf))\n\nThe ideal heat requirement for 6 L/day heated from 20°C to 80°C is:\n\n\\[\nQ=\\frac{6\\times4.18\\times60}{3600}\n\\approx0.42\\ \\text{kWh thermal/day}\n\\]\n\nThat excludes losses. Consequently, **unheated winter storage cannot simply be assumed equivalent to warm storage**, and electric heating would materially change the energy budget.\n\n### C. Fecal co-composting\n\nUse local chopped straw, leaves, and untreated wood shavings for structure, together with suitable wet kitchen or garden residues. Do not assume three adults’ feces alone will reliably maintain sanitizing temperatures. Co-composting and insulated vessels are design responses to that small loading. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai))\n\nProposed commissioning targets are:\n\n- Approximately **50–60% moisture**.\n- Initial **C:N around 25–30:1**, adjusted to actual feedstock.\n- A porous mixture and controlled airflow.\n- Insulated walls and lid.\n- Temperature logging at the center, walls, base, and other identified cold locations.\n\nThese are operating targets, not a universal scoop-based recipe; sanitation guidance emphasizes suitable process conditions and whole-mass temperature monitoring. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai))\n\nOnce a batch closes, **add no fresh feces**. Plan initially for **4–8 weeks of active treatment after closure**, but regard that as a prototype target—not a guaranteed completion time.\n\n### D. Staged bacterial–fungal inoculation\n\n**Early stage—bacterial decomposition.** Trial a professionally supplied, documented compost inoculant containing suitable cellulolytic or proteolytic strains, such as screened *Bacillus subtilis*. Compare its performance against a verified mature-compost starter without specialized inoculants. Species names alone do not establish strain safety or performance. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC7035406/?utm_source=openai))\n\n**Cooling stage—fungal fiber decomposition.** After successful heat treatment, trial a screened lignocellulose-degrading fungus. *Phanerochaete chrysosporium* is a relevant **research candidate**, not a proven consumer ecosanitation additive. Introduce it only below its strain-specific temperature limit; the main purpose is to process residual plant fibers. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/25567055/))\n\nI would **not specify a universal inoculation dose or promise a percentage acceleration** from the available evidence. Nor would I recommend home isolation of organisms from feces or copying an unscreened research consortium.\n\n### E. Sanitization, curing, and release\n\nFor reference, U.S. Part 503 specifies these composting process benchmarks:\n\n- **In-vessel/aerated static:** at least 55°C for three days.\n- **Windrow:** at least 55°C for 15 days, including at least five turnings.\n\nThese are **not automatic approval or Class A certification for a homemade sanitation system**. ([ecfr.gov](https://www.ecfr.gov/current/title-40/chapter-I/subchapter-O/part-503/appendix-Appendix%20B%20to%20Part%20503))\n\nThe proposed system must demonstrate treatment of the whole batch. Failed cold spots, missing records, or inadequate mixing mean **hold and reprocess**, not “use because it looks finished.” ([nepis.epa.gov](https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1017HWO.TXT))\n\nAfter successful treatment, allow approximately **six months of separate curing during initial operation**. This is a conservative design reserve, not an independent safety guarantee. Release should require:\n\n1. Acceptable process records.\n2. Stability and maturity assessment.\n3. Accredited-laboratory pathogen testing appropriate to local requirements.\n4. Approval for the intended land application.\n\nCompost maturity and pathogen control are separate questions; human-excreta research supports retaining both treatment and curing stages. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai))\n\n## 5. Ecological footprint and practical limits\n\n### Electricity and water\n\nAn illustrative electrical budget is:\n\n- 2-W continuous ventilation: 48 Wh/day.\n- 10-W blower for four hours: 40 Wh/day.\n- 0.5-W logger/control system: 12 Wh/day.\n\n**Total: 100 Wh/day, or 36.5 kWh/year**, before heating. Actual blower selection requires airflow and pressure testing.\n\nThe toilet requires **no flush water**. However, “virtually no freshwater” must not mean eliminating safe handwashing. Cleaning and moisture management also need explicit provision; contaminated wash water remains part of the treatment chain. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai))\n\n### Garden capacity may be the limiting factor\n\nApply urine according to soil tests and plant demand—not according to how quickly tanks fill. Incorporate it into soil rather than spraying foliage, and assess salinity risks, particularly in dry climates or greenhouses. ([richearthinstitute.org](https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf))\n\nFor illustration only, **1,640 L/year at an assumed measured concentration of 6 g N/L contains 9.84 kg nitrogen**. At a hypothetical annual application allowance of 10 g N/m², that corresponds to about **984 m²** before accounting for other fertilizers and losses.\n\nThus, a small vegetable patch may not absorb the household’s entire nutrient output. A genuinely self-contained system needs sufficient planted area; otherwise it needs an authorized outlet.\n\n### What should not be promised\n\nThis design should not be presented as:\n\n- Producing verified garden-ready fecal compost in days.\n- Removing all pharmaceuticals or persistent chemicals.\n- Operating indefinitely without carbon inputs, maintenance, or testing.\n- Achieving year-round sanitization in every climate without supplemental heat.\n\nAdvanced urine-recovery systems offer additional treatment possibilities, but introduce their own equipment, consumables, and operating requirements. ([richearthinstitute.org](https://richearthinstitute.org/research-results/pharmaceutical-study/?utm_source=openai))\n\n**Bottom line:** this is a credible architecture to prototype, but its strongest features are separation, containment, controlled batches, and verification—not a “supermicrobe” mixture. Climate, co-feed availability, and nutrient-receiving land are the three site conditions to establish next.\n\n## 6. Selected references\n\nThe PDF includes the complete numbered bibliography and source links.\n\n### Open manuals and textbooks\n\n1. **Tilley et al. (2014).** *Compendium of Sanitation Systems and Technologies*, 2nd revised edition. Eawag/Sandec. Useful for source separation and complete treatment-chain selection. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/compendium/?utm_source=openai))\n2. **Strande, Ronteltap & Brdjanovic, eds. (2014).** *Faecal Sludge Management: Systems Approach for Implementation and Operation*. IWA/Eawag. Treatment mechanisms, operations, and end-use planning. ([eawag.ch](https://www.eawag.ch/en/department/sandec/publications/fsm-book/?utm_source=openai))\n3. **WHO (2006).** *Guidelines for the Safe Use of Wastewater, Excreta and Greywater*, Volume 4. Particularly relevant to urine storage and exposure barriers. ([iris.who.int](https://iris.who.int/bitstream/handle/10665/78265/9241546824_eng.pdf?+isAllowed=y&sequence=1&utm_source=openai))\n4. **U.S. EPA / eCFR.** *Pathogens and Vector Attraction in Sewage Sludge* and **40 CFR Part 503, Appendix B**. Process benchmarks and monitoring requirements. ([nepis.epa.gov](https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1017HWO.TXT))\n\n### Research papers\n\n5. **Rose et al. (2015).** “The Characterization of Feces and Urine…” *Critical Reviews in Environmental Science and Technology*. DOI: **10.1080/10643389.2014.1000761**. Open-access characterization review. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/26246784/?utm_source=openai))\n6. **Li et al. (2020).** “Inoculation of cattle manure with microbial agents increases efficiency and promotes maturity in composting.” *3 Biotech* 10:128. DOI: **10.1007/s13205-020-2127-4**. Open-access experiment. ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/32154041/))\n7. **Li et al. (2026).** “Enhancing cow manure composting via staged inoculation of functional microbial consortia.” *Frontiers in Microbiomes*. DOI: **10.3389/frmbi.2026.1855343**. Open-access experiment. ([frontiersin.org](https://www.frontiersin.org/journals/microbiomes/articles/10.3389/frmbi.2026.1855343/full))\n8. **Varma, Ramu & Kalamdhad (2015).** “Carbon decomposition by inoculating *Phanerochaete chrysosporium* during drum composting of agricultural waste.” DOI: **10.1007/s11356-014-3989-y**. **Public abstract reviewed; open full text not verified.** ([pubmed.ncbi.nlm.nih.gov](https://pubmed.ncbi.nlm.nih.gov/25567055/))\n9. **Piceno et al. (2017).** “Bacterial community structure transformed after thermophilically composting human waste in Haiti.” *PLOS ONE*. DOI: **10.1371/journal.pone.0177626**. Open-access human-excreta study. ([pmc.ncbi.nlm.nih.gov](https://pmc.ncbi.nlm.nih.gov/articles/PMC5453478/))\n\n### Applied nutrient recovery\n\n10. **Rich Earth Institute (2026).** *Urine My Garden: Gardener Guide to Fertilizing with Urine*. Household collection, treatment, application, and salt considerations. ([richearthinstitute.org](https://richearthinstitute.org/wp-content/uploads/2026/02/Urine-My-Garden-2026-Plain-Text-1.pdf))\n11. **Eawag—Blue Diversion Autarky.** Official research materials and linked studies on separate treatment and decentralized urine recovery. ([eawag.ch](https://www.eawag.ch/en/research/humanwelfare/wastewater/projects/autarky/?utm_source=openai))",
+          "type": "output_text",
+          "logprobs": []
+        }
+      ],
+      "role": "assistant",
+      "status": "completed",
+      "type": "message",
+      "phase": "final_answer"
+    }
+  ],
+  "parallel_tool_calls": true,
+  "temperature": 1.0,
+  "tool_choice": "auto",
+  "tools": [
+    {
+      "container": {
+        "type": "auto",
+        "file_ids": null,
+        "memory_limit": null,
+        "network_policy": null
+      },
+      "type": "code_interpreter",
+      "allowed_callers": null
+    },
+    {
+      "type": "web_search",
+      "external_web_access": null,
+      "filters": null,
+      "search_context_size": "medium",
+      "user_location": {
+        "city": null,
+        "country": "US",
+        "region": null,
+        "timezone": null,
+        "type": "approximate"
+      },
+      "return_token_budget": "default",
+      "search_content_types": [
+        "text"
+      ]
+    }
+  ],
+  "top_p": 0.98,
+  "background": true,
+  "completed_at": 1790378797.0,
+  "conversation": null,
+  "max_output_tokens": null,
+  "max_tool_calls": null,
+  "moderation": null,
+  "previous_response_id": null,
+  "prompt": null,
+  "prompt_cache_diagnostics": null,
+  "prompt_cache_key": null,
+  "prompt_cache_options": null,
+  "prompt_cache_retention": "24h",
+  "reasoning": {
+    "context": "all_turns",
+    "effort": "medium",
+    "generate_summary": null,
+    "mode": "standard",
+    "summary": null
+  },
+  "safety_identifier": null,
+  "service_tier": "default",
+  "status": "completed",
+  "text": {
+    "format": {
+      "type": "text"
+    },
+    "verbosity": "medium"
+  },
+  "top_logprobs": 0,
+  "truncation": "disabled",
+  "usage": {
+    "input_tokens": 102700,
+    "input_tokens_details": {
+      "cache_write_tokens": 5744,
+      "cached_tokens": 0
+    },
+    "output_tokens": 13772,
+    "output_tokens_details": {
+      "reasoning_tokens": 3982
+    },
+    "total_tokens": 116472
+  },
+  "user": null,
+  "access_programs": null,
+  "billing": {
+    "payer": "developer"
+  },
+  "frequency_penalty": 0.0,
+  "presence_penalty": 0.0,
+  "store": true,
+  "tool_usage": {
+    "image_gen": {
+      "input_tokens": 0,
+      "input_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "output_tokens": 0,
+      "output_tokens_details": {
+        "image_tokens": 0,
+        "text_tokens": 0
+      },
+      "total_tokens": 0
+    },
+    "web_search": {
+      "num_requests": 6
+    }
+  }
+}

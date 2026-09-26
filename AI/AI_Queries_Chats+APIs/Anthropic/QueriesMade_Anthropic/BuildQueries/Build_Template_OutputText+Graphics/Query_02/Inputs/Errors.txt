@@ -1,0 +1,264 @@
+
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_QueriesApplicationsBuilds_Chats+APIs/OpenAI/Queries_OpenAI/SustainabilityQueries/Data_HomeEcosanitation_Analytic/Query_01/X_Template_DataQuery_OpenAI-API_v1.0.py --wdir
+Sending prompt to gpt-6-astra ...
+
+---------------------------------------------------------------------------
+RemoteProtocolError                       Traceback (most recent call last)
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_transports/default.py:98, in map_httpcore_exceptions()
+     97 try:
+---> 98     yield
+     99 except Exception as exc:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_transports/default.py:245, in HTTPTransport.handle_request(self, request)
+    244 with map_httpcore_exceptions():
+--> 245     resp = self._pool.handle_request(req)
+    247 assert isinstance(resp.stream, typing.Iterable)
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/connection_pool.py:242, in ConnectionPool.handle_request(self, request)
+    241     self._close_connections(closing)
+--> 242     raise exc from None
+    244 # Return the response. Note that in this case we still have to manage
+    245 # the point at which the response is closed.
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/connection_pool.py:224, in ConnectionPool.handle_request(self, request)
+    222 try:
+    223     # Send the request on the assigned connection.
+--> 224     response = connection.handle_request(pool_request.request)
+    225 except ConnectionNotAvailable:
+    226     # In some cases a connection may initially be available to
+    227     # handle a request, but then become unavailable.
+    228     #
+    229     # In this case we clear the connection and try again.
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/connection.py:96, in HTTPConnection.handle_request(self, request)
+     94     raise exc
+---> 96 return self._connection.handle_request(request)
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/http11.py:125, in HTTP11Connection.handle_request(self, request)
+    124         self._response_closed()
+--> 125 raise exc
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/http11.py:97, in HTTP11Connection.handle_request(self, request)
+     90 with Trace("receive_response_headers", logger, request, kwargs) as trace:
+     91     (
+     92         http_version,
+     93         status,
+     94         reason_phrase,
+     95         headers,
+     96         trailing_data,
+---> 97     ) = self._receive_response_headers(**kwargs)
+     98     trace.return_value = (
+     99         http_version,
+    100         status,
+    101         reason_phrase,
+    102         headers,
+    103     )
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/http11.py:167, in HTTP11Connection._receive_response_headers(self, request)
+    166 while True:
+--> 167     event = self._receive_event(timeout=timeout)
+    168     if isinstance(event, h11.Response):
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpcore2/_sync/http11.py:212, in HTTP11Connection._receive_event(self, timeout)
+    211     msg = "Server disconnected without sending a response."
+--> 212     raise RemoteProtocolError(msg)
+    214 self._h11_state.receive_data(data)
+
+RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+RemoteProtocolError                       Traceback (most recent call last)
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/_base_client.py:1147, in SyncAPIClient.request(self, cast_to, options, stream, stream_cls)
+   1146 try:
+-> 1147     response = self._send_request(
+   1148         request,
+   1149         stream=stream or self._should_stream_response_body(request=request),
+   1150         **kwargs,
+   1151     )
+   1152 except timeout_exceptions() as err:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/_client.py:601, in OpenAI._send_request(self, request, stream, **kwargs)
+    593 @override
+    594 def _send_request(
+    595     self,
+   (...)    599     **kwargs: Unpack[HttpxSendArgs],
+    600 ) -> httpx2.Response:
+--> 601     response = self._send_with_auth_retry(request, stream=stream, **kwargs)
+    602     if self._provider_runtime is not None and self._provider_runtime.normalize_response is not None:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/_client.py:580, in OpenAI._send_with_auth_retry(self, request, stream, retried, **kwargs)
+    579 else:
+--> 580     response = super()._send_request(request, stream=stream, **kwargs)
+    581 if response.status_code != 401 or self._workload_identity_auth is None or used_access_token is None:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/_base_client.py:1068, in SyncAPIClient._send_request(self, request, stream, **kwargs)
+   1061 def _send_request(
+   1062     self,
+   1063     request: httpx2.Request,
+   (...)   1066     **kwargs: Unpack[HttpxSendArgs],
+   1067 ) -> httpx2.Response:
+-> 1068     return self._client.send(request, stream=stream, **kwargs)
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_client.py:980, in Client.send(self, request, stream, auth, follow_redirects)
+    978 auth = self._build_request_auth(request, auth)
+--> 980 response = self._send_handling_auth(
+    981     request,
+    982     auth=auth,
+    983     follow_redirects=follow_redirects,
+    984     history=[],
+    985 )
+    986 try:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_client.py:1008, in Client._send_handling_auth(self, request, auth, follow_redirects, history)
+   1007 while True:
+-> 1008     response = self._send_handling_redirects(
+   1009         request,
+   1010         follow_redirects=follow_redirects,
+   1011         history=history,
+   1012     )
+   1013     try:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_client.py:1043, in Client._send_handling_redirects(self, request, follow_redirects, history)
+   1041     hook(request)
+-> 1043 response = self._send_single_request(request)
+   1044 try:
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_client.py:1076, in Client._send_single_request(self, request)
+   1075 with request_context(request=request):
+-> 1076     response = transport.handle_request(request)
+   1078 assert isinstance(response.stream, SyncByteStream)
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_transports/default.py:244, in HTTPTransport.handle_request(self, request)
+    232 req = httpcore2.Request(
+    233     method=request.method,
+    234     url=httpcore2.URL(
+   (...)    242     extensions=request.extensions,
+    243 )
+--> 244 with map_httpcore_exceptions():
+    245     resp = self._pool.handle_request(req)
+
+File /usr/lib/python3.12/contextlib.py:158, in _GeneratorContextManager.__exit__(self, typ, value, traceback)
+    157 try:
+--> 158     self.gen.throw(value)
+    159 except StopIteration as exc:
+    160     # Suppress StopIteration *unless* it's the same exception that
+    161     # was passed to throw().  This prevents a StopIteration
+    162     # raised inside the "with" statement from being suppressed.
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/httpx2/_transports/default.py:115, in map_httpcore_exceptions()
+    114 message = str(exc)
+--> 115 raise mapped_exc(message) from exc
+
+RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+APIConnectionError                        Traceback (most recent call last)
+File ~/Desktop/Marron_Projects/AI/AI_QueriesApplicationsBuilds_Chats+APIs/OpenAI/Queries_OpenAI/SustainabilityQueries/Data_HomeEcosanitation_Analytic/Query_01/X_Template_DataQuery_OpenAI-API_v1.0.py:356
+    352     run_query(client, out_dir)
+    355 if __name__ == "__main__":
+--> 356     main()
+
+File ~/Desktop/Marron_Projects/AI/AI_QueriesApplicationsBuilds_Chats+APIs/OpenAI/Queries_OpenAI/SustainabilityQueries/Data_HomeEcosanitation_Analytic/Query_01/X_Template_DataQuery_OpenAI-API_v1.0.py:352, in main()
+    349 client = OpenAI(api_key=api_key, timeout=API_TIMEOUT)
+    351 out_dir = make_output_dir(DOC_DIR, OUTPUT_LABEL)
+--> 352 run_query(client, out_dir)
+
+File ~/Desktop/Marron_Projects/AI/AI_QueriesApplicationsBuilds_Chats+APIs/OpenAI/Queries_OpenAI/SustainabilityQueries/Data_HomeEcosanitation_Analytic/Query_01/X_Template_DataQuery_OpenAI-API_v1.0.py:202, in run_query(client, out_dir)
+    199 if CONTAINER_MEMORY:
+    200     container["memory_limit"] = CONTAINER_MEMORY
+--> 202 response = client.responses.create(
+    203     model=MODEL,
+    204     instructions=sys_prompt,
+    205     input=user_prompt,
+    206     tools=[{"type": "code_interpreter", "container": container}],
+    207     include=["code_interpreter_call.outputs"],   # return logs + images
+    208 )
+    210 saved_files = []
+    212 # ---------------------------------------------------------------
+    213 # 1. TEXT OUTPUT  -> .txt
+    214 # ---------------------------------------------------------------
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/resources/responses/responses.py:1045, in Responses.create(self, background, context_management, conversation, include, input, instructions, max_output_tokens, max_tool_calls, metadata, model, moderation, parallel_tool_calls, previous_response_id, prompt, prompt_cache_key, prompt_cache_options, prompt_cache_retention, reasoning, safety_identifier, service_tier, store, stream, stream_options, temperature, text, tool_choice, tools, top_logprobs, top_p, truncation, user, extra_headers, extra_query, extra_body, timeout)
+   1004 def create(
+   1005     self,
+   1006     *,
+   (...)   1043     timeout: float | httpx2.Timeout | None | NotGiven = not_given,
+   1044 ) -> Response | Stream[ResponseStreamEvent]:
+-> 1045     return self._post(
+   1046         "/responses",
+   1047         body=maybe_transform(
+   1048             {
+   1049                 "background": background,
+   1050                 "context_management": context_management,
+   1051                 "conversation": conversation,
+   1052                 "include": include,
+   1053                 "input": input,
+   1054                 "instructions": instructions,
+   1055                 "max_output_tokens": max_output_tokens,
+   1056                 "max_tool_calls": max_tool_calls,
+   1057                 "metadata": metadata,
+   1058                 "model": model,
+   1059                 "moderation": moderation,
+   1060                 "parallel_tool_calls": parallel_tool_calls,
+   1061                 "previous_response_id": previous_response_id,
+   1062                 "prompt": prompt,
+   1063                 "prompt_cache_key": prompt_cache_key,
+   1064                 "prompt_cache_options": prompt_cache_options,
+   1065                 "prompt_cache_retention": prompt_cache_retention,
+   1066                 "reasoning": reasoning,
+   1067                 "safety_identifier": safety_identifier,
+   1068                 "service_tier": service_tier,
+   1069                 "store": store,
+   1070                 "stream": stream,
+   1071                 "stream_options": stream_options,
+   1072                 "temperature": temperature,
+   1073                 "text": text,
+   1074                 "tool_choice": tool_choice,
+   1075                 "tools": tools,
+   1076                 "top_logprobs": top_logprobs,
+   1077                 "top_p": top_p,
+   1078                 "truncation": truncation,
+   1079                 "user": user,
+   1080             },
+   1081             response_create_params.ResponseCreateParamsStreaming
+   1082             if stream
+   1083             else response_create_params.ResponseCreateParamsNonStreaming,
+   1084         ),
+   1085         options=make_request_options(
+   1086             extra_headers=extra_headers,
+   1087             extra_query=extra_query,
+   1088             extra_body=extra_body,
+   1089             timeout=timeout,
+   1090             security={"bearer_auth": True},
+   1091         ),
+   1092         cast_to=Response,
+   1093         stream=stream or False,
+   1094         stream_cls=Stream[ResponseStreamEvent],
+   1095     )
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/_base_client.py:1439, in SyncAPIClient.post(self, path, cast_to, body, content, options, files, stream, stream_cls)
+   1430     warnings.warn(
+   1431         "Passing raw bytes as `body` is deprecated and will be removed in a future version. "
+   1432         "Please pass raw bytes via the `content` parameter instead.",
+   1433         DeprecationWarning,
+   1434         stacklevel=2,
+   1435     )
+   1436 opts = FinalRequestOptions.construct(
+   1437     method="post", url=path, json_data=body, content=content, files=to_httpx_files(files), **options
+   1438 )
+-> 1439 return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+
+File ~/spyder-6/envs/ai-apis/lib/python3.12/site-packages/openai/_base_client.py:1182, in SyncAPIClient.request(self, cast_to, options, stream, stream_cls)
+   1179         continue
+   1181     log.debug("Raising connection error")
+-> 1182     raise APIConnectionError(request=request) from err
+   1184 log.debug(
+   1185     "HTTP Response: %s %i",
+   1186     get_http_method_for_logging(request.method),
+   1187     response.status_code,
+   1188 )
+   1189 log.debug("request_id: %s", response.headers.get("x-request-id"))
+
+APIConnectionError: Connection error.

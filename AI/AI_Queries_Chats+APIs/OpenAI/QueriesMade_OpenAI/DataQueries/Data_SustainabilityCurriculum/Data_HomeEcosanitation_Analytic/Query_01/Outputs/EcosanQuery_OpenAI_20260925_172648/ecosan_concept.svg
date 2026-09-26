@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1130" viewBox="0 0 1500 1130">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+<path d="M0,0 L8,3 L0,6 Z" fill="#526777"/></marker></defs>
+<rect width="1500" height="1130" fill="#f7faf9"/>
+<style>text{font-family:Arial,sans-serif;fill:#17332f}
+.title{font-size:34px;font-weight:700} .sub{font-size:19px;fill:#526777}
+.head{font-size:22px;font-weight:700} .body{font-size:19px}
+.small{font-size:17px;fill:#526777}</style>
+<text x="45" y="55" class="title">THREE-ADULT ECOSAN • CONCEPTUAL TREATMENT TRAIN</text>
+<text x="45" y="87" class="sub">Separate nutrients at source. Treat closed batches. Release only after verification.</text>
+<rect x="530" y="115" width="440" height="125" fill="#e3eee9" stroke="#b4c6bf" stroke-width="2"/>
+<text x="550" y="149" class="head">WATERLESS DIVERTING TOILET</text>
+<text x="550" y="180" class="body">Gravity separation; dedicated vent</text>
+<text x="550" y="207" class="body">Urine: design 6 L/day | feces: 0.6 kg/day</text>
+<path d="M 600,240 L 600,273 L 290,273 L 290,305" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 900,240 L 900,273 L 1110,273 L 1110,305" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="115" y="288" class="small">URINE LINE</text>
+<text x="870" y="288" class="small">FECES + PAPER LINE</text>
+<rect x="45" y="305" width="560" height="155" fill="#fff3d5" stroke="#ccb77f" stroke-width="2"/>
+<text x="65" y="339" class="head">ISOLATED URINE BATCH TANKS</text>
+<text x="65" y="370" class="body">6 × 500 L nominal; 450 L working each</text>
+<text x="65" y="397" class="body">Date, level and temperature records</text>
+<text x="65" y="424" class="body">No top-ups after a batch is closed</text>
+<rect x="790" y="305" width="665" height="155" fill="#e8eee0" stroke="#b4c6bf" stroke-width="2"/>
+<text x="810" y="339" class="head">COVERED COLLECTION + CO-COMPOST FEED</text>
+<text x="810" y="370" class="body">Local straw / shavings + wet kitchen / garden residues</text>
+<text x="810" y="397" class="body">Plan 4–8 L/day total mix; confirm with household data</text>
+<text x="810" y="424" class="body">Three 700 L bins: filling / active / spare-turning</text>
+<path d="M 325,460 L 325,500" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 1110,460 L 1110,500" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="45" y="500" width="560" height="175" fill="#fff3d5" stroke="#ccb77f" stroke-width="2"/>
+<text x="65" y="534" class="head">URINE HYGIENIZATION GATE  [3,11]</text>
+<text x="65" y="565" class="body">Storage: ≥6 months at ≥20°C after closure</text>
+<text x="65" y="592" class="body">Cold climate: validated solar/waste-heat pasteurizer</text>
+<text x="65" y="619" class="body">80°C for ≥90 seconds at the coldest point</text>
+<text x="65" y="646" class="body">Cold storage alone does not meet the warm criterion</text>
+<rect x="790" y="500" width="665" height="175" fill="#e8eee0" stroke="#b4c6bf" stroke-width="2"/>
+<text x="810" y="534" class="head">INSULATED AEROBIC BATCH TREATMENT  [4,5]</text>
+<text x="810" y="565" class="body">Target 50–60% moisture; controlled low-power air</text>
+<text x="810" y="592" class="body">Bacterial starter: screened compost strains (trial)</text>
+<text x="810" y="619" class="body">Validate ≥55°C for ≥72 h throughout the batch</text>
+<text x="810" y="646" class="body">Cold spots or missing records → HOLD / REPROCESS</text>
+<path d="M 325,675 L 325,755" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 1110,675 L 1110,715" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="790" y="715" width="665" height="155" fill="#e8eee0" stroke="#b4c6bf" stroke-width="2"/>
+<text x="810" y="749" class="head">COOLING + FUNGAL CURING  [7–10]</text>
+<text x="810" y="780" class="body">Only after verified heat treatment; no fresh feces</text>
+<text x="810" y="807" class="body">Screened fungal starter below its temperature limit</text>
+<text x="810" y="834" class="body">4 × 600 L curing bins; allow ~6 months initially</text>
+<rect x="45" y="755" width="560" height="115" fill="#d7e9df" stroke="#b4c6bf" stroke-width="2"/>
+<text x="65" y="789" class="head">PRODUCT A • LIQUID FERTILIZER</text>
+<text x="65" y="820" class="body">Release only after treatment gate passes</text>
+<text x="65" y="847" class="body">Soil-test-based dose; incorporate, do not spray</text>
+<path d="M 1110,870 L 1110,910" fill="none" stroke="#526777" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="790" y="910" width="665" height="115" fill="#d7e9df" stroke="#b4c6bf" stroke-width="2"/>
+<text x="810" y="944" class="head">PRODUCT B • MATURE SOIL AMENDMENT</text>
+<text x="810" y="975" class="body">Process records + stability + accredited-lab testing</text>
+<text x="810" y="1002" class="body">Food-garden use only if locally permitted and verified</text>
+<rect x="45" y="910" width="560" height="115" fill="#e7edf0" stroke="#b4c6bf" stroke-width="2"/>
+<text x="65" y="944" class="head">CONTAIN ALL SIDE STREAMS</text>
+<text x="65" y="975" class="body">Leachate / dirty rinse → untreated batch before heat</text>
+<text x="65" y="1002" class="body">Exhaust → odor biofilter → outdoor vent</text>
+<path d="M 735,565 L 680,565 L 680,950 L 605,950" fill="none" stroke="#526777" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+<path d="M 790,565 L 735,565" fill="none" stroke="#526777" stroke-width="3" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+<text x="45" y="1070" class="small">Design allowances, not validated performance: ~50–150 Wh/day electricity (no heating); ~12–18 m² service area.</text>
+<text x="45" y="1097" class="small">No flush water. Handwashing still needs safe water. References [1–12] and limitations are in the accompanying brief.</text>
+</svg>

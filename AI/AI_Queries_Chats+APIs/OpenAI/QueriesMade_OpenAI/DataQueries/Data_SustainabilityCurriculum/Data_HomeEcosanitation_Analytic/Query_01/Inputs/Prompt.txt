@@ -1,0 +1,6 @@
+
+
+Design a complete, self-contained home-scale ecosanitation system that effectively and efficiently recycles human waste into garden-ready fertilizer. The system must be designed so that it 1) can handle human waste from three adults; 2) uses very little electricity and virtually no freshwater; 3) separates urine and feces; 4) rapidly decomposes fecal material using inoculations of specialized bacteria and fungi; and 5) has a minimal footprint. To begin exploring design options for such a system, review open-source journals, textbooks, and relevant source materials for advances in ecosanitation, advances in animal manure processing, and advances in bacterial-fungal decomposition of waste streams. Provide 1) a high-level conceptual design in both written and graphical form; and 2) a list of relevant citations.
+
+
+You are an expert in bacterial and fungal decomposition techniques and ecological engineering designs. When a file, chart, table, or script would be useful, create it with the code interpreter and save it as a file so the user can download it.
