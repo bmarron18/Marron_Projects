@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber Concepts_and_Frameworks"] 1788716488.25279 "Concepts_and_Frameworks.bcf" "Concepts_and_Frameworks.bbl" "Concepts_and_Frameworks" 1788716494.12906 0
-  "/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib" 1788716461.36847 663895 4d64f6113832ac83961038e021f59eb4 ""
-  "Concepts_and_Frameworks.bcf" 1788716493.94749 135677 7f16afb22f9c3b2391bf6bb482e82f36 "pdflatex"
+["biber Concepts_and_Frameworks"] 1790450971.7909 "Concepts_and_Frameworks.bcf" "Concepts_and_Frameworks.bbl" "Concepts_and_Frameworks" 1790450976.25231 0
+  "/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib" 1788716552.64753 663780 a5281d0ed6ac89e0b67a83f28cbdf691 ""
+  "Concepts_and_Frameworks.bcf" 1790450976.07145 135677 7f16afb22f9c3b2391bf6bb482e82f36 "pdflatex"
   (generated)
   "Concepts_and_Frameworks.bbl"
   "Concepts_and_Frameworks.blg"
   (rewritten before read)
-["pdflatex"] 1788716492.70368 "Concepts_and_Frameworks.tex" "Concepts_and_Frameworks.pdf" "Concepts_and_Frameworks" 1788716494.12944 0
+["pdflatex"] 1790450974.86748 "Concepts_and_Frameworks.tex" "Concepts_and_Frameworks.pdf" "Concepts_and_Frameworks" 1790450976.25264 0
   "/usr/local/share/texmf/tex/latex/biblatex/latex/bbx/standard.bbx" 1756502253.24981 25680 409c3f3d570418bc545e8065bebd0688 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.cfg" 1756502253.24981 69 249fa6df04d948e51b6d5c67bea30c42 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.def" 1756502253.24981 96838 ffbc2c4ed45b0b76660254a85df40e90 ""
@@ -203,10 +203,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788581441 5609353 13863466be7e2f3222bf573e23e6e97d ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1788581470 3658238 4e535c84a4e2b98eb209584d747fd9b2 ""
   "/usr/local/texlive/2026/texmf.cnf" 1788631954.43217 490 bda3fb63e318ca41966f63cd33cd8534 ""
-  "Concepts_and_Frameworks.aux" 1788716493.94449 9796 ab60aab35c5acff62abeb9a30a477e8c "pdflatex"
-  "Concepts_and_Frameworks.bbl" 1788716489.84849 125118 679b6c60a368bee8cc746767f3dc29c0 "biber Concepts_and_Frameworks"
-  "Concepts_and_Frameworks.run.xml" 1788716493.94896 2582 e6dd4345d6aac8b32cb8e38b32f375c4 "pdflatex"
-  "Concepts_and_Frameworks.tex" 1788716431.48554 9474 dfa47af16e7a2a5b21a63034cdf007d2 ""
+  "Concepts_and_Frameworks.aux" 1790450976.06845 9796 fa87370035ebaee1ca1c79e3749888fd "pdflatex"
+  "Concepts_and_Frameworks.bbl" 1790450973.4477 124820 b8e506583738b1c2b7127e4e744d22a9 "biber Concepts_and_Frameworks"
+  "Concepts_and_Frameworks.run.xml" 1790450976.07269 2582 e6dd4345d6aac8b32cb8e38b32f375c4 "pdflatex"
+  "Concepts_and_Frameworks.tex" 1790450971.66388 9474 dfa47af16e7a2a5b21a63034cdf007d2 ""
   (generated)
   "Concepts_and_Frameworks.aux"
   "Concepts_and_Frameworks.bcf"

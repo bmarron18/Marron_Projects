@@ -20,7 +20,7 @@ Revised: v2.0
            typos corrected.
 
 ==================================
-Data Query Template
+Research Query Template
 Model ==> gpt-6-astra
 Multi-file-type output (text, code, images, data files)
 ==================================

@@ -1,0 +1,30 @@
+
+							LECTURE 01 
+
+Docente:		Bruce D. Marron
+Course: 		Sustainability Now!
+Section:		05_Standard Concepts and Frameworks of Sustainability
+
+
+##################
+Slide Graphics
+###################
+
+https://mx.pinterest.com/danwalsh1115/complex-adaptive-systems/
+
+
+
+############
+Slide Content
+###############
+Use Zotero search by title to find PDFs
+
+<<< bash
+cd /opt/Zotero && ./zotero
+>>>
+
+
+
+* “Brundtland Report: Our Common Future.”
+* 
+

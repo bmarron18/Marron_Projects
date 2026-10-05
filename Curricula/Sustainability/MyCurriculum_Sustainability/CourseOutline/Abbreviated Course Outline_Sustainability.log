@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  24 SEP 2026 11:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  26 SEP 2026 13:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1403,7 +1403,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [5]
 
-LaTeX Warning: Empty bibliography on input line 415.
+LaTeX Warning: Empty bibliography on input line 416.
 
 (./Abbreviated Course Outline_Sustainability.aux)
  ***********
@@ -1427,8 +1427,8 @@ Here is how much of TeX's memory you used:
 local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
 exlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/
 2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Abbreviated Course Outline_Sustainability.pdf" (5 pages, 740
-98 bytes).
+Output written on "Abbreviated Course Outline_Sustainability.pdf" (5 pages, 741
+11 bytes).
 PDF statistics:
  44 PDF objects out of 1000 (max. 8388607)
  28 compressed objects within 1 object stream

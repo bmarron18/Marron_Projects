@@ -2,17 +2,24 @@
 
 Docente:		Bruce D. Marron
 Course: 		Sustainability Now!
-Section:		Std Concepts and Frameworks for Sustainability
+Section:		05_Std Concepts and Frameworks for Sustainability
 			
 
+##########
+Sustainability
+###############
 
 -----------
-Why Systems Analysis?
+The Seven Generations Principle is an ancient ethical and governance framework rooted in the Iroquois Confederacy that mandates evaluating every present action, law, and decision by how it affects seven generations into the future. (Mohawk, Oneida, Onondaga, Cayuga, Seneca, and Tuscarora).
+
 
 ------------
 Complex Adaptive Systems
 
 	CAS are composed of diverse, interconnected, semi-autonomous parts that learn and change through experience. These systems undergo continuous adaptation, self-organization, and emergent behavior as they interact with their environment.
+
+	Traditional (reductionist) science is not so helpful when managing the behavior of complex adaptive systems
+
 
 	Complex:
 		numerous interdependent agents (components) interacting in relationships that are often non-linear... small changes can create massive, disproportionate effects, making precise, long-term predictions difficult
@@ -41,14 +48,23 @@ Complex Adaptive Systems
 
 	CAS = Life!!
 
+
+	"The whole is greater than the sum of the parts"
+
 --------------
 Sustainability
 
 
 
 
+
+
 ------------
 Resilience
+
+
+
+
 
 Pressures Behind Leaving the Gold Standard (1971)
 

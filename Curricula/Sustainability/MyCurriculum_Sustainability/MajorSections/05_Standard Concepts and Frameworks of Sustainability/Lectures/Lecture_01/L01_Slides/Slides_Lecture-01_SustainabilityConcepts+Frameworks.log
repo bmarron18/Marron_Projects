@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  6 SEP 2026 12:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  26 SEP 2026 18:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1390,7 +1390,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmss' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 156
+LaTeX Font Info:    Trying to load font information for U+msa on input line 160
 .
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -1398,7 +1398,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 156
+LaTeX Font Info:    Trying to load font information for U+msb on input line 160
 .
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -1408,65 +1408,96 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 156.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <8> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 156.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <6> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 156.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 160.
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 156.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10.95> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 156.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 156.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 156.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <6> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 156.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 160.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <6> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 156.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 160.
  [2
 
 ]
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 165.
+<graphics/Iriquois.png, id=34, 773.89125pt x 446.66875pt>
+File: graphics/Iriquois.png Graphic file (type png)
+<use graphics/Iriquois.png>
+Package pdftex.def Info: graphics/Iriquois.png  used on input line 175.
+(pdftex.def)             Requested size: 154.7755pt x 89.33215pt.
 
 [3
 
-]
-<graphics/CAS1.jpeg, id=40, 526.96875pt x 360.34625pt>
-File: graphics/CAS1.jpeg Graphic file (type jpg)
-<use graphics/CAS1.jpeg>
-Package pdftex.def Info: graphics/CAS1.jpeg  used on input line 175.
-(pdftex.def)             Requested size: 263.48372pt x 180.17268pt.
+ <./graphics/Iriquois.png>]
+<graphics/DreamCity.jpeg, id=40, 738.76pt x 1108.14pt>
+File: graphics/DreamCity.jpeg Graphic file (type jpg)
+<use graphics/DreamCity.jpeg>
+Package pdftex.def Info: graphics/DreamCity.jpeg  used on input line 187.
+(pdftex.def)             Requested size: 147.74937pt x 221.62407pt.
  [4
 
- <./graphics/CAS1.jpeg>]
-<graphics/Fractal_CAS.jpeg, id=46, 501.875pt x 485.815pt>
-File: graphics/Fractal_CAS.jpeg Graphic file (type jpg)
-<use graphics/Fractal_CAS.jpeg>
-Package pdftex.def Info: graphics/Fractal_CAS.jpeg  used on input line 185.
-(pdftex.def)             Requested size: 200.74643pt x 194.32256pt.
+ <./graphics/DreamCity.jpeg>]
+<graphics/GHBrundtland.jpg, id=46, 229.0959pt x 334.851pt>
+File: graphics/GHBrundtland.jpg Graphic file (type jpg)
+<use graphics/GHBrundtland.jpg>
+Package pdftex.def Info: graphics/GHBrundtland.jpg  used on input line 212.
+(pdftex.def)             Requested size: 68.7293pt x 100.45607pt.
+<graphics/BrundtlandReport.png, id=47, 1514.65875pt x 505.89pt>
+File: graphics/BrundtlandReport.png Graphic file (type png)
+<use graphics/BrundtlandReport.png>
+Package pdftex.def Info: graphics/BrundtlandReport.png  used on input line 212.
+
+(pdftex.def)             Requested size: 257.48859pt x 86.00015pt.
  [5
 
- <./graphics/Fractal_CAS.jpeg>]
-<graphics/Fractal_CAS2.jpeg, id=52, 1108.14pt x 738.76pt>
-File: graphics/Fractal_CAS2.jpeg Graphic file (type jpg)
-<use graphics/Fractal_CAS2.jpeg>
-Package pdftex.def Info: graphics/Fractal_CAS2.jpeg  used on input line 195.
-(pdftex.def)             Requested size: 277.03432pt x 184.68954pt.
+ <./graphics/GHBrundtland.jpg> <./graphics/BrundtlandReport.png>]
+<graphics/CAS1.jpeg, id=54, 526.96875pt x 360.34625pt>
+File: graphics/CAS1.jpeg Graphic file (type jpg)
+<use graphics/CAS1.jpeg>
+Package pdftex.def Info: graphics/CAS1.jpeg  used on input line 223.
+(pdftex.def)             Requested size: 263.48372pt x 180.17268pt.
  [6
 
+ <./graphics/CAS1.jpeg>]
+[7
+
+]
+<graphics/Fractal_CAS.jpeg, id=66, 501.875pt x 485.815pt>
+File: graphics/Fractal_CAS.jpeg Graphic file (type jpg)
+<use graphics/Fractal_CAS.jpeg>
+Package pdftex.def Info: graphics/Fractal_CAS.jpeg  used on input line 252.
+(pdftex.def)             Requested size: 200.74643pt x 194.32256pt.
+ [8
+
+ <./graphics/Fractal_CAS.jpeg>]
+<graphics/Fractal_CAS2.jpeg, id=72, 1108.14pt x 738.76pt>
+File: graphics/Fractal_CAS2.jpeg Graphic file (type jpg)
+<use graphics/Fractal_CAS2.jpeg>
+Package pdftex.def Info: graphics/Fractal_CAS2.jpeg  used on input line 262.
+(pdftex.def)             Requested size: 277.03432pt x 184.68954pt.
+ [9
+
  <./graphics/Fractal_CAS2.jpeg>]
-Overfull \vbox (15.72923pt too high) detected at line 208
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 278.
+
+Overfull \vbox (15.72923pt too high) detected at line 278
  []
 
-[7
+[10
 
 ]
 \tf@nav=\write7
@@ -1485,24 +1516,24 @@ L3 programming layer <2026-08-10>
  ***********
 Package rerunfilecheck Info: File `Slides_Lecture-01_SustainabilityConcepts+Fra
 meworks.out' has not changed.
-(rerunfilecheck)             Checksum: 6F64DB35606AE736744B01878AFBECFE;181.
+(rerunfilecheck)             Checksum: E0917AB220BF634EF0DD04184B712EEA;118.
  ) 
 Here is how much of TeX's memory you used:
- 33225 strings out of 467099
- 658363 string characters out of 5408266
- 1079581 words of memory out of 5000000
- 61819 multiletter control sequences out of 15000+600000
- 673953 words of font info for 138 fonts, out of 8000000 for 9000
+ 33287 strings out of 467099
+ 659664 string characters out of 5408266
+ 1079583 words of memory out of 5000000
+ 61865 multiletter control sequences out of 15000+600000
+ 676702 words of font info for 144 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,13n,125p,1939b,782s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
 /local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/
 texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Slides_Lecture-01_SustainabilityConcepts+Frameworks.pdf (7 pa
-ges, 357803 bytes).
+Output written on Slides_Lecture-01_SustainabilityConcepts+Frameworks.pdf (10 p
+ages, 1466960 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
- 48199 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 106 PDF objects out of 1000 (max. 8388607)
+ 72 compressed objects within 1 object stream
+ 22 named destinations out of 1000 (max. 500000)
+ 52315 words of extra memory for PDF output out of 61914 (max. 10000000)
 

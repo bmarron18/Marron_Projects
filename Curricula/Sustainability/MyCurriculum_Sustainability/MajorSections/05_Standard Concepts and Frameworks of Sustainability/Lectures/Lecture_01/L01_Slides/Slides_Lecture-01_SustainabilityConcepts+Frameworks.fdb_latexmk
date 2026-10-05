@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1788719906.77127 "Slides_Lecture-01_SustainabilityConcepts+Frameworks.tex" "Slides_Lecture-01_SustainabilityConcepts+Frameworks.pdf" "Slides_Lecture-01_SustainabilityConcepts+Frameworks" 1788719907.66679 0
+["pdflatex"] 1790470429.14233 "Slides_Lecture-01_SustainabilityConcepts+Frameworks.tex" "Slides_Lecture-01_SustainabilityConcepts+Frameworks.pdf" "Slides_Lecture-01_SustainabilityConcepts+Frameworks" 1790470430.14982 0
   "/usr/local/share/texmf/tex/latex/nicefrac/nicefrac.sty" 1606787429.19777 4029 0462ee5ab265cf59dc15a41a3b883101 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -258,13 +258,17 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788581441 5609353 13863466be7e2f3222bf573e23e6e97d ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1788581470 3658238 4e535c84a4e2b98eb209584d747fd9b2 ""
   "/usr/local/texlive/2026/texmf.cnf" 1788631954.43217 490 bda3fb63e318ca41966f63cd33cd8534 ""
-  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.aux" 1788719907.59266 1778 bd7d718df5cd34fd495456f136277257 "pdflatex"
-  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.nav" 1788719907.59266 1021 75f54609c043ebd66fb602dbbd67506c "pdflatex"
-  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.out" 1788719907.59266 181 6f64db35606ae736744b01878afbecfe "pdflatex"
-  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.tex" 1788719906.62167 6379 2374facbd2933fd677ddd576d450d3f0 ""
+  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.aux" 1790470430.06818 2123 50ae304b2c842c67146b7f6cf31699bb "pdflatex"
+  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.nav" 1790470430.06918 1269 a57422acf956d6f3b3aea34cc48842b4 "pdflatex"
+  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.out" 1790470430.06818 118 e0917ab220bf634ef0dd04184b712eea "pdflatex"
+  "Slides_Lecture-01_SustainabilityConcepts+Frameworks.tex" 1790470429.03513 8191 d4ccab3eec67e7532fcd92bee44d94de ""
+  "graphics/BrundtlandReport.png" 1790468318.72695 77052 fc26ef1260e5f2f090553e988bee506c ""
   "graphics/CAS1.jpeg" 1780686105.77348 43571 b81f235d735e9039e1f4fe71a45ec188 ""
+  "graphics/DreamCity.jpeg" 1790458065.83565 181455 0a7f5b4e5938a13a54763151307b9905 ""
   "graphics/Fractal_CAS.jpeg" 1780686413.28504 59463 c20c0219e2567a76933e57b17ddad16d ""
   "graphics/Fractal_CAS2.jpeg" 1780688709.50354 184450 04a5df8341e4af2fbddb0fe0e96ad85e ""
+  "graphics/GHBrundtland.jpg" 1790467599.17364 117461 ec628d475765b2e7aba0f7f5c04d9150 ""
+  "graphics/Iriquois.png" 1790461549.80247 621216 1647178a8bdbc796ef846ff37eb9a6c3 ""
   "graphics/UTECA_Logo.png" 1733877938.46627 49897 86b878dac820d8504319fc5c55b981bd ""
   (generated)
   "Slides_Lecture-01_SustainabilityConcepts+Frameworks.aux"

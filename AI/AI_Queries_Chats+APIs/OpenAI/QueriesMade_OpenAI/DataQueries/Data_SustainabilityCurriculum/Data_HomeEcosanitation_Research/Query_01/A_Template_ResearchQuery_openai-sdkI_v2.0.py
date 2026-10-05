@@ -69,10 +69,10 @@ On Desktop
     source ./ai-apis/bin/activate
 
         # run script (normal)
-    python3 ~/Desktop/A_Template_DataQuery_OpenAI_v2.0.py
+    python3 ~/DesktopA_Template_ResearchQuery_openai-sdk_v2.0.py
 
         # run script (dry run)
-    python3 ~/Desktop/A_Template_DataQuery_OpenAI_v2.0.py --dry-run
+    python3 ~/DesktopA_Template_ResearchQuery_openai-sdk_v2.0.py --dry-run
 >>>
     
     
@@ -87,7 +87,7 @@ server-side. Check the ouput docs for a XXXX_response_id.txt file. Will have dat
 Collect the job with:
 <<<bash
        # resume / collect an earlier background job
-   python3 ~/Desktop/A_Template_DataQuery_OpenAI_v2.0.py --resume resp_XXXXXXXX
+   python3 ~/DesktopA_Template_ResearchQuery_openai-sdk_v2.0.py --resume resp_XXXXXXXX
 >>>
 
    In Spyder, set this under **Run → Configuration per file → Command line options**.

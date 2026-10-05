@@ -1,4 +1,4 @@
-PWD /home/bruce-vdb/Desktop/UTECA/UTECA-03_MyCurr/Sustainability/Curriculum_Sustainability/MajorSections/05_Standard Concepts and Frameworks of Sustainability/LectureSlides/Lecture_01/Slides_L01
+PWD /home/bruce-vdb/Desktop/Marron_Projects/Curricula/Sustainability/MyCurriculum_Sustainability/MajorSections/05_Standard Concepts and Frameworks of Sustainability/LectureSlides/Lecture_01/Slides_L01
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -593,10 +593,31 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvbo8t.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvbo8t.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvbo8t.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvr8t.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvro8t.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvb8t.tfm
+INPUT ./graphics/Iriquois.png
+INPUT ./graphics/Iriquois.png
+INPUT ./graphics/Iriquois.png
+INPUT ./graphics/Iriquois.png
+INPUT ./graphics/Iriquois.png
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvb8r.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
+INPUT ./graphics/DreamCity.jpeg
+INPUT ./graphics/DreamCity.jpeg
+INPUT ./graphics/DreamCity.jpeg
+INPUT ./graphics/DreamCity.jpeg
+INPUT ./graphics/DreamCity.jpeg
+INPUT ./graphics/GHBrundtland.jpg
+INPUT ./graphics/GHBrundtland.jpg
+INPUT ./graphics/GHBrundtland.jpg
+INPUT ./graphics/GHBrundtland.jpg
+INPUT ./graphics/GHBrundtland.jpg
+INPUT ./graphics/BrundtlandReport.png
+INPUT ./graphics/BrundtlandReport.png
+INPUT ./graphics/BrundtlandReport.png
+INPUT ./graphics/BrundtlandReport.png
+INPUT ./graphics/BrundtlandReport.png
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvro8t.vf
@@ -616,6 +637,9 @@ INPUT ./graphics/Fractal_CAS2.jpeg
 INPUT ./graphics/Fractal_CAS2.jpeg
 INPUT ./graphics/Fractal_CAS2.jpeg
 INPUT ./graphics/Fractal_CAS2.jpeg
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvro8t.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvro8t.vf
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvro8r.tfm
 OUTPUT Slides_Lecture-01_SustainabilityConcepts+Frameworks.nav
 OUTPUT Slides_Lecture-01_SustainabilityConcepts+Frameworks.toc
 OUTPUT Slides_Lecture-01_SustainabilityConcepts+Frameworks.snm

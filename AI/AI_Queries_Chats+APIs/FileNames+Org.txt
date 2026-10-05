@@ -17,8 +17,7 @@ Name folder as 'QueryType_Description_TaskType'
 	TaskTypes
 	---------
 	_Analytic
-	_Translation
-	_Transcription
+	_Template
 	_Snippet
 
 ###########

@@ -195,12 +195,14 @@
 
 \normalsize
 \begin{outline}[enumerate]
+%---------------------------------
 \1 Sustainability Concepts
 
 \2 Brundtland Commission
 \2 UN Sustainable Development Goals
 \2 \cite{marshall_framing_2005}\\
 
+%---------------------------------
 \1 Sustainability Frameworks
 
 \2 Ecological Sustainability\\
@@ -241,6 +243,12 @@
 
 \2 Agricultural Sustainability \\
 \cite{bardgett_belowground_2014}
+
+%-------------------------
+\1 Resilience Concepts
+
+\2 Ecologucal Resilience
+\cite {folke_resilience_2016}
 
 \end{outline}
 
