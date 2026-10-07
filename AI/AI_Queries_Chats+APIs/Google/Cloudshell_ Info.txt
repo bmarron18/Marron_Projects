@@ -1,0 +1,48 @@
+
+
+################
+Google CloudShell
+###################
+https://docs.cloud.google.com/shell/docs/using-cloud-shell
+
+Cloud Shell access (Cloud Hub)
+  https://console.cloud.google.com/welcome?project=my-project-uteca1
+
+Project name
+    My Project-UTECA1
+Project number
+    735387290281
+Project ID
+    my-project-uteca1
+
+Click "Activate Cloud Shell" at the top of the console.
+
+Cloudshell CLI (a Unix-based VM)
+    marron_bruce_mx@cloudshell:~ (my-project-uteca1)$ exit
+
+
+Cloudshell Virtual Machine (VM)
+--------------------------------
+When you set up a Cloud Shell session, you get a regular Unix user account with a username based on your email address. With this access, you have full root privileges on your allocated VM and can even run sudo commands, if you need to.
+
+Cloud Shell provisions 5 GB of free persistent disk storage mounted as your $HOME directory. All files you store in your home directory, including installed software, scripts and user configuration files like .bashrc and .vimrc, persist between sessions. Since your .bashrc persists across sessions, it's a great way to customize your Cloud Shell behavior. Similarly, to have your installations persist, you can install packages into your home directory.
+
+Welcome to Google Cloud Shell, a tool for managing resources hosted on Google Cloud Platform!
+The machine comes pre-installed with the Google Cloud SDK and other popular developer tools.
+
+
+Cloudshell Curomization
+------------------------
+https://docs.cloud.google.com/shell/docs/configuring-cloud-shell#environment_customization
+
+
+VM Tools
+-----------
+https://docs.cloud.google.com/shell/docs/how-cloud-shell-works#tools
+
+You can install additional software packages on the virtual machine instance but the installation will not persist after the instance terminates unless you install the software in your $HOME directory or create a custom environment.
+  
+
+vim
+-------
+Shift + ZZ to exit

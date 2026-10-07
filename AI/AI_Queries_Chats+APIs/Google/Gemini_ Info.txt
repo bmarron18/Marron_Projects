@@ -162,7 +162,7 @@ Application:
     application/json: JavaScript Object Notation files (.json) 
     application/zip: ZIP compressed archive files (.zip) 
     application/octet-stream: A general-purpose type for unspecified binary data 
-    *application/vnd.openxmlformats-officedocument.wordprocessingml.document (.docx)
+   *application/vnd.openxmlformats-officedocument.wordprocessingml.document (.docx)
 
 
     * Gemini gave me a .json file when this mime type was requested
@@ -224,37 +224,3 @@ uploadedfile = client.files.upload(
 <<<
 ----------------------------------------
 
-
-################
-Google CloudShell
-###################
-https://docs.cloud.google.com/shell/docs/using-cloud-shell
-
-'''
-Doing simple excerpt translations in  with the Standard NMT model
-  Login to Google (marron,bruce,mx@gmail,com)
-  Login to Google Cloud Console
-  Activate Google Cloud Shell
-  Click Activate Cloud Shell at the top of the Google Cloud console.
-
-Cloud Shell access
-  https://console.cloud.google.com/welcome?project=my-project-uteca1
-'''
-
-
-Project name
-    My Project-UTECA1
-Project number
-    735387290281
-Project ID
-    my-project-uteca1
-
-
-'''
- Go to Cloud Hub for better visibility
-This dashboard is no longer updated and will shut down in 2027. 
-Cloud Hub offers a more comprehensive view across health, security, 
-cost, optimization, and other data about your projects and applications. 
-
-marron_bruce_mx@cloudshell:~ (my-project-uteca1)$ 
-'''
