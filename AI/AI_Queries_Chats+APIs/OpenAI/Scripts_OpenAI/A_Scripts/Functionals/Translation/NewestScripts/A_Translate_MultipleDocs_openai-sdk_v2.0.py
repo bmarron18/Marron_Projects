@@ -2,86 +2,86 @@
 # -*- coding: utf-8 -*-
 
 """
-Created on Sat Sep 19 12:22:40 2026
+Created on Sat Sep 19 12:27:53 2026
+Updated 13 Oct 2026
 @author: bruce-vdb, claude-opus-5
 
-=====================================================
-Batch document translation with the Google Gemini API.
-======================================================
+
+UPDATE AND LIST INSTALLED PACKAGES FROM CLI
+-------------
+<<< bash
+    cd ~/spyder-6/envs && pip list
+    
+    source ./ai-apis/bin/activate &&
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade openai && deactivate
+
+>>>
+
+========================================================
+Batch document translation with the OpenAI Responses API.
+=========================================================
 
 FEATURES
 --------
 * Translates **many** documents in one run (explicit file list, one or more
   directories, or the configured default input directory).
-* Accepts **several input types** - anything Gemini can read as inline data or
-  through the Files API (.pdf, .txt, .md, .html, .csv, .xml, .rtf, .tex,
-  .json, .py, .js, .css ...).
-* Produces a **unique output file for every input file**, in the requested
+* Handles **three input families**:
+    - PDF          -> uploaded to the Files API and sent as `input_file`
+    - text formats -> read locally and sent as delimited `input_text`
+                      (.txt, .md, .html, .csv, .tsv, .xml, .tex, .json,
+                       .rtf, .py, .js, .css, .srt, .vtt ...)
+    - images       -> uploaded and sent as `input_image` (the model reads and
+                      translates the text it sees)
+* Produces a **unique output file for every input file** in the requested
   output format (.txt, .md, .html, .tex, .json).
-* Small files are sent inline; large files (> 18 MB) go through the Files API
-  and are deleted again as soon as the translation is finished.
+* Uploaded files are deleted from OpenAI storage as soon as the job is done.
 * Per-file error isolation, retry with exponential back-off, run summary.
 
+
 DEFAULTS
----------
-DEFAULT_MODEL = "gemini-3.1-pro-preview"
-DEFAULT_INPUT_DIR = Path.home() / "Desktop" / "to_translate"
+----------
+DEFAULT_MODEL = "gpt-5.6"
+DEFAULT_INPUT_DIR = Path.home() / "Desktop" / "to_translate"    <== FILES TO BE TRANSALTED IN FOLDER
 DEFAULT_OUTPUT_DIR = Path.home() / "Desktop" / "translated"
 DEFAULT_SOURCE_LANGUAGE = "English"
 DEFAULT_TARGET_LANGUAGE = "Spanish"
 DEFAULT_OUTPUT_FORMAT = "txt"
 
-UPDATE AND LIST INSTALLED PACKAGES
+
+RUN IN SPYDER
+-------------
+    * *Run* (f5)                        <== defaults
+    *  type in Ipython Console
+        -- main([])                     <== defaults
+        -- main(["-t", "German"])       <== w/ toggles
+
+
+RUN FROM CLI
 -------------
 <<< bash
     cd ~/spyder-6/envs && 
-    source ./ai-apis/bin/activate &&
-    python3 -m pip install --upgrade pip &&
-    pip install --upgrade genai
-
-    pip list
->>>
-
-RUN IN SPYDER ==> TO FIX!!
--------------
-    * *Run* (f5)                        <== defaults
-    * Set toggles (Ctrl + F6),  then *Run*
-        --dry-run           <== w/ toggles
-         -t German        <== w/ toggles
-
-
-RUN SCRIPT FROM DESKTOP
-------------------
-On Desktop
-    * folder 'to_trnslate' with files  <== for multiple files
-    * single MIME file                  <== for a single file
-    * copy of this script
-
-<<<bash
-    cd ~/spyder-6/envs && 
     source ./ai-apis/bin/activate
+   
+    python3  ~/Desktop/A_translate_docs_openai_v2.0.py               <== use defaults
+    python3  ~/Desktop/A_translate_docs_openai_v2.0.py --dry-run     <== show the plan only
 
-        # show the plan only
-    python3  ~/Desktop/A_translate_docs_gemini_v2.0.py --dry-run
-    
-        # translate multiple files, multiple MOME types
-    python3  ~/Desktop/A_translate_docs_gemini_v2.0.py               <== multiple files, defaults
-
-       # translate just one file, a .pdf
-   python3 ~/Desktop/A_translate_docs_gemini_v2.0.py ~/Desktop/*.pdf                <== defaults
-   python3 ~/Desktop/A_translate_docs_gemini_v2.0.py ~/Desktop/*.pdf -t French      <== English-French
 >>>
 
 
-TOGGLES
----------------
-see 'Command-line interface' in script below for optional toggles
+CLI TOGGLES
+-----------
+see 'Command-line interface' in script for optional toggles
 For example, 
+
+        # translate just one file to French
+    python3 translate_docs_openai_v2.0.py ~/Desktop/*.pdf -t French
     
         #change name of input directory, change name of output directory, change output file type
-    python3 ~/Desktop/A_translate_docs_gemini_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f md
-    python ~/Desktop/A_translate_docs_openai_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f html
-    
+    python3 translate_docs_openai_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f md
+    python3 A_translate_docs_openai_v2.0.py -i ~/Desktop/in -o ~/Desktop/out -r -f html
+
+
 """
 
 from __future__ import annotations
@@ -95,79 +95,68 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Iterator, Sequence
+from typing import Any, Iterable, Iterator, Sequence
 
-from google import genai
-from google.genai import errors as genai_errors
-from google.genai import types
+from openai import (
+    APIConnectionError,
+    APIStatusError,
+    APITimeoutError,
+    OpenAI,
+    RateLimitError,
+)
 
 # --------------------------------------------------------------------------- #
 # Configuration
 # --------------------------------------------------------------------------- #
-LOGGER = logging.getLogger("gemini_translate")
+LOGGER = logging.getLogger("openai_translate")
 
-DEFAULT_MODEL = "gemini-3.1-pro-preview"
+DEFAULT_MODEL = "gpt-5.6"
 DEFAULT_INPUT_DIR = Path.home() / "Desktop" / "to_translate"
 DEFAULT_OUTPUT_DIR = Path.home() / "Desktop" / "translated"
 DEFAULT_SOURCE_LANGUAGE = "English"
 DEFAULT_TARGET_LANGUAGE = "Spanish"
 DEFAULT_OUTPUT_FORMAT = "txt"
 
-INLINE_LIMIT_BYTES = 18 * 1024 * 1024      # larger payloads -> Files API
-UPLOAD_POLL_SECONDS = 2.0
-UPLOAD_TIMEOUT_SECONDS = 300.0
+REQUEST_TIMEOUT_SECONDS = 900.0
 MAX_ATTEMPTS = 3
 BACKOFF_SECONDS = 5.0
-RETRYABLE_STATUS = frozenset({408, 429, 500, 502, 503, 504})
+MAX_INLINE_CHARACTERS = 400_000            # guard against context overflow
 
+PDF_EXTENSIONS = frozenset({".pdf"})
+IMAGE_EXTENSIONS = frozenset({".png", ".jpg", ".jpeg", ".webp", ".gif"})
+TEXT_EXTENSIONS = frozenset({
+    ".txt", ".text", ".md", ".markdown", ".html", ".htm", ".xml", ".csv",
+    ".tsv", ".json", ".tex", ".rtf", ".srt", ".vtt", ".py", ".js", ".css",
+})
+SUPPORTED_EXTENSIONS = PDF_EXTENSIONS | IMAGE_EXTENSIONS | TEXT_EXTENSIONS
+# NOTE: .docx/.odt/.pptx are not read directly - export them to PDF first
+#       (e.g. `libreoffice --headless --convert-to pdf file.docx`).
 
-#: Input extension -> MIME type accepted by Gemini.
-INPUT_MIME_TYPES: dict[str, str] = {
-    ".pdf": "application/pdf",
-    ".txt": "text/plain",
-    ".text": "text/plain",
-    ".tex": "text/plain",
-    ".json": "text/plain",
-    ".srt": "text/plain",
-    ".vtt": "text/plain",
-    ".md": "text/md",
-    ".markdown": "text/md",
-    ".csv": "text/csv",
-    ".tsv": "text/csv",
-    ".html": "text/html",
-    ".htm": "text/html",
-    ".xml": "text/xml",
-    ".rtf": "text/rtf",
-    ".css": "text/css",
-    ".js": "text/javascript",
-    ".py": "text/x-python",
-}
-# NOTE: .docx/.odt/.pptx are *not* natively supported - export them to PDF
-#       first (e.g. `libreoffice --headless --convert-to pdf file.docx`).
+TEXT_ENCODINGS = ("utf-8", "utf-8-sig", "cp1252", "latin-1")
 
 
 @dataclass(frozen=True)
 class OutputFormat:
-    """Extension, response MIME type and prompt wording of an output format."""
+    """Extension, response format and prompt wording of an output format."""
 
     extension: str
-    response_mime_type: str | None
+    response_format: str          # "text" or "json_object"
     description: str
 
 
 OUTPUT_FORMATS: dict[str, OutputFormat] = {
-    "txt": OutputFormat(".txt", "text/plain", "plain UTF-8 text (.txt)"),
-    "md": OutputFormat(".md", "text/plain", "GitHub-flavoured Markdown (.md)"),
-    "html": OutputFormat(".html", "text/plain",
+    "txt": OutputFormat(".txt", "text", "plain UTF-8 text (.txt)"),
+    "md": OutputFormat(".md", "text", "GitHub-flavoured Markdown (.md)"),
+    "html": OutputFormat(".html", "text",
                          "one complete, valid HTML5 document (.html)"),
-    "tex": OutputFormat(".tex", "text/plain",
+    "tex": OutputFormat(".tex", "text",
                         "a compilable LaTeX source document (.tex)"),
-    "json": OutputFormat(".json", "application/json",
+    "json": OutputFormat(".json", "json_object",
                          'a single JSON object with the keys "source_file", '
                          '"target_language" and "translation"'),
 }
 
-SYSTEM_INSTRUCTION = (
+SYSTEM_PROMPT = (
     "You are an expert linguist specialising in document translation. "
     "Preserve the meaning, register and tone of the source text, and keep the "
     "original layout intact: line breaks, indentation, spacing, paragraphs, "
@@ -183,13 +172,25 @@ class TranslationJob:
     """One source document and the file its translation will be written to."""
 
     source: Path
-    mime_type: str
+    kind: str                     # "pdf" | "text" | "image"
     destination: Path
 
 
 # --------------------------------------------------------------------------- #
 # File discovery / output naming
 # --------------------------------------------------------------------------- #
+def classify(path: Path) -> str | None:
+    """Return 'pdf', 'text', 'image' or None for an unsupported extension."""
+    suffix = path.suffix.lower()
+    if suffix in PDF_EXTENSIONS:
+        return "pdf"
+    if suffix in IMAGE_EXTENSIONS:
+        return "image"
+    if suffix in TEXT_EXTENSIONS:
+        return "text"
+    return None
+
+
 def iter_candidate_files(
     sources: Sequence[Path],
     input_dir: Path,
@@ -218,15 +219,15 @@ def iter_candidate_files(
 
 
 def select_translatable(paths: Iterable[Path]) -> list[tuple[Path, str]]:
-    """Keep only files whose extension maps to a Gemini-readable MIME type."""
+    """Keep only files this script knows how to send to the API."""
     selected: list[tuple[Path, str]] = []
     for path in paths:
-        mime_type = INPUT_MIME_TYPES.get(path.suffix.lower())
-        if mime_type is None:
+        kind = classify(path)
+        if kind is None:
             LOGGER.warning("Skipping '%s' - unsupported file type '%s'.",
                            path.name, path.suffix or "<none>")
             continue
-        selected.append((path, mime_type))
+        selected.append((path, kind))
     return selected
 
 
@@ -259,7 +260,7 @@ def build_jobs(
     language_slug = slugify(target_language)
     input_root = input_dir.expanduser().resolve()
 
-    for source, mime_type in files:
+    for source, kind in files:
         try:                                    # mirror sub-directories
             sub_dir = source.parent.relative_to(input_root)
         except ValueError:
@@ -267,20 +268,30 @@ def build_jobs(
         name = f"{source.stem}_{language_slug}{output_format.extension}"
         destination = unique_path(output_dir / sub_dir / name, taken, overwrite)
         taken.add(destination)
-        jobs.append(TranslationJob(source, mime_type, destination))
+        jobs.append(TranslationJob(source, kind, destination))
 
     return jobs
+
+
+def read_text(path: Path) -> str:
+    """Read a text file, trying a few common encodings before giving up."""
+    for encoding in TEXT_ENCODINGS:
+        try:
+            return path.read_text(encoding=encoding)
+        except UnicodeDecodeError:
+            continue
+    return path.read_bytes().decode("utf-8", errors="replace")
 
 
 # --------------------------------------------------------------------------- #
 # Translator
 # --------------------------------------------------------------------------- #
-class GeminiTranslator:
-    """Thin, reusable wrapper around `client.models.generate_content`."""
+class OpenAITranslator:
+    """Thin, reusable wrapper around `client.responses.create`."""
 
     def __init__(
         self,
-        client: genai.Client,
+        client: OpenAI,
         model: str,
         source_language: str,
         target_language: str,
@@ -291,33 +302,34 @@ class GeminiTranslator:
         self.source_language = source_language
         self.target_language = target_language
         self.output_format = output_format
-        self.config = types.GenerateContentConfig(
-            system_instruction=SYSTEM_INSTRUCTION,
-            temperature=0.2,
-            response_mime_type=output_format.response_mime_type,
-        )
 
     # -- public API -------------------------------------------------------- #
     def translate(self, job: TranslationJob) -> str:
         """Translate one document and return the translated text."""
-        content, uploaded = self._build_content(job)
+        content, uploaded_id = self._build_content(job)
         try:
-            response = self._generate([content, self._build_prompt(job)])
+            response = self._create_response(content)
         finally:
-            self._cleanup(uploaded)
+            self._cleanup(uploaded_id)
 
-        text = (getattr(response, "text", None) or "").strip()
+        text = (getattr(response, "output_text", "") or "").strip()
         if not text:
             raise RuntimeError(
-                f"Gemini returned no text (finish reason: "
-                f"{self._finish_reason(response)!r})."
+                f"The model returned no text (status: "
+                f"{getattr(response, 'status', 'unknown')!r})."
             )
         return text
 
     # -- helpers ----------------------------------------------------------- #
     def _build_prompt(self, job: TranslationJob) -> str:
+        subject = {
+            "pdf": "the attached PDF document",
+            "image": "the text visible in the attached image",
+            "text": "the document supplied below between the "
+                    "<<<DOCUMENT>>> markers",
+        }[job.kind]
         return (
-            f"Translate the attached document '{job.source.name}' from "
+            f"Translate {subject} ('{job.source.name}') from "
             f"{self.source_language} into standard, natural, fluent "
             f"{self.target_language}.\n"
             "Reproduce the original formatting as faithfully as the output "
@@ -331,72 +343,66 @@ class GeminiTranslator:
 
     def _build_content(
         self, job: TranslationJob
-    ) -> tuple[types.Part | types.File, types.File | None]:
-        """Inline small documents; upload large ones via the Files API."""
-        size = job.source.stat().st_size
-        if size <= INLINE_LIMIT_BYTES:
-            part = types.Part.from_bytes(
-                data=job.source.read_bytes(), mime_type=job.mime_type
-            )
-            return part, None
+    ) -> tuple[list[dict[str, Any]], str | None]:
+        """Build the `content` list and return any uploaded file id."""
+        prompt = self._build_prompt(job)
 
-        LOGGER.info("Uploading '%s' (%.1f MB) via the Files API ...",
-                    job.source.name, size / 1024 ** 2)
-        uploaded = self.client.files.upload(
-            file=job.source,
-            config=types.UploadFileConfig(
-                mime_type=job.mime_type, display_name=job.source.name
-            ),
-        )
-        return self._wait_until_active(uploaded), uploaded
+        if job.kind == "text":
+            body = read_text(job.source)
+            if len(body) > MAX_INLINE_CHARACTERS:
+                LOGGER.warning("'%s' is very large (%d characters); consider "
+                               "splitting it.", job.source.name, len(body))
+            content = [{
+                "type": "input_text",
+                "text": f"{prompt}\n\n<<<DOCUMENT>>>\n{body}\n<<<END DOCUMENT>>>",
+            }]
+            return content, None
 
-    def _wait_until_active(self, file_obj: types.File) -> types.File:
-        deadline = time.monotonic() + UPLOAD_TIMEOUT_SECONDS
-        while self._state(file_obj) == "PROCESSING":
-            if time.monotonic() > deadline:
-                raise TimeoutError(f"Upload of '{file_obj.name}' timed out.")
-            time.sleep(UPLOAD_POLL_SECONDS)
-            file_obj = self.client.files.get(name=file_obj.name)
-        if self._state(file_obj) == "FAILED":
-            raise RuntimeError(f"Gemini failed to process '{file_obj.name}'.")
-        return file_obj
+        purpose = "vision" if job.kind == "image" else "user_data"
+        with open(job.source, "rb") as fh:
+            uploaded = self.client.files.create(file=fh, purpose=purpose)
+        LOGGER.debug("Uploaded '%s' as %s.", job.source.name, uploaded.id)
 
-    def _generate(self, contents: list) -> types.GenerateContentResponse:
+        attachment_type = "input_image" if job.kind == "image" else "input_file"
+        content = [
+            {"type": attachment_type, "file_id": uploaded.id},
+            {"type": "input_text", "text": prompt},
+        ]
+        return content, uploaded.id
+
+    def _create_response(self, content: list[dict[str, Any]]):
+        kwargs: dict[str, Any] = {
+            "model": self.model,
+            "instructions": SYSTEM_PROMPT,
+            "input": [{"role": "user", "content": content}],
+            "text": {"format": {"type": self.output_format.response_format}},
+        }
+
         for attempt in range(1, MAX_ATTEMPTS + 1):
             try:
-                return self.client.models.generate_content(
-                    model=self.model, config=self.config, contents=contents
-                )
-            except genai_errors.APIError as exc:
-                status = getattr(exc, "code", None)
-                if attempt == MAX_ATTEMPTS or status not in RETRYABLE_STATUS:
+                return self.client.responses.create(**kwargs)
+            except (RateLimitError, APIConnectionError, APITimeoutError) as exc:
+                retryable = True
+            except APIStatusError as exc:                      # noqa: F841
+                retryable = exc.status_code >= 500
+                if not retryable:
                     raise
-                delay = BACKOFF_SECONDS * 2 ** (attempt - 1)
-                LOGGER.warning("API error %s - retrying in %.0f s (%d/%d).",
-                               status, delay, attempt, MAX_ATTEMPTS)
-                time.sleep(delay)
+            if attempt == MAX_ATTEMPTS:
+                raise
+            delay = BACKOFF_SECONDS * 2 ** (attempt - 1)
+            LOGGER.warning("API error - retrying in %.0f s (%d/%d).",
+                           delay, attempt, MAX_ATTEMPTS)
+            time.sleep(delay)
         raise RuntimeError("Unreachable")       # pragma: no cover
 
-    def _cleanup(self, uploaded: types.File | None) -> None:
-        if uploaded is None:
+    def _cleanup(self, file_id: str | None) -> None:
+        if file_id is None:
             return
         try:
-            self.client.files.delete(name=uploaded.name)
-            LOGGER.debug("Deleted remote file '%s'.", uploaded.name)
+            self.client.files.delete(file_id)
+            LOGGER.debug("Deleted remote file %s.", file_id)
         except Exception as exc:                # noqa: BLE001 - never fatal
-            LOGGER.debug("Could not delete '%s': %s", uploaded.name, exc)
-
-    @staticmethod
-    def _state(file_obj: types.File) -> str:
-        state = getattr(file_obj, "state", None)
-        return getattr(state, "name", str(state)).upper()
-
-    @staticmethod
-    def _finish_reason(response) -> str | None:
-        try:
-            return str(response.candidates[0].finish_reason)
-        except (AttributeError, IndexError, TypeError):
-            return None
+            LOGGER.debug("Could not delete %s: %s", file_id, exc)
 
 
 # --------------------------------------------------------------------------- #
@@ -404,7 +410,7 @@ class GeminiTranslator:
 # --------------------------------------------------------------------------- #
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Translate one or many documents with the Gemini API.",
+        description="Translate one or many documents with the OpenAI API.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("sources", nargs="*", type=Path,
@@ -447,7 +453,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     if not files:
         LOGGER.error("No translatable files found. Supported types: %s",
-                     ", ".join(sorted(INPUT_MIME_TYPES)))
+                     ", ".join(sorted(SUPPORTED_EXTENSIONS)))
         return 1
 
     jobs = build_jobs(files, args.input_dir, args.output_dir.expanduser(),
@@ -456,17 +462,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     LOGGER.info("%d document(s) queued -> %s (%s)",
                 len(jobs), args.output_dir, output_format.extension)
     for job in jobs:
-        LOGGER.info("  %-45s -> %s", job.source.name, job.destination.name)
+        LOGGER.info("  [%-5s] %-40s -> %s",
+                    job.kind, job.source.name, job.destination.name)
     if args.dry_run:
         return 0
 
-    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        LOGGER.error("Environment variable GEMINI_API_KEY is not set.")
+        LOGGER.error("Environment variable OPENAI_API_KEY is not set.")
         return 2
 
-    translator = GeminiTranslator(
-        client=genai.Client(api_key=api_key),
+    translator = OpenAITranslator(
+        client=OpenAI(api_key=api_key, timeout=REQUEST_TIMEOUT_SECONDS,
+                      max_retries=0),          # retries handled in this script
         model=args.model,
         source_language=args.source_language,
         target_language=args.target_language,

@@ -4,20 +4,18 @@
 Created on 24 Sept 2026
 @author: bmarron, claude-opus-5-5
 
-Revised: v2.0
-    * FIX: long-running requests failed with
-           "RemoteProtocolError: Server disconnected without sending a response"
-           -> APIConnectionError.  The request is now submitted in BACKGROUND
-           mode and polled until complete, so no HTTP connection is held open
-           for minutes at a time.
-    * NEW: --resume <response_id> to collect a background job later
-           (e.g. after Ctrl-C, a network drop, or a polling timeout).
-    * NEW: web_search tool enabled so the model can actually review
-           literature; web sources saved to *_sources.txt.
-    * NEW: raw response JSON + response ID saved for debugging.
-    * NEW: status handling for failed / incomplete / cancelled responses.
-    * FIX: prompt strings no longer contain embedded runs of whitespace;
-           typos corrected.
+
+UPDATE AND LIST INSTALLED PACKAGES
+-------------
+<<< bash
+    cd ~/spyder-6/envs && pip list
+    
+    source ./ai-apis/bin/activate &&
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade openai && deactivate
+
+>>>
+
 
 ==================================
 Research Query Template
@@ -43,20 +41,11 @@ WHAT THIS SCRIPT DOES
         ~/Desktop/EcosanQuery_OpenAI_YYYYMMDD_HHMMSS/
 
 
-UPDATE AND LIST INSTALLED PACKAGES
--------------
-<<< bash
-    cd ~/spyder-6/envs &&
-    source ./ai-apis/bin/activate &&
-    python3 -m pip install --upgrade pip &&
-    pip install --upgrade openai
-
-    pip list
->>>
 
 RUN IN SPYDER
 -------------
     * *Run* (F5)
+
 
 
 RUN SCRIPT FROM DESKTOP
@@ -92,6 +81,24 @@ Collect the job with:
 
    In Spyder, set this under **Run → Configuration per file → Command line options**.
         Run > Configuration per file > Command line options:  --resume resp_XXXXXXXX
+        
+        
+REVISIONS
+-----------
+Revised: v2.0
+    * FIX: long-running requests failed with
+           "RemoteProtocolError: Server disconnected without sending a response"
+           -> APIConnectionError.  The request is now submitted in BACKGROUND
+           mode and polled until complete, so no HTTP connection is held open
+           for minutes at a time.
+    * NEW: --resume <response_id> to collect a background job later
+           (e.g. after Ctrl-C, a network drop, or a polling timeout).
+    * NEW: web_search tool enabled so the model can actually review
+           literature; web sources saved to *_sources.txt.
+    * NEW: raw response JSON + response ID saved for debugging.
+    * NEW: status handling for failed / incomplete / cancelled responses.
+    * FIX: prompt strings no longer contain embedded runs of whitespace;
+           typos corrected.
 """
 
 

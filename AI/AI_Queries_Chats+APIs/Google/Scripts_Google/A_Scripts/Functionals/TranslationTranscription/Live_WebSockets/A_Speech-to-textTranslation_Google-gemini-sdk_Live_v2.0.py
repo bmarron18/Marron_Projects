@@ -6,21 +6,23 @@ A_Speech-to-text_Gemini-API_Live_v2.0.py
 Live EN -> ES speech translation / transcription via the Gemini Live API.
 
 Created: 18 Sept 2026
-@author: bruce-vdb, claude-opus-5
+@author: bruce-vdb, claude-opus-5.5
+
+
 
 UPDATE AND LIST INSTALLED PACKAGES
 -------------
 <<< bash
-    cd ~/spyder-6/envs && 
+    cd ~/spyder-6/envs &&  pip list
+    
     source ./ai-apis/bin/activate &&
     python3 -m pip install --upgrade pip &&
-    pip install --upgrade genai
+    pip install --upgrade genai && deactivate
 
-    pip list
 >>>
 
 RUN SCRIPT FROM DESKTOP
-(copy of script on Desktop)
+(place a copy of script on Desktop)
 -------------
 <<< bash
     cd ~/spyder-6/envs && 

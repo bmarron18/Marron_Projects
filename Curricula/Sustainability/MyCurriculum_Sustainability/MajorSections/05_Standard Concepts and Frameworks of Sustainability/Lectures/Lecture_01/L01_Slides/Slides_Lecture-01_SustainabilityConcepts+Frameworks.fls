@@ -1,4 +1,4 @@
-PWD /home/bruce-vdb/Desktop/Marron_Projects/Curricula/Sustainability/MyCurriculum_Sustainability/MajorSections/05_Standard Concepts and Frameworks of Sustainability/LectureSlides/Lecture_01/Slides_L01
+PWD /home/bruce-vdb/Desktop/Marron_Projects/Curricula/Sustainability/MyCurriculum_Sustainability/MajorSections/05_Standard Concepts and Frameworks of Sustainability/Lectures/Lecture_01/L01_Slides
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -622,6 +622,11 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvr8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvr8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvro8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvro8r.tfm
+INPUT ./graphics/TripleBottomLine.jpg
+INPUT ./graphics/TripleBottomLine.jpg
+INPUT ./graphics/TripleBottomLine.jpg
+INPUT ./graphics/TripleBottomLine.jpg
+INPUT ./graphics/TripleBottomLine.jpg
 INPUT ./graphics/CAS1.jpeg
 INPUT ./graphics/CAS1.jpeg
 INPUT ./graphics/CAS1.jpeg
