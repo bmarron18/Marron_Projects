@@ -1,0 +1,436 @@
+
+
+======================================================================
+ Run: 2026-10-16 12:14:45  |  Model: claude-opus-5-5
+======================================================================
+
+**Note:** Your prompt asks me to review `input_f1` (`X_Template_DataQuery_OpenAI-API_v1.0.py`) and `Errors.txt`, but neither was attached. The only attached file is the Anthropic template script itself, so I reorganized and corrected that one. If you meant the OpenAI script, attach it with `Errors.txt` and I'll do the same for it.
+
+## Corrections and revisions
+
+| # | Issue in v3.1 | Fix in v3.2 |
+|---|---|---|
+| 1 | The prompt uses `\` line continuations *inside* the string, which embeds runs of spaces (visible in your message: `and          2)`). The comment says "adjacent string literals," but the code doesn't use them. | The prompt is now built from real adjacent string literals. Typos fixed ("Incorporate", "unneeded"). |
+| 2 | Uploads happen *outside* the `try`. If the 2nd upload fails, the 1st file is never deleted. | Uploads are inside `try`/`finally`, so every file that was uploaded gets cleaned up, including after Ctrl-C. |
+| 3 | `client.files.*` with `file_id` sources. The Files API is a beta feature in the Python SDK. | Uses `client.beta.files.*` and `client.beta.messages.stream(..., betas=[...])`. The header lives in one constant, so it's easy to change. |
+| 4 | Missing input files caused a crash halfway through. | All paths are validated *before* anything is uploaded. |
+| 5 | MIME types were typed by hand and could mismatch. | MIME type is detected from the file extension. `.csv`, `.py`, `.md` and similar are sent as `text/plain`, which is what document blocks accept. |
+| 6 | A missing API key only failed deep inside the SDK. | Checked up front with a clear message. |
+| 7 | An empty partial reply would have triggered an invalid continuation request. | Guarded. Refusals and other stop reasons are reported. |
+| 8 | Not really runnable as a command: hard-coded files, `# %%` cells, the purge code sat in a dead string. | Has a `main()` entry point, `argparse` options (files, prompt, output, model, etc.), `--purge-all` and `--keep-files` flags, and exit codes. |
+| 9 | `Path(os.path.join(...))` and a hard-coded `/home/...` path. | Uses `Path.home() / "Desktop"`. Relative names resolve against `--dir`. |
+
+## New script
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+
+Send one or more local files (PDF, plain text, images) plus a prompt to Claude,
+stream the reply into a text file, then delete the uploaded files.
+
+QUICK START
+-----------
+    pip install anthropic
+    export ANTHROPIC_API_KEY="sk-ant-..."
+    chmod +x A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+
+    # 1) Edit the USER SETTINGS block below, then just run:
+    ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+
+    # 2) ...or override anything from the command line:
+    ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py report.pdf notes.txt \
+        -p "Summarize these documents."
+
+    ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py script.py Errors.txt \
+        --prompt-file my_prompt.txt --overwrite
+
+    # Delete EVERY file stored in your Files-API workspace, then exit
+    ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py --purge-all
+
+    # Full option list
+    ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py --help
+
+SUPPORTED INPUT TYPES (detected from the file extension)
+--------------------------------------------------------
+    .pdf                                   -> document block (application/pdf)
+    .txt .md .py .csv .json .log .yaml ... -> document block (text/plain)
+    .jpg .jpeg .png .gif .webp             -> image block
+
+Created 24 Sept 2026   @author: bruce-vdb, claude-opus-5-5
+v3.2: reorganized into functions + CLI; upload cleanup made failure-safe;
+      prompt whitespace bug fixed; input validation added.
+"""
+
+# =============================================================================
+#  USER SETTINGS  --  edit these; every one can also be overridden on the CLI
+# =============================================================================
+from pathlib import Path
+
+    # Folder where input files live and where the output file is written
+DOC_DIR = Path.home() / "Desktop"
+
+    # Default input files (names relative to DOC_DIR, or absolute paths)
+INPUT_FILES = [
+    "X_Template_DataQuery_OpenAI-API_v1.0.py",
+    "Errors.txt",
+]
+
+    # Default prompt (adjacent string literals -> no stray whitespace)
+PROMPT = (
+    "Review the attached Python script. Do the following: "
+    "1) Reorganize the script for ease of use, and "
+    "2) make the script an executable Python script. "
+    "Incorporate all corrections and revisions into a new script. "
+    "Provide a copy of the entire new script."
+)
+
+    # Output file (written inside DOC_DIR unless an absolute path is given)
+OUTPUT_FILE = "QueryResponse_Anthropic.txt"
+
+    # True  = append each run (a dated separator marks each run)
+    # False = overwrite the file on every run
+APPEND_MODE = True
+
+    # Model and output-size settings
+MODEL = "claude-opus-5-5"     # or another current model id
+MAX_TOKENS = 64000            # lower this if the API rejects it for your model
+MAX_CONTINUATIONS = 3         # extra passes if the reply hits max_tokens
+
+    # Delete uploaded files from the Files-API workspace when finished
+DELETE_UPLOADS = True
+
+
+# =============================================================================
+#  INTERNAL CONSTANTS  --  normally no need to edit below this line
+# =============================================================================
+import argparse
+import os
+import sys
+from datetime import datetime
+
+try:
+    import anthropic
+    from anthropic import Anthropic
+except ImportError:
+    sys.exit("ERROR: the 'anthropic' package is not installed.  Run:  pip install anthropic")
+
+    # Beta flag that enables the Files API (upload once, reference by file_id)
+FILES_API_BETA = "files-api-2025-04-14"
+
+    # Extension -> MIME type sent to the API
+MIME_TYPES = {
+    ".pdf":  "application/pdf",
+    # plain-text family -- all sent as text/plain document blocks
+    ".txt":  "text/plain", ".md":   "text/plain", ".py":   "text/plain",
+    ".csv":  "text/plain", ".tsv":  "text/plain", ".json": "text/plain",
+    ".log":  "text/plain", ".yaml": "text/plain", ".yml":  "text/plain",
+    ".xml":  "text/plain", ".html": "text/plain", ".ini":  "text/plain",
+    ".sh":   "text/plain", ".sql":  "text/plain",
+    # images
+    ".jpg":  "image/jpeg", ".jpeg": "image/jpeg", ".png":  "image/png",
+    ".gif":  "image/gif",  ".webp": "image/webp",
+}
+
+CONTINUE_PROMPT = (
+    "Your previous reply was cut off by the output-token limit. "
+    "Continue exactly where you stopped -- no preamble, no repeated text."
+)
+
+
+# =============================================================================
+#  HELPERS
+# =============================================================================
+def log(msg: str) -> None:
+    """Status messages go to stderr so stdout stays clean."""
+    print(msg, file=sys.stderr, flush=True)
+
+
+def resolve_path(name: str | Path, base_dir: Path) -> Path:
+    """Expand ~ and make relative paths relative to base_dir."""
+    p = Path(name).expanduser()
+    return p if p.is_absolute() else base_dir / p
+
+
+def mime_type_for(path: Path) -> str:
+    """Return the MIME type for a file, or raise ValueError if unsupported."""
+    mime = MIME_TYPES.get(path.suffix.lower())
+    if mime is None:
+        raise ValueError(
+            f"Unsupported file type '{path.suffix}' for {path.name}. "
+            f"Supported: {', '.join(sorted(MIME_TYPES))}"
+        )
+    return mime
+
+
+def validate_inputs(paths: list[Path]) -> list[tuple[Path, str]]:
+    """Check every input exists and is supported BEFORE uploading anything."""
+    problems, checked = [], []
+    for p in paths:
+        if not p.is_file():
+            problems.append(f"  - not found: {p}")
+            continue
+        try:
+            checked.append((p, mime_type_for(p)))
+        except ValueError as e:
+            problems.append(f"  - {e}")
+    if problems:
+        raise SystemExit("ERROR: problem(s) with input files:\n" + "\n".join(problems))
+    return checked
+
+
+# =============================================================================
+#  FILES API
+# =============================================================================
+def upload_files(client: Anthropic,
+                 files: list[tuple[Path, str]],
+                 uploaded: list[tuple[Path, str, str]]) -> None:
+    """
+    Upload each file and append (path, file_id, mime) to `uploaded`.
+    `uploaded` is filled in place so the caller can clean up partial uploads
+    if a later upload fails.
+    """
+    for path, mime in files:
+        with open(path, "rb") as f:
+            # The multipart encoder needs a str filename, not a Path.
+            result = client.beta.files.upload(file=(path.name, f, mime))
+        uploaded.append((path, result.id, mime))
+        log(f"Uploaded {path.name} -> {result.id}")
+
+
+def delete_files(client: Anthropic, uploaded: list[tuple[Path, str, str]]) -> None:
+    """Delete only the files uploaded during this run."""
+    for path, file_id, _ in uploaded:
+        try:
+            client.beta.files.delete(file_id)
+            log(f"Deleted {path.name} ({file_id})")
+        except Exception as e:  # keep going; report every failure
+            log(f"Could not delete {path.name} ({file_id}): {e}")
+
+
+def purge_workspace(client: Anthropic) -> int:
+    """Delete EVERY file in the Files-API workspace."""
+    count = 0
+    for f in client.beta.files.list():
+        try:
+            client.beta.files.delete(f.id)
+            log(f"Deleted {f.filename} ({f.id})")
+            count += 1
+        except Exception as e:
+            log(f"Could not delete {f.filename} ({f.id}): {e}")
+    log(f"Purge complete: {count} file(s) deleted.")
+    return 0
+
+
+# =============================================================================
+#  MESSAGE BUILDING + STREAMING
+# =============================================================================
+def build_content(uploaded: list[tuple[Path, str, str]], prompt: str) -> list[dict]:
+    """File blocks first, then the text prompt."""
+    blocks = []
+    for path, file_id, mime in uploaded:
+        if mime.startswith("image/"):
+            blocks.append({
+                "type": "image",
+                "source": {"type": "file", "file_id": file_id},
+            })
+        else:
+            blocks.append({
+                "type": "document",
+                "source": {"type": "file", "file_id": file_id},
+                "title": path.name,          # must be str, not Path
+            })
+    blocks.append({"type": "text", "text": prompt})
+    return blocks
+
+
+def stream_reply(client: Anthropic, messages: list[dict], out,
+                 model: str, max_tokens: int, max_continuations: int) -> bool:
+    """
+    Stream the reply into `out`, flushing every chunk so nothing is lost if
+    the connection drops. If the reply hits max_tokens, ask Claude to continue
+    (up to max_continuations extra passes).
+
+    Returns True if the reply finished normally, False if still truncated.
+    """
+    for attempt in range(max_continuations + 1):
+        collected: list[str] = []
+
+        with client.beta.messages.stream(
+            model=model,
+            max_tokens=max_tokens,
+            messages=messages,
+            betas=[FILES_API_BETA],
+        ) as stream:
+            for text in stream.text_stream:          # text deltas only
+                collected.append(text)
+                out.write(text)
+                out.flush()
+            final = stream.get_final_message()
+
+        log(f"Pass {attempt + 1}: stop_reason = {final.stop_reason}, "
+            f"input tokens = {final.usage.input_tokens}, "
+            f"output tokens = {final.usage.output_tokens}")
+
+        if final.stop_reason != "max_tokens":
+            if final.stop_reason == "refusal":
+                log("NOTE: the model declined to complete this request.")
+            return True
+
+        partial = "".join(collected)
+        if attempt == max_continuations or not partial.strip():
+            warning = ("\n\n[WARNING: output was still cut off at the token "
+                       "limit after all continuation attempts. Raise "
+                       "MAX_TOKENS or MAX_CONTINUATIONS.]\n")
+            out.write(warning)
+            out.flush()
+            log(warning.strip())
+            return False
+
+        # Ask Claude to pick up exactly where it stopped
+        messages.append({"role": "assistant", "content": partial})
+        messages.append({"role": "user", "content": CONTINUE_PROMPT})
+        log("Reply hit max_tokens -- requesting continuation...")
+
+    return False
+
+
+def write_run_header(out, model: str, files: list[tuple[Path, str]], prompt: str) -> None:
+    out.write(
+        f"\n\n{'=' * 70}\n"
+        f" Run: {datetime.now():%Y-%m-%d %H:%M:%S}  |  Model: {model}\n"
+        f" Files: {', '.join(p.name for p, _ in files)}\n"
+        f" Prompt: {prompt[:200]}{'...' if len(prompt) > 200 else ''}\n"
+        f"{'=' * 70}\n\n"
+    )
+    out.flush()
+
+
+# =============================================================================
+#  COMMAND LINE
+# =============================================================================
+def parse_args(argv=None) -> argparse.Namespace:
+    ap = argparse.ArgumentParser(
+        description="Send files + a prompt to Claude and stream the reply to a text file.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    ap.add_argument("files", nargs="*",
+                    help="input files (default: INPUT_FILES in the script)")
+    ap.add_argument("-d", "--dir", type=Path, default=DOC_DIR,
+                    help="base folder for relative input/output paths")
+    grp = ap.add_mutually_exclusive_group()
+    grp.add_argument("-p", "--prompt", help="prompt text (default: PROMPT in the script)")
+    grp.add_argument("--prompt-file", type=Path, help="read the prompt from this file")
+    ap.add_argument("-o", "--output", default=OUTPUT_FILE, help="output text file")
+    ap.add_argument("--overwrite", action="store_true",
+                    help="overwrite the output file instead of appending")
+    ap.add_argument("-m", "--model", default=MODEL, help="model id")
+    ap.add_argument("--max-tokens", type=int, default=MAX_TOKENS,
+                    help="max output tokens per pass")
+    ap.add_argument("--max-continuations", type=int, default=MAX_CONTINUATIONS,
+                    help="extra passes if the reply is cut off")
+    ap.add_argument("--keep-files", action="store_true",
+                    help="do NOT delete uploaded files afterwards")
+    ap.add_argument("--purge-all", action="store_true",
+                    help="delete EVERY file in the Files-API workspace and exit")
+    return ap.parse_args(argv)
+
+
+# =============================================================================
+#  MAIN
+# =============================================================================
+def main(argv=None) -> int:
+    args = parse_args(argv)
+    base_dir = args.dir.expanduser()
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        log("ERROR: environment variable ANTHROPIC_API_KEY is not set.")
+        return 1
+    client = Anthropic(api_key=api_key)
+
+    if args.purge_all:
+        return purge_workspace(client)
+
+    # ---- Resolve prompt ----
+    if args.prompt_file:
+        pf = resolve_path(args.prompt_file, base_dir)
+        if not pf.is_file():
+            log(f"ERROR: prompt file not found: {pf}")
+            return 1
+        prompt = pf.read_text(encoding="utf-8").strip()
+    else:
+        prompt = (args.prompt or PROMPT).strip()
+    if not prompt:
+        log("ERROR: prompt is empty.")
+        return 1
+
+    # ---- Resolve + validate inputs (nothing uploaded yet) ----
+    names = args.files or INPUT_FILES
+    if not names:
+        log("ERROR: no input files given.")
+        return 1
+    files = validate_inputs([resolve_path(n, base_dir) for n in names])
+
+    output_path = resolve_path(args.output, base_dir)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    append = APPEND_MODE and not args.overwrite
+    delete_after = DELETE_UPLOADS and not args.keep_files
+
+    # ---- Upload, query, always clean up ----
+    uploaded: list[tuple[Path, str, str]] = []
+    exit_code = 0
+    try:
+        upload_files(client, files, uploaded)
+        messages = [{"role": "user", "content": build_content(uploaded, prompt)}]
+
+        with open(output_path, "a" if append else "w", encoding="utf-8") as out:
+            write_run_header(out, args.model, files, prompt)
+            complete = stream_reply(client, messages, out, args.model,
+                                    args.max_tokens, args.max_continuations)
+            out.write("\n")
+        log(f"Response written to {output_path}")
+        if not complete:
+            exit_code = 2
+
+    except KeyboardInterrupt:
+        log("\nInterrupted by user.")
+        exit_code = 130
+    except anthropic.APIStatusError as e:
+        log(f"API error {e.status_code}: {e.message}")
+        exit_code = 1
+    except anthropic.APIConnectionError as e:
+        log(f"Connection error: {e}")
+        exit_code = 1
+    finally:
+        if delete_after:
+            delete_files(client, uploaded)
+        elif uploaded:
+            log("Uploaded files kept (--keep-files): "
+                + ", ".join(fid for _, fid, _ in uploaded))
+
+    return exit_code
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+```
+
+## Making it executable
+
+```bash
+chmod +x A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py --help
+```
+
+To run it from any folder, copy it into a directory on your `PATH` (for example `~/.local/bin/`). Inputs and output still default to `~/Desktop` unless you pass `--dir`.
+
+**Exit codes:**
+- `0`: success
+- `1`: error
+- `2`: the reply was still truncated after all continuation passes
+- `130`: interrupted with Ctrl-C
+
+The model ID `claude-opus-5-5` is kept from your template. If the API rejects it, set `MODEL` or pass `-m` with a current model ID.

@@ -1,0 +1,22 @@
+
+
+query_01a
+------------
+"Review the attached Python script (input_f1). Do the following: 1) Reorganize the script for ease of use, and  \
+ 2) make the file an executable Python script. Incoporate all corrections and revisions into a new script. \
+ Provide a copy of the entire new script."
+
+
+query_01b
+------------
+ "Review the attached Python script for queries to Anthropic (input_f1). Do the following: 1) Reorganize the script for ease of use, and  \
+ 2) make the script an executable Python script. Incoporate all corrections and revisions into a new script. \
+ Provide a copy of the entire new script."
+
+
+query_01c
+------------
+Review the attached Python script for queries to Anthropic (input_f1). Do the following: 1) allow upload of all permitted file types, \
+2) provide examples of upload for each file type, and 3) organize the input area to easily change the types and number of uploaded files.\
+Incoporate all corrections and revisions into a new script and provide a copy of the entire new script. Thank you!"
+

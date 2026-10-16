@@ -1,0 +1,103 @@
+<!--
+compile to pdf
+  ==> Open Linux terminal in the directory where the .Rmd file is located
+  ==> Run the one set of following lines at the Linux command line
+  ==> Note that must process .tex file with XeLaTex
+
+#################
+new file name
+#################
+
+RMDFILE=Background_DataClean_DataLoad &&
+Rscript -e "require(knitr); require(markdown); require(formatR); knit('$RMDFILE.Rmd', '$RMDFILE.md')" &&
+pandoc --from=markdown --output=$RMDFILE.pdf $RMDFILE.md --latex-engine=xelatex
+
+OR
+
+RMDFILE=Background_DataClean_DataLoad_20180407  &&
+Rscript -e "require(knitr); require(markdown); require(formatR); knit('$RMDFILE.Rmd', '$RMDFILE.md')" &&
+pandoc --from=markdown --output=$RMDFILE.tex $RMDFILE.md --latex-engine=xelatex --standalone
+-->
+
+<!--
+
+https://opensource.com/article/17/2/command-line-tools-data-analysis-linux
+
+-->
+
+
+<!--
+Origin Date:	07 Apr 2018
+-->
+
+
+---
+title:  |
+        | Data Cleaning and Data Loading into R
+author: |
+        | Bruce D. Marron
+        | Project No. 2018NWDS006
+        | \copyright  NW Data Science, LLC, Portland, Oregon 97214
+        | \date{\today}
+
+
+geometry: scale=0.85
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{verbatim}
+---
+
+## Data Clean I
+Output of datasets from Excel often contain spurious quotes, misplaced commas, non-ASCII characters, $ characters, and % characters. The dataset needs to be cleaned to fit the format of a simple comma-separated file. Simple comma separated files are kept as proprietary datasets. Note that there are Linux/Unix vs. Microsoft issues with regards to end-of-line formats as well as with character set encodings in text files:
+
+* Linux/Unix uses (ASCII octal 012; LF) while Microsoft uses (ASCII octal 012 + octal 015; CRLF)
+* Linux/Unix uses UTF-8 ASCII; Microsoft uses WINDOWS-1252 (a non-ISO extended-ASCII)
+* It is possible to export UTF-8 encoded text file from Excel
+
+See this article https://donatstudios.com/CSV-An-Encoding-Nightmare.
+
+### Set the ASCII character set and the end-of-line format
+\begin{verbatim}
+file ROIs_FOR_BRUCE_07_28_2018.csv
+dos2unix -idu ROIs_FOR_BRUCE_07_28_2018.csv
+
+iconv -f WINDOWS-1252 -t UTF-8 ROIs_FOR_BRUCE_07_28_2018.csv -o ROI.csv \
+&& dos2unix ROI.csv
+
+file ROI.csv
+unix2dos -idu ROI.csv
+\end{verbatim}
+
+
+### Set field separators correctly and character clean a .csv file
+The code below ensures that a copy of the original file (<name-of-file>.csv) is kept and new, character cleaned (CC) version is created (CC_<name-of-file>.csv)
+
+1. Use 'awk' to
+	+ remove commas inside quotes (in titles or in numbers) then remove the quotes
+	+ remove $ and % characters
+2. Use 'tr' to
+	+ remove all non-printable ASCII characters (garbage characters== !(octal 11-15 || 40-176)).
+	+ NB. 'tr' uses backslash to denote an octal number.
+
+\begin{verbatim}
+awk -F'"' -v OFS='' '{ for (i=2; i<=NF; i+=2) gsub(",", "", $i) }1' ROI.csv \
+> CC_ROI.csv
+
+awk 'BEGIN{FS=","} ; {gsub(/\$|%/,"",$0)}1' CC_ROI.csv > tmp.csv \
+&& mv tmp.csv CC_ROI.csv
+
+tr -cd '\11-\15\40-\176' < CC_ROI.csv > temp.csv \
+&& mv temp.csv CC_ROI.csv
+\end{verbatim}
+
+
+## Load data into R
+Assume data have been put in a file, "data".
+```{r codeset1, fig.height = 3, fig.width = 3, eval=FALSE, tidy=TRUE}
+data_path = file.path(getwd(), "data")
+datafile = file.path(data_path, "2018RG005_data.csv")
+data <- readr::read_csv(datafile)
+```
+
+***
+\copyright  NW Data Science, LLC, Portland, Oregon 97214

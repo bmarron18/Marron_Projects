@@ -10,8 +10,7 @@
 Open Zotero
 #############
 
-$ cd /opt/Zotero
-$ ./zotero
+$ cd /opt/Zotero && ./zotero
 
 
 ############

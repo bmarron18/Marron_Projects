@@ -1,7 +1,7 @@
 
 ############
 Anthropic
-Claude
+Claude API
 #############
 
 
@@ -32,15 +32,17 @@ $3.58 USD to build
     A_Speech-to-text_Gemini-API_Live_v2.0.py
     A_Speech-to-text_OpenAI-AP_VAD_v2.0.py
 
-(includes all queries to claude-chat and claude-sdk)
+(includes all queries to claude-sdk)
 
 
 
 Your Anthropic Console (API) account and your Claude.ai chat account are separate systems,
+
     Claude Chat Account (claude.ai): 
         *Used for the consumer/web chat interface, mobile apps, and team/enterprise workspaces.Anthropic
         *5 hr limit then refresh
         *can upgrade
+
     Console Account (console.anthropic.com): 
         *Used by developers to generate API keys, manage prepaid billing credits, and build custom applications.
         *Prepaid credits
@@ -74,7 +76,7 @@ https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python
 
 
 ###########
-Using Claude
+Using Claude API
 #############
 if your goal is to prevent Claude Code's agentic loop from executing terminal commands, creating local files, or installing dependencies, you can explicitly force it to operate in a "text-only/print" mode.Depending on whether you want to use the Claude Code CLI to output text or prompt the underlying Claude Agent SDK / Messages API programmatically, you can structure your setup using the workflows below.
 

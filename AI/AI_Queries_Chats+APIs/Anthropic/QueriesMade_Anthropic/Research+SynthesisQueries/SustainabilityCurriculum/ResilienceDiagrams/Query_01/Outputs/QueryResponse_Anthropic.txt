@@ -1,0 +1,347 @@
+/home/bruce-vdb/Desktop/Marron_Projects/AI/AI_Queries_Chats+APIs/Anthropic/Scripts_Anthropic/A_Scripts/Templates/Template_Py_Upload+AnalyzeFiles/NewestScript/A_Template_AnalyzeMultipleFiles_claude-sdk_v3.3.py
+
+======================================================================
+ Run: 2026-10-16 13:31:27  |  Model: claude-opus-5-5
+ Files: Woods_Resilience.pdf [document]
+======================================================================
+
+# Four Resilience Diagrams (JPEG) from Woods (2015)
+
+I can't run code or attach files in this conversation, so I've written a complete Python script that generates the four diagrams as `.jpeg` files. Each diagram is based on how Woods describes and critiques that concept.
+
+## What each diagram shows
+
+| File | Concept | Visual metaphor | Key ideas from the paper |
+|---|---|---|---|
+| `resilience_1_rebound.jpeg` | **Rebound**: return to equilibrium after trauma | Performance-vs-time curve with a drop and recovery | The assumed return to the old equilibrium versus the observed transformation into "something new." The shaded *pre-event* zone shows that capacities present before the surprise determine recovery (Finkel; Lagadec's "brutal and abrupt audit"). Includes Woods' critique. |
+| `resilience_2_robustness.jpeg` | **Robustness**: absorbing perturbations | Disturbance-space envelopes | A well-modeled disturbance set, expanded by robust control. Expanding it in one direction creates new fragility elsewhere ("robust yet fragile"). Surprises outside the set lead to brittle collapse. Includes Alderson and Doyle's "X has property Y robust in sense Z to perturbation W." |
+| `resilience_3_graceful_extensibility.jpeg` | **Graceful extensibility**: the opposite of brittleness | Stress-strain style plot (Woods and Wreathall) | The base competence envelope and its uncertain, moving boundary. A brittle collapse is contrasted with graceful stretching. Annotations cover anticipation, saturation and decompensation, and an inset shows *critical slowing down*. |
+| `resilience_4_sustained_adaptability.jpeg` | **Sustained adaptability**: network architectures | Layered polycentric network plus a trade space | A layered network nested in a larger network. The trade-space panel shows a hard-limit frontier that shifts as conditions change. A sustained-adaptability trajectory follows the frontier, while an over-optimized trajectory falls into a trap. Includes Woods' three questions and the life-cycle challenges. |
+
+## Python script
+
+```python
+"""
+Generates four JPEG diagrams for the four concepts of resilience in:
+Woods, D.D. (2015) "Four concepts for resilience and the implications for the
+future of resilience engineering", Reliability Engineering & System Safety 141, 5-9.
+Requires: numpy, matplotlib, pillow
+"""
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse, Polygon
+
+SAVE = dict(dpi=200, format="jpeg", pil_kwargs={"quality": 95},
+            bbox_inches="tight", facecolor="white")
+BOX = dict(boxstyle="round,pad=0.5", fc="white", ec="0.4", alpha=0.95)
+CITE = "Source: Woods, D.D. (2015). Reliability Engineering & System Safety 141, 5-9."
+
+# =============================================================================
+# 1. RESILIENCE AS REBOUND
+# =============================================================================
+def fig_rebound():
+    fig, ax = plt.subplots(figsize=(14, 8))
+    t = np.linspace(0, 12, 3000)
+    t0, t1 = 3.0, 3.6
+
+    def traj(final, tau):
+        y = np.ones_like(t)
+        m = (t >= t0) & (t < t1)
+        y[m] = 1 - 0.65 * (t[m] - t0) / (t1 - t0)
+        m2 = t >= t1
+        y[m2] = final - (final - 0.35) * np.exp(-(t[m2] - t1) / tau)
+        return y
+
+    assumed = traj(1.00, 1.3)
+    observed = traj(0.86, 1.7) + np.where(t > t1, 0.03 * np.sin(2.2 * (t - t1)) * np.exp(-(t - t1) / 3), 0)
+
+    ax.axvspan(0, t0, color="#d9ead3", alpha=0.8)
+    ax.text(1.5, 0.62, "BEFORE the surprise\n\nCapacities & resources\nthat can be deployed /\nmobilized (Finkel)\n\n"
+            "→ these actually\ndetermine recovery",
+            ha="center", va="center", fontsize=10.5, color="#274e13", fontweight="bold")
+
+    ax.axhline(1.0, color="0.5", ls=":", lw=1.2)
+    ax.text(11.9, 1.015, "previous 'normal' equilibrium", ha="right", va="bottom", fontsize=9, color="0.35")
+
+    ax.fill_between(t, assumed, 1, where=t >= t0, color="#f4cccc", alpha=0.6)
+    ax.text(4.25, 0.86, "loss of\nfunction", fontsize=9, color="#990000", ha="center")
+
+    ax.plot(t, assumed, "--", lw=2.5, color="#1f4e79",
+            label="Assumed in Resilience [1]: bounce back to previous state")
+    ax.plot(t, observed, "-", lw=3, color="#b45f06",
+            label="Observed: adapting transforms the system → it becomes something new")
+
+    ax.axvline(t0, color="#cc0000", ls="--", lw=1.5)
+    ax.annotate("SURPRISE / traumatic event\n(falls outside the scope the\nsystem's model can handle)",
+                xy=(t0, 1.0), xytext=(3.25, 1.18), fontsize=10, color="#cc0000",
+                arrowprops=dict(arrowstyle="->", color="#cc0000"))
+
+    ax.annotate("", xy=(8.0, 0.22), xytext=(t1, 0.22),
+                arrowprops=dict(arrowstyle="<->", lw=1.8, color="0.25"))
+    ax.text((t1 + 8) / 2, 0.245, "Rebound / restoration phase — the focus of Resilience [1]",
+            ha="center", fontsize=10, color="0.2")
+
+    ax.text(11.95, 1.43,
+            "\"The event can in some ways be considered a brutal and abrupt audit:\n"
+            "at a moment's notice, everything that was left unprepared becomes\n"
+            "a complex problem, and every weakness comes rushing to the forefront.\"\n— Lagadec (1993)",
+            ha="right", va="top", fontsize=9, style="italic", bbox=BOX)
+
+    ax.text(8.45, 0.03,
+            "Woods' assessment — low yield:\n"
+            "• Restates the question 'why do some recover better?'\n"
+            "• Misdirects inquiry to the reactive phase\n"
+            "• Ignores what is needed in advance\n"
+            "• 'Return to equilibrium' has not held up:\n"
+            "  continuity = lineage of adaptive cycles",
+            fontsize=9, va="bottom", bbox=dict(BOX, fc="#fff2cc"))
+
+    ax.set_xlim(0, 12); ax.set_ylim(0, 1.45)
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.set_xlabel("Time", fontsize=12); ax.set_ylabel("System function / performance", fontsize=12)
+    ax.legend(loc="lower left", fontsize=9.5, framealpha=0.95)
+    ax.set_title("Resilience [1] — RESILIENCE AS REBOUND\nfrom trauma and return to equilibrium",
+                 fontsize=15, fontweight="bold")
+    fig.text(0.01, -0.01, CITE, fontsize=8, color="0.4")
+    fig.savefig("resilience_1_rebound.jpeg", **SAVE); plt.close(fig)
+
+# =============================================================================
+# 2. RESILIENCE AS ROBUSTNESS
+# =============================================================================
+def fig_robustness():
+    fig = plt.figure(figsize=(16, 8.5))
+    ax = fig.add_axes([0.04, 0.08, 0.6, 0.8])
+    X, Y = np.meshgrid(np.linspace(-5.5, 5.5, 800), np.linspace(-4.2, 4.2, 800))
+    in1 = (X / 2.0) ** 2 + (Y / 1.5) ** 2 <= 1          # original envelope
+    in2 = (X / 3.6) ** 2 + (Y / 0.95) ** 2 <= 1         # expanded (re-optimized) envelope
+
+    ax.contourf(X, Y, (in2 & ~in1).astype(float), levels=[0.5, 1.5], colors=["#c9e7c9"])
+    cs = ax.contourf(X, Y, (in1 & ~in2).astype(float), levels=[0.5, 1.5], colors=["#fde0c5"], hatches=["///"])
+    ax.add_patch(Ellipse((0, 0), 4.0, 3.0, fill=False, lw=2.8, ec="#1f4e79"))
+    ax.add_patch(Ellipse((0, 0), 7.2, 1.9, fill=False, lw=2.8, ec="#2e7d32", ls="--"))
+
+    rng = np.random.default_rng(3)
+    pts = rng.uniform([-1.6, -0.7], [1.6, 0.7], (25, 2))
+    ax.scatter(pts[:, 0], pts[:, 1], s=28, color="#1f4e79", zorder=5, label="Well-modeled disturbances (handled)")
+    ax.scatter([2.4, -2.6, 3.1], [0.3, -0.4, -0.2], s=45, color="#2e7d32", marker="s", zorder=5,
+               label="Newly handled after robustness is increased")
+    ax.scatter([0.2, -0.5, 0.9], [1.25, -1.25, 1.15], s=70, color="#e69138", marker="^", zorder=5,
+               label="Newly vulnerable ('robust yet fragile')")
+    sx, sy = [4.5, -4.3, 0.6, -3.6, 4.0], [2.6, -3.0, 3.6, 2.4, -2.7]
+    ax.scatter(sx, sy, s=110, color="#cc0000", marker="X", zorder=5,
+               label="Poorly modeled events / surprises → brittle failure")
+
+    ax.annotate("Original envelope:\nset of disturbances the system\ncan respond to effectively",
+                xy=(-1.2, 1.2), xytext=(-5.3, 3.0), fontsize=10, color="#1f4e79",
+                arrowprops=dict(arrowstyle="->", color="#1f4e79"))
+    ax.annotate("Robust control expands the set\n(optimizing worst-case performance\nfor MODELED disturbances)",
+                xy=(3.4, 0.4), xytext=(2.0, 2.55), fontsize=10, color="#2e7d32",
+                arrowprops=dict(arrowstyle="->", color="#2e7d32"))
+    ax.annotate("...but expansion increases\nvulnerability to OTHER events\n(the envelope does not simply grow)",
+                xy=(0.4, -1.2), xytext=(-1.5, -3.6), fontsize=10, color="#b45f06",
+                arrowprops=dict(arrowstyle="->", color="#b45f06"))
+    ax.annotate("", xy=(3.5, 0), xytext=(2.0, 0), arrowprops=dict(arrowstyle="-|>", lw=2, color="#2e7d32"))
+    ax.annotate("", xy=(-3.5, 0), xytext=(-2.0, 0), arrowprops=dict(arrowstyle="-|>", lw=2, color="#2e7d32"))
+
+    ax.set_xlim(-5.5, 5.5); ax.set_ylim(-4.2, 4.2)
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.set_xlabel("Disturbance dimension A (e.g., magnitude / type)", fontsize=11)
+    ax.set_ylabel("Disturbance dimension B", fontsize=11)
+    ax.legend(loc="upper right", fontsize=8.5, framealpha=0.95)
+    ax.set_title("Resilience [2] — RESILIENCE AS ROBUSTNESS\n(increased ability to absorb perturbations)",
+                 fontsize=15, fontweight="bold", loc="left")
+
+    fig.text(0.665, 0.86,
+             "Robustness always has the form:\n\n"
+             "  System X has property Y\n  that is robust in sense Z\n  to perturbation W\n"
+             "                  — Alderson & Doyle (2010)",
+             fontsize=11, va="top", family="monospace", bbox=dict(BOX, fc="#deebf7"))
+    fig.text(0.665, 0.55,
+             "Key points (Woods 2015):\n\n"
+             "• Robust control works — and ONLY works —\n  when disturbances are well-modeled.\n\n"
+             "• Fundamental trade-off: becoming more\n  optimal for some disturbances increases\n"
+             "  brittleness to those outside the set.\n\n"
+             "• Events outside the set → sudden failure\n  (brittle at the boundaries → Resilience [3]).\n\n"
+             "• Confounding robustness with resilience\n  begs the question of how systems adapt\n"
+             "  to poorly modeled, changing events.\n\n"
+             "• Assessment: low yield; historical value.",
+             fontsize=10, va="top", bbox=dict(BOX, fc="#fff2cc"))
+    fig.text(0.01, 0.0, CITE, fontsize=8, color="0.4")
+    fig.savefig("resilience_2_robustness.jpeg", **SAVE); plt.close(fig)
+
+# =============================================================================
+# 3. RESILIENCE AS GRACEFUL EXTENSIBILITY
+# =============================================================================
+def fig_graceful():
+    fig, ax = plt.subplots(figsize=(15, 8.5))
+    b = 6.0
+    x = np.linspace(0, 10, 2000)
+    base = 0.15 * x
+
+    xb = x[x <= 6.6]
+    brittle = np.where(xb <= b, 0.15 * xb, 0.9 - 0.9 * ((xb - b) / 0.6) ** 1.6)
+    graceful = np.where(x <= b, base, 0.9 + 0.3 * (x - b) / (1 + (x - b)) - 0.08 * np.clip(x - 8.5, 0, None) ** 2)
+
+    ax.axvspan(0, 5.4, color="#deebf7", alpha=0.8)
+    ax.axvspan(5.4, 6.6, facecolor="none", hatch="..", edgecolor="0.6")
+    ax.axvspan(6.6, 10, color="#fff2cc", alpha=0.6)
+    ax.text(2.7, 1.27, "BASE COMPETENCE ENVELOPE\n(base adaptive capacity;\nwell within boundaries)",
+            ha="center", va="top", fontsize=10.5, fontweight="bold", color="#1f4e79")
+    ax.text(6.0, 1.27, "Boundary:\nuncertain &\nmoving", ha="center", va="top", fontsize=9.5, color="0.25")
+    ax.text(8.3, 1.27, "BEYOND THE BOUNDARY\n(surprise: events outside the\nscope of planned handling)",
+            ha="center", va="top", fontsize=10.5, fontweight="bold", color="#7f6000")
+
+    ax.plot(x, graceful, lw=3.2, color="#2e7d32", label="High graceful extensibility (resilient)")
+    ax.plot(xb, brittle, lw=3.2, color="#cc0000", label="Low graceful extensibility (brittle)")
+    ax.plot(x[x <= b], base[x <= b], lw=3.2, color="#1f4e79")
+    ax.scatter([6.6], [0], marker="X", s=220, color="#cc0000", zorder=6)
+
+    ax.annotate("BRITTLENESS: rapid performance\ncollapse as demands near and\nexceed the boundary",
+                xy=(6.4, 0.35), xytext=(3.2, 0.12), fontsize=10, color="#cc0000",
+                arrowprops=dict(arrowstyle="->", color="#cc0000"))
+    ax.annotate("GRACEFUL EXTENSIBILITY: stretch,\nbring extra adaptive capacity to bear\n"
+                "• anticipate bottlenecks ahead\n• learn the changing shape of disturbances\n• readiness-to-respond",
+                xy=(7.2, 1.07), xytext=(3.0, 0.88), fontsize=9.5, color="#2e7d32",
+                arrowprops=dict(arrowstyle="->", color="#2e7d32"), bbox=dict(BOX, ec="#2e7d32"))
+    ax.annotate("Risk of SATURATION /\nDECOMPENSATION: capacity to\nmobilize responses exhausted\nas disturbances grow & cascade",
+                xy=(9.4, 1.03), xytext=(6.8, 0.63), fontsize=9.5, color="#7f6000",
+                arrowprops=dict(arrowstyle="->", color="#7f6000"))
+
+    ins = ax.inset_axes([0.69, 0.05, 0.30, 0.27])
+    tt = np.linspace(0, 10, 2000); y = np.ones_like(tt)
+    for ts, tau, lvl in [(0.5, 0.15, 1.0), (3.0, 0.35, 0.95), (5.5, 0.7, 0.88), (8.0, 1.4, 0.8)]:
+        m = tt >= ts
+        y[m] = lvl - (lvl - 0.45) * np.exp(-(tt[m] - ts) / tau)
+    ins.plot(tt, y, color="#7f6000", lw=1.8)
+    for ts in [0.5, 3.0, 5.5, 8.0]:
+        ins.axvline(ts, color="#cc0000", lw=0.8, ls=":")
+    ins.set_xticks([]); ins.set_yticks([]); ins.set_ylim(0.35, 1.1)
+    ins.set_title("Early warning — critical slowing down:\nrecovery slower, level lower → nearing saturation",
+                  fontsize=8.5)
+    ins.set_xlabel("time (repeated challenges)", fontsize=8)
+
+    ax.set_xlim(0, 10); ax.set_ylim(0, 1.3)
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.set_xlabel("Demands / disturbances / load  →  (increasing, including surprise events)", fontsize=12)
+    ax.set_ylabel("Adaptive response / performance", fontsize=12)
+    ax.legend(loc="upper left", bbox_to_anchor=(0.0, 0.83), fontsize=9.5, framealpha=0.95)
+    ax.set_title("Resilience [3] — RESILIENCE AS GRACEFUL EXTENSIBILITY (the opposite of brittleness)\n"
+                 "\"How do systems stretch to handle surprises?\"", fontsize=15, fontweight="bold")
+    fig.text(0.01, -0.01, CITE + "  Plot style after the stress-strain model (Woods & Wreathall, 2008).",
+             fontsize=8, color="0.4")
+    fig.savefig("resilience_3_graceful_extensibility.jpeg", **SAVE); plt.close(fig)
+
+# =============================================================================
+# 4. RESILIENCE AS SUSTAINED ADAPTABILITY
+# =============================================================================
+def fig_sustained():
+    fig, (axL, axR) = plt.subplots(1, 2, figsize=(18, 10), gridspec_kw=dict(width_ratios=[1, 1.15]))
+    fig.subplots_adjust(bottom=0.30, top=0.86, wspace=0.12)
+
+    # ---- Left: layered network ----
+    rng = np.random.default_rng(7)
+    skew = 0.8
+    layers = [(0.0, 9, "#f4cccc", "Operations / front line\n(adaptive units at the sharp end)"),
+              (2.2, 6, "#fff2cc", "Units / organizations"),
+              (4.4, 3, "#d9ead3", "Polycentric governance\n(multiple coordinating centres)")]
+    nodes = []
+    for yl, n, col, lab in layers:
+        axL.add_patch(Polygon([[0, yl], [6, yl], [6 + skew, yl + 1.2], [skew, yl + 1.2]],
+                              closed=True, fc=col, ec="0.4", alpha=0.85))
+        axL.text(7.0, yl + 0.6, lab, va="center", fontsize=9.5)
+        xs = np.linspace(0.6, 5.4, n) + rng.uniform(-0.15, 0.15, n)
+        ys = yl + rng.uniform(0.3, 0.9, n)
+        xs = xs + skew * (ys - yl) / 1.2
+        nodes.append(np.c_[xs, ys])
+    for P in nodes:                                    # within-layer links
+        for i in range(len(P) - 1):
+            axL.plot(P[i:i + 2, 0], P[i:i + 2, 1], color="0.45", lw=1)
+    for lo, hi in [(0, 1), (1, 2)]:                    # between-layer links
+        for p in nodes[lo]:
+            for j in rng.choice(len(nodes[hi]), size=min(2, len(nodes[hi])), replace=False):
+                axL.plot([p[0], nodes[hi][j][0]], [p[1], nodes[hi][j][1]], color="#6fa8dc", lw=0.8, alpha=0.7)
+    for P, c in zip(nodes, ["#cc0000", "#b45f06", "#2e7d32"]):
+        axL.scatter(P[:, 0], P[:, 1], s=90, color=c, ec="k", zorder=5)
+    axL.annotate("", xy=(-0.5, 0.6), xytext=(-0.5, 5.0), arrowprops=dict(arrowstyle="-|>", lw=2, color="#1f4e79"))
+    axL.text(-0.75, 2.8, "coordination,\ngoals, resources", rotation=90, ha="center", va="center", fontsize=9, color="#1f4e79")
+    axL.annotate("", xy=(-1.5, 5.0), xytext=(-1.5, 0.6), arrowprops=dict(arrowstyle="-|>", lw=2, color="#b45f06"))
+    axL.text(-1.75, 2.8, "signals of surprise,\nadaptive shortfalls", rotation=90, ha="center", va="center", fontsize=9, color="#b45f06")
+    axL.add_patch(plt.Rectangle((-2.3, -0.5), 12.4, 6.6, fill=False, ls="--", ec="0.5", lw=1.5))
+    axL.text(-2.2, 5.95, "...nested within LARGER layered networks (interdependencies)", fontsize=9, color="0.35", va="top")
+    axL.set_xlim(-2.5, 10.3); axL.set_ylim(-0.7, 6.4); axL.axis("off")
+    axL.set_title("A. Layered network architecture", fontsize=13, fontweight="bold")
+
+    # ---- Right: trade space over adaptive cycles ----
+    th = np.linspace(0, np.pi / 2, 300)
+    r1, r2 = 0.95, 0.80
+    axR.fill_between(r1 * np.cos(th), 0, r1 * np.sin(th), color="#deebf7", alpha=0.7)
+    axR.plot(r1 * np.cos(th), r1 * np.sin(th), lw=3, color="#1f4e79", label="Hard limit line (fundamental trade-off)")
+    axR.plot(r2 * np.cos(th), r2 * np.sin(th), lw=2.5, ls="--", color="#674ea7",
+             label="Hard limit after conditions change")
+    axR.text(0.05, 0.05, "Feasible\ntrade space", fontsize=10, color="#1f4e79")
+
+    good = np.array([[0.35, 0.45], [0.60, 0.70], [0.50, 0.58], [0.33, 0.70]])
+    bad = np.array([[0.35, 0.45], [0.70, 0.40], [0.88, 0.15]])
+    for P, c in [(good, "#2e7d32"), (bad, "#cc0000")]:
+        for i in range(len(P) - 1):
+            axR.annotate("", xy=P[i + 1], xytext=P[i],
+                         arrowprops=dict(arrowstyle="-|>", lw=2.4, color=c, connectionstyle="arc3,rad=0.15"))
+    axR.scatter(*good.T, s=90, color="#2e7d32", zorder=5, label="Sustained adaptability: re-positions along the limit")
+    axR.scatter(*bad[:-1].T, s=90, color="#cc0000", zorder=5, label="Adaptive shortfall: drifts into a trap")
+    axR.scatter(*bad[-1], s=260, marker="X", color="#cc0000", zorder=6)
+    for (px, py), lab in zip(good, ["cycle 1", "cycle 2", "cycle 3\n(after change)", "cycle 4"]):
+        axR.text(px - 0.02, py + 0.03, lab, fontsize=9, color="#2e7d32", ha="right")
+    axR.text(0.86, 0.21, "over-optimized → brittle;\nunravels when conditions\nchange despite past success",
+             fontsize=9, color="#cc0000", ha="center")
+
+    axR.set_xlim(0, 1.05); axR.set_ylim(0, 1.05)
+    axR.set_xticks([]); axR.set_yticks([])
+    axR.set_xlabel("Efficiency / optimality for current conditions  →", fontsize=11)
+    axR.set_ylabel("Thoroughness / capacity to handle surprise  →", fontsize=11)
+    axR.legend(loc="upper right", fontsize=8.8, framealpha=0.95)
+    axR.set_title("B. Trade space over multiple adaptive cycles", fontsize=13, fontweight="bold")
+
+    fig.suptitle("Resilience [4] — RESILIENCE AS SUSTAINED ADAPTABILITY\n"
+                 "Network architectures (governance policies) that sustain the ability to adapt to future surprises",
+                 fontsize=16, fontweight="bold")
+    fig.text(0.04, 0.245,
+             "Three questions of Resilience [4]:\n"
+             "1. What governance / architectural characteristics distinguish networks that sustain\n"
+             "   adaptability from those that fail to?\n"
+             "2. What design principles & techniques allow engineering such a network?\n"
+             "3. How can one confidently assess whether a system can sustain adaptability over time?\n\n"
+             "Exemplars: glycolysis (Chandra et al.), selection for evolvability (Lehman & Stanley),\n"
+             "military adaptation to surprise (Finkel), Ostrom's polycentric commons (Bali water temples).",
+             fontsize=10, va="top", bbox=dict(BOX, fc="#d9ead3"))
+    fig.text(0.53, 0.245,
+             "Predictable dynamics of challenge over the life cycle(s):\n"
+             "• Assumptions and boundary conditions will be challenged — surprises re-cur\n"
+             "• Conditions and contexts of use will change — so boundaries will change\n"
+             "• Adaptive shortfalls will occur; people will step in to fill the breach\n"
+             "• The need for, and sources of, graceful extensibility will change — more than once\n"
+             "• The system must readjust itself and its relationships in the layered network\n\n"
+             "Resilience [4] = managing adaptive capacities relative to multiple fundamental trade-offs.",
+             fontsize=10, va="top", bbox=dict(BOX, fc="#fff2cc"))
+    fig.text(0.01, 0.01, CITE, fontsize=8, color="0.4")
+    fig.savefig("resilience_4_sustained_adaptability.jpeg", **SAVE); plt.close(fig)
+
+if __name__ == "__main__":
+    fig_rebound(); fig_robustness(); fig_graceful(); fig_sustained()
+    print("Saved: resilience_1_rebound.jpeg, resilience_2_robustness.jpeg, "
+          "resilience_3_graceful_extensibility.jpeg, resilience_4_sustained_adaptability.jpeg")
+```
+
+## How to use
+
+1. Install the dependencies: `pip install numpy matplotlib pillow`
+2. Save the script as `woods_resilience_diagrams.py` and run `python woods_resilience_diagrams.py`.
+3. Four high-resolution JPEGs (200 dpi, quality 95) will appear in the working directory.
+
+## Interpretive notes
+
+- Woods doesn't give quantitative curves, so all axes are **conceptual (unitless)**.
+- The diagrams for concepts 1 and 2 include his critique (he judges their yield as "low"). The diagrams for concepts 3 and 4 show his view of where productive inquiry lies.
+- Diagram 3 draws on the stress-strain model the paper cites (Woods & Wreathall, 2008).
+- Diagram 4's efficiency-versus-thoroughness axes stand for the "multi-dimensional trade space" (e.g., Hollnagel's ETTO trade-off). Real systems face several trade-offs at once.

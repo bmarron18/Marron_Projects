@@ -1,0 +1,396 @@
+
+
+======================================================================
+ Run: 2026-10-16 12:22:18  |  Model: claude-opus-5-5
+======================================================================
+
+# Reorganized Script: `A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py`
+
+## Summary of corrections and revisions
+
+**Corrections (bugs and likely failures)**
+
+| # | Issue in v3.1 | Fix in v3.2 |
+|---|---|---|
+| 1 | The prompt used backslash line continuation *inside* the string. This embedded runs of spaces in the text Claude received (e.g. `"and          2)"`). The comment said "adjacent string literals", but the code didn't use them. | The prompt is now built from real adjacent string literals. |
+| 2 | Uploads happened *before* the `try:` block. If the 2nd upload failed, the 1st file was never deleted from your workspace. | Uploads now happen inside `try`, so `finally` always cleans up whatever was uploaded. |
+| 3 | The Files API is a beta feature. It is reached via `client.beta.files` and needs the `files-api-2025-04-14` beta flag on the Messages request. `client.files` / `client.messages.stream` may not work, depending on SDK version. | The script uses `client.beta.files` and `client.beta.messages.stream(..., betas=[...])`. These also work with newer SDKs. |
+| 4 | `text/csv` was listed as an accepted MIME type. Document blocks accept only `application/pdf` and `text/plain`. | MIME types are auto-detected from the file extension. `.csv`, `.md`, `.py`, etc. are sent as `text/plain`. |
+| 5 | The prompt said "(input_f1)". Claude never sees your variable names, only the document title (the filename). | The prompt refers to "the attached script". |
+| 6 | There was no check for a missing API key or missing input files. The script failed deep inside the SDK with confusing errors. | Both are checked up front, with clear messages. |
+| 7 | An empty assistant turn during continuation would cause an API error. | This case is now guarded against. |
+
+**Reorganization and executability**
+
+- All settings you normally edit are in **one block at the top**. Input files are now a simple list instead of numbered `INPUT_FILE_01` / `input_f1` pairs.
+- The code is split into small functions with a `main()` and an `if __name__ == "__main__":` guard.
+- **Command-line options** override the top-of-file defaults, so you can run it without editing it. The old commented-out "delete every file" snippet is now the `--purge-all` flag.
+- Optional system prompt, a prompt-from-file option, and proper exit codes.
+
+---
+
+## The complete new script
+
+```python
+#!/usr/bin/env python3
+"""
+A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+
+Send one or more files (PDF, plain text, images) plus a prompt to Claude,
+stream the reply to a text file, and clean up the uploaded files afterwards.
+
+Created : 24 Sept 2026
+Revised : v3.2 -- reorganized, executable, bug fixes
+Authors : bruce-vdb, claude-opus-5-5
+
+---------------------------------------------------------------------------
+QUICK START
+---------------------------------------------------------------------------
+  1. Install the SDK (once):         pip install --upgrade anthropic
+  2. Set your API key (once):        export ANTHROPIC_API_KEY="sk-ant-..."
+  3. Make this file executable:      chmod +x A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+  4. Edit SECTION 1 below (files, prompt), then run:
+         ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+
+  Or override the settings from the command line, e.g.:
+         ./A_Template_...py report.pdf notes.txt -p "Summarize these files"
+         ./A_Template_...py script.py --prompt-file my_prompt.txt --overwrite
+         ./A_Template_...py --purge-all          # delete ALL workspace files
+         ./A_Template_...py --help
+---------------------------------------------------------------------------
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import sys
+from datetime import datetime
+from pathlib import Path
+
+try:
+    import anthropic
+    from anthropic import Anthropic
+except ImportError:
+    sys.exit("The 'anthropic' package is not installed.  Run:  pip install --upgrade anthropic")
+
+
+# =========================================================================
+#  SECTION 1 -- USER SETTINGS  (edit these)
+# =========================================================================
+
+# ---- Folder that holds the input files and receives the output file ----
+DOC_DIR = Path.home() / "Desktop"          # e.g. /home/bruce-vdb/Desktop
+
+# ---- Input files (names relative to DOC_DIR, or absolute paths) --------
+#   Supported: .pdf | .txt .md .csv .py .json .log ... (sent as plain text)
+#              .jpg .jpeg .png .gif .webp (images)
+INPUT_FILES = [
+    "X_Template_DataQuery_OpenAI-API_v1.0.py",
+    "Errors.txt",
+]
+
+# ---- The prompt (adjacent string literals = no stray spaces) ----------
+PROMPT = (
+    "Review the attached Python script. Do the following: "
+    "1) Reorganize the script for ease of use, and "
+    "2) make the script an executable Python script. "
+    "Incorporate all corrections and revisions into a new script. "
+    "Provide a copy of the entire new script."
+)
+
+# ---- Optional system prompt (None = no system prompt) -----------------
+SYSTEM_PROMPT = None
+
+# ---- Output file -------------------------------------------------------
+OUTPUT_FILE = "QueryResponse_Anthropic.txt"
+APPEND_MODE = True      # True = append each run (dated separator); False = overwrite
+
+# ---- Model / output size -----------------------------------------------
+MODEL = "claude-opus-5-5"   # or another current model id
+MAX_TOKENS = 64000          # lower this if the API rejects it for your model
+MAX_CONTINUATIONS = 3       # extra "please continue" passes if the reply is cut off
+
+
+# =========================================================================
+#  SECTION 2 -- FIXED SETTINGS  (normally no need to edit)
+# =========================================================================
+
+FILES_API_BETA = "files-api-2025-04-14"
+
+# Document blocks accept only application/pdf and text/plain, so all
+# text-like formats (csv, md, py, ...) are uploaded as text/plain.
+MIME_TYPES = {
+    ".pdf":  "application/pdf",
+    ".txt":  "text/plain",
+    ".md":   "text/plain",
+    ".csv":  "text/plain",
+    ".tsv":  "text/plain",
+    ".py":   "text/plain",
+    ".json": "text/plain",
+    ".log":  "text/plain",
+    ".xml":  "text/plain",
+    ".html": "text/plain",
+    ".yaml": "text/plain",
+    ".yml":  "text/plain",
+    ".jpg":  "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png":  "image/png",
+    ".gif":  "image/gif",
+    ".webp": "image/webp",
+}
+
+CONTINUE_PROMPT = (
+    "Your previous reply was cut off by the output-token limit. "
+    "Continue exactly where you stopped -- no preamble, no repeated text."
+)
+
+
+# =========================================================================
+#  SECTION 3 -- FUNCTIONS
+# =========================================================================
+
+def parse_args() -> argparse.Namespace:
+    """Command-line options; every option defaults to the SECTION 1 value."""
+    p = argparse.ArgumentParser(
+        description="Send files + a prompt to Claude and save the streamed reply.",
+    )
+    p.add_argument("files", nargs="*",
+                   help="input files (default: INPUT_FILES in the script)")
+    p.add_argument("-d", "--dir", type=Path, default=DOC_DIR,
+                   help=f"folder for input/output files (default: {DOC_DIR})")
+    p.add_argument("-p", "--prompt", default=None,
+                   help="prompt text (default: PROMPT in the script)")
+    p.add_argument("--prompt-file", type=Path, default=None,
+                   help="read the prompt from a text file")
+    p.add_argument("-s", "--system", default=SYSTEM_PROMPT,
+                   help="optional system prompt")
+    p.add_argument("-o", "--output", default=OUTPUT_FILE,
+                   help=f"output file name (default: {OUTPUT_FILE})")
+    p.add_argument("--overwrite", action="store_true",
+                   help="overwrite the output file instead of appending")
+    p.add_argument("-m", "--model", default=MODEL,
+                   help=f"model id (default: {MODEL})")
+    p.add_argument("--max-tokens", type=int, default=MAX_TOKENS,
+                   help=f"max output tokens per pass (default: {MAX_TOKENS})")
+    p.add_argument("--max-continuations", type=int, default=MAX_CONTINUATIONS,
+                   help=f"continuation passes if cut off (default: {MAX_CONTINUATIONS})")
+    p.add_argument("--purge-all", action="store_true",
+                   help="delete EVERY file in your Anthropic Files workspace, then exit")
+    return p.parse_args()
+
+
+def make_client() -> Anthropic:
+    """Create the API client (key read from the ANTHROPIC_API_KEY env var)."""
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        sys.exit("ERROR: environment variable ANTHROPIC_API_KEY is not set.")
+    return Anthropic(api_key=api_key)
+
+
+def resolve_prompt(args: argparse.Namespace) -> str:
+    """Prompt priority: --prompt-file, then --prompt, then PROMPT."""
+    if args.prompt_file:
+        path = args.prompt_file if args.prompt_file.is_absolute() else args.dir / args.prompt_file
+        if not path.is_file():
+            sys.exit(f"ERROR: prompt file not found: {path}")
+        return path.read_text(encoding="utf-8").strip()
+    return args.prompt if args.prompt else PROMPT
+
+
+def resolve_files(names: list[str], doc_dir: Path) -> list[tuple[Path, str]]:
+    """Turn file names into (Path, MIME type) pairs; stop on any problem."""
+    files, problems = [], []
+    for name in names:
+        path = Path(name).expanduser()
+        if not path.is_absolute():
+            path = doc_dir / path
+        mime = MIME_TYPES.get(path.suffix.lower())
+        if not path.is_file():
+            problems.append(f"  not found:        {path}")
+        elif mime is None:
+            problems.append(f"  unsupported type: {path}")
+        else:
+            files.append((path, mime))
+    if problems:
+        sys.exit("ERROR: problem(s) with input files:\n" + "\n".join(problems))
+    if not files:
+        sys.exit("ERROR: no input files given.")
+    return files
+
+
+def upload_files(client: Anthropic, files: list[tuple[Path, str]],
+                 uploaded: list[tuple[Path, str, str]]) -> None:
+    """Upload each file. Results are appended to `uploaded` as they succeed,
+    so the caller can clean up even if a later upload fails."""
+    for path, mime in files:
+        with open(path, "rb") as f:
+            # httpx needs a str filename, not a Path -> use path.name
+            result = client.beta.files.upload(file=(path.name, f, mime))
+        uploaded.append((path, result.id, mime))
+        print(f"Uploaded {path.name} -> {result.id}")
+
+
+def build_content(uploaded: list[tuple[Path, str, str]], prompt: str) -> list[dict]:
+    """File blocks first (document for PDF/text, image for images), prompt last."""
+    blocks = []
+    for path, file_id, mime in uploaded:
+        if mime.startswith("image/"):
+            blocks.append({
+                "type": "image",
+                "source": {"type": "file", "file_id": file_id},
+            })
+        else:
+            blocks.append({
+                "type": "document",
+                "source": {"type": "file", "file_id": file_id},
+                "title": path.name,          # must be a str
+            })
+    blocks.append({"type": "text", "text": prompt})
+    return blocks
+
+
+def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
+              max_tokens: int, max_continuations: int, system: str | None) -> None:
+    """Stream the reply to `out`; if cut off at max_tokens, ask to continue."""
+    for attempt in range(max_continuations + 1):
+        collected = []
+        request = dict(
+            model=model,
+            max_tokens=max_tokens,
+            messages=messages,
+            betas=[FILES_API_BETA],
+        )
+        if system:
+            request["system"] = system
+
+        with client.beta.messages.stream(**request) as stream:
+            for text in stream.text_stream:          # text deltas only
+                collected.append(text)
+                out.write(text)
+                out.flush()                          # nothing lost if the run dies
+            final = stream.get_final_message()
+
+        print(f"Pass {attempt + 1}: stop_reason = {final.stop_reason}, "
+              f"input tokens = {final.usage.input_tokens}, "
+              f"output tokens = {final.usage.output_tokens}")
+
+        if final.stop_reason != "max_tokens":       # finished normally
+            return
+
+        if attempt == max_continuations:             # out of retries
+            warning = ("\n\n[WARNING: output was still cut off at the token limit "
+                       "after all continuation attempts. Raise MAX_TOKENS or "
+                       "MAX_CONTINUATIONS.]\n")
+            out.write(warning)
+            print(warning)
+            return
+
+        reply = "".join(collected)
+        if not reply.strip():                        # API rejects empty turns
+            print("Reply was empty -- cannot request a continuation.")
+            return
+        messages.append({"role": "assistant", "content": reply})
+        messages.append({"role": "user", "content": CONTINUE_PROMPT})
+        print("Reply hit max_tokens -- requesting continuation...")
+
+
+def delete_uploads(client: Anthropic, uploaded: list[tuple[Path, str, str]]) -> None:
+    """Delete just the files uploaded during this run."""
+    for path, file_id, _ in uploaded:
+        try:
+            client.beta.files.delete(file_id)
+            print(f"Deleted {path.name} ({file_id})")
+        except Exception as e:
+            print(f"Could not delete {path.name} ({file_id}): {e}")
+
+
+def purge_workspace(client: Anthropic) -> None:
+    """Delete EVERY file in the Files workspace (asks for confirmation)."""
+    files = list(client.beta.files.list())
+    if not files:
+        print("Workspace is already empty.")
+        return
+    answer = input(f"Delete ALL {len(files)} file(s) in the workspace? [y/N] ")
+    if answer.strip().lower() != "y":
+        print("Cancelled.")
+        return
+    for f in files:
+        try:
+            client.beta.files.delete(f.id)
+            print(f"Deleted {f.filename} ({f.id})")
+        except Exception as e:
+            print(f"Could not delete {f.filename} ({f.id}): {e}")
+
+
+# =========================================================================
+#  SECTION 4 -- MAIN
+# =========================================================================
+
+def main() -> int:
+    args = parse_args()
+    client = make_client()
+
+    if args.purge_all:
+        purge_workspace(client)
+        return 0
+
+    prompt = resolve_prompt(args)
+    files = resolve_files(args.files or INPUT_FILES, args.dir)
+    output_path = args.dir / args.output
+    mode = "w" if (args.overwrite or not APPEND_MODE) else "a"
+
+    uploaded: list[tuple[Path, str, str]] = []
+    try:
+        upload_files(client, files, uploaded)
+        messages = [{"role": "user", "content": build_content(uploaded, prompt)}]
+
+        with open(output_path, mode, encoding="utf-8") as out:
+            out.write(
+                f"\n\n{'=' * 70}\n"
+                f" Run: {datetime.now():%Y-%m-%d %H:%M:%S}  |  Model: {args.model}\n"
+                f" Files: {', '.join(p.name for p, _ in files)}\n"
+                f"{'=' * 70}\n\n"
+            )
+            run_query(
+                client, messages, out,
+                model=args.model,
+                max_tokens=args.max_tokens,
+                max_continuations=args.max_continuations,
+                system=args.system,
+            )
+        print(f"Response written to {output_path}")
+        return 0
+
+    except anthropic.APIError as e:
+        print(f"API ERROR: {e}", file=sys.stderr)
+        return 1
+    except KeyboardInterrupt:
+        print("\nInterrupted -- partial output (if any) was saved.", file=sys.stderr)
+        return 130
+    finally:
+        delete_uploads(client, uploaded)            # always clean up
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+```
+
+---
+
+## How to run it
+
+```bash
+cd ~/Desktop
+chmod +x A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py
+
+./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py                 # uses SECTION 1 settings
+./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py a.pdf b.png -p "Compare these"
+./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.2.py --help
+```
+
+**Notes**
+
+- If your editor saved the file with Windows line endings, the shebang will fail with `env: 'python3\r': No such file or directory`. Fix it with `sed -i 's/\r$//' <file>`.
+- If the API rejects `MAX_TOKENS = 64000` for your chosen model, lower it with `--max-tokens 32000` or by editing SECTION 1.
+- The script still works in Spyder or VS Code. Run it as a file, and edit SECTION 1 instead of passing command-line options.
