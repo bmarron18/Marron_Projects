@@ -1,0 +1,60 @@
+## 1. What Ashby's excerpt actually says
+
+**The core result (§11/5–11/7).** Picture a game. The disturbance D picks a row of a table, and the regulator R picks a column. Assume no outcome repeats within a column. Then the variety (number of distinct outcomes) can never fall below D's variety divided by R's variety. Measured in bits, this becomes **V_E ≥ V_D − V_R**. Ashby's short version is "only variety can destroy variety."
+
+**Extensions that matter for resilience.**
+- **The world itself can absorb variety (§11/9).** The fixed world T may soak up some disturbance with no help from R. This gives V_E ≥ V_D − log k − V_R, where log k is the variety T absorbs on its own. In resilience terms, that is passive buffering, or designed-in robustness.
+- **Information-theory form (§11/8).** In Shannon's entropy terms, H(E) ≥ H(D) + H_D(R) − H(R). The outcome is best when R is a fixed function of D. In other words, the regulator's response rule must already exist before the disturbance arrives.
+- **Channel limit (§11/11).** "R's capacity as a regulator cannot exceed R's capacity as a channel of communication." This puts hard limits on both sensing (D→R) and acting (R→T).
+- **A logical necessity, not a physical one (§11/10).** The law comes from how a table can be arranged, not from properties of matter. No invention escapes it.
+- **Regulation enables control (§11/14).** A perfect regulator gives a higher-level controller C full control over the outcome. This is a layered structure.
+- **Constancy of relations, not of states (§11/15).** A searchlight or a steering wheel moves constantly in order to hold one relationship fixed.
+- **Redrawing the boundary (§11/17–21).** Noise, unknown starting states, and multiple threats can all be folded into a larger disturbance D. The cost is that R must become more complex.
+- **Taking in variety on purpose (§11/13).** Organisms deliberately take in more variety than they currently need, through curiosity and play. This builds up the regulator's repertoire.
+
+**Text glitches in the excerpt.** A few symbols appear garbled:
+- "≥" is printed as ">" in §11/8–9.
+- "106 bits" in Ex. 3 is 10⁶.
+- "acceptable set 17" is η.
+
+## 2. The law framed as resilience (Diagram 1)
+
+Read through a resilience lens, the law gives a clear condition:
+
+**The system is resilient when V_D − log k − V_R ≤ log|η|.**
+
+Here η is the viability envelope, the set of acceptable values for the essential variables E. In words: whatever disturbance variety is not absorbed by the world (log k) or cancelled by the regulator (V_R) must still fit inside what the system can tolerate.
+
+**Brittleness is a variety deficit.** Any variety left over flows through T to E and pushes the essential variables out of η.
+
+The diagram maps this condition onto Ashby's D–T–R–E–C loop. It also lists five resilience levers the law implies:
+1. Increase the regulator's repertoire (V_R).
+2. Absorb more disturbance passively in T (log k).
+3. Widen the sensing and acting channels.
+4. Redraw the system boundary.
+5. Take in variety before a crisis demands it.
+
+A small chart shows a "resilience margin." The same regulator copes with routine disturbance but fails once a surprise raises V_D.
+
+## 3. The law compared with Woods' four concepts (Diagram 2)
+
+| Woods concept | Relationship to the law |
+|---|---|
+| **R1 Rebound** | **Partial fit.** Ashby's compound thermostat target literally specifies rebound: "return to range within one minute." Both thinkers place the decisive capacity *before* the event; Woods quotes Lagadec calling a crisis a "brutal audit." Ashby holds *relations* constant rather than restoring prior states, which supports Woods' rejection of "return to equilibrium." |
+| **R2 Robustness** | **Strongest fit.** The law is effectively the theoretical floor of robust control for a disturbance set that is known and well modelled. However, it contains no cost model, so it cannot capture Doyle's "robust-yet-fragile" trade-off: gaining coverage in one place creates vulnerability somewhere else. |
+| **R3 Graceful extensibility** | **Partial fit.** The law shows *where* a system's boundary lies: the point where the variety deficit exceeds log|η|. Woods' "decompensation" (failure as the capacity to respond runs out) corresponds to the regulator saturating. But the law says nothing about the *shape* of degradation (a cliff versus a slope), about anticipation, or about timing such as critical slowing down. Most importantly, it assumes the table is known, while Woods centres "model surprise": cases where the table itself is wrong. |
+| **R4 Sustained adaptability** | **A foundational constraint, not an architecture.** Ashby's observation that Hitler's control amounted to "just 1 man-power" anticipates the case for polycentric governance (Ostrom). The law is the kind of hard limit that R4 architectures must navigate. But it is static and single-loop, whereas R4 is reflexive: one unit's success changes D and T for its neighbours. |
+
+## 4. Synthesis
+
+**Where the two disagree in method.**
+- The law is a **necessary but not sufficient** condition for every Woods concept.
+- Ashby gives a *deductive limit with a metric*, measured in bits.
+- Woods gives an *empirical taxonomy*: patterns of failure plus a research agenda.
+
+**The deepest contrast is what each takes as fixed.** Ashby assumes the disturbance set, the world T, and the target η are all given. Woods' progression from R1 to R4 can be read as successively removing those assumptions:
+- surprise breaks the disturbance set;
+- adaptation changes the world;
+- co-evolution changes everything over time.
+
+**Where they connect.** Ashby's own hints point toward Woods: redrawing boundaries, deliberately taking in surplus variety, and layered control. Those passages are the bridge from requisite variety to graceful extensibility and sustained adaptability.

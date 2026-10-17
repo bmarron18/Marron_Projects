@@ -1,0 +1,27 @@
+
+
+Review and analyze the file, Ashby_Resilience.pdf, which is an excerpt from Ashby's, Introduction to \
+Cybernetics. Compare and contrast Ashby's concept of the Law of Requisite Variety with the four \
+concepts in Wood's paper, Four concepts for resilience and the implications for the future \
+of resilience engineering. Do the following: 1) Create a single diagram that frames The Law of \
+Rquisite Variety in terms of resilience, and 2) Create a single diagram that compares and contrasts \
+The Law of Requisite Variety with Wood's concepts of resilience. The diagrams should be in .jpeg format.
+
+
+You are an expert in sustainability, the analysis of complex adaptive systems, and cybernetics. When \
+an additional file, chart, table, or script would be useful, create it with the code interpreter and \
+save it as a file so the user can download it.
+
+
+
+file                                     route      mime
+---------------------------------------- ---------- ----------------------------
+Woods_Resilience.pdf                     document   application/pdf
+Ashby_Resilience.pdf                     document   application/pdf
+
+Uploaded Woods_Resilience.pdf [document] -> file_016GD8KepozB8qAPtwM7yf77
+Uploaded Ashby_Resilience.pdf [document] -> file_01PLF8118a7suuoCMJNpG6Gh
+Pass 1: stop_reason = end_turn, input tokens = 62049, output tokens = 24162
+Response written to /home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt
+Deleted Woods_Resilience.pdf (file_016GD8KepozB8qAPtwM7yf77)
+Deleted Ashby_Resilience.pdf (file_01PLF8118a7suuoCMJNpG6Gh)

@@ -7,6 +7,7 @@
 % 3) LaTex -> DVI -> PS -> PDF
 % 4) XeTex -> PDF
 %
+%  Use Ctrl+Alt+F to see the last slide changed
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -175,7 +176,7 @@ Lecture 01}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sustainability?}
+\section{What is Sustainability?}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Slide-------------------------------------------------------------------
@@ -230,10 +231,14 @@ First Woman Prime Minister of Norway, 1981
  
  %Slide-------------------------------------------------------------------
 \begin{frame}{Sustainability}
-%\vspace{-70 mm}
+\vspace{-30 mm}
 \textbf{Brundtland says:} \\
-Wake up!  (We need spiritual, social, environmental, economic, political awareness)\\
-Cooperate! (We need empathetic, equity-based cooperation)\\
+\medskip 
+\textbf{Wake up!}  (spiritual, social, environmental, economic, political awareness)\\
+\medskip 
+\textbf{Cooperate!} (empathetic, equity-based cooperation)\\
+\medskip 
+\textbf{Break out!} (imagine new systems and build them) 
 
 
 \end{frame}

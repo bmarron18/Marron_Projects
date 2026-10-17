@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  15 OCT 2026 17:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  16 OCT 2026 20:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1691,7 +1691,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 ))
 (./Slides_Lecture-01.nav)
 Package babel Info: Main language set to 'english'.
-<graphics/UTECA_Logo.png, id=17, 260.172pt x 117.8001pt>
+<graphics/UTECA_Logo.png, id=29, 260.172pt x 117.8001pt>
 File: graphics/UTECA_Logo.png Graphic file (type png)
 <use graphics/UTECA_Logo.png>
 Package pdftex.def Info: graphics/UTECA_Logo.png  used on input line 167.
@@ -1756,7 +1756,7 @@ LaTeX Font Info:    Font shape `T1/phv/b/it' in size <6> not available
  [2
 
 ]
-<graphics/Iriquois.png, id=34, 773.89125pt x 446.66875pt>
+<graphics/Iriquois.png, id=46, 773.89125pt x 446.66875pt>
 File: graphics/Iriquois.png Graphic file (type png)
 <use graphics/Iriquois.png>
 Package pdftex.def Info: graphics/Iriquois.png  used on input line 194.
@@ -1765,7 +1765,7 @@ Package pdftex.def Info: graphics/Iriquois.png  used on input line 194.
 [3
 
  <./graphics/Iriquois.png>]
-<graphics/DreamCity.jpeg, id=40, 738.76pt x 1108.14pt>
+<graphics/DreamCity.jpeg, id=52, 738.76pt x 1108.14pt>
 File: graphics/DreamCity.jpeg Graphic file (type jpg)
 <use graphics/DreamCity.jpeg>
 Package pdftex.def Info: graphics/DreamCity.jpeg  used on input line 206.
@@ -1773,12 +1773,12 @@ Package pdftex.def Info: graphics/DreamCity.jpeg  used on input line 206.
  [4
 
  <./graphics/DreamCity.jpeg>]
-<graphics/GHBrundtland.jpg, id=46, 229.0959pt x 334.851pt>
+<graphics/GHBrundtland.jpg, id=58, 229.0959pt x 334.851pt>
 File: graphics/GHBrundtland.jpg Graphic file (type jpg)
 <use graphics/GHBrundtland.jpg>
 Package pdftex.def Info: graphics/GHBrundtland.jpg  used on input line 230.
 (pdftex.def)             Requested size: 68.7293pt x 100.45607pt.
-<graphics/BrundtlandReport.png, id=47, 1514.65875pt x 505.89pt>
+<graphics/BrundtlandReport.png, id=59, 1514.65875pt x 505.89pt>
 File: graphics/BrundtlandReport.png Graphic file (type png)
 <use graphics/BrundtlandReport.png>
 Package pdftex.def Info: graphics/BrundtlandReport.png  used on input line 230.
@@ -1786,53 +1786,137 @@ Package pdftex.def Info: graphics/BrundtlandReport.png  used on input line 230.
 (pdftex.def)             Requested size: 257.48859pt x 86.00015pt.
  [5
 
- <./graphics/GHBrundtland.jpg> <./graphics/BrundtlandReport.png>] [6
+ <./graphics/GHBrundtland.jpg> <./graphics/BrundtlandReport.png>]
+<graphics/utopia.png, id=66, 532.99126pt x 361.35pt>
+File: graphics/utopia.png Graphic file (type png)
+<use graphics/utopia.png>
+Package pdftex.def Info: graphics/utopia.png  used on input line 247.
+(pdftex.def)             Requested size: 159.8986pt x 108.40584pt.
+ [6
 
-]
-<graphics/TripleBottomLine.jpg, id=59, 502.2765pt x 516.7305pt>
-File: graphics/TripleBottomLine.jpg Graphic file (type jpg)
-<use graphics/TripleBottomLine.jpg>
-Package pdftex.def Info: graphics/TripleBottomLine.jpg  used on input line 258.
+ <./graphics/utopia.png>]
+<graphics/brundtland_sd_infographic_part1.jpg, id=74, 867.24pt x 802.197pt>
+File: graphics/brundtland_sd_infographic_part1.jpg Graphic file (type jpg)
+<use graphics/brundtland_sd_infographic_part1.jpg>
+Package pdftex.def Info: graphics/brundtland_sd_infographic_part1.jpg  used on 
+input line 257.
+(pdftex.def)             Requested size: 260.17401pt x 240.66095pt.
 
-(pdftex.def)             Requested size: 150.68411pt x 155.02034pt.
- [7
+[7
 
- <./graphics/TripleBottomLine.jpg>]
-<graphics/CAS1.jpeg, id=66, 526.96875pt x 360.34625pt>
-File: graphics/CAS1.jpeg Graphic file (type jpg)
-<use graphics/CAS1.jpeg>
-Package pdftex.def Info: graphics/CAS1.jpeg  used on input line 268.
-(pdftex.def)             Requested size: 263.48372pt x 180.17268pt.
+ <./graphics/brundtland_sd_infographic_part1.jpg>]
+<graphics/brundtland_sd_infographic_part2.jpg, id=81, 867.24pt x 809.424pt>
+File: graphics/brundtland_sd_infographic_part2.jpg Graphic file (type jpg)
+<use graphics/brundtland_sd_infographic_part2.jpg>
+Package pdftex.def Info: graphics/brundtland_sd_infographic_part2.jpg  used on 
+input line 268.
+(pdftex.def)             Requested size: 260.17401pt x 242.82907pt.
  [8
 
- <./graphics/CAS1.jpeg>] [9
+ <./graphics/brundtland_sd_infographic_part2.jpg>]
+<graphics/TripleBottomLine.jpg, id=87, 502.2765pt x 516.7305pt>
+File: graphics/TripleBottomLine.jpg Graphic file (type jpg)
+<use graphics/TripleBottomLine.jpg>
+Package pdftex.def Info: graphics/TripleBottomLine.jpg  used on input line 285.
+
+(pdftex.def)             Requested size: 150.68411pt x 155.02034pt.
+ [9
+
+ <./graphics/TripleBottomLine.jpg>] [10
 
 ]
-<graphics/Fractal_CAS.jpeg, id=77, 501.875pt x 485.815pt>
+<graphics/CAS1.jpeg, id=100, 526.96875pt x 360.34625pt>
+File: graphics/CAS1.jpeg Graphic file (type jpg)
+<use graphics/CAS1.jpeg>
+Package pdftex.def Info: graphics/CAS1.jpeg  used on input line 299.
+(pdftex.def)             Requested size: 263.48372pt x 180.17268pt.
+ [11
+
+ <./graphics/CAS1.jpeg>] [12
+
+]
+<graphics/Fractal_CAS.jpeg, id=111, 501.875pt x 485.815pt>
 File: graphics/Fractal_CAS.jpeg Graphic file (type jpg)
 <use graphics/Fractal_CAS.jpeg>
-Package pdftex.def Info: graphics/Fractal_CAS.jpeg  used on input line 297.
+Package pdftex.def Info: graphics/Fractal_CAS.jpeg  used on input line 328.
 (pdftex.def)             Requested size: 200.74643pt x 194.32256pt.
- [10
+ [13
 
  <./graphics/Fractal_CAS.jpeg>]
-<graphics/Fractal_CAS2.jpeg, id=83, 1108.14pt x 738.76pt>
+<graphics/Fractal_CAS2.jpeg, id=118, 1108.14pt x 738.76pt>
 File: graphics/Fractal_CAS2.jpeg Graphic file (type jpg)
 <use graphics/Fractal_CAS2.jpeg>
-Package pdftex.def Info: graphics/Fractal_CAS2.jpeg  used on input line 307.
+Package pdftex.def Info: graphics/Fractal_CAS2.jpeg  used on input line 338.
 (pdftex.def)             Requested size: 277.03432pt x 184.68954pt.
-[11
+ [14
 
- <./graphics/Fractal_CAS2.jpeg>]
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 323.
-
-Overfull \vbox (15.56528pt too high) detected at line 323
- []
-
-[12
+ <./graphics/Fractal_CAS2.jpeg>] [15
 
 ]
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 354.
+ [16
+
+]
+<graphics/resilience_1_rebound.jpeg, id=135, 928.6695pt x 568.0422pt>
+File: graphics/resilience_1_rebound.jpeg Graphic file (type jpg)
+<use graphics/resilience_1_rebound.jpeg>
+Package pdftex.def Info: graphics/resilience_1_rebound.jpeg  used on input line
+ 363.
+(pdftex.def)             Requested size: 371.46121pt x 227.21284pt.
+ [17
+
+ <./graphics/resilience_1_rebound.jpeg>]
+<graphics/resilience_2_robustness.jpeg, id=141, 1067.06654pt x 594.0594pt>
+File: graphics/resilience_2_robustness.jpeg Graphic file (type jpg)
+<use graphics/resilience_2_robustness.jpeg>
+Package pdftex.def Info: graphics/resilience_2_robustness.jpeg  used on input l
+ine 376.
+(pdftex.def)             Requested size: 373.47888pt x 207.9239pt.
+ [18
+
+ <./graphics/resilience_2_robustness.jpeg>]
+<graphics/resilience_3_graceful_extensibility.jpeg, id=147, 979.2585pt x 600.20
+235pt>
+File: graphics/resilience_3_graceful_extensibility.jpeg Graphic file (type jpg)
+
+<use graphics/resilience_3_graceful_extensibility.jpeg>
+Package pdftex.def Info: graphics/resilience_3_graceful_extensibility.jpeg  use
+d on input line 387.
+(pdftex.def)             Requested size: 391.69646pt x 240.07668pt.
+ [19
+
+ <./graphics/resilience_3_graceful_extensibility.jpeg>]
+<graphics/resilience_4_sustained_adaptability.jpeg, id=154, 1172.2194pt x 717.2
+7975pt>
+File: graphics/resilience_4_sustained_adaptability.jpeg Graphic file (type jpg)
+
+<use graphics/resilience_4_sustained_adaptability.jpeg>
+Package pdftex.def Info: graphics/resilience_4_sustained_adaptability.jpeg  use
+d on input line 398.
+(pdftex.def)             Requested size: 375.11787pt x 229.53421pt.
+ [20
+
+ <./graphics/resilience_4_sustained_adaptability.jpeg>]
+<graphics/GreekShip.jpg, id=160, 1606.0pt x 1004.75375pt>
+File: graphics/GreekShip.jpg Graphic file (type jpg)
+<use graphics/GreekShip.jpg>
+Package pdftex.def Info: graphics/GreekShip.jpg  used on input line 410.
+(pdftex.def)             Requested size: 321.19432pt x 200.94719pt.
+
+[21
+
+ <./graphics/GreekShip.jpg>] [22
+
+]
+<graphics/Earth.jpg, id=173, 2168.1pt x 1230.5975pt>
+File: graphics/Earth.jpg Graphic file (type jpg)
+<use graphics/Earth.jpg>
+Package pdftex.def Info: graphics/Earth.jpg  used on input line 424.
+(pdftex.def)             Requested size: 455.31444pt x 258.4331pt.
+ [23
+
+ <./graphics/Earth.jpg>]
 \tf@nav=\write8
 \openout8 = `Slides_Lecture-01.nav'.
 
@@ -1842,32 +1926,34 @@ Overfull \vbox (15.56528pt too high) detected at line 323
 \tf@snm=\write10
 \openout10 = `Slides_Lecture-01.snm'.
 
- (./Slides_Lecture-01.aux)
+
+(./Slides_Lecture-01.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
  ***********
 Package rerunfilecheck Info: File `Slides_Lecture-01.out' has not changed.
-(rerunfilecheck)             Checksum: 2D7A50ADA025CBD6C0FF2092C736E922;164.
+(rerunfilecheck)             Checksum: 0BD15945C2F792827797A9913BA51961;614.
 Package logreq Info: Writing requests to 'Slides_Lecture-01.run.xml'.
 \openout1 = `Slides_Lecture-01.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41153 strings out of 467099
- 819455 string characters out of 5408266
+ 41291 strings out of 467099
+ 823011 string characters out of 5408266
  1773936 words of memory out of 5000000
- 69644 multiletter control sequences out of 15000+600000
- 679626 words of font info for 150 fonts, out of 8000000 for 9000
+ 69759 multiletter control sequences out of 15000+600000
+ 679564 words of font info for 149 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,13n,125p,1905b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pf
+b></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr
 /local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/
 texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Slides_Lecture-01.pdf (12 pages, 1893095 bytes).
+Output written on Slides_Lecture-01.pdf (23 pages, 8032782 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
- 81 compressed objects within 1 object stream
- 26 named destinations out of 1000 (max. 500000)
- 56416 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 152 compressed objects within 2 object streams
+ 51 named destinations out of 1000 (max. 500000)
+ 56485 words of extra memory for PDF output out of 61914 (max. 10000000)
 

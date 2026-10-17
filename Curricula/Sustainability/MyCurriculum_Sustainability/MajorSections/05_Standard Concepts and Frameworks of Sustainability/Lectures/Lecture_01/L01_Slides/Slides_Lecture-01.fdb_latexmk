@@ -1,11 +1,11 @@
 # Fdb version 4
-["biber Slides_Lecture-01"] 1792107558.726 "Slides_Lecture-01.bcf" "Slides_Lecture-01.bbl" "Slides_Lecture-01" 1792108250.14777 0
-  "Slides_Lecture-01.bcf" 1792108249.9613 133004 8663a15599df3f57c51a753ef50bf7b8 "pdflatex"
+["biber Slides_Lecture-01"] 1792107558.726 "Slides_Lecture-01.bcf" "Slides_Lecture-01.bbl" "Slides_Lecture-01" 1792204600.36892 0
+  "Slides_Lecture-01.bcf" 1792204600.20018 133004 8663a15599df3f57c51a753ef50bf7b8 "pdflatex"
   (generated)
   "Slides_Lecture-01.bbl"
   "Slides_Lecture-01.blg"
   (rewritten before read)
-["pdflatex"] 1792108248.6099 "Slides_Lecture-01.tex" "Slides_Lecture-01.pdf" "Slides_Lecture-01" 1792108250.14809 0
+["pdflatex"] 1792204598.77585 "Slides_Lecture-01.tex" "Slides_Lecture-01.pdf" "Slides_Lecture-01" 1792204600.3692 0
   "/usr/local/share/texmf/tex/latex/biblatex/latex/bbx/standard.bbx" 1756502253.24981 25680 409c3f3d570418bc545e8065bebd0688 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.cfg" 1756502253.24981 69 249fa6df04d948e51b6d5c67bea30c42 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.def" 1756502253.24981 96838 ffbc2c4ed45b0b76660254a85df40e90 ""
@@ -52,6 +52,7 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1136768653 1124 6c73e740cf17375f03eec0ee63599741 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1136768653 1116 933a60c408fc0a863a92debe84b2d294 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1136768653 1120 8b7d695260f3cff42e636090a8002094 ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb" 1248133631 34793 87a84b12f86dfd35a1cf1bb142b75602 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb" 1136849748 35941 f27169cc74234d5bd5e4cca5abafaabb ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb" 1136849748 44648 23115b2a545ebfe2c526c3ca99db8b95 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb" 1136849748 48169 b4fd9d908b9ee8c65d4305ad39071c5e ""
@@ -283,21 +284,30 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788581441 5609353 13863466be7e2f3222bf573e23e6e97d ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1788581470 3658238 4e535c84a4e2b98eb209584d747fd9b2 ""
   "/usr/local/texlive/2026/texmf.cnf" 1788631954.43217 490 bda3fb63e318ca41966f63cd33cd8534 ""
-  "Slides_Lecture-01.aux" 1792108249.9593 2522 30d4b92f6e35d8d14538fc2cc1520f6a "pdflatex"
+  "Slides_Lecture-01.aux" 1792204600.19818 4844 3e6e85ecad2ab73aa6f7867392e2cabb "pdflatex"
   "Slides_Lecture-01.bbl" 1792107561.34944 466 76d65a242ec496c9b4361af646ff12cb "biber Slides_Lecture-01"
-  "Slides_Lecture-01.nav" 1792108249.9629 1472 46cb42f97d70da1fe9143628dac7d3c4 "pdflatex"
-  "Slides_Lecture-01.out" 1792108249.9603 164 2d7a50ada025cbd6c0ff2092c736e922 "pdflatex"
-  "Slides_Lecture-01.run.xml" 1792108249.9629 2540 382fcac1f84684bb80adf51c526d878b "pdflatex"
-  "Slides_Lecture-01.tex" 1792108248.45728 9632 3bf26cdbd2ff8cbf3db1234f71e75397 ""
+  "Slides_Lecture-01.nav" 1792204600.20096 3011 19ec0406a0609f3717dfc7168b537890 "pdflatex"
+  "Slides_Lecture-01.out" 1792204600.19918 614 0bd15945c2f792827797a9913ba51961 "pdflatex"
+  "Slides_Lecture-01.run.xml" 1792204600.20096 2540 382fcac1f84684bb80adf51c526d878b "pdflatex"
+  "Slides_Lecture-01.tex" 1792204598.65819 12109 6c74fa71610204c9b2452f8e47f6cc5f ""
   "graphics/BrundtlandReport.png" 1790468318.72695 77052 fc26ef1260e5f2f090553e988bee506c ""
   "graphics/CAS1.jpeg" 1780686105.77348 43571 b81f235d735e9039e1f4fe71a45ec188 ""
   "graphics/DreamCity.jpeg" 1790458065.83565 181455 0a7f5b4e5938a13a54763151307b9905 ""
+  "graphics/Earth.jpg" 1792204402.59579 200737 8e03cd1216e27034881fadb5c2f2aedf ""
   "graphics/Fractal_CAS.jpeg" 1780686413.28504 59463 c20c0219e2567a76933e57b17ddad16d ""
   "graphics/Fractal_CAS2.jpeg" 1780688709.50354 184450 04a5df8341e4af2fbddb0fe0e96ad85e ""
   "graphics/GHBrundtland.jpg" 1790467599.17364 117461 ec628d475765b2e7aba0f7f5c04d9150 ""
+  "graphics/GreekShip.jpg" 1792203473.52326 295408 01f8c05df656f21dccb6060485db0e05 ""
   "graphics/Iriquois.png" 1790461549.80247 621216 1647178a8bdbc796ef846ff37eb9a6c3 ""
   "graphics/TripleBottomLine.jpg" 1791853363.69921 423750 269ad148e85144c741215bad57793a57 ""
   "graphics/UTECA_Logo.png" 1733877938.46627 49897 86b878dac820d8504319fc5c55b981bd ""
+  "graphics/brundtland_sd_infographic_part1.jpg" 1792200220.75522 447056 9eb019ddeb52ca41430c9ce4f485a9dd ""
+  "graphics/brundtland_sd_infographic_part2.jpg" 1792200220.92522 561888 3b8572758a061d1e34c1ba4d59096e1d ""
+  "graphics/resilience_1_rebound.jpeg" 1792179673.12631 487666 db2d2d447ac1d917408f3dcb0747ecab ""
+  "graphics/resilience_2_robustness.jpeg" 1792179673.35731 631884 1e6154af98bfe548764c3d46877156c6 ""
+  "graphics/resilience_3_graceful_extensibility.jpeg" 1792179673.52832 681512 5893026941c4af6525128632f6891cb3 ""
+  "graphics/resilience_4_sustained_adaptability.jpeg" 1792179673.82632 953834 0f6a86cdfaf517d806cabda3fde9876b ""
+  "graphics/utopia.png" 1792196265.54986 1472844 8ba0cfb1d2e51f3572222d5256d1edfb ""
   (generated)
   "Slides_Lecture-01.aux"
   "Slides_Lecture-01.bcf"

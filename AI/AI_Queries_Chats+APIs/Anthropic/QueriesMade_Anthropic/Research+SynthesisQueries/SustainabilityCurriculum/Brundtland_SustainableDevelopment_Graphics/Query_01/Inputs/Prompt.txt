@@ -1,0 +1,11 @@
+
+
+Review and analyze the file, Brundtland_ocr_P01.pdf, which is an excerpt from the Brundtland Report, \
+Our Common Future. Do the following: 1) Create a Python script for a single infographic that depicts \
+the Brundtland Report concept of sustainable development. The output of Python script should be in .jpeg format.
+
+
+You are an expert in sustainability and infographic design. 
+
+
+

@@ -17,7 +17,7 @@ https://mx.pinterest.com/danwalsh1115/complex-adaptive-systems/
 ############
 Slide Content
 ###############
-Use Zotero search by title to find PDFs
+Use Zotero search by title or Tagto find PDFs
 
 <<< bash
 cd /opt/Zotero && ./zotero
