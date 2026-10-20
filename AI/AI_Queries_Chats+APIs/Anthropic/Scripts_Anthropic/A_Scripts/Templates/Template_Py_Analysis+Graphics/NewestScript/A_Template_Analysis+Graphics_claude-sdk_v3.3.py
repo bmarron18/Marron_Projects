@@ -1,16 +1,57 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-A_Template_AnalyzeMultipleFiles_claude-sdk_v3.3.py
-
-Send one or more files of ANY permitted type plus a prompt to Claude,
-stream the reply to a text file, save any files Claude generates, and
-clean up the uploaded files afterwards.
-
 Created : 24 Sept 2026
-Revised : v3.3 -- all permitted file types, per-type examples,
-                  reorganized input area, continuation / pause_turn fixes
+Revised:  20 Oct 2026
 Authors : bruce-vdb, claude-opus-5-5
+
+-------------------------------------------------
+A_Template_Analysis+Graphics_claude-sdk_v3.3.py
+-------------------------------------------------
+  * Send one or more files of ANY permitted type for analysis to Claude
+  * Stream the reply to a text file that includes a) analytical results, and 
+    b) the Python code to generate any requested graphics
+  * Save any files Claude generates
+  * Clean up (remove from storage) the uploaded files
+
+
+---------------------------------------------------------------------------
+QUICK START
+---------------------------------------------------------------------------
+  1. Check packages installed in venv (ai-apis) and perform updates
+
+<<< bash
+    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && pip list
+    
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade anthropic && 
+    deactivate
+
+>>>
+  
+  2. Set your API key as ENV VARAIBLE (once)
+  3. Edit SECTION 1 below (files, prompt)
+  
+  4. Run file (runs in Spyder within virtual environment, ai-apis)
+      * To run file w/o CLI toggles
+          a) Clic on the green Run file icon in Toolbar or press F5
+      * To run file w/ CLI toggles
+          a) place copy of file on Desktop
+          b) run file using IPython interpreter
+runfile('/home/bruce-vdb/Desktop/A_Template_Analysis+Graphics_claude-sdk_v3.3.py', args='--dry-run')
+
+  Command-line examples (CLI files replace INPUT_FILES for that run):
+     ./A_Template_...py report.pdf notes.txt -p "Summarize these files"
+     ./A_Template_...py photo.png diagram.webp -p "Describe these images"
+     ./A_Template_...py -c sales.xlsx budget.docx -p "Compare the totals"
+     ./A_Template_...py data.csv -c data.csv -p "..."   # same file, both routes
+     ./A_Template_...py script.py --prompt-file my_prompt.txt --overwrite
+     ./A_Template_...py --dry-run            # show routing, upload nothing
+     ./A_Template_...py --list-types         # list supported extensions
+     ./A_Template_...py --purge-all          # delete ALL workspace files
+     ./A_Template_...py --help
+     
+ 
 
 ---------------------------------------------------------------------------
 HOW FILES ARE SENT TO CLAUDE  (chosen automatically from the extension)
@@ -23,30 +64,13 @@ HOW FILES ARE SENT TO CLAUDE  (chosen automatically from the extension)
   container   container_upload   ANY other file (.xlsx .docx .pptx .zip
                                  .parquet .sqlite .bmp .tiff ...).  Claude
                                  opens these with Python in a sandbox; the
-                                 code-execution tool is enabled automatically.
+                                 code-execution tool is enabled automatically.        
 
----------------------------------------------------------------------------
-QUICK START
----------------------------------------------------------------------------
-  1. Install the SDK (once):         pip install --upgrade anthropic
-  2. Set your API key (once):        export ANTHROPIC_API_KEY="sk-ant-..."
-  3. Make this file executable:      chmod +x A_Template_AnalyzeMultipleFiles_claude-sdk_v3.3.py
-  4. Edit SECTION 1 below (files, prompt), then run:
-         ./A_Template_AnalyzeMultipleFiles_claude-sdk_v3.3.py
-         
-runfile('/home/bruce-vdb/Desktop/Marron_Projects/AI/AI_Queries_Chats+APIs/Anthropic/Scripts_Anthropic/A_Scripts/Templates/Template_Py_Upload+AnalyzeFiles/NewestScript/A_Template_AnalyzeMultipleFiles_claude-sdk_v3.3.py', args='--dry-run')
-
-  Command-line examples (CLI files replace INPUT_FILES for that run):
-     ./A_Template_...py report.pdf notes.txt -p "Summarize these files"
-     ./A_Template_...py photo.png diagram.webp -p "Describe these images"
-     ./A_Template_...py -c sales.xlsx budget.docx -p "Compare the totals"
-     ./A_Template_...py data.csv -c data.csv -p "..."   # same file, both routes
-     ./A_Template_...py script.py --prompt-file my_prompt.txt --overwrite
-     ./A_Template_...py --dry-run            # show routing, upload nothing
-     ./A_Template_...py --list-types         # list supported extensions
-     ./A_Template_...py --purge-all          # delete ALL workspace files
-     ./A_Template_...py --help
----------------------------------------------------------------------------
+-----------
+REVISIONS
+-----------
+Revised : v3.3 -- all permitted file types, per-type examples,
+                  reorganized input area, continuation / pause_turn fixes
 """
 
 from __future__ import annotations

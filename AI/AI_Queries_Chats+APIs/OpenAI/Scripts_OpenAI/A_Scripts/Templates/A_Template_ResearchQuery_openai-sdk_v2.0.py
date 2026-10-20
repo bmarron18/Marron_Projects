@@ -1,30 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on 24 Sept 2026
-@author: bmarron, claude-opus-5-5
+Created: 24 Sept 2026
+Revised: 20 Oct 2026
+Authors: bmarron, claude-opus-5-5
 
 
-UPDATE AND LIST INSTALLED PACKAGES
--------------
-<<< bash
-    cd ~/spyder-6/envs && pip list
-    
-    source ./ai-apis/bin/activate &&
-    python3 -m pip install --upgrade pip &&
-    pip install --upgrade openai && deactivate
-
->>>
-
-
-==================================
-Research Query Template
-Model ==> gpt-6-astra
-Multi-file-type output (text, code, images, data files)
-==================================
-
-WHAT THIS SCRIPT DOES
----------------------
+---------------------------------------------
+A_Template_ResearchQuery_openai-sdk_v2.0.py
+----------------------------------------------
     1. Submits a query to an OpenAI model via the Responses API in
        BACKGROUND mode, with the Code Interpreter and Web Search tools enabled.
     2. Polls the API until the job completes (robust to network drops).
@@ -34,6 +18,7 @@ WHAT THIS SCRIPT DOES
     6. Saves the execution logs to a .log file.
     7. Downloads every file the model generated inside its sandbox
        (e.g. .png, .csv, .xlsx, .py, .pdf) with its original name and extension.
+       That is, multi-file-type output (text, code, images, data files)
     8. Saves any inline images (plots) returned by Code Interpreter.
     9. Saves the raw JSON response for debugging.
 
@@ -41,48 +26,46 @@ WHAT THIS SCRIPT DOES
         ~/Desktop/EcosanQuery_OpenAI_YYYYMMDD_HHMMSS/
 
 
-
-RUN IN SPYDER
--------------
-    * *Run* (F5)
-
-
-
-RUN SCRIPT FROM DESKTOP
-------------------
-On Desktop
-    * copy of this script
-
-<<<bash
-    cd ~/spyder-6/envs &&
-    source ./ai-apis/bin/activate
-
-        # run script (normal)
-    python3 ~/Desktop/A_Template_DataQuery_OpenAI_v2.0.py
-
-        # run script (dry run)
-    python3 ~/Desktop/A_Template_DataQuery_OpenAI_v2.0.py --dry-run
+---------------------------------------------------------------------------
+QUICK START
+---------------------------------------------------------------------------
+  1. Check packages installed in venv (ai-apis) and perform updates
+  
+<<< bash
+    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && pip list
+    
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade openai && 
+    deactivate
 >>>
-    
-    
-INTERRUPTED RUN 
+
+  2. Set your API key as ENV VARAIBLE (once)
+  3. Edit sections below, as needed
+    # CONFIGURATION
+    # PROMPT
+  
+  4. Run file (runs in Spyder within virtual environment, ai-apis)
+      * To run file w/o CLI toggles
+          a) Clic on the green Run file icon in Toolbar or press F5
+      * To run file w/ CLI toggles
+          a) place copy of file on Desktop
+          b) run file using IPython interpreter
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_openai-sdk_v2.0.py', args='--dry-run')
+
+   
+------------------ 
+IF INTERRUPTED RUN 
 -----------------
 If the run is interrupted(Ctrl-C, network drop, or polling exceeds 60 minutes), the job keeps running 
 server-side. Check the ouput docs for a XXXX_response_id.txt file. Will have data like this:
     resp_0500885f0f7254b2006ab701e618e487d1b2da1e48a6b43be6
     status: completed
 
+Collect the job inside IPython interpreter with copy of file on Desktop:
+    runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_openai-sdk_v2.0.py', args='-resume resp_XXXXXXXX')
 
-Collect the job with:
-<<<bash
-       # resume / collect an earlier background job
-   python3 ~/Desktop/A_Template_DataQuery_OpenAI_v2.0.py --resume resp_XXXXXXXX
->>>
-
-   In Spyder, set this under **Run → Configuration per file → Command line options**.
-        Run > Configuration per file > Command line options:  --resume resp_XXXXXXXX
         
-        
+-----------      
 REVISIONS
 -----------
 Revised: v2.0
@@ -156,7 +139,7 @@ if USE_WEB_SEARCH:
 
 
 # =============================================================================
-# Prompt
+# PROMPT
 # =============================================================================
 
     # User level message
