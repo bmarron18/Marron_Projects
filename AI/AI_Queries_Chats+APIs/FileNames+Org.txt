@@ -1,36 +1,65 @@
 
+##################
+Template Scripts
+##################
 
-########
-Queries
-########
+	A_Template_
+		AnalysisQuery_
+		ResearchQuery_
+			_anthropic_
+			_google-genai_
+			_openai_
+				_v#.#.py
 
-Name folder as 'QueryType_Description_TaskType'
+
+##################
+Functional Scripts
+##################
+
+	A_Functional_[descriptor]
+			_anthropic_
+			_google-genai_
+			_openai_
+				_v#.#.py
 
 
-	QueryTypes			
-	---------					
+##############
+Queries Made
+Folder Names
+##############
+
+	Analysis_[descriptor]
+		+ Summary
+		+ Synthesis
+		+ Comparison
+		+ Graphics
+				
 	Build_
-	Data_
-	Info_
+		_bash-
+		_anthropic-
+		_google-genai-
+		_openai-
+			Template [descriptor]
+			Functional [descriptor]
+
+	Research_[descriptor]
+		+ Summary
+		+ Synthesis
+		+ Graphics
 
 
-	TaskTypes
-	---------
-	_Analytic
-	_Template
-	_Snippet
 
 ###########
-Scripts
+Script Codes
 ###########
 
 	ScriptType
 	----------
-	A_
-	X_
+	A_ 				<== Active; works!
+	X_				<== Nonfunctional
 
 
 	ScriptLanguage
 	--------------
-	Py
-	Bash
+	py
+	bash
