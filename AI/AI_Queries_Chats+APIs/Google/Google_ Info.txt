@@ -1,4 +1,21 @@
 
+#########################
+Google Developer Platform
+Google Builders Hub
+#########################
+https://me.developers.google.com/
+
+
+#################
+Google Earth Engine
+#####################
+
+https://developers.google.com/earth-engine
+https://developers.google.com/earth-engine/guides/python_install
+
+Connect to the Earth Engine service through one of the APIs. Client libraries for JavaScript and Python translate complex geospatial analyses to Earth Engine requests. Or connect directly to Earth Engine servers using the REST API. 
+
+
 ##################
 Google AI Studio
 #################

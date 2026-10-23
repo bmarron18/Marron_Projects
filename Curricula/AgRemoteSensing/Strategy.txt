@@ -1,0 +1,48 @@
+
+Title:					Goals and Strategy
+Project:				Remote-Sensing for Ag: 	
+Author:					bmarron
+Created:				23 Oct 2026
+Revised:				20 Oct 2026
+
+
+##############
+Major Goals
+##############
+
+1. Use open source satelite data for monitoring agroecosystem changes at the regional scale
+
+
+2. Use drone-based data for monitoring agroecosystems changes at the local scale
+
+
+3. Develop API-based research and analysis scripts in Python for agroecological production queries
+
+
+#######################
+Strategy Goal 1:
+Satelite Data
+#######################
+
+1. Create API-based scripts in Python for generic research and analysis 
+	a. anthropic
+	b. openai
+	c. google-genai
+
+2. Research available open-source satelite feeds
+	a. Copernicus
+
+	b. Google Earth Engine (GEE)
+		https://earthengine.google.com/
+
+3. Research papers, seminars, Python code on GitHub, recent journal articles, about using satelite data for ag
+
+4. Research for specific latent variables (soil bacterial-fungi ratio, soil organic carbon, )
+
+5. Build scripts and pipelines
+
+6. Build curriculum
+
+
+
+

@@ -1,0 +1,66 @@
+
+Title:					Terminology
+Project:				Remote-Sensing for Ag
+Author:					bmarron
+Created:				23 Oct 2026
+Revised:				
+
+
+###############
+Terminology
+###############
+
+General Terms
+
+	ML		Machine Lerning
+	LLM		Large Language Model
+	NMT		Neural Machine Translation
+	GPT		Generative Pre-Trained Transformer
+	MIME	Multipurpose Internet Mail Extension; type of file format for translating
+	
+	API		Application Programmer Interface
+	SDK		Software Development Kit
+	IDE		Integrated Development Environment	
+	Python	Object-oriented programming language
+
+	client library
+		 For a web service or cloud API, the published package you install via a package manager (like pip) is usually called a client library and functions as the API SDK for that service. However, a full platform SDK (like the Android SDK) contains much more than just a network client—it includes emulators, build toolchains, and local system libraries
+
+	NDVI 	Normalized Difference Vegetation Index
+			
+	
+ML
+A subfield of artificial intelligence (AI) that gives computers the ability to learn without explicitly being programmed; the development and study of statistical algorithms that can learn from data and generalize to unseen data, and thus perform tasks without explicit instructions.
+
+
+LLM
+An artificial intelligence (AI) system that can understand, process, and generate human language. LLMs are trained on large amounts of data, such as books and articles, using machine learning techniques.
+
+
+NMT
+A method of automated translation that uses artificial neural networks to translate text from one language to another, essentially mimicking the human translation process by learning patterns from large datasets to predict the most likely sequence of words in the target language; a data-driven approach to machine translation considering the entire sentence context rather than just individual words.
+
+
+GPT
+A type of artificial intelligence (AI) model that can create human-like text. GPT is a family of neural network models that use a transformer architecture. 
+
+
+MIME
+Many file types can be translated by Google Translate API (NMT model). Translation will keep the original format.
+
+
+NVDI
+	a simple remote-sensing metric used to measure and monitor the health, density, and growth of live green veg
+
+NDVI Value Scale
+• -1.0 to 0: Water bodies, snow, ice, or clouds (negative values typically represent water).
+• 0 to 0.1: Barren rock, sand, or urban/built-up areas with little to no vegetation.
+• 0.1 to 0.3: Sparse vegetation, such as grasslands, shrubs, or early-stage crops.
+• 0.3 to 0.6: Moderate vegetation, such as temperate forests or stressed crops.
+• 0.6 to 0.9: Dense, healthy, thriving crops or forests.
+• 0.9 to 1.0: Extremely dense vegetation, such as tropical rainforests (though rarely hit a full 1.0)
+
+• Light absorption and reflection: Healthy plants contain chlorophyll, which absorbs visible red light for photosynthesis and strongly reflects near-infrared (NIR) light.  Stressed, dying, or sparse plants reflect less NIR light and absorb more red light.
+
+• The Formula: It is calculated using satellite or drone sensor data with the equation:
+\(\text{NDVI}=\frac{\text{NIR}-\text{Red}}{\text{NIR}+\text{Red}}\)

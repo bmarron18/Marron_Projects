@@ -1,0 +1,22 @@
+
+
+#############
+Coprnicus
+Space Data
+###########
+Copernicus Data Space Ecosystem
+https://browser.dataspace.copernicus.eu/?zoom=13&lat=19.19649&lng=-100.10416&themeId=DEFAULT-THEME&visualizationUrl=U2FsdGVkX19s69oc4DdHFc1LhbNsod7aJkBaZ72bLsqrjpaMjxG2UbWQZNyYEbq6pWAqDmlClU9SF5AtfLVB8znTG28d4BhCEZ%2Fi5XA%2FnKgkphJQMYyoi0LTJTmKTnVZ&datasetId=S2_L2A_CDAS&demSource3D=%22MAPZEN%22&cloudCoverage=30&dateMode=SINGLE
+
+A complete archive of Sentinel-1, Sentinel-2, Sentinel-3, Sentinel-5P, Sentinel-6,
+Copernicus Contributing Missions (Optical, SAR and DEM), Copernicus Land Monitoring Service (CLMS), and Sentinel-1 and Sentinel-2 Global Mosaics data in one place.
+
+marron.bruce.mx@gmail.com
+47Co59*LupM7
+
+
+##################
+from Newsletter
+##################
+10:00 CET (which is 9:00 UTC) is 3:00 AM in Mexico City (CST, UTC-6).
+
+Introduction to Free Copernicus Data for Farming: Join us on Tuesday, 24 November 2026 at 10:00 CET (9:00 UTC) to learn how free satellite imagery from the CDSE can enhance precision farming without requiring complex tools or specialized expertise. Designed for complete newcomers, this hands-on webinar demonstrates how to use intuitive, browser-based tools to track crop growth and vigour, generate 10-metre resolution NDVI maps, analyze field wetness patterns, and review historical crop data to optimize daily management decisions. Register here to reserve your spot.

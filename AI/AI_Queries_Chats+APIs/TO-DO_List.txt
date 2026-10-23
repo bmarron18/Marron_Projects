@@ -1,0 +1,28 @@
+Have
+	A_Template_AnalysisQuery_anthropic_v3.4.py
+	A_Template_ResearchQuery_openai_v2.0.py
+
+
+Task 1
+-----------
+Clean/Update research query for openai
+	1. Send claude-sonnet-5.5 "A_Template_ResearchQuery_openai_v2.0.py" and ask to clean......????
+		==> becomes "A_Template_ResearchQuery_openai_v3.0.py"
+
+
+Task 2
+--------
+Need complete set of queries for all three APIs:
+1. Create a research query template for anthropic
+	* Send claude-sonnet-5.5 "A_Template_ResearchQuery_openai_v3.0.py" and ask 
+	to build an equivalent script for claude-opus-5.5
+
+2. Create a research query template for google-genai
+	* Send claude-sonnet-5.5 "A_Template_ResearchQuery_openai_v3.0.py" and ask 
+	to build an equivalent script for gemini-4-argon
+
+3. Create an analysis query template for google-genai
+	* Send claude-sonnet-5.5 "A_Template_AnalysisQuery_anthropic_v3.4.py" and ask to build an equivalent script for gemini-4-argon
+
+4. Create an analysis query template for openai
+	* Send claude-sonnet-5.5 "A_Template_AnalysisQuery_anthropic_v3.4.py" and ask to build an equivalent script for gpt-6-astra
