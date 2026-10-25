@@ -1,0 +1,65 @@
+
+Satellite data has been used to evaluate agricultural production for some time. 1) Review peer-reviewed journals, textbooks, seminar and conference publications, and all relevant source materials for the use and processing of satellite data as well as for the use and processing of drone data in agriculture. 2) Provide a high level summary of how each type of data source (satellite data, drone data) are currently being used in agriculture. 3) Provide a detailed account of how satellite data and drone data are obtained, processed, and evaluated for agricultural use.
+4) Provide infographics explaining how both satellite data and drone data are obtained, processed, and evaluated for agricultural use. The two infographics should be developed in a Python script that can be run independently to generate the infographics as .jpeg files. 5) Provide a list of foundational and canonical references that explain the process and theory for obtaining, processing, and evaluating satellite data and drone data for agricultural use. 6) Provide a list of sources for satellite data for agricultural use
+
+You are an expert in agriculture, crop and soil science, and geospatial analysis. Use web search to find and verify sources; cite only sources you have actually located.
+
+
+
+
+
+
+
+
+
+
+
+ERROR
+• The model or API endpoint you are using allows a maximum of 1,000,000 tokens.
+• Your input prompt contained 1,037,825 tokens
+---------
+Satellite data has been used to evaluate agricultural production for some time. Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and Cation Exchange Capacity. More recently, drone data has also been used evaluate soil health and crop vitality. Review peer-reviewed journals, textbooks, seminar and conference publications, and all relevant source materials for the use and processing of satellite data as well as for the use and processing of drone data in agriculture. With this information at hand, do the following:
+1) Provide a high level summary of how each type of data source (satellite data, drone data) are currently being used in agriculture.
+2) Provide a detailed account of how satellite data is obtained, processed, and evaluated for agricultural use.
+3) Provide an infographic explaining how satellite data is obtained, processed, and evaluated for agricultural use. The infographic should be developed in a Python script that can be run independently to generate the infographic as a .jpeg file.
+4) Provide a detailed account of how drone data is obtained, processed, and evaluated for agricultural use.
+5) Provide an infographic explaining how drone data is obtained, processed, and evaluated for agricultural use. The infographic should be developed in a Python script that can be run independently to generate the infographic as a .jpeg file.
+6) Provide a list of foundational and canonical references that explain the process and theory for obtaining, processing, and evaluating satellite data for agricultural use
+7) Provide a list of foundational and canonical references that explain the process and theory for obtaining, processing, and evaluating satellite data for agricultural use
+8) Provide a list of sources for satellite data for agricultural use
+
+
+You are an expert in agriculture, crop and soil science, and geospatial analysis. Use web search to find and verify sources; cite only sources you have actually located.
+
+
+ 
+
+IPython Output
+-----------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_Queries_Chats+APIs/Anthropic/Queries/ReaearchQueries/AgRemoteSensing/Research_BasicsAgRemoteSensing_Summary+Synthesis+Graphics/Query_01/A_Template_ResearchQuery_anthropic_v3.0.py --wdir
+
+Submitting prompt to claude-fable-5-1 (background / batch mode) ...
+Batch ID: msgbatch_01URBjcz9SGSZKNVYSFFzHat
+(If interrupted, collect later with:
+  python3 A_Template_ResearchQuery_anthropic_v3.0.py --resume msgbatch_01URBjcz9SGSZKNVYSFFzHat
+  or in Spyder/IPython:  runfile('<path>/A_Template_ResearchQuery_anthropic_v3.0.py', args='--resume msgbatch_01URBjcz9SGSZKNVYSFFzHat'))
+
+[    0s] status: in_progress
+[  283s] status: endedress ...
+
+[Warning] Response status is 'errored'. Details: {'error': {'message': 'prompt is too long: 1037825 tokens > 1000000 maximum', 'type': 'invalid_request_error', 'details': None}, 'request_id': 'workerreq_015PfTmHk51XzB1dj5CSxdVa', 'type': 'error'}
+--- TEXT OUTPUT ---
+(no text output)
+
+
+==================================
+Turns: 0  |  Code blocks: 0  |  Images: 0  |  Web searches: 0
+Tokens: input=0  output=0  cache_write=0  cache_read=0  total=0
+(Batch mode: token costs billed at 50% of standard rates.)
+Query errored! 4 file(s) saved to:
+  /home/bruce-vdb/Desktop/ResearchQuery_Anthropic_20261024_205814
+    - ResearchQuery_Anthropic_raw_response.json
+    - ResearchQuery_Anthropic_response_id.txt
+    - ResearchQuery_Anthropic_status_errored.txt
+    - ResearchQuery_Anthropic.txt
+==================================

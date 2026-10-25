@@ -7,7 +7,7 @@ Authors: bmarron, claude-opus-5-5
 
 
 ---------------------------------------------
-A_Template_ResearchQuery_openai-sdk_v2.0.py
+A_Template_ResearchQuery_openai_v3.0.py
 ----------------------------------------------
     1. Submits a query to an OpenAI model via the Responses API in
        BACKGROUND mode, with the Code Interpreter and Web Search tools enabled.
@@ -50,7 +50,7 @@ QUICK START
       * To run file w/ CLI toggles
           a) place copy of file on Desktop
           b) run file using IPython interpreter
-runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_openai-sdk_v2.0.py', args='--dry-run')
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_openai_v3.0.py', args='--dry-run')
 
    
 ------------------ 

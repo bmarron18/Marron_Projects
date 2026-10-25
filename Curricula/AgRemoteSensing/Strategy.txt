@@ -36,6 +36,7 @@ Satelite Data
 		https://earthengine.google.com/
 
 3. Research papers, seminars, Python code on GitHub, recent journal articles, about using satelite data for ag
+	a. anthropic research query.....basic orientation and background
 
 4. Research for specific latent variables (soil bacterial-fungi ratio, soil organic carbon, )
 

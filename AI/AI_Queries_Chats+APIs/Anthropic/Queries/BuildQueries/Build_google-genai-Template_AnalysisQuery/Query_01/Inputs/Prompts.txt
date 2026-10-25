@@ -1,0 +1,19 @@
+
+
+Review and analyze the attached Python script. The script works perfectly and provides high-level analysis of multiple files. The script has multiple features as described in the module docstring. Using the attached script as a template, create an equivalent Python script for using Google gemini-3.8-flash. The new script should maintain all the same features as the attached script. The name of the new script will be, A_Template_AnalysisQuery_google-genai_v3.0.py. Thank you!
+
+You are an expert Python coder.
+
+
+IPython output
+------------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_Queries_Chats+APIs/Anthropic/Queries/BuildQueries/Build_google-genai-Template_AnalysisQuery/Query_01/A_Template_AnalysisQuery_anthropic_v3.4.py --wdir
+
+file                                     route      mime
+---------------------------------------- ---------- ----------------------------
+A_Template_AnalysisQuery_anthropic_v3.4. document   text/plain
+
+Uploaded A_Template_AnalysisQuery_anthropic_v3.4.py [document] -> file_01FhBrwyLbjBirGD8VtHTRxo
+Pass 1: stop_reason = end_turn, input tokens = 11663, output tokens = 49982
+Response written to /home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt
+Deleted A_Template_AnalysisQuery_anthropic_v3.4.py (file_01FhBrwyLbjBirGD8VtHTRxo)

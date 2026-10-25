@@ -6,7 +6,7 @@ Revised:  20 Oct 2026
 Authors : bruce-vdb, claude-opus-5-5
 
 -------------------------------------------------
-A_Template_Analysis+Graphics_claude-sdk_v3.3.py
+A_Template_AnalysisQuery_anthropic_v3.4.py
 -------------------------------------------------
   * Send one or more files of ANY permitted type for analysis to Claude
   * Stream the reply to a text file that includes a) analytical results, and 
@@ -21,7 +21,8 @@ QUICK START
   1. Check packages installed in venv (ai-apis) and perform updates
 
 <<< bash
-    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && pip list
+    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+    pip list &&
     
     python3 -m pip install --upgrade pip &&
     pip install --upgrade anthropic && 
@@ -35,10 +36,11 @@ QUICK START
   4. Run file (runs in Spyder within virtual environment, ai-apis)
       * To run file w/o CLI toggles
           a) Clic on the green Run file icon in Toolbar or press F5
+
       * To run file w/ CLI toggles
           a) place copy of file on Desktop
           b) run file using IPython interpreter
-runfile('/home/bruce-vdb/Desktop/A_Template_Analysis+Graphics_claude-sdk_v3.3.py', args='--dry-run')
+runfile('/home/bruce-vdb/Desktop/A_Template_AnalysisQuery_anthropic_v3.4.py', args='--dry-run')
 
   Command-line examples (CLI files replace INPUT_FILES for that run):
      ./A_Template_...py report.pdf notes.txt -p "Summarize these files"
@@ -94,10 +96,10 @@ except ImportError:
 #  SECTION 1 -- USER SETTINGS  (edit these)
 # =========================================================================
 
-# ---- Folder that holds the input files and receives the output ---------
-DOC_DIR = Path.home() / "/home/bruce-vdb/Desktop"          # e.g. /home/bruce-vdb/Desktop
+# ---- Directory that holds the input files and receives the output ---------
+DOC_DIR = Path.home() / "/home/bruce-vdb/Desktop"          
 
-# ---- Input files --------------------------------------------------------
+# ---- Input files (on Desktop) --------------------------------------------------------
 #   * One entry per line; add, remove or comment out (#) lines freely.
 #   * Names are relative to DOC_DIR, or give an absolute path.
 #   * Entry formats:
@@ -106,10 +108,10 @@ DOC_DIR = Path.home() / "/home/bruce-vdb/Desktop"          # e.g. /home/bruce-vd
 #                                            "document" | "image" | "container"
 INPUT_FILES = [
     # ---- PDF documents ----------------------------------------------
-     "Woods_Resilience.pdf",
+ #    "Woods_Resilience.pdf",
 
     # ---- Plain text / source code -----------------------------------
- #   "X_Template_DataQuery_OpenAI-API_v1.0.py",
+    "A_Template_ResearchQuery_openai_v3.0.py",
  #   "Errors.txt",
 
     # ---- Images -----------------------------------------------------
@@ -157,14 +159,15 @@ INPUT_FILES = [
 
 # ---- The prompt (adjacent string literals = no stray spaces) ----------
 PROMPT = (
-    "Analyze the attached pdf file and create a single diagram for each of the four cases of resilience as \
-    described in the attached document. The diagrams should be in .jpeg format."
+    "Review and analyze the attached Python script. The script works perfectly and provides high-level research capacity \
+    for invetigation across published and web-based materials. The script has multiple features as described in the \
+    Module Docstring. Using the attached script as a template, create an equivalent Python script for using Anthropic \
+    claude-fable-5-1. The new script should maintain all the same features as the attached script. The name of the new \
+    script will be, A_Template_ResearchQuery_anthropic_v3.0.py. Thank you!"
 )
 
 # ---- Optional system prompt (None = no system prompt) -----------------
-SYSTEM_PROMPT = "You are an expert in sustainability and the analysis of complex adaptive systems. When a file, \
-    chart, table, or script would be useful, create it with the code interpreter and save it as a file so the user \
-    can download it."
+SYSTEM_PROMPT = "You are an expert Python coder."
 
 # ---- Output -------------------------------------------------------------
 OUTPUT_FILE = "QueryResponse_Anthropic.txt"

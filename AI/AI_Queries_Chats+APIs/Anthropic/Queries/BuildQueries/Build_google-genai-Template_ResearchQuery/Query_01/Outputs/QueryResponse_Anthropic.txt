@@ -1,0 +1,964 @@
+
+
+======================================================================
+ Run: 2026-10-24 18:43:26  |  Model: claude-opus-5-5
+ Files: A_Template_ResearchQuery_openai_v3.0.py [document]
+======================================================================
+
+# A_Template_ResearchQuery_google-genai_v3.0.py
+
+Below is the Gemini version of your script. It keeps the same structure, configuration style, and the nine output features. Some features needed a different approach because the two APIs work differently. Those changes are explained after the script and in the module docstring under **PORTING NOTES**.
+
+
+## How the features map
+
+| # | OpenAI v3.0 | Gemini v3.0 |
+|---|---|---|
+| 1 | Responses API, `background=True` | Interactions API, `background=True`. In `API_MODE="auto"` it falls back to streaming `generate_content` if needed. |
+| 2 | `responses.retrieve` polling | `interactions.get` polling. The same backoff and error-tolerance logic is kept. |
+| 3 | `output_text` → `.txt` | Text outputs are joined → `.txt` |
+| 4 | URL citations → `_sources.txt` | Google Search grounding results → `_sources.txt`. Redirect links are resolved to real URLs, and the search queries used are listed. |
+| 5 | `code_interpreter_call.code` → `.py` | `code_execution_call` or `executable_code` → `.py` |
+| 6 | Logs → `.log` | Execution results → `.log`, with errors flagged |
+| 7 | Container file download | **File-export protocol**: the model prints files between markers, and the script extracts them with their original names. |
+| 8 | Inline images | Inline image outputs from matplotlib |
+| 9 | Raw JSON + ID | Raw JSON + ID file. The ID file also records the mode and whether the job can be resumed. |
+
+## Things to know before you run it
+
+1. **Some details could not be verified.** I can't confirm `gemini-4-argon`'s exact capabilities. I also can't confirm every field name in your installed google-genai version. In particular, it's unclear whether background mode is allowed for models or only for agents, and the Interactions output schema may differ. To handle this, all response parsing uses `get_attr` with fallbacks, and `API_MODE="auto"` switches to streaming if background submission is rejected. Before running the full query, do `--dry-run` and then one short test prompt. Compare `_raw_response.json` against the parser if anything comes back empty.
+2. **Feature 7 works differently.** Gemini's code sandbox doesn't expose generated files for download. So the system prompt now asks the model to print files using `<<<FILE name=... encoding=...>>>` markers. Images still come back natively. Large binary files may hit output-length limits, so text formats (CSV, MD, SVG, PY) work best.
+3. **Stream mode cannot be resumed.** Only background mode supports `--resume`. If a stream fails partway, the partial output is still saved.
+4. **Fixes to the original docstring:** the resume example in the OpenAI script pointed to the `v2.0` filename and used `-resume` with one dash. This version uses the correct filename and `--resume`. The script also prints a ready-to-paste `runfile(...)` command.
+5. **Setup:** run `pip install --upgrade google-genai` and set `GEMINI_API_KEY`.
+
+
+
+```python
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created: 20 Oct 2026
+Revised: 20 Oct 2026
+Authors: bmarron (port of the OpenAI v3.0 template to google-genai)
+
+
+---------------------------------------------
+A_Template_ResearchQuery_google-genai_v3.0.py
+----------------------------------------------
+    1. Submits a query to a Google Gemini model via the google-genai SDK in
+       BACKGROUND mode (Interactions API), with the Code Execution and
+       Google Search (grounding) tools enabled.
+         * Falls back to a STREAMING generate_content call if background mode
+           is unavailable for the chosen model (see API_MODE).
+    2. Polls the API until the job completes (robust to network drops).
+    3. Saves the model's text answer to a .txt file.
+    4. Saves any web sources (Google Search grounding) to a _sources.txt file.
+    5. Saves any code that the model executed to .py files.
+    6. Saves the execution logs to a .log file.
+    7. Saves every file the model generated inside its sandbox
+       (e.g. .csv, .py, .md, .xlsx, .pdf) with its original name and extension.
+       That is, multi-file-type output (text, code, images, data files)
+       (see PORTING NOTES: delivered via a file-export protocol)
+    8. Saves any inline images (plots) returned by Code Execution.
+    9. Saves the raw JSON response for debugging.
+
+    All outputs are written to a time-stamped folder on the Desktop:
+        ~/Desktop/EcosanQuery_Google_YYYYMMDD_HHMMSS/
+
+
+---------------------------------------------------------------------------
+QUICK START
+---------------------------------------------------------------------------
+  1. Check packages installed in venv (ai-apis) and perform updates
+
+<<< bash
+    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && pip list
+
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade google-genai &&
+    deactivate
+>>>
+
+  2. Set your API key as ENV VARIABLE (once):  GEMINI_API_KEY
+     (GOOGLE_API_KEY is also accepted)
+  3. Edit sections below, as needed
+    # CONFIGURATION
+    # PROMPT
+
+  4. Run file (runs in Spyder within virtual environment, ai-apis)
+      * To run file w/o CLI toggles
+          a) Click on the green Run file icon in Toolbar or press F5
+      * To run file w/ CLI toggles
+          a) place copy of file on Desktop
+          b) run file using IPython interpreter
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_google-genai_v3.0.py', args='--dry-run')
+
+
+------------------
+IF INTERRUPTED RUN
+------------------
+If the run is interrupted (Ctrl-C, network drop, or polling exceeds 60 minutes)
+in BACKGROUND mode, the job keeps running server-side. The interaction ID is
+printed at submission and saved in the XXXX_response_id.txt file of a later
+run. Collect the job inside the IPython interpreter with a copy of the file
+on the Desktop:
+    runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_google-genai_v3.0.py', args='--resume INTERACTION_ID')
+
+NOTE: STREAM mode (fallback) has no server-side job, so it cannot be resumed.
+      If a stream is interrupted, whatever was received is saved and the
+      status file records 'interrupted' / 'incomplete'.
+
+
+---------------------------------------------------------------------------
+PORTING NOTES (OpenAI Responses API -> google-genai)
+---------------------------------------------------------------------------
+  * Background mode  -> client.interactions.create(background=True), then
+                        client.interactions.get(id) for polling / --resume.
+  * code_interpreter -> code_execution tool. Gemini's sandbox has no
+                        downloadable container file store, so:
+                          - matplotlib plots come back as inline images;
+                          - other files are delivered with a FILE EXPORT
+                            PROTOCOL (the model prints the file between
+                            <<<FILE ...>>> / <<<END FILE>>> markers; this
+                            script extracts and saves them with their
+                            original names and extensions).
+  * web_search       -> google_search grounding. Grounding URLs are Google
+                        redirect links; they are resolved to the real URLs
+                        when RESOLVE_SOURCE_URLS = True.
+  * CONTAINER_MEMORY -> no equivalent (option removed).
+  * API_MODE         -> "auto" tries background mode first and falls back to
+                        streaming generate_content (streaming keeps bytes
+                        flowing so the connection is not dropped as idle).
+
+
+-----------
+REVISIONS
+-----------
+v3.0 (google-genai)
+    * Port of A_Template_ResearchQuery_openai_v3.0.py to the google-genai SDK.
+    * NEW: API_MODE ("auto" | "background" | "stream").
+    * NEW: file-export protocol for non-image sandbox files.
+    * NEW: grounding redirect URLs resolved to the real source URLs.
+    * NEW: partial output saved if a stream is interrupted.
+"""
+
+
+import argparse
+import base64
+import binascii
+import hashlib
+import json
+import mimetypes
+import os
+import re
+import sys
+import time
+import urllib.error
+import urllib.request
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+import httpx
+from google import genai
+from google.genai import types
+
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+    # model to query
+MODEL = "gemini-4-argon"
+
+    # base label for all output files
+OUTPUT_LABEL = "EcosanQuery_Google"
+
+    # Desktop directory (falls back to ~/Desktop if the hard-coded path is absent)
+DOC_DIR = Path("/home/bruce-vdb/Desktop")
+if not DOC_DIR.exists():
+    DOC_DIR = Path.home() / "Desktop"
+
+    # how to call the API:
+    #   "background" -> Interactions API, background=True, poll (resumable)
+    #   "stream"     -> generate_content_stream (not resumable)
+    #   "auto"       -> try background; fall back to stream if unavailable
+API_MODE = "auto"
+
+    # tools
+USE_CODE_EXECUTION = True
+USE_WEB_SEARCH = True       # needed for real literature review/citations
+
+    # optional reasoning depth ("low", "high", ...); None = model default
+THINKING_LEVEL = None
+
+    # resolve Google grounding redirect links to the real source URLs
+RESOLVE_SOURCE_URLS = True
+
+    # per-HTTP-request timeout (seconds) for submit / poll requests
+API_TIMEOUT = 120
+
+    # per-read timeout (seconds) for the streaming fallback
+    # (long, because the model may think silently for minutes between chunks)
+STREAM_TIMEOUT = 15 * 60
+
+    # automatic SDK retries for each individual HTTP request
+MAX_RETRIES = 3
+
+    # polling settings for background mode
+POLL_INTERVAL = 10          # seconds between status checks
+MAX_WAIT = 60 * 60          # give up polling after this many seconds (job keeps running)
+MAX_POLL_ERRORS = 10        # consecutive network errors tolerated while polling
+
+    # streaming fallback: restart attempts (only if NOTHING was received yet)
+STREAM_RETRIES = 2
+
+
+# =============================================================================
+# PROMPT
+# =============================================================================
+
+    # User level message
+user_prompt = (
+    "Design a complete, self-contained home-scale ecosanitation system that "
+    "effectively and efficiently recycles human waste into garden-ready "
+    "fertilizer. The system must be designed so that 1) it can handle human "
+    "waste from three adults; 2) it uses very little electricity and virtually "
+    "no freshwater; 3) it separates urine and feces; 4) it rapidly decomposes "
+    "fecal material using inoculations of specialized bacteria and fungi; and "
+    "5) it has a minimal ecological footprint. To begin exploring design options "
+    "for such a system, review open-source journals, textbooks, and relevant "
+    "source materials for advances in ecosanitation, advances in animal manure "
+    "processing, and advances in bacterial-fungal decomposition of waste "
+    "streams. Provide 1) a high-level conceptual design in both written and "
+    "graphical form; and 2) a list of relevant citations."
+)
+
+    # System level message
+sys_prompt = (
+    "You are an expert in bacterial and fungal decomposition techniques and "
+    "ecological engineering designs. Use Google Search to find and verify "
+    "sources; cite only sources you have actually located. When a file, chart, "
+    "table, or script would be useful, create it with the code execution tool "
+    "so the user can download it."
+)
+
+    # Appended to sys_prompt so the model can deliver non-image files.
+    # (Gemini's code sandbox does not expose generated files for download.)
+FILE_EXPORT_INSTRUCTIONS = (
+    "\n\nFILE EXPORT PROTOCOL: Files saved inside your code-execution sandbox "
+    "are NOT returned to the user. To deliver a file (e.g. .csv, .py, .md, "
+    ".svg, .json), print its full contents to stdout from the code tool, "
+    "wrapped exactly like this:\n"
+    "<<<FILE name=example.csv encoding=text>>>\n"
+    "...file contents...\n"
+    "<<<END FILE>>>\n"
+    "For binary files (e.g. .xlsx, .pdf) use encoding=base64 and print the "
+    "base64-encoded bytes. Use simple filenames without spaces. Charts drawn "
+    "with matplotlib are returned to the user automatically as images."
+)
+
+
+def full_system_prompt() -> str:
+    if USE_CODE_EXECUTION:
+        return sys_prompt + FILE_EXPORT_INSTRUCTIONS
+    return sys_prompt
+
+
+# =============================================================================
+# HELPER FUNCTIONS
+# =============================================================================
+
+def make_output_dir(base_dir: Path, label: str) -> Path:
+    """Create a unique, time-stamped output folder."""
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_dir = base_dir / f"{label}_{stamp}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    return out_dir
+
+
+def safe_filename(name: str, default: str = "file") -> str:
+    """Strip path parts and characters that are unsafe in filenames."""
+    name = os.path.basename(name or "").strip()
+    name = re.sub(r"[^\w.\-]+", "_", name)
+    return name or default
+
+
+def unique_path(directory: Path, filename: str) -> Path:
+    """Avoid overwriting files that share the same name."""
+    path = directory / filename
+    stem, suffix = path.stem, path.suffix
+    n = 1
+    while path.exists():
+        path = directory / f"{stem}_{n}{suffix}"
+        n += 1
+    return path
+
+
+def get_attr(obj, key, default=None):
+    """Read a field from either an SDK object or a plain dict."""
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def to_bytes(data) -> bytes:
+    """Normalize inline data (raw bytes, base64 str, or data URL) to bytes."""
+    if isinstance(data, (bytes, bytearray)):
+        return bytes(data)
+    if isinstance(data, str):
+        if data.startswith("data:"):
+            data = data.split(",", 1)[1]
+        return base64.b64decode(data)
+    raise TypeError(f"Unsupported data type: {type(data).__name__}")
+
+
+def to_jsonable(obj):
+    """Best-effort conversion of SDK objects to JSON-serialisable data."""
+    if obj is None or isinstance(obj, (str, int, float, bool)):
+        return obj
+    if isinstance(obj, (bytes, bytearray)):
+        return base64.b64encode(bytes(obj)).decode("ascii")
+    if isinstance(obj, (list, tuple)):
+        return [to_jsonable(o) for o in obj]
+    if isinstance(obj, dict):
+        return {str(k): to_jsonable(v) for k, v in obj.items()}
+    for meth, kwargs in (("model_dump", {"mode": "json", "exclude_none": True}),
+                         ("to_json_dict", {}),
+                         ("to_dict", {})):
+        fn = getattr(obj, meth, None)
+        if callable(fn):
+            try:
+                return fn(**kwargs)
+            except Exception:
+                pass
+    return str(obj)
+
+
+def http_status(err) -> Optional[int]:
+    """Extract an HTTP status code from any SDK / httpx exception."""
+    for attr in ("code", "status_code"):
+        val = getattr(err, attr, None)
+        if isinstance(val, int):
+            return val
+    resp = getattr(err, "response", None)
+    val = getattr(resp, "status_code", None)
+    return val if isinstance(val, int) else None
+
+
+def is_transient(err) -> bool:
+    """True for network drops, timeouts, rate limits and 5xx errors."""
+    if isinstance(err, (httpx.TransportError, ConnectionError, TimeoutError)):
+        return True
+    if type(err).__name__ in {"APIConnectionError", "APITimeoutError"}:
+        return True
+    return http_status(err) in {408, 429, 500, 502, 503, 504}
+
+
+def describe_error(err) -> str:
+    code = http_status(err)
+    prefix = f"HTTP {code}: " if code else ""
+    return f"{prefix}{type(err).__name__}: {err}"
+
+
+def resume_hint(response_id: str) -> str:
+    """Commands the user can run to collect a background job later."""
+    if "__file__" in globals():
+        script = os.path.basename(__file__)
+        full = os.path.abspath(__file__)
+    else:
+        script = full = "script.py"
+    return (f"python3 {script} --resume {response_id}\n"
+            f"  or in Spyder/IPython:\n"
+            f"  runfile('{full}', args='--resume {response_id}')")
+
+
+def resolve_url(url: str) -> str:
+    """Follow Google grounding redirect links to the real source URL."""
+    if not RESOLVE_SOURCE_URLS or "grounding-api-redirect" not in url:
+        return url
+    for method in ("HEAD", "GET"):
+        try:
+            req = urllib.request.Request(url, method=method,
+                                         headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                return resp.geturl()
+        except urllib.error.HTTPError as err:
+            # redirect followed, but the final site refused the request
+            final = err.geturl()
+            if final and final != url:
+                return final
+        except Exception:
+            pass
+    return url
+
+
+    # <<<FILE name=foo.csv encoding=text>>> ... <<<END FILE>>>
+FILE_BLOCK_RE = re.compile(
+    r"<<<FILE name=(?P<name>[^\s>]+)(?:\s+encoding=(?P<enc>text|base64))?\s*>>>"
+    r"[ \t]*\r?\n(?P<body>.*?)\r?\n?<<<END FILE>>>",
+    re.DOTALL,
+)
+
+
+def extract_exported_files(texts) -> list:
+    """Find files printed with the FILE EXPORT PROTOCOL. Returns [(name, bytes)]."""
+    found, seen = [], set()
+    for text in texts:
+        for m in FILE_BLOCK_RE.finditer(text or ""):
+            name = m.group("name")
+            body = m.group("body")
+            if (m.group("enc") or "text") == "base64":
+                try:
+                    data = base64.b64decode("".join(body.split()), validate=True)
+                except (binascii.Error, ValueError) as err:
+                    print(f"[Warning] Bad base64 for exported file '{name}': {err}")
+                    continue
+            else:
+                data = (body + "\n").encode("utf-8")
+            key = (name, hashlib.sha256(data).hexdigest())
+            if key not in seen:
+                seen.add(key)
+                found.append((name, data))
+    return found
+
+
+# =============================================================================
+# NORMALISED RESULT (common to background and stream modes)
+# =============================================================================
+
+@dataclass
+class QueryResult:
+    mode: str                                   # "background" | "stream"
+    response_id: Optional[str] = None
+    status: str = "unknown"
+    detail: str = ""
+    resumable: bool = False
+    text_parts: list = field(default_factory=list)
+    code_blocks: list = field(default_factory=list)
+    logs: list = field(default_factory=list)     # (code_index, text, is_error)
+    images: list = field(default_factory=list)   # (bytes, mime_type)
+    sources: dict = field(default_factory=dict)  # url -> title
+    search_queries: list = field(default_factory=list)
+    usage: dict = field(default_factory=dict)
+    raw: object = None
+    _text_open: bool = False                     # stream: merge text fragments
+
+    @property
+    def text(self) -> str:
+        return "\n\n".join(p.strip("\n") for p in self.text_parts if p.strip())
+
+    def add_source(self, url, title=None):
+        if isinstance(url, str) and url.startswith("http"):
+            if title or url not in self.sources:
+                self.sources[url] = title or self.sources.get(url, "")
+
+
+def usage_to_dict(usage) -> dict:
+    data = to_jsonable(usage) if usage is not None else {}
+    if not isinstance(data, dict):
+        return {}
+    return {k: v for k, v in data.items() if isinstance(v, (int, float))}
+
+
+# =============================================================================
+# API: BACKGROUND MODE (Interactions API) - SUBMIT + POLL
+# =============================================================================
+
+def build_interaction_tools() -> list:
+    tools = []
+    if USE_CODE_EXECUTION:
+        tools.append({"type": "code_execution"})
+    if USE_WEB_SEARCH:
+        tools.append({"type": "google_search"})
+    return tools
+
+
+def submit_background(client: genai.Client) -> str:
+    """
+    Submit the request in background mode.
+    Returns immediately with an interaction ID; the model works server-side.
+    """
+    if not hasattr(client, "interactions"):
+        raise RuntimeError("This google-genai version has no Interactions API "
+                           "(pip install --upgrade google-genai).")
+
+    print(f"Submitting prompt to {MODEL} (background mode) ...")
+    kwargs = dict(
+        model=MODEL,
+        input=user_prompt,
+        system_instruction=full_system_prompt(),
+        tools=build_interaction_tools(),
+        background=True,     # <-- no long-held HTTP connection
+        store=True,          # required for background mode / resume
+    )
+    if THINKING_LEVEL:
+        kwargs["generation_config"] = {"thinking_level": THINKING_LEVEL}
+
+    interaction = client.interactions.create(**kwargs)
+    interaction_id = get_attr(interaction, "id")
+
+    print(f"Interaction ID: {interaction_id}")
+    print(f"(If interrupted, collect later with:\n  {resume_hint(interaction_id)})\n")
+    return interaction_id
+
+
+def wait_for_interaction(client: genai.Client, interaction_id: str):
+    """
+    Poll a background interaction until it reaches a terminal state.
+    Tolerates transient network errors. Returns the final Interaction object,
+    or None if MAX_WAIT is exceeded (the job keeps running on the server).
+    """
+    terminal = {"completed", "failed", "cancelled", "incomplete", "requires_action"}
+    start = time.time()
+    last_status = None
+    poll_errors = 0
+
+    while True:
+        try:
+            interaction = client.interactions.get(interaction_id)
+            poll_errors = 0
+        except Exception as err:
+            if not is_transient(err):
+                raise
+            poll_errors += 1
+            if poll_errors > MAX_POLL_ERRORS:
+                print(f"\n[Error] Too many consecutive polling errors: {describe_error(err)}")
+                return None
+            wait = min(POLL_INTERVAL * poll_errors, 60)
+            print(f"[Warning] Polling error ({poll_errors}/{MAX_POLL_ERRORS}): "
+                  f"{describe_error(err)}. Retrying in {wait}s ...")
+            time.sleep(wait)
+            continue
+
+        status = str(get_attr(interaction, "status") or "unknown").lower()
+        elapsed = int(time.time() - start)
+
+        if status != last_status:
+            print(f"[{elapsed:>5}s] status: {status}")
+            last_status = status
+        else:
+            print(f"[{elapsed:>5}s] still {status} ...", end="\r", flush=True)
+
+        if status in terminal:
+            print()
+            return interaction
+
+        if elapsed > MAX_WAIT:
+            print(f"\n[Warning] Stopped polling after {MAX_WAIT}s. "
+                  "The job is still running on the server.")
+            return None
+
+        time.sleep(POLL_INTERVAL)
+
+
+def normalize_interaction(interaction) -> QueryResult:
+    """Convert a finished Interaction into a QueryResult."""
+    status = str(get_attr(interaction, "status") or "unknown").lower()
+    res = QueryResult(mode="background", response_id=get_attr(interaction, "id"),
+                      status=status, resumable=True, raw=interaction)
+    if status != "completed":
+        detail = (get_attr(interaction, "error")
+                  or get_attr(interaction, "incomplete_details") or "")
+        res.detail = str(detail)
+
+    for out in get_attr(interaction, "outputs") or []:
+        otype = get_attr(out, "type")
+
+        if otype == "text":
+            txt = get_attr(out, "text")
+            if txt:
+                res.text_parts.append(txt)
+            for ann in get_attr(out, "annotations") or []:
+                res.add_source(get_attr(ann, "url") or get_attr(ann, "uri")
+                               or get_attr(ann, "source"), get_attr(ann, "title"))
+
+        elif otype == "code_execution_call":
+            args = get_attr(out, "arguments")
+            code = get_attr(args, "code") or get_attr(out, "code")
+            if code:
+                res.code_blocks.append(code)
+
+        elif otype == "code_execution_result":
+            result = get_attr(out, "result") or get_attr(out, "output") or ""
+            res.logs.append((len(res.code_blocks), str(result),
+                             bool(get_attr(out, "is_error"))))
+
+        elif otype == "google_search_call":
+            args = get_attr(out, "arguments")
+            res.search_queries.extend(get_attr(args, "queries") or [])
+
+        elif otype == "google_search_result":
+            results = get_attr(out, "result") or []
+            if not isinstance(results, list):
+                results = [results]
+            for item in results:
+                res.add_source(get_attr(item, "url") or get_attr(item, "uri"),
+                               get_attr(item, "title"))
+
+        elif otype == "image":
+            data = get_attr(out, "data")
+            if data:
+                try:
+                    res.images.append((to_bytes(data),
+                                       get_attr(out, "mime_type") or "image/png"))
+                except Exception as err:
+                    print(f"[Warning] Could not decode image output: {err}")
+
+    res.usage = usage_to_dict(get_attr(interaction, "usage"))
+    return res
+
+
+# =============================================================================
+# API: STREAM MODE (fallback, generate_content_stream)
+# =============================================================================
+
+def build_generate_config() -> types.GenerateContentConfig:
+    tools = []
+    if USE_CODE_EXECUTION:
+        tools.append(types.Tool(code_execution=types.ToolCodeExecution()))
+    if USE_WEB_SEARCH:
+        tools.append(types.Tool(google_search=types.GoogleSearch()))
+
+    kwargs = dict(
+        system_instruction=full_system_prompt(),
+        tools=tools,
+        http_options=types.HttpOptions(timeout=STREAM_TIMEOUT * 1000),  # ms
+    )
+    if THINKING_LEVEL:
+        kwargs["thinking_config"] = types.ThinkingConfig(thinking_level=THINKING_LEVEL)
+    return types.GenerateContentConfig(**kwargs)
+
+
+def absorb_chunk(res: QueryResult, chunk, state: dict) -> None:
+    """Merge one streamed GenerateContentResponse chunk into res."""
+    if get_attr(chunk, "response_id"):
+        res.response_id = chunk.response_id
+    if get_attr(chunk, "usage_metadata"):
+        res.usage = usage_to_dict(chunk.usage_metadata)
+
+    for cand in get_attr(chunk, "candidates") or []:
+        fr = get_attr(cand, "finish_reason")
+        if fr is not None:
+            state["finish_reason"] = getattr(fr, "name", str(fr))
+
+        gm = get_attr(cand, "grounding_metadata")
+        if gm:
+            res.search_queries.extend(q for q in (get_attr(gm, "web_search_queries") or [])
+                                      if q not in res.search_queries)
+            for gc in get_attr(gm, "grounding_chunks") or []:
+                web = get_attr(gc, "web")
+                if web:
+                    res.add_source(get_attr(web, "uri"), get_attr(web, "title"))
+
+        content = get_attr(cand, "content")
+        for part in get_attr(content, "parts") or []:
+            if get_attr(part, "thought"):
+                continue
+
+            if get_attr(part, "text"):
+                if res._text_open and res.text_parts:
+                    res.text_parts[-1] += part.text
+                else:
+                    res.text_parts.append(part.text)
+                res._text_open = True
+                state["chars"] += len(part.text)
+                continue
+
+            res._text_open = False
+            if get_attr(part, "executable_code"):
+                code = get_attr(part.executable_code, "code")
+                if code:
+                    res.code_blocks.append(code)
+            elif get_attr(part, "code_execution_result"):
+                cer = part.code_execution_result
+                outcome = get_attr(cer, "outcome")
+                outcome = getattr(outcome, "name", str(outcome or ""))
+                res.logs.append((len(res.code_blocks), get_attr(cer, "output") or "",
+                                 outcome not in ("OUTCOME_OK", "")))
+            elif get_attr(part, "inline_data"):
+                blob = part.inline_data
+                if get_attr(blob, "data"):
+                    res.images.append((to_bytes(blob.data),
+                                       get_attr(blob, "mime_type") or "image/png"))
+
+
+def stream_query(client: genai.Client) -> QueryResult:
+    """
+    Run the query with streaming. Not resumable, but partial output is kept
+    if the stream is interrupted after content has started arriving.
+    """
+    res = QueryResult(mode="stream", status="in_progress", resumable=False)
+    raw_chunks = []
+    config = build_generate_config()
+    attempt = 0
+
+    print(f"Submitting prompt to {MODEL} (stream mode) ...")
+    while True:
+        attempt += 1
+        state = {"finish_reason": None, "chars": 0}
+        start = time.time()
+        try:
+            for chunk in client.models.generate_content_stream(
+                    model=MODEL, contents=user_prompt, config=config):
+                raw_chunks.append(chunk)
+                absorb_chunk(res, chunk, state)
+                print(f"[{int(time.time() - start):>5}s] receiving ... "
+                      f"{state['chars']} chars, {len(res.code_blocks)} code block(s)",
+                      end="\r", flush=True)
+            print()
+            fr = state["finish_reason"]
+            if fr in (None, "STOP", "FINISH_REASON_UNSPECIFIED"):
+                res.status = "completed"
+            else:
+                res.status, res.detail = "incomplete", f"finish_reason={fr}"
+            break
+
+        except KeyboardInterrupt:
+            print("\n\nInterrupted. Stream mode is not resumable; saving partial output.")
+            res.status, res.detail = "interrupted", "Ctrl-C during stream"
+            break
+
+        except Exception as err:
+            if not raw_chunks and is_transient(err) and attempt <= STREAM_RETRIES:
+                wait = POLL_INTERVAL * attempt
+                print(f"\n[Warning] Stream error before any output: {describe_error(err)}. "
+                      f"Retrying in {wait}s ({attempt}/{STREAM_RETRIES}) ...")
+                time.sleep(wait)
+                continue
+            if raw_chunks:
+                print(f"\n[Warning] Stream broke after partial output: {describe_error(err)}")
+                res.status, res.detail = "incomplete", f"stream error: {describe_error(err)}"
+                break
+            raise
+
+    res.raw = raw_chunks
+    return res
+
+
+# =============================================================================
+# OUTPUT HANDLING
+# =============================================================================
+
+def process_result(res: QueryResult, out_dir: Path) -> None:
+
+    saved_files = []
+
+    # ---------------------------------------------------------------
+    # 0. RAW JSON + ID (debugging / record keeping)
+    # ---------------------------------------------------------------
+    try:
+        raw_path = out_dir / f"{OUTPUT_LABEL}_raw_response.json"
+        raw_path.write_text(json.dumps(to_jsonable(res.raw), indent=2,
+                                       ensure_ascii=False, default=str),
+                            encoding="utf-8")
+        saved_files.append(raw_path)
+    except Exception as err:
+        print(f"[Warning] Could not save raw JSON: {err}")
+
+    id_path = out_dir / f"{OUTPUT_LABEL}_response_id.txt"
+    id_path.write_text(
+        f"{res.response_id or '(none)'}\n"
+        f"status: {res.status}\n"
+        f"mode: {res.mode}\n"
+        f"resumable: {res.resumable}\n",
+        encoding="utf-8")
+    saved_files.append(id_path)
+
+    # ---------------------------------------------------------------
+    # 0b. STATUS CHECK
+    # ---------------------------------------------------------------
+    if res.status != "completed":
+        print(f"[Warning] Response status is '{res.status}'. Details: {res.detail}")
+        err_path = out_dir / f"{OUTPUT_LABEL}_status_{safe_filename(res.status)}.txt"
+        err_path.write_text(f"status: {res.status}\ndetails: {res.detail}\n",
+                            encoding="utf-8")
+        saved_files.append(err_path)
+        # continue anyway: partial output may still be useful
+
+    # ---------------------------------------------------------------
+    # 1. TEXT OUTPUT -> .txt
+    # ---------------------------------------------------------------
+    output_text = res.text
+    text_path = out_dir / f"{OUTPUT_LABEL}.txt"
+    text_path.write_text(output_text, encoding="utf-8")
+    saved_files.append(text_path)
+
+    print("--- TEXT OUTPUT ---")
+    print(output_text if output_text else "(no text output)")
+    print()
+
+    # ---------------------------------------------------------------
+    # 2. EXECUTED CODE -> .py
+    # ---------------------------------------------------------------
+    for i, code in enumerate(res.code_blocks, start=1):
+        code_path = unique_path(out_dir, f"executed_code_{i}.py")
+        code_path.write_text(code, encoding="utf-8")
+        saved_files.append(code_path)
+
+    # ---------------------------------------------------------------
+    # 3. INLINE IMAGES (plots)
+    # ---------------------------------------------------------------
+    for i, (data, mime) in enumerate(res.images, start=1):
+        try:
+            ext = mimetypes.guess_extension(mime or "") or ".png"
+            img_path = unique_path(out_dir, f"image_{i}{ext}")
+            img_path.write_bytes(data)
+            saved_files.append(img_path)
+            print(f"[Image Output] -> {img_path.name}")
+        except Exception as err:
+            print(f"[Warning] Could not save image {i}: {err}")
+
+    # ---------------------------------------------------------------
+    # 4. GENERATED FILES (any type, via FILE EXPORT PROTOCOL)
+    # ---------------------------------------------------------------
+    texts_to_scan = [log for _, log, _ in res.logs] + res.text_parts
+    for name, data in extract_exported_files(texts_to_scan):
+        try:
+            path = unique_path(out_dir, safe_filename(name))
+            path.write_bytes(data)
+            saved_files.append(path)
+            print(f"[File Output] -> {path.name}")
+        except Exception as err:
+            print(f"[Warning] Could not save exported file '{name}': {err}")
+
+    # ---------------------------------------------------------------
+    # 5. EXECUTION LOGS -> .log
+    # ---------------------------------------------------------------
+    if res.logs:
+        log_lines = []
+        for idx, log, is_error in res.logs:
+            tag = " (ERROR)" if is_error else ""
+            log_lines.append(f"=== Code block {idx}{tag} ===\n{log}\n")
+        print("--- CODE EXECUTION LOGS ---")
+        print("\n".join(log_lines))
+        log_path = out_dir / f"{OUTPUT_LABEL}_execution.log"
+        log_path.write_text("\n".join(log_lines), encoding="utf-8")
+        saved_files.append(log_path)
+
+    # ---------------------------------------------------------------
+    # 6. WEB SOURCES -> _sources.txt
+    # ---------------------------------------------------------------
+    if res.sources:
+        if RESOLVE_SOURCE_URLS:
+            print(f"Resolving {len(res.sources)} source URL(s) ...")
+        lines = []
+        for i, (url, title) in enumerate(res.sources.items(), start=1):
+            real = resolve_url(url)
+            lines.append(f"{i}. {title}\n   {real}" if title else f"{i}. {real}")
+        if res.search_queries:
+            lines.append("\nSearch queries used:")
+            lines.extend(f"  - {q}" for q in res.search_queries)
+        src_path = out_dir / f"{OUTPUT_LABEL}_sources.txt"
+        src_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        saved_files.append(src_path)
+
+    # ---------------------------------------------------------------
+    # 7. USAGE + SUMMARY
+    # ---------------------------------------------------------------
+    print("\n==================================")
+    if res.usage:
+        print("Tokens: " + "  ".join(f"{k}={v}" for k, v in res.usage.items()))
+    print(f"Query {res.status}! ({res.mode} mode) {len(saved_files)} file(s) saved to:")
+    print(f"  {out_dir}")
+    for p in saved_files:
+        print(f"    - {p.name}")
+    print("==================================")
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
+
+def make_client(api_key: str) -> genai.Client:
+    http_options = types.HttpOptions(
+        timeout=API_TIMEOUT * 1000,                                  # ms
+        retry_options=types.HttpRetryOptions(attempts=MAX_RETRIES),
+    )
+    return genai.Client(api_key=api_key, http_options=http_options)
+
+
+def main() -> None:
+        # parse_known_args ignores extra arguments Spyder may pass (e.g. --wdir)
+    parser = argparse.ArgumentParser(description="Query Google Gemini with multi-file output.")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Show settings without calling the API.")
+    parser.add_argument("--resume", metavar="INTERACTION_ID", default=None,
+                        help="Collect results of an existing background interaction.")
+    args, _ = parser.parse_known_args()
+
+    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+
+    if args.dry_run:
+        print("DRY RUN: no API call will be made.\n")
+        print(f"SDK version:    google-genai {getattr(genai, '__version__', '?')}")
+        print(f"Model:          {MODEL}")
+        print(f"API mode:       {API_MODE}")
+        print(f"Output folder:  {DOC_DIR / (OUTPUT_LABEL + '_<timestamp>')}")
+        print(f"Code execution: {USE_CODE_EXECUTION}")
+        print(f"Web search:     {USE_WEB_SEARCH}")
+        print(f"Tools:          {[t['type'] for t in build_interaction_tools()]}")
+        print(f"Thinking level: {THINKING_LEVEL or 'model default'}")
+        print(f"Poll every:     {POLL_INTERVAL}s  (max wait {MAX_WAIT}s)")
+        print(f"API key found:  {bool(api_key)}")
+        print(f"\nInstructions:\n{full_system_prompt()}")
+        print(f"\nPrompt:\n{user_prompt}")
+        return
+
+        # API key is saved as an ENV VARIABLE on home computer
+    if not api_key:
+        sys.exit("ERROR: GEMINI_API_KEY (or GOOGLE_API_KEY) environment variable is not set.")
+
+    client = make_client(api_key)
+    result = None
+
+    # ---- submit (or resume) in background mode ----------------------
+    interaction_id = None
+    if args.resume:
+        interaction_id = args.resume
+        print(f"Resuming background interaction {interaction_id} ...\n")
+    elif API_MODE in ("background", "auto"):
+        try:
+            interaction_id = submit_background(client)
+        except Exception as err:
+            if API_MODE == "background":
+                sys.exit(f"ERROR: Background submit failed: {describe_error(err)}")
+            print(f"[Info] Background mode unavailable ({describe_error(err)}).\n"
+                  f"       Falling back to stream mode.\n")
+
+    # ---- poll -------------------------------------------------------
+    if interaction_id:
+        try:
+            interaction = wait_for_interaction(client, interaction_id)
+        except KeyboardInterrupt:
+            print("\n\nInterrupted. The job is still running on the server.")
+            print(f"Collect it later with:\n  {resume_hint(interaction_id)}")
+            return
+        except Exception as err:
+            sys.exit(f"ERROR while polling: {describe_error(err)}")
+
+        if interaction is None:
+            print(f"Collect it later with:\n  {resume_hint(interaction_id)}")
+            return
+        result = normalize_interaction(interaction)
+
+    # ---- stream (explicit mode or fallback) -------------------------
+    else:
+        try:
+            result = stream_query(client)
+        except Exception as err:
+            sys.exit(f"ERROR: Stream request failed: {describe_error(err)}")
+
+    # ---- save outputs ----------------------------------------------
+    out_dir = make_output_dir(DOC_DIR, OUTPUT_LABEL)
+    process_result(result, out_dir)
+
+
+if __name__ == "__main__":
+    main()
+```
+

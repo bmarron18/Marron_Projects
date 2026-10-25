@@ -11,6 +11,7 @@ Terminology
 ###############
 
 General Terms
+--------------
 
 	ML		Machine Lerning
 	LLM		Large Language Model
@@ -28,7 +29,7 @@ General Terms
 
 	NDVI 	Normalized Difference Vegetation Index
 			
-	
+
 ML
 A subfield of artificial intelligence (AI) that gives computers the ability to learn without explicitly being programmed; the development and study of statistical algorithms that can learn from data and generalize to unseen data, and thus perform tasks without explicit instructions.
 
@@ -64,3 +65,16 @@ NDVI Value Scale
 
 • The Formula: It is calculated using satellite or drone sensor data with the equation:
 \(\text{NDVI}=\frac{\text{NIR}-\text{Red}}{\text{NIR}+\text{Red}}\)
+
+Shebang Line (#!/usr/bin/env python3)
+	Tells Unix-based operating systems (like Linux and macOS) which interpreter to use to execute the script
+
+
+Encoding Declaration (# -*- coding: utf-8 -*-): 
+	Explicitly defines the character encoding for the file, preventing issues with non-ASCII characters
+
+Module Docstring (""" ... """): 
+	A multi-line comment block used for documentation, outlining the script's purpose, usage, and parameters
+
+
+
