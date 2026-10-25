@@ -1,0 +1,78 @@
+
+
+##########################################
+find overlaps and diffs in installed pkgs
+##########################################
+
+		a.
+		#obtain listing of all installed packages on reference compu (compu1; most-updated)
+		#sent to a .txt file, "packages"
+$ dpkg --get-selections | grep -v deinstall > ~/Desktop/packages1.txt
+
+		#open 'packages1.txt' in Mousepad
+		#delete all occurrences of 'install'
+		#save 
+		#scan into R
+compu1 <-readLines("~/Desktop/packages1.txt")
+
+		#delete the '\t'
+library(stringr)
+compu1<- str_trim(compu1)
+
+
+		b.
+		#obtain listing of all installed packages on new compu (compu2; least-updated)
+		#sent to a .txt file, "packages2"
+$ dpkg --get-selections | grep -v deinstall > ~/Desktop/packages2.txt
+
+		#open packages2.txt in Mousepad
+		#delete all occurrences of 'install'
+		#save and email 
+		#import from email into compu1 and scan into R
+compu2 <-readLines("~/Desktop/packages2.txt")
+compu2<- str_trim(compu2)
+
+
+		c.
+		#how string comparisons work
+A = c("Dog", "Cat", "Mouse")
+B = c("Tiger","Lion","Cat")
+
+A %in% B
+[1] FALSE  TRUE FALSE
+
+intersect(A,B)
+[1] "Cat"
+
+setdiff(A,B)
+[1] "Dog"   "Mouse"
+
+setdiff(B,A)
+[1] "Tiger" "Lion" 
+
+
+		d.
+		#find string overlaps (installed files in common)
+overlap <- intersect(compu1, compu2)
+
+		#find string diffs
+		#(watch out how the comparison is made!)
+diff_12 <- setdiff(compu1, compu2)
+diff_21 <- setdiff(compu2, compu1)
+
+
+####################
+install needed pkgs
+####################
+
+	a.
+	#check installation logs (book and *.txt) and the string diffs above
+	#decide which pkgs to install
+
+	b.
+	#install the pkgs found in compu1 but not in compu2
+
+	c.
+	#install any appropriate files from the thumb-drive backups
+	#(eg the current R libraries) 
+

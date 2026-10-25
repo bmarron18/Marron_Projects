@@ -19,6 +19,7 @@ INITIAL SETUP and LOGIN
 
 
 BILLING ETC
+    https://platform.claude.com/settings/billing
     https://platform.claude.com/login?from=logout
     https://platform.claude.com/dashboard
 

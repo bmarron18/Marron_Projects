@@ -1,0 +1,86 @@
+
+
+################
+using pyreport
+#################
+
+	a. open pyreport.py in "gedit"
+$ gedit /home/bmarron/anaconda2/pkgs/pyreport/pyreport.py
+
+	b. edit Line 1034, as needed
+\markleft{\centerline {\bf \Large SWAT Modeling of the Clackamas Basin: Baseline Models}}
+
+	c. move file to be translated to the Desktop
+
+	d. test
+$ pyreport.py -h
+
+	e. run
+$ pyreport.py -x ~/Desktop/MNBayes1.py
+
+
+
+#############
+pyreport
+##############
+http://gael-varoquaux.info/programming/pyreport-literate-programming-in-python.html
+https://answers.launchpad.net/pyreport/+question/50479
+https://itb.biologie.hu-berlin.de/~bergmann/pyreporttips.html
+
+	# DOESNT WORK
+pip install pyreport
+pyreport in ./anaconda2/lib/python2.7/site-packages
+
+	# FIX
+	a.  move pyreport folder to /home/bmarron/anaconda2/pkgs
+	
+	b.  make the file executable
+$ chmod uog+x pyreport.py	
+
+	c. add this to .bashrc
+$ export PATH="/home/bmarron/anaconda2/pkgs/pyreport:$PATH"
+
+	d. use pyreport.py -x file.py
+	
+	e. test
+$ pyreport.py -h
+	
+	f. example
+$ pyreport.py -x ~/Desktop/test.py
+Outputing report to /home/bmarron/Desktop/test.pdf
+Compiling document to pdf
+Ran script in 1.37s
+
+	g. runs on .txt files, too!
+
+	h. %s	==> Python code == string conversion via str() prior to formatting
+
+
+##########
+knitr
+############
+http://stackoverflow.com/questions/10943695/what-is-the-knitr-equivalent-of-r-cmd-sweave-myfile-rnw
+http://stackoverflow.com/questions/15512545/root-directory-for-python-chunk-in-knitr
+
+	#.Rmd ==> R markdown file
+$ Rscript -e "library(knitr); knit('myfile.Rmd')"
+
+	#.Rnw ==> “R noweb”. Noweb was an early system (still used) for literate programming (mixing code and text)
+	# .Rnw is basically a LaTex file !!!
+	# RStudio will open .Rnw and .Rmd files and allow a direct call to knitr
+	#knitr runs thru R to process the .Rnw file and then spits out the .tex file
+	
+	# using .Rnw, instead of .Rmd
+$ Rscript -e "library(knitr); knit('knitr-minimal.Rnw')" &&
+$ pdflatex knitr-minimal.tex
+
+
+$ Rscript -e "library(knitr); knit('knitr1.Rnw')" &&
+$ pdflatex knitr1.tex
+
+	#poor documaentation of using Python in knitr 
+opts_chunk$set(engine = 'python')
+
+
+
+
