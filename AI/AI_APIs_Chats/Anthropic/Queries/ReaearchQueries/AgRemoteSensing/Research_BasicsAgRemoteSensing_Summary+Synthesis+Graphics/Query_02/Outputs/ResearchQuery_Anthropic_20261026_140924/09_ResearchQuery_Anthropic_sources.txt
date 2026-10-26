@@ -1,0 +1,128 @@
+1. (PDF) Remote Sensing Techniques for Soil Organic Carbon Estimation: A Review
+   https://www.researchgate.net/publication/331942730_Remote_Sensing_Techniques_for_Soil_Organic_Carbon_Estimation_A_Review
+2. Soil Organic Carbon Assessment Using Remote-Sensing Data and Machine Learning: A Systematic Literature Review
+   https://doi.org/10.3390/rs17050882
+3. (PDF) Soil Organic Carbon Assessment Using Remote-Sensing Data and Machine Learning: A Systematic Literature Review
+   https://www.researchgate.net/publication/389573079_Soil_Organic_Carbon_Assessment_Using_Remote-Sensing_Data_and_Machine_Learning_A_Systematic_Literature_Review
+4. Satellite remote sensing enables monitoring of soil organic carbon decline in croplands of Jilin China
+   https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12917285/
+5. Image-Based Soil Organic Carbon Remote Sensing from Satellite Images with Fourier Neural Operator and Structural Similarity
+   https://arxiv.org/pdf/2311.13016
+6. Estimating soil organic carbon levels in cultivated soils from satellite image using parametric and data-driven methods: International Journal of Remote Sensing: Vol 43, No 9
+   https://www.tandfonline.com/doi/abs/10.1080/01431161.2022.2093144
+7. A comprehensive review of soil organic carbon estimates: Integrating remote sensing and machine learning technologies
+   https://link.springer.com/article/10.1007/s11368-024-03913-8
+8. Frontiers
+   https://www.frontiersin.org/journals/environmental-science/articles/10.3389/fenvs.2024.1448601/full
+9. Soil Organic Carbon Monitoring and Modelling via Machine Learning Methods Using Soil and Remote Sensing Data
+   https://www.mdpi.com/2077-0472/15/9/910
+10. Sentinel-2 for Crop Yield Estimation: A Systematic Review
+   https://arxiv.org/pdf/2603.23779
+11. (PDF) SENTINEL FOR APPLICATIONS IN AGRICULTURE
+   https://www.researchgate.net/publication/334738233_SENTINEL_FOR_APPLICATIONS_IN_AGRICULTURE
+12. Crop Mapping and Monitoring Using Sentinel-2: A Review
+   https://link.springer.com/chapter/10.1007/978-981-96-0143-1_14
+13. Sentinel-2 for crop yield estimation: A systematic review - ScienceDirect
+   https://www.sciencedirect.com/science/article/pii/S2772375526006301
+14. Recent applications of machine learning, remote sensing, and iot approaches in yield prediction: a critical review
+   https://arxiv.org/pdf/2306.04566
+15. Towards Space-to-Ground Data Availability for Agriculture Monitoring
+   https://arxiv.org/pdf/2205.07721
+16. Monitoring digestate application on agricultural crops using Sentinel-2 Satellite imagery
+   https://arxiv.org/pdf/2504.19996
+17. Reconstruction of Sentinel-2 Time Series Using Robust Gaussian Mixture Models -- Application to the Detection of Anomalous Crop Development in wheat and rapeseed crops
+   https://arxiv.org/pdf/2110.11780
+18. (PDF) Remote Sensing for Precision Agriculture: Sentinel-2 Improved Features and Applications
+   https://www.researchgate.net/publication/341129373_Remote_Sensing_for_Precision_Agriculture_Sentinel-2_Improved_Features_and_Applications
+19. Remote sensing for agricultural applications: A meta-review
+   https://www.semanticscholar.org/paper/Remote-sensing-for-agricultural-applications:-A-Weiss-Jacob/c41ae136ba732da6316f0c851555fb571b56460b
+20. Remote sensing for agricultural applications : a meta-review - fdi:010077446 - Horizon
+   https://www.documentation.ird.fr/hor/fdi:010077446
+21. Remote sensing for agricultural applications: A meta-review - ADS
+   https://ui.adsabs.harvard.edu/abs/2020RSEnv.23611402W/abstract
+22. Full article: Satellite- and drone-based remote sensing of crops and soils for smart farming
+   https://www.tandfonline.com/doi/full/10.1080/00380768.2020.1738899
+23. Remote sensing for agricultural applications: A meta-review
+   https://ouci.dntb.gov.ua/en/works/7pGaqAj9/
+24. (PDF) Remote Sensing as a Management and Monitoring Tool for Agriculture: Potential Applications
+   https://www.researchgate.net/publication/371012003_Remote_Sensing_as_a_Management_and_Monitoring_Tool_for_Agriculture_Potential_Applications
+25. A Comprehensive Review of Agricultural Parcel and Boundary Delineation from Remote Sensing Images: Recent Progress and Future Perspectives
+   https://arxiv.org/pdf/2508.14558
+26. Machine Learning-Driven Remote Sensing Applications for Agriculture in India—A Systematic Review
+   https://www.mdpi.com/2073-4395/13/9/2302
+27. Remote Sensing Applications in Agricultural, Earth and Environmental Sciences
+   https://www.mdpi.com/2076-3417/15/8/4537
+28. Full article: eDNA biodiversity from space: predicting soil bacteria and fungi alpha diversity in forests using DESIS satellite remote sensing
+   https://www.tandfonline.com/doi/full/10.1080/01431161.2025.2464958
+29. Exploring crop health and its associations with fungal soil microbiome composition using machine learning applied to remote sensing data
+   https://www.nature.com/articles/s43247-025-02330-0
+30. (PDF) Assessing crop health and its link to fungal soil microbiome composition through remote sensing
+   https://www.researchgate.net/publication/382842804_Assessing_crop_health_and_its_link_to_fungal_soil_microbiome_composition_through_remote_sensing
+31. microBIOMETER Soil Test
+   https://microbiometer.com/our-test/
+32. Soil microbial diversity–biomass relationships are driven by soil carbon content across global biomes
+   https://www.nature.com/articles/s41396-021-00906-0
+33. A hitchhiker’s guide: estimates of microbial biomass and microbial gene abundance in soil
+   https://link.springer.com/article/10.1007/s00374-024-01810-3
+34. Devices and assays for estimating microbial load and differentiating microbial populations
+   https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/11268125
+35. Can Satellite Remote Sensing Assist in the Characterization of Yeasts Related to Biogeographical Origin?
+   https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9962804/
+36. Mycorrhizal association of common European tree species shapes biomass   and metabolic activity of bacterial and fungal communities in soil
+   https://arxiv.org/pdf/2011.05846
+37. Google Earth Engine: Planetary-scale geospatial analysis for everyone
+   https://www.semanticscholar.org/paper/Google-Earth-Engine:-Planetary-scale-geospatial-for-Gorelick-Hancher/3c8fa05f8dd3a971bc4138b1b111a217c2ae3d14
+38. (Open Access) Google Earth Engine: Planetary-scale geospatial analysis for everyone (2017)
+   https://scispace.com/papers/google-earth-engine-planetary-scale-geospatial-analysis-for-1m9b6vynch
+39. Google Earth Engine: Planetary-scale geospatial analysis for everyone - ADS
+   https://ui.adsabs.harvard.edu/abs/2017RSEnv.202...18G/abstract
+40. Google Earth Engine: Planetary-Scale Geospatial Analysis for Everyone
+   https://research.google/pubs/google-earth-engine-planetary-scale-geospatial-analysis-for-everyone/
+41. Google Earth Engine for Geospatial Analysis: A Conceptual of Applications and Potential for Research and Development
+   https://ph01.tci-thaijo.org/index.php/jsid/article/view/263775
+42. Google Earth Engine: Planetary-scale geospatial analysis for everyone · DHeLO · CHLOE - Cultural Heritage Linked Open data Environment
+   https://chloe.cnr.it/s/DHeLO/item/16105
+43. Google Earth Engine: Planetary-sc... preview & related info
+   https://www.mendeley.com/catalogue/8959ea98-e7c9-3577-a98c-98d1602b4bdc/
+44. Noel Gorelick - Google Scholar
+   https://scholar.google.com/citations?user=KI5gwEYAAAAJ&hl=en
+45. (PDF) Terrain Analysis in Google Earth Engine: A Method Adapted for High-Performance Global-Scale Analysis
+   https://www.researchgate.net/publication/342251755_Terrain_Analysis_in_Google_Earth_Engine_A_Method_Adapted_for_High-Performance_Global-Scale_Analysis
+46. Spatial-Temporal-Spectral Unified Modeling for Remote Sensing Dense Prediction
+   https://arxiv.org/pdf/2505.12280
+47. SOIL - Relations - SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty
+   https://soil.copernicus.org/articles/7/217/2021/soil-7-217-2021-relations.html
+48. SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty - ADS
+   https://ui.adsabs.harvard.edu/abs/2021SOIL....7..217P/abstract
+49. SoilGrids 2.0: Producing soil information for the globe with quantified spatial uncertainty - Research Portal - Wageningen University & Research
+   https://research.wur.nl/en/publications/soilgrids-20-producing-soil-information-for-the-globe-with-quanti/
+50. SoilGrids 2.0: producing soil information for the globe with ...
+   https://soil.copernicus.org/articles/7/217/2021/soil-7-217-2021.pdf
+51. SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty
+   https://ouci.dntb.gov.ua/en/works/9jXaJNq4/
+52. New paper released: SoilGrids 2.0, Soil information for the globe
+   https://isric.org/news/new-paper-released-soilgrids-20-soil-information-for-the-globe/
+53. Copernicus
+   https://soil.copernicus.org/articles/7/217/2021/soil-7-217-2021.bib
+54. SoilGrids 2.0: producing quality-assessed soil information for the globe
+   https://d-nb.info/1221272993/34
+55. Uncertainty quantification for probabilistic machine learning in earth observation using conformal prediction
+   https://arxiv.org/pdf/2401.06421
+56. Cloud-Based Remote Sensing with Google Earth Engine
+   https://www.springerprofessional.de/en/cloud-based-remote-sensing-with-google-earth-engine/26127686
+57. Cloud-Based Remote Sensing with Google Earth Engine: Process and Prospects from a Large Edited Open-Access Book - ADS
+   https://ui.adsabs.harvard.edu/abs/2022AGUFMED32D0552C/abstract
+58. Cloud-Based Remote Sensing with Google Earth Engine: Fundamentals and Applications: Cardille, Jeffrey A., Crowley, Morgan A., Saah, David, Clinton, Nicholas E.: 9783031265877: Amazon.com: Books
+   https://www.amazon.com/Cloud-Based-Remote-Sensing-Google-Engine/dp/3031265874
+59. Cloud-Based Remote Sensing with Google Earth Engine: Fundamentals and Applications: 9783031265907 - AbeBooks
+   https://www.abebooks.com/9783031265907/Cloud-Based-Remote-Sensing-Google-Earth-3031265904/plp
+60. Cloud-Based Remote Sensing with Google Earth Engine: Fundamentals and Applications
+   https://link.springer.com/book/10.1007/978-3-031-26588-4
+61. Cloud-Based Remote Sensing with Google Earth Engine: Fundamentals and Applications: Amazon.co.uk: Cardille, Jeffrey A., Crowley, Morgan A., Saah, David, Clinton, Nicholas E.: 9783031265877: Books
+   https://www.amazon.co.uk/Cloud-Based-Remote-Sensing-Google-Engine/dp/3031265874
+62. Cloud-Based Remote Sensing with Google Earth Engine: Fundamentals and Applications - Free Computer, Programming, Mathematics, Technical Books, Lecture Notes and Tutorials
+   https://freecomputerbooks.com/Cloud-Based-Remote-Sensing-with-Google-Earth-Engine.html
+63. Cloud-Based Remote Sensing with Google Earth Engine - Open Tech Book
+   https://opentechbook.com/book/cloud-based-remote-sensing-with-google-earth-engine/
+64. Cloud-Based Remote Sensing with Google Earth Engine: Fundamentals and Applications 3031265874, 9783031265877 - DOKUMEN.PUB
+   https://dokumen.pub/cloud-based-remote-sensing-with-google-earth-engine-fundamentals-and-applications-3031265874-9783031265877.html

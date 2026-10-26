@@ -1,0 +1,45 @@
+
+Prompt
+-----------
+Review the attached files. The Python script (.py) runs fine but, given the prompt, allowed 10 continuations and thus \
+the context snowballed. At some point the resubmitted conversation hit 1,037,825 tokens and the query ended with an \
+output error and no files generated. The errors file (.txt) lists the IPython outputs plus a conversation with Claude \
+Chat about the problem. Do the following: 1) analyze both files, 2) revise the attached Python script given the \
+recommendations made by Claude Chat and include any other changes necessary to avoid the problem of snowballing, \
+and 3) incorporate the revisions into a new script that maintains all the same features and layout as the original \
+script. The name of the new script will be, A_Template_ResearchQuery_anthropic_v3.1.py. Thank you!
+
+
+You are an expert Python coder.
+
+
+
+PROMPT = (
+    "Review the attached files. The Python script (.py) runs fine but, given the prompt, allowed 10 "
+    "continuations and thus the context snowballed. At some point the resubmitted conversation hit "
+    "1,037,825 tokens and the query ended with an output error and no files generated. The errors file "
+    "(.txt) lists the IPython outputs plus a conversation with Claude Chat about the problem. Do the "
+    "following: 1) analyze both files, 2) revise the attached Python script given the recommendations "
+    "made by Claude Chat and include any other changes necessary to avoid the problem of snowballing, "
+    "and 3) incorporate the revisions into a new script that maintains all the same features and layout "
+    "as the original script. The name of the new script will be, "
+    "A_Template_ResearchQuery_anthropic_v3.1.py. Thank you!"
+)
+
+
+
+IPython Output
+---------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/Anthropic/Queries/BuildQueries/Build_anthropic-Template_ResearchQuery/Query_02/A_Template_AnalysisQuery_anthropic_v3.4.py --wdir
+
+file                                     route      mime
+---------------------------------------- ---------- ----------------------------
+A_Template_ResearchQuery_anthropic_v3.0. document   text/plain
+Errors.txt                               document   text/plain
+
+Uploaded A_Template_ResearchQuery_anthropic_v3.0.py [document] -> file_01445Z1Jhc9EKFVyoE8bbrvz
+Uploaded Errors.txt [document] -> file_01ABU8Bqj38jiH6TRbZ5W2qx
+Pass 1: stop_reason = end_turn, input tokens = 16311, output tokens = 48775
+Response written to /home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt
+Deleted A_Template_ResearchQuery_anthropic_v3.0.py (file_01445Z1Jhc9EKFVyoE8bbrvz)
+Deleted Errors.txt (file_01ABU8Bqj38jiH6TRbZ5W2qx)

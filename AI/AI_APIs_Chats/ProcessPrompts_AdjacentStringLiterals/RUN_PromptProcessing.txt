@@ -1,0 +1,16 @@
+
+
+############
+Quick Start
+##############
+
+1. Write original prompt with normal punctuation.
+2. Add "\" and hard returns to original prompt (format for prompt input into script)
+3. Paste the formatted prompt into "PromptInput.txt" in this folder
+4. Opem terminal in this folder
+5. Run "AdjacentStringLiterals_Prompts.sh"
+
+<<< bash
+	chmod +x AdjacentStringLiterals_Prompts.sh &&
+	./AdjacentStringLiterals_Prompts.sh INPUT_user_prompt-backslash.txt
+>>>

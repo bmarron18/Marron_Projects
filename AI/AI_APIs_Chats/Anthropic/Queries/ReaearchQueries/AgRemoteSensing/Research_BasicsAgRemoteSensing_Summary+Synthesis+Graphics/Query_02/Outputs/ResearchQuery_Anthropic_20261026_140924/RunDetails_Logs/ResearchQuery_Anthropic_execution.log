@@ -1,0 +1,168 @@
+=== Code block 1 (exit 0) ===
+$ python3 -c "import reportlab, matplotlib; print(reportlab.Version, matplotlib.__version__)"; python3 -c "import PIL; print(PIL.__version__)"; fc-list | grep -i -E "dejavu|liberation" | head -3
+--- stdout ---
+4.2.2 3.10.5
+12.3.0
+/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf: DejaVu Serif:style=Bold
+/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf: DejaVu Sans Mono:style=Book
+/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Italic.ttf: Liberation Sans Narrow:style=Italic
+
+
+=== Code block 2 (exit 0) ===
+$ cd /tmp/deliverables && python3 make_infographic.py --dpi 110 -o /tmp/preview.jpeg && python3 -c "
+from PIL import Image; im=Image.open('/tmp/preview.jpeg'); print(im.size)
+im.resize((im.width//2, im.height//2)).save('/tmp/preview_small.jpeg', quality=70)"
+--- stdout ---
+Wrote /tmp/preview.jpeg
+(1760, 2200)
+
+
+=== Code block 3 (exit 0) ===
+$ cd /tmp/deliverables && python3 - <<'EOF'
+import matplotlib; matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import make_infographic as mi
+# monkeypatch savefig to capture figure
+captured={}
+orig=plt.Figure.savefig
+def fake(self,*a,**k): captured['fig']=self
+plt.Figure.savefig=fake
+orig_close=plt.close; plt.close=lambda *a,**k: None
+mi.build("/dev/null",dpi=110)
+fig=captured['fig']; fig.canvas.draw(); r=fig.canvas.get_renderer()
+ax=fig.axes[0]; W,H=fig.get_size_inches()*fig.dpi
+over=[]
+for t in ax.texts:
+    bb=t.get_window_extent(r)
+    x1=bb.x1/W; y0=bb.y0/H
+    if x1>0.945 or y0<0.0: over.append((t.get_text()[:50], round(x1,3), round(y0,3)))
+print("overflow count:",len(over))
+for o in over[:10]: print(o)
+EOF
+--- stdout ---
+overflow count: 2
+('• USGS EarthExplorer / NASA Earthdata (Landsat, MO', np.float64(0.962), np.float64(0.088))
+('Sources: Weiss, Jacob & Duveiller (2020) Remote Se', np.float64(1.131), np.float64(0.012))
+
+
+=== Code block 4 (exit 0) ===
+$ cd /tmp/deliverables && python3 - <<'EOF'
+import re
+s=open('make_infographic.py').read()
+s=s.replace('"USGS EarthExplorer / NASA Earthdata (Landsat, MODIS, HLS, SMAP, ECOSTRESS)"',
+            '"USGS EarthExplorer / NASA Earthdata (Landsat, MODIS, HLS, SMAP)"')
+s=s.replace('"Satellite SOC/pH/CEC models: typically R2 ~0.4-0.7; validation RPD >1.4 = fair"',
+            '"Satellite SOC/pH/CEC models: typically R2 ~0.4-0.7; RPD >1.4 = fair"')
+s=s.replace('"Microbial biomass / F:B ratio is NOT directly observed - inferred via covariates"',
+            '"Microbial biomass / F:B ratio is NOT directly observed - only inferred"')
+s=s.replace('"SoilGrids (ISRIC); LUCAS topsoil (ESDAC); SSURGO / POLARIS (USA)"',
+            '"SoilGrids (ISRIC); LUCAS topsoil (ESDAC); SSURGO (USA)"')
+s=s.replace('''         "Sources: Weiss, Jacob & Duveiller (2020) Remote Sens. Environ. 236:111402; "
+         "Angelopoulou et al. (2019) Remote Sens. 11:676; Lima et al. (2025) Remote Sens. 17:882; "
+         "Poggio et al. (2021) SOIL 7:217; Gorelick et al. (2017) Remote Sens. Environ. 202:18; "
+         "Cardille et al. (eds., 2024) Cloud-Based Remote Sensing with Google Earth Engine (open access).",
+         size=7.5, color=C_MUTED, va="bottom")''',
+'''         "Sources: Weiss, Jacob & Duveiller (2020) Remote Sens. Environ. 236:111402; "
+         "Angelopoulou et al. (2019) Remote Sens. 11:676; Lima et al. (2025) Remote Sens. 17:882; "
+         "Poggio et al. (2021) SOIL 7:217;\\n"
+         "Gorelick et al. (2017) Remote Sens. Environ. 202:18; "
+         "Cardille et al. (eds., 2024) Cloud-Based Remote Sensing with Google Earth Engine (open access, Springer).",
+         size=7.5, color=C_MUTED, va="bottom", linespacing=1.4)''')
+open('make_infographic.py','w').write(s)
+EOF
+python3 - <<'EOF'
+import matplotlib; matplotlib.use("Agg")
+import matplotlib.pyplot as plt, sys
+sys.path.insert(0,'/tmp/deliverables')
+import make_infographic as mi
+captured={}
+plt.Figure.savefig=lambda self,*a,**k: captured.setdefault('fig',self)
+plt.close=lambda *a,**k: None
+mi.build("/dev/null",dpi=110)
+fig=captured['fig']; fig.canvas.draw(); r=fig.canvas.get_renderer()
+ax=fig.axes[0]; W,H=fig.get_size_inches()*fig.dpi
+# panel bounds
+x_left,w=0.06,0.88; panel_w=(w-0.03)/3
+bounds=[(x_left+j*(panel_w+0.015), x_left+j*(panel_w+0.015)+panel_w) for j in range(3)]
+bad=[]
+for t in ax.texts:
+    bb=t.get_window_extent(r); x0,x1,y0=bb.x0/W,bb.x1/W,bb.y0/H
+    if y0<0.14 and y0>0.02:
+        for lo,hi in bounds:
+            if lo-0.001<=x0<=hi and x1>hi: bad.append((t.get_text()[:40],round(x1-hi,3)))
+    if x1>0.945: bad.append(('GLOBAL',t.get_text()[:40],round(x1,3)))
+print(bad)
+EOF
+--- stdout ---
+[]
+
+
+=== Code block 5 (exit 0) ===
+$ cd /tmp/deliverables && python3 make_infographic.py -o satellite_ag_infographic.jpeg --dpi 200 && ls -la
+--- stdout ---
+Wrote satellite_ag_infographic.jpeg
+total 1080
+drwxr-xr-x 3 root root    4096 Oct 26 19:59 .
+drwxrwxrwt 6 root root    4096 Oct 26 19:58 ..
+drwxr-xr-x 2 root root    4096 Oct 26 19:59 __pycache__
+-rw-r--r-- 1 root root   13213 Oct 26 19:59 make_infographic.py
+-rw-r--r-- 1 root root 1074191 Oct 26 19:59 satellite_ag_infographic.jpeg
+
+
+=== Code block 6 (exit 0) ===
+$ cd /tmp/deliverables && python3 build_pdfs.py 2>&1 | tail -3 && for f in *.pdf; do echo "$f: $(python3 -c "import pypdf,sys; print(len(pypdf.PdfReader('$f').pages))" 2>/dev/null) pages"; done
+--- stdout ---
+done
+01_High_Level_Summary_Satellite_Data_in_Agriculture.pdf: 3 pages
+02_Detailed_Account_Acquisition_Processing_Evaluation.pdf: 6 pages
+03_Foundational_and_Canonical_References.pdf: 4 pages
+04_Public_Satellite_Data_Sources.pdf: 2 pages
+
+
+=== Code block 7 (exit 0) ===
+$ cd /tmp/deliverables && python3 -c "
+import pypdf
+r=pypdf.PdfReader('02_Detailed_Account_Acquisition_Processing_Evaluation.pdf')
+t=r.pages[0].extract_text()
+import re
+print([m for m in re.findall(r'.{10}(?:&|8-14).{12}', t)][:5])
+r2=pypdf.PdfReader('01_High_Level_Summary_Satellite_Data_in_Agriculture.pdf')
+print(re.findall(r'.{8}R2.{8}|.{8}R\n?2 .{8}', r2.pages[1].extract_text())[:2])
+"; rm -rf __pycache__; ls
+--- stdout ---
+['infrared (8-14 µm), which ']
+['lidated R2 of abou']
+01_High_Level_Summary_Satellite_Data_in_Agriculture.pdf
+02_Detailed_Account_Acquisition_Processing_Evaluation.pdf
+03_Foundational_and_Canonical_References.pdf
+04_Public_Satellite_Data_Sources.pdf
+build_pdfs.py
+make_infographic.py
+satellite_ag_infographic.jpeg
+
+
+=== Code block 8 (exit 0) ===
+$ cd /tmp/deliverables && cat > README.txt <<'EOF'
+Satellite Data for Agriculture and Soil Health - Deliverables (October 2026)
+
+01_High_Level_Summary_Satellite_Data_in_Agriculture.pdf   - Task 1: high-level summary of current uses
+02_Detailed_Account_Acquisition_Processing_Evaluation.pdf - Task 2: detailed account (acquisition, processing, modelling, evaluation)
+make_infographic.py                                       - Task 3: stand-alone script; run `python make_infographic.py` to regenerate the JPEG
+satellite_ag_infographic.jpeg                             - Task 3: infographic output (16 x 20 in @ 200 dpi)
+03_Foundational_and_Canonical_References.pdf              - Task 4: foundational/canonical references with DOIs and open-access flags
+04_Public_Satellite_Data_Sources.pdf                      - Task 5: public satellite and ancillary soil data sources
+build_pdfs.py                                             - script used to generate the four PDFs (reportlab)
+
+Dependencies: Python 3.8+, matplotlib, Pillow (infographic); reportlab (PDFs).
+EOF
+cp -r /tmp/deliverables/* "$OUTPUT_DIR"/ && ls "$OUTPUT_DIR"
+--- stdout ---
+01_High_Level_Summary_Satellite_Data_in_Agriculture.pdf
+02_Detailed_Account_Acquisition_Processing_Evaluation.pdf
+03_Foundational_and_Canonical_References.pdf
+04_Public_Satellite_Data_Sources.pdf
+README.txt
+build_pdfs.py
+make_infographic.py
+satellite_ag_infographic.jpeg
+

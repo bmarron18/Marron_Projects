@@ -1,0 +1,1 @@
+python3 -c "import reportlab, matplotlib; print(reportlab.Version, matplotlib.__version__)"; python3 -c "import PIL; print(PIL.__version__)"; fc-list | grep -i -E "dejavu|liberation" | head -3

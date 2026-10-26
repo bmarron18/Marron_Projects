@@ -1,0 +1,1 @@
+cd /tmp/deliverables && python3 make_infographic.py -o satellite_ag_infographic.jpeg --dpi 200 && ls -la

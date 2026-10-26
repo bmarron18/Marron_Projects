@@ -1,0 +1,1 @@
+cd /tmp/deliverables && python3 build_pdfs.py 2>&1 | tail -3 && for f in *.pdf; do echo "$f: $(python3 -c "import pypdf,sys; print(len(pypdf.PdfReader('$f').pages))" 2>/dev/null) pages"; done

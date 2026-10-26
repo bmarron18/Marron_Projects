@@ -1,0 +1,1399 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Created: 20 Oct 2026
+Revised: 26 Oct 2026
+Authors: bmarron, claude-opus-5.5
+
+
+---------------------------------------------
+A_Template_ResearchQuery_anthropic_v3.1.py
+----------------------------------------------
+    1. Submits a query to an Anthropic Claude model via the Messages API in
+       BACKGROUND mode (Message Batches API), with the Code Execution and
+       Web Search server tools enabled.
+    2. Polls the API until the job completes (robust to network drops).
+       Long research turns that hit the server-side tool-loop limit
+       (stop_reason = "pause_turn") are continued automatically, subject to
+       CONTEXT GUARDS that stop the conversation from snowballing past the
+       model's context window (see CONTEXT GUARDS below).
+    3. Saves the model's text answer to a .txt file.
+    4. Saves any web sources (search results + URL citations) to a _sources.txt file.
+    5. Saves any code/commands that the model executed to .py / .sh files.
+    6. Saves the execution logs (stdout / stderr / exit codes) to a .log file.
+    7. Downloads every file the model generated inside its sandbox
+       (e.g. .png, .csv, .xlsx, .py, .pdf) with its original name and extension.
+       That is, multi-file-type output (text, code, images, data files)
+    8. Saves image outputs (plots). Claude writes plots to files, which are
+       downloaded in step 7 and flagged as [Image Output].
+    9. Saves the raw JSON response(s) for debugging.
+   10. If the research phase must stop early (token guard, continuation
+       limit, or context-window overflow), a compact, TOOL-FREE "wrap-up"
+       turn writes the final answer from the material already gathered.
+
+    All outputs are written to a time-stamped folder on the Desktop:
+        ~/Desktop/ResearchQuery_Anthropic_YYYYMMDD_HHMMSS/
+
+
+---------------------------------------------------------------------------
+QUICK START
+---------------------------------------------------------------------------
+  1. Check packages installed in venv (ai-apis) and perform updates
+
+<<< bash
+    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+    pip list &&
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade anthropic &&
+    deactivate
+>>>
+
+  2. Set your API key as ENV VARIABLE (once):  ANTHROPIC_API_KEY
+  3. Edit sections below, as needed
+    # CONFIGURATION
+    # PROMPT
+
+  4. Run file (runs in Spyder within virtual environment, ai-apis)
+      * To run file w/o CLI toggles
+          a) Click on the green Run file icon in Toolbar or press F5
+    
+      * To run file w/ CLI toggles
+          a) place copy of file on Desktop
+          b) run file using IPython interpreter
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.1.py', args='--dry-run')
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.1.py', args='--mode stream')
+
+    5. Run `--dry-run` first.
+
+------------------
+EXECUTION MODES
+------------------
+  batch  (default) : Message Batches API. Job runs server-side; no long-held
+                     HTTP connection; resumable; 50% cheaper. Most batches
+                     finish well within an hour (max 24 h).
+  stream           : Direct streaming request. Usually faster to start,
+                     shows live progress, but is NOT resumable.
+
+
+------------------
+CONTEXT GUARDS (new in v3.1)
+------------------
+The model's context window (1,000,000 tokens for claude-fable-5-1) must hold
+EVERYTHING: prompt, every web-search result (incl. encrypted page content),
+every code-execution output, and every thinking block. It can snowball at
+two levels:
+
+  (a) INSIDE one request : the server-side tool loop keeps adding results.
+                           (This is what killed the v3.0 run: the very first
+                           request reached 1,037,825 tokens.)
+  (b) ACROSS requests    : each pause_turn continuation re-sends the whole
+                           history.
+
+Guards applied:
+  A. Per-turn   : WEB_SEARCH_TOOL["max_uses"] (per request, now 8)
+                  CONTEXT_MANAGEMENT clears old tool results server-side
+                  system-prompt rules: economical searching, short stdout
+  B. Job-wide   : WEB_SEARCH_TOTAL_BUDGET (searches across ALL turns)
+                  MAX_CONTINUATIONS (now 4)
+                  CONTINUE_TOKEN_THRESHOLD: before every continuation the
+                  next request is token-counted; if too large, stop.
+  C. Graceful   : WRAP_UP_ENABLED: when research is stopped early, a compact
+                  tool-free request writes the final answer from the notes,
+                  sources, and files gathered so far. Partial turns are
+                  always saved (also in stream mode).
+
+
+------------------
+IF INTERRUPTED RUN
+-----------------
+If a batch run is interrupted (Ctrl-C, network drop, or polling exceeds
+60 minutes), the job keeps running server-side. The batch ID is printed at
+submission and the job state is stored in ~/Desktop/.anthropic_jobs/.
+A batch ID looks like:
+    msgbatch_013Zva2CMHLNnXjNJJKqJ2EF
+
+Collect the job inside IPython interpreter with copy of file on Desktop:
+    runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.1.py', args='--resume msgbatch_XXXXXXXX')
+
+Any batch ID of a job can be given; the script follows the job to its
+latest batch automatically. Batch results remain available for 29 days.
+Generated files are stored in the Files API (they do not expire with the sandbox).
+
+
+-----------
+REVISIONS
+-----------
+Revised: v3.1 (fix for context "snowballing": prompt is too long > 1,000,000)
+    * Web search: max_uses lowered 25 -> 8 per request, plus a job-wide
+      budget (WEB_SEARCH_TOTAL_BUDGET); each continuation gets only the
+      remaining allowance.
+    * MAX_CONTINUATIONS lowered 10 -> 4.
+    * Token guard: next request is counted (count_tokens API, char-based
+      fallback) before every continuation; stops above CONTINUE_TOKEN_THRESHOLD.
+    * Context editing (clear_tool_uses) clears stale tool results server-side.
+    * System prompt asks for economical searching and short code stdout.
+    * New tool-free WRAP-UP turn produces a final answer when research is
+      stopped early (guard, continuation limit, or overflow on a later turn).
+    * Stream mode keeps partial turns on API errors instead of exiting.
+    * Job state stored once per job (+ pointer files); --resume follows the
+      chain to the latest batch and never re-runs a finished job.
+    * Continuations merge into one assistant message (no assistant/assistant pairs).
+    * Context-growth log, guard decisions, and context-editing stats saved.
+    * Fixed "\r" status-line residue (e.g. "status: endedress ...").
+Revised: v3.0 (Anthropic port of A_Template_ResearchQuery_openai_v3.0.py)
+    * Background mode via Message Batches API (+ polling, --resume).
+    * Code execution + web search server tools.
+    * Automatic continuation of "pause_turn" responses in the same sandbox.
+    * Generated files downloaded via the Files API; files written with the
+      model's text-editor tool are reconstructed if not otherwise downloadable.
+    * Optional --mode stream for interactive runs.
+
+---------------------------
+NOTES
+----------------------------
+1. **Run `--dry-run` first.** 
+It confirms that `ANTHROPIC_API_KEY` is found and prints the full configuration 
+without calling the API.
+
+2. **Check the tool versions and beta headers for your model.** 
+Anthropic updates these periodically. If the API rejects 
+a tool or header (HTTP 400), update these constants in the CONFIGURATION section to the versions listed in Anthropic's 
+docs for `claude-fable-5-1`:
+   - `CODE_EXECUTION_TOOL`
+   - `WEB_SEARCH_TOOL`
+   - `BETAS`
+   - `CONTEXT_MANAGEMENT` / `CONTEXT_MANAGEMENT_BETA`
+   If context editing is rejected, set `CONTEXT_MANAGEMENT = None`. The other guards still apply.
+
+3. **Thinking setting.** 
+`THINKING = {"type": "adaptive"}` is meant for newer models. If your model rejects it, 
+switch to `{"type": "enabled", "budget_tokens": 16000}`.
+
+4. **Choosing a mode.** 
+Batch mode is the robust, resumable equivalent of OpenAI's background mode. For quick tests, 
+`args='--mode stream'` gives faster turnaround and live progress, but it cannot be resumed.
+
+5. **Resuming multi-turn jobs.** 
+The `.anthropic_jobs/` folder on your Desktop stores the conversation state. A resumed job that 
+needed `pause_turn` continuations can then be rebuilt in full. It is safe to delete old entries.
+
+6. **Tuning the guards.** 
+If a FIRST request still overflows (status 'errored', "prompt is too long",
+Turns: 0), lower `WEB_SEARCH_TOOL["max_uses"]`, lower the CONTEXT_MANAGEMENT trigger, or narrow the
+prompt. If answers feel under-researched, raise `WEB_SEARCH_TOTAL_BUDGET` or `MAX_CONTINUATIONS`.
+Keep `CONTINUE_TOKEN_THRESHOLD` well below `CONTEXT_WINDOW`, because one turn can add hundreds of thousands of tokens.
+
+
+"""
+
+
+import argparse
+import json
+import os
+import sys
+import time
+import re
+from datetime import datetime
+from pathlib import Path
+
+from anthropic import Anthropic, APIConnectionError, APIStatusError, APITimeoutError
+
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+    # model to query
+MODEL = "claude-fable-5-1"
+
+    # base label for all output files
+OUTPUT_LABEL = "ResearchQuery_Anthropic"
+
+    # Desktop directory (falls back to ~/Desktop if the hard-coded path is absent)
+DOC_DIR = Path("/home/bruce-vdb/Desktop")
+if not DOC_DIR.exists():
+    DOC_DIR = Path.home() / "Desktop"
+
+    # where batch job state is kept (needed for --resume of multi-turn jobs)
+JOBS_DIR = DOC_DIR / ".anthropic_jobs"
+
+    # "batch" (background, resumable) or "stream" (direct, not resumable)
+EXECUTION_MODE = "batch"
+
+    # maximum output tokens per turn (includes thinking tokens)
+MAX_TOKENS = 64000
+
+    # extended thinking
+    #   {"type": "adaptive"}                          -> model decides (newer models)
+    #   {"type": "enabled", "budget_tokens": 16000}   -> fixed budget (< MAX_TOKENS)
+    #   None                                          -> off
+THINKING = {"type": "adaptive"}
+
+    # NOTE: Anthropic's code-execution sandbox has a fixed size
+    # (~5 GiB RAM / 5 GiB disk); there is no memory setting equivalent
+    # to OpenAI's CONTAINER_MEMORY.
+
+    # code execution tool (bash + file editing in a sandbox)
+CODE_EXECUTION_TOOL = {"type": "code_execution_20250825", "name": "code_execution"}
+
+    # enable the web search tool (needed for real literature review/citations)
+USE_WEB_SEARCH = True
+    # max_uses is enforced PER REQUEST (per turn). v3.0 used 25, which let a
+    # single request overflow the context window. Keep this small.
+WEB_SEARCH_TOOL = {"type": "web_search_20250305", "name": "web_search", "max_uses": 8}
+
+    # job-wide web search budget (summed over ALL turns / continuations)
+WEB_SEARCH_TOTAL_BUDGET = 20
+
+    # beta headers: code execution + Files API (file downloads)
+BETAS = ["code-execution-2025-08-25", "files-api-2025-04-14"]
+
+    # ---- CONTEXT GUARDS (v3.1) ---------------------------------------------
+    # model context window (hard API limit, in tokens)
+CONTEXT_WINDOW = 1_000_000
+
+    # do not submit a continuation whose input would exceed this many tokens.
+    # Leave large headroom: a single turn can add several hundred thousand tokens.
+CONTINUE_TOKEN_THRESHOLD = 500_000
+
+    # rough chars-per-token ratio, used only if the count_tokens API call fails
+    # (conservative: encrypted/base64 content tokenizes densely)
+CHARS_PER_TOKEN_ESTIMATE = 3
+
+    # server-side context editing: clears the oldest tool results once the
+    # prompt grows past the trigger. Set to None to disable.
+CONTEXT_MANAGEMENT = {
+    "edits": [
+        {
+            "type": "clear_tool_uses_20250919",
+            "trigger": {"type": "input_tokens", "value": 150_000},
+            "keep": {"type": "tool_uses", "value": 6},
+            "clear_at_least": {"type": "input_tokens", "value": 30_000},
+        }
+    ]
+}
+CONTEXT_MANAGEMENT_BETA = "context-management-2025-06-27"
+
+    # tool-free final turn when the research phase is stopped early
+WRAP_UP_ENABLED = True
+WRAP_UP_MAX_NOTE_CHARS = 250_000   # cap on research notes sent to wrap-up (~80k tokens)
+WRAP_UP_MAX_SOURCES = 150          # cap on sources listed in wrap-up request
+
+    # stop reasons that mean "context is full" (newer models may return this
+    # instead of an error)
+CONTEXT_STOP_REASONS = ("model_context_window_exceeded",)
+    # ------------------------------------------------------------------------
+
+    # per-HTTP-request timeout (seconds). In batch mode each request is short.
+API_TIMEOUT = 300
+
+    # automatic SDK retries for each individual HTTP request
+MAX_RETRIES = 3
+
+    # polling settings for background (batch) mode
+POLL_INTERVAL = 15          # seconds between status checks
+MAX_WAIT = 60 * 60          # give up polling after this many seconds (job keeps running)
+MAX_POLL_ERRORS = 10        # consecutive network errors tolerated while polling
+
+    # automatic continuations when the model returns stop_reason="pause_turn"
+    # (v3.0 used 10; each continuation re-sends the whole history)
+MAX_CONTINUATIONS = 4
+
+    # fallback: scan the Files API for downloadable files created during the job
+FILES_FALLBACK_SCAN = True
+FILES_FALLBACK_LIMIT = 500   # max file entries to inspect
+
+    # identifier for the single request inside each batch
+CUSTOM_ID = "research_query"
+
+IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tif", ".tiff"}
+
+
+# =============================================================================
+# PROMPT
+# =============================================================================
+
+    # User level message
+user_prompt = (
+    "Satellite data has been used to evaluate various aspects of agricultural production for some time. "
+    "Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as "
+    "other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and "
+    "Cation Exchange Capacity. Examine peer-reviewed journals, textbooks, seminar and conference "
+    "publications, and all relevant source materials for the use and processing of satellite data in "
+    "agriculture. With this information at hand, do the following: 1) Provide a high-level summary of "
+    "how satellite data are currently being used in agriculture in .pdf format. 2) Provide a detailed "
+    "account of how satellite data is obtained, processed, and evaluated for agricultural use in pdf "
+    "format. 3) Provide an infographic explaining how satellite data is obtained, processed, and "
+    "evaluated for agricultural use. The infographic should be developed in a Python script that can be "
+    "run independently to generate the infographic as a .jpeg file. 4) Provide a list of foundational "
+    "and canonical references (open-source peer-reviewed papers and textbooks) that explain the process "
+    "and theory for obtaining, processing, and evaluating satellite data for agricultural use 8) Provide "
+    "a list of sources for publicly-available satellite data that can be used for agricultural "
+    "evaluations (eg, Copernicus and Google Earth Engine). Thank you!"
+)
+
+
+    # System level message
+sys_prompt = (
+    "You are an expert in agriculture, crop and soil science, and geospatial analysis."
+    "Use web search to find and verify sources; cite only sources you have actually located."
+    
+    # v3.1: resource discipline (limits context growth inside each turn)
+    "\n\nWork economically: the whole conversation must fit in a fixed context "
+    "window. Prefer a few targeted searches over many broad ones, and stop "
+    "searching once you have enough well-supported sources. When running code, "
+    "keep printed output short (summaries, shapes, or the first few lines). "
+    "Never print whole files, large tables, or long logs; write large outputs "
+    "to files instead."
+)
+
+    # appended to the system prompt once the job-wide search budget is used up
+SEARCH_EXHAUSTED_NOTE = (
+    "\n\nThe web-search budget for this task is exhausted. Do not run further "
+    "web searches; finish the task using the sources already found."
+)
+
+
+# =============================================================================
+# HELPER FUNCTIONS
+# =============================================================================
+
+def make_output_dir(base_dir: Path, label: str) -> Path:
+    """Create a unique, time-stamped output folder."""
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_dir = base_dir / f"{label}_{stamp}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    return out_dir
+
+
+def safe_filename(name: str, default: str = "file") -> str:
+    """Strip path parts and characters that are unsafe in filenames."""
+    name = os.path.basename(name or "").strip()
+    name = re.sub(r"[^\w.\-]+", "_", name)
+    return name or default
+
+
+def unique_path(directory: Path, filename: str) -> Path:
+    """Avoid overwriting files that share the same name."""
+    path = directory / filename
+    stem, suffix = path.stem, path.suffix
+    n = 1
+    while path.exists():
+        path = directory / f"{stem}_{n}{suffix}"
+        n += 1
+    return path
+
+
+def get_attr(obj, key, default=None):
+    """Read a field from either an SDK object or a plain dict."""
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def to_plain(obj):
+    """Convert an SDK object into JSON-serialisable Python data."""
+    if hasattr(obj, "model_dump"):
+        return obj.model_dump(mode="json")
+    return obj
+
+
+def strip_none(obj):
+    """Recursively remove None values (for sending content blocks back)."""
+    if isinstance(obj, dict):
+        return {k: strip_none(v) for k, v in obj.items() if v is not None}
+    if isinstance(obj, list):
+        return [strip_none(v) for v in obj]
+    return obj
+
+
+def resume_hint(job_id: str) -> str:
+    """Command the user can run to collect a background job later."""
+    script = os.path.basename(__file__) if "__file__" in globals() else "script.py"
+    return (f"python3 {script} --resume {job_id}\n"
+            f"  or in Spyder/IPython:  runfile('<path>/{script}', args='--resume {job_id}')")
+
+
+def initial_messages() -> list:
+    return [{"role": "user", "content": user_prompt}]
+
+
+def classify_stop(stop_reason):
+    """Map Anthropic stop_reason onto the status vocabulary used for output."""
+    if stop_reason in ("end_turn", "stop_sequence"):
+        return "completed"
+    return {
+        "pause_turn": "incomplete_pause_turn",
+        "max_tokens": "incomplete_max_tokens",
+        "model_context_window_exceeded": "incomplete_context_window",
+        "refusal": "refused",
+    }.get(stop_reason, f"stopped_{stop_reason}")
+
+
+def active_betas() -> list:
+    """Beta headers for Messages/Batches calls (adds context-editing beta)."""
+    betas = list(BETAS)
+    if CONTEXT_MANAGEMENT and CONTEXT_MANAGEMENT_BETA not in betas:
+        betas.append(CONTEXT_MANAGEMENT_BETA)
+    return betas
+
+
+def is_context_overflow(detail) -> bool:
+    """True if an error payload says the prompt exceeded the context window."""
+    text = json.dumps(detail, default=str).lower() if detail is not None else ""
+    return ("prompt is too long" in text or "context window" in text
+            or "context_window" in text)
+
+
+OVERFLOW_ADVICE = (
+    "The request exceeded the model's context window. If this happened on the "
+    "FIRST turn (Turns: 0), the overflow occurred inside the server-side tool "
+    "loop of a single request: lower WEB_SEARCH_TOOL['max_uses'], lower the "
+    "CONTEXT_MANAGEMENT trigger / keep values, or narrow the prompt, then rerun."
+)
+
+
+def web_searches_in(turn) -> int:
+    """Number of web searches billed in one turn."""
+    usage = get_attr(turn, "usage") or {}
+    return get_attr(get_attr(usage, "server_tool_use") or {}, "web_search_requests") or 0
+
+
+def append_assistant(messages: list, content: list) -> list:
+    """
+    Return a copy of messages with the paused assistant content appended.
+    Consecutive pause_turn outputs are merged into ONE assistant message.
+    """
+    new = [dict(m) for m in messages]
+    blocks = strip_none(content)
+    if new and new[-1].get("role") == "assistant":
+        new[-1] = {"role": "assistant", "content": list(new[-1]["content"]) + blocks}
+    else:
+        new.append({"role": "assistant", "content": blocks})
+    return new
+
+
+def truncate_middle(text: str, limit: int) -> str:
+    """Keep the start and end of long text, dropping the middle."""
+    if len(text) <= limit:
+        return text
+    half = limit // 2
+    return (text[:half]
+            + "\n\n[... middle of research notes omitted to fit the context budget ...]\n\n"
+            + text[-half:])
+
+
+# =============================================================================
+# JOB STATE (resume support)
+# =============================================================================
+
+def new_state() -> dict:
+    return {"messages": initial_messages(), "turns": [], "container_id": None,
+            "job_start": time.time(), "batch_ids": [], "phase": "research",
+            "web_searches_used": 0, "context_log": [], "notes": [],
+            "wrap_messages": None, "final": None}
+
+
+def upgrade_state(state: dict) -> dict:
+    """Fill in keys missing from older (v3.0) state files."""
+    if "web_searches_used" not in state:
+        state["web_searches_used"] = sum(web_searches_in(t) for t in state.get("turns", []))
+    for key, value in new_state().items():
+        if key == "job_start":
+            state.setdefault(key, None)
+        else:
+            state.setdefault(key, value)
+    return state
+
+
+def save_job_state(state: dict) -> None:
+    """
+    Full state is stored ONCE under the job's first batch ID; every later
+    batch ID gets a small pointer file -> {"root": <first batch ID>}.
+    """
+    if not state.get("batch_ids"):
+        return
+    JOBS_DIR.mkdir(parents=True, exist_ok=True)
+    root = state["batch_ids"][0]
+    (JOBS_DIR / f"{root}.json").write_text(json.dumps(state, indent=2), encoding="utf-8")
+    for bid in state["batch_ids"][1:]:
+        ptr = JOBS_DIR / f"{bid}.json"
+        if not ptr.exists():
+            ptr.write_text(json.dumps({"root": root}), encoding="utf-8")
+
+
+def load_job_state(job_id: str, _depth: int = 0):
+    path = JOBS_DIR / f"{job_id}.json"
+    if not path.exists():
+        return None
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if "messages" not in data and "root" in data and _depth < 3:
+        return load_job_state(data["root"], _depth + 1)
+    return data
+
+
+def record_turn(state: dict, msg: dict) -> None:
+    """Store a completed turn and update the search budget + container."""
+    state["turns"].append(msg)
+    state["web_searches_used"] += web_searches_in(msg)
+    state["container_id"] = get_attr(msg.get("container"), "id") or state.get("container_id")
+
+
+def finish_job(state: dict, mode: str, job_id: str, status: str, detail, persist: bool) -> dict:
+    """Build the job dict passed to process_response (and persist it)."""
+    state["final"] = {"job_id": job_id, "status": status, "detail": detail}
+    if persist:
+        save_job_state(state)
+    return {"mode": mode, "job_id": job_id, "status": status, "detail": detail,
+            "turns": state["turns"], "job_start": state["job_start"],
+            "context_log": state["context_log"], "notes": state["notes"],
+            "web_searches_used": state["web_searches_used"]}
+
+
+# =============================================================================
+# API: REQUEST PARAMETERS
+# =============================================================================
+
+def build_tools(web_max_uses=None) -> list:
+    """Assemble the tool list for the request."""
+    tools = [dict(CODE_EXECUTION_TOOL)]
+    if USE_WEB_SEARCH:
+        ws = dict(WEB_SEARCH_TOOL)
+        if web_max_uses is not None:
+            # API requires max_uses >= 1; an exhausted budget is enforced via
+            # SEARCH_EXHAUSTED_NOTE (the tool stays defined because earlier
+            # turns contain web_search blocks).
+            ws["max_uses"] = max(1, int(web_max_uses))
+        tools.append(ws)
+    return tools
+
+
+def web_uses_for_next_turn(state: dict) -> int:
+    """Per-request search allowance = min(per-turn cap, remaining job budget)."""
+    remaining = WEB_SEARCH_TOTAL_BUDGET - state.get("web_searches_used", 0)
+    return min(WEB_SEARCH_TOOL.get("max_uses", remaining), remaining)
+
+
+def wrap_up_system() -> str:
+    return (sys_prompt
+            + "\n\nFINAL STEP: tools are NOT available in this request. Write the "
+              "complete final answer from the research notes, sources, and file "
+              "list provided. Cite only sources that appear in the provided list.")
+
+
+def build_params(messages: list, container_id=None, web_max_uses=None,
+                 wrap_up: bool = False) -> dict:
+    """Messages API parameters (shared by batch and stream modes)."""
+    params = {
+        "model": MODEL,
+        "max_tokens": MAX_TOKENS,
+        "messages": messages,
+    }
+    if wrap_up:
+        params["system"] = wrap_up_system()           # tool-free: cannot snowball
+    else:
+        system = sys_prompt
+        if USE_WEB_SEARCH and web_max_uses is not None and web_max_uses <= 0:
+            system += SEARCH_EXHAUSTED_NOTE
+        params["system"] = system
+        params["tools"] = build_tools(web_max_uses)
+        if CONTEXT_MANAGEMENT:
+            params["context_management"] = CONTEXT_MANAGEMENT
+        if container_id:
+            params["container"] = container_id        # reuse sandbox across continuations
+    if THINKING:
+        params["thinking"] = THINKING
+    return params
+
+
+def research_params(state: dict) -> dict:
+    return build_params(state["messages"], state.get("container_id"),
+                        web_uses_for_next_turn(state))
+
+
+# =============================================================================
+# CONTEXT GUARD + WRAP-UP (v3.1)
+# =============================================================================
+
+def count_context_tokens(client: Anthropic, params: dict):
+    """
+    Count input tokens of a prospective request. Uses the count_tokens API;
+    falls back to a conservative character-based estimate.
+    (The count is of the FULL client-side history, i.e. before any
+    server-side context editing, so it errs on the safe side.)
+    """
+    try:
+        kwargs = {k: params[k] for k in ("model", "system", "messages", "tools", "thinking")
+                  if k in params}
+        res = client.beta.messages.count_tokens(**kwargs, betas=active_betas())
+        return int(get_attr(res, "input_tokens")), "count_tokens"
+    except Exception as err:
+        approx = len(json.dumps(params["messages"], default=str)) // CHARS_PER_TOKEN_ESTIMATE
+        return approx, f"char estimate; count_tokens failed: {type(err).__name__}"
+
+
+def plan_next_step(client: Anthropic, state: dict, msg: dict):
+    """
+    Decide what to do after a successful research turn.
+    Returns ("continue" | "wrap_up" | "finish", reason).
+    On "continue", state["messages"] is updated for the next request.
+    """
+    stop = msg.get("stop_reason")
+
+    if stop in CONTEXT_STOP_REASONS:
+        action, reason = "wrap_up", f"model stopped with stop_reason={stop}"
+    elif stop != "pause_turn":
+        return "finish", None
+    elif len(state["turns"]) > MAX_CONTINUATIONS:
+        action, reason = "wrap_up", f"continuation limit reached ({MAX_CONTINUATIONS})"
+    else:
+        candidate = append_assistant(state["messages"], msg["content"])
+        params = build_params(candidate, state.get("container_id"),
+                              web_uses_for_next_turn(state))
+        tokens, method = count_context_tokens(client, params)
+        line = (f"after turn {len(state['turns'])}: next request = {tokens:,} tokens "
+                f"({method}); guard = {CONTINUE_TOKEN_THRESHOLD:,}; "
+                f"searches used = {state['web_searches_used']}/{WEB_SEARCH_TOTAL_BUDGET}")
+        state["context_log"].append(line)
+        print(f"[Guard] {line}")
+        if tokens <= CONTINUE_TOKEN_THRESHOLD:
+            state["messages"] = candidate
+            return "continue", None
+        action, reason = "wrap_up", (f"context guard: next request {tokens:,} tokens "
+                                     f"> {CONTINUE_TOKEN_THRESHOLD:,}")
+
+    if not WRAP_UP_ENABLED:
+        state["notes"].append(f"Research stopped: {reason} (wrap-up disabled).")
+        print(f"[Guard] Stopping: {reason} (wrap-up disabled).")
+        return "finish", reason
+    return action, reason
+
+
+def collect_digest(client: Anthropic, turns: list) -> dict:
+    """Extract notes (text), sources, and generated file names from turns."""
+    text_parts, prev_was_text = [], False
+    sources, file_ids, editor_paths = {}, [], []
+
+    for turn in turns:
+        for block in get_attr(turn, "content") or []:
+            btype = get_attr(block, "type")
+            if btype == "text":
+                if not prev_was_text and text_parts:
+                    text_parts.append("\n\n")
+                text_parts.append(get_attr(block, "text") or "")
+                prev_was_text = True
+                for cit in get_attr(block, "citations") or []:
+                    url = get_attr(cit, "url")
+                    if url:
+                        sources[url] = get_attr(cit, "title") or sources.get(url, "")
+                continue
+            prev_was_text = False
+            if btype == "web_search_tool_result":
+                content = get_attr(block, "content")
+                if isinstance(content, list):
+                    for src in content:
+                        url = get_attr(src, "url")
+                        if url and url not in sources:
+                            sources[url] = get_attr(src, "title") or ""
+            elif btype in ("bash_code_execution_tool_result", "code_execution_tool_result"):
+                content = get_attr(block, "content") or {}
+                for item in get_attr(content, "content") or []:
+                    fid = get_attr(item, "file_id")
+                    if fid and fid not in file_ids:
+                        file_ids.append(fid)
+            elif btype == "server_tool_use" and get_attr(block, "name") == "text_editor_code_execution":
+                inp = get_attr(block, "input") or {}
+                if get_attr(inp, "command") == "create" and get_attr(inp, "path"):
+                    editor_paths.append(get_attr(inp, "path"))
+
+    names = []
+    for fid in file_ids:
+        try:
+            meta = client.beta.files.retrieve_metadata(fid, betas=BETAS)
+            names.append(get_attr(meta, "filename") or fid)
+        except Exception:
+            names.append(fid)
+    for p in editor_paths:
+        base = os.path.basename(p)
+        if base not in names:
+            names.append(base)
+
+    return {"notes": "".join(text_parts).strip(), "sources": sources, "files": names}
+
+
+def build_wrap_up_messages(client: Anthropic, turns: list, reason: str) -> list:
+    """Compact, tool-free request that turns the gathered material into an answer."""
+    digest = collect_digest(client, turns)
+    notes = truncate_middle(digest["notes"] or "(no written notes yet)", WRAP_UP_MAX_NOTE_CHARS)
+    src_items = list(digest["sources"].items())[:WRAP_UP_MAX_SOURCES]
+    src_lines = "\n".join(f"- {t or '(untitled)'} | {u}" for u, t in src_items) or "(none)"
+    file_lines = "\n".join(f"- {n}" for n in digest["files"]) or "(none)"
+
+    content = (
+        f"The research phase for the task below was stopped early ({reason}) to "
+        "stay within the context window. Using ONLY the research notes, sources, "
+        "and generated files listed below, write the complete final answer to the "
+        "original task. Do not invent sources. Refer to generated files by name "
+        "where relevant (they have already been saved for the user). If a requested "
+        "graphic was not generated, describe it and provide a text diagram "
+        "(e.g. ASCII or Mermaid).\n\n"
+        f"=== ORIGINAL TASK ===\n{user_prompt}\n\n"
+        f"=== RESEARCH NOTES SO FAR ===\n{notes}\n\n"
+        f"=== SOURCES LOCATED ({len(src_items)}) ===\n{src_lines}\n\n"
+        f"=== FILES ALREADY GENERATED ===\n{file_lines}\n"
+    )
+    return [{"role": "user", "content": content}]
+
+
+def start_wrap_up(client: Anthropic, state: dict, reason: str) -> dict:
+    """Switch the job to the wrap-up phase; return wrap-up request params."""
+    print(f"[Guard] Stopping research phase: {reason}")
+    print("[Guard] Building compact, tool-free wrap-up request ...")
+    state["notes"].append(f"Research phase stopped early: {reason}. "
+                          "Final answer written by a tool-free wrap-up turn.")
+    state["phase"] = "wrap_up"
+    state["wrap_messages"] = build_wrap_up_messages(client, state["turns"], reason)
+    return build_params(state["wrap_messages"], wrap_up=True)
+
+
+def wrap_up_status(msg: dict) -> str:
+    status = classify_stop(msg.get("stop_reason"))
+    return "completed_via_wrap_up" if status == "completed" else f"wrap_up_{status}"
+
+
+# =============================================================================
+# API: BATCH MODE (BACKGROUND) - SUBMIT + POLL
+# =============================================================================
+
+def submit_batch(client: Anthropic, params: dict, state: dict, label: str = "prompt") -> str:
+    """
+    Submit the request as a one-item Message Batch.
+    Returns immediately with a batch ID; the model works server-side.
+    """
+    print(f"Submitting {label} to {MODEL} (background / batch mode) ...")
+    batch = client.beta.messages.batches.create(
+        requests=[{"custom_id": CUSTOM_ID, "params": params}],
+        betas=active_betas(),
+    )
+    state["batch_ids"].append(batch.id)
+    save_job_state(state)
+    print(f"Batch ID: {batch.id}")
+    print(f"(If interrupted, collect later with:\n  {resume_hint(batch.id)})\n")
+    return batch.id
+
+
+def wait_for_batch(client: Anthropic, batch_id: str):
+    """
+    Poll a batch until processing has ended.
+    Tolerates transient network errors. Returns the final batch object,
+    or None if MAX_WAIT is exceeded (the job keeps running on the server).
+    """
+    start = time.time()
+    last_status = None
+    poll_errors = 0
+
+    while True:
+        try:
+            batch = client.beta.messages.batches.retrieve(batch_id, betas=active_betas())
+            poll_errors = 0
+        except (APIConnectionError, APITimeoutError) as err:
+            poll_errors += 1
+            if poll_errors > MAX_POLL_ERRORS:
+                print(f"\n[Error] Too many consecutive polling errors: {err}")
+                return None
+            wait = min(POLL_INTERVAL * poll_errors, 60)
+            print(f"\n[Warning] Polling error ({poll_errors}/{MAX_POLL_ERRORS}): "
+                  f"{err}. Retrying in {wait}s ...")
+            time.sleep(wait)
+            continue
+
+        status = get_attr(batch, "processing_status")
+        elapsed = int(time.time() - start)
+
+        if status != last_status:
+            # "\r" + padding clears any leftover "still ..." progress text
+            print(f"\r{f'[{elapsed:>5}s] status: {status}':<60}")
+            last_status = status
+        else:
+            print(f"\r{f'[{elapsed:>5}s] still {status} ...':<60}", end="", flush=True)
+
+        if status == "ended":
+            return batch
+
+        if elapsed > MAX_WAIT:
+            print(f"\n[Warning] Stopped polling after {MAX_WAIT}s. "
+                  "The job is still running on the server.")
+            return None
+
+        time.sleep(POLL_INTERVAL)
+
+
+def fetch_batch_result(client: Anthropic, batch_id: str):
+    """Return (result_type, message_or_error) for our request in the batch."""
+    for entry in client.beta.messages.batches.results(batch_id, betas=active_betas()):
+        if get_attr(entry, "custom_id") == CUSTOM_ID:
+            result = get_attr(entry, "result")
+            rtype = get_attr(result, "type")
+            if rtype == "succeeded":
+                return rtype, get_attr(result, "message")
+            return rtype, get_attr(result, "error")
+    return "missing", "Result for custom_id not found in batch."
+
+
+def run_batch_mode(client: Anthropic, resume_id=None):
+    """Submit (or resume) a batch job, continuing pause_turn responses under guards."""
+    if resume_id:
+        state = load_job_state(resume_id)
+        if state is None:
+            print("[Info] No local state file for this batch; assuming a single-turn job.")
+            state = upgrade_state({"batch_ids": [resume_id], "job_start": None})
+        else:
+            upgrade_state(state)
+        if not state["batch_ids"]:
+            state["batch_ids"] = [resume_id]
+
+        if state.get("final"):
+            fin = state["final"]
+            print(f"[Info] Job already finished (status: {fin['status']}); "
+                  "re-saving outputs from stored state.\n")
+            return finish_job(state, "batch", fin["job_id"], fin["status"],
+                              fin["detail"], persist=False)
+
+        batch_id = state["batch_ids"][-1]
+        if batch_id != resume_id:
+            print(f"[Info] {resume_id} was followed by later batch(es); "
+                  f"resuming the latest: {batch_id}")
+        print(f"Resuming background batch {batch_id} (phase: {state['phase']}) ...\n")
+    else:
+        state = new_state()
+        batch_id = submit_batch(client, research_params(state), state, "prompt")
+
+    try:
+        while True:
+            batch = wait_for_batch(client, batch_id)
+            if batch is None:
+                print(f"Collect it later with:\n  {resume_hint(batch_id)}")
+                return None
+
+            if state.get("job_start") is None:
+                created = get_attr(batch, "created_at")
+                state["job_start"] = created.timestamp() if created else time.time()
+
+            rtype, payload = fetch_batch_result(client, batch_id)
+
+            # ---- failed request ----------------------------------------
+            if rtype != "succeeded":
+                detail = to_plain(payload)
+                overflow = is_context_overflow(detail)
+                if (overflow and state["phase"] == "research"
+                        and WRAP_UP_ENABLED and state["turns"]):
+                    params = start_wrap_up(client, state,
+                                           "context-window overflow on a continuation request")
+                    batch_id = submit_batch(client, params, state, "wrap-up request")
+                    continue
+                if overflow:
+                    state["notes"].append(OVERFLOW_ADVICE)
+                return finish_job(state, "batch", batch_id, rtype, detail, persist=True)
+
+            msg = to_plain(payload)
+
+            # ---- wrap-up turn finished ---------------------------------
+            if state["phase"] == "wrap_up":
+                msg["_wrap_up"] = True
+                record_turn(state, msg)
+                return finish_job(state, "batch", batch_id, wrap_up_status(msg),
+                                  f"stop_reason={msg.get('stop_reason')}", persist=True)
+
+            # ---- research turn finished --------------------------------
+            record_turn(state, msg)
+            action, reason = plan_next_step(client, state, msg)
+
+            if action == "continue":
+                print(f"[Info] pause_turn received; continuing in same sandbox "
+                      f"({len(state['turns'])}/{MAX_CONTINUATIONS}) ...")
+                batch_id = submit_batch(client, research_params(state), state,
+                                        "continuation")
+                continue
+
+            if action == "wrap_up":
+                params = start_wrap_up(client, state, reason)
+                batch_id = submit_batch(client, params, state, "wrap-up request")
+                continue
+
+            stop = msg.get("stop_reason")
+            return finish_job(state, "batch", batch_id, classify_stop(stop),
+                              f"stop_reason={stop}", persist=True)
+
+    except KeyboardInterrupt:
+        print("\n\nInterrupted. The job is still running on the server.")
+        print(f"Collect it later with:\n  {resume_hint(batch_id)}")
+        return None
+
+
+# =============================================================================
+# API: STREAM MODE (DIRECT, NOT RESUMABLE)
+# =============================================================================
+
+def stream_turn(client: Anthropic, params: dict, t0: float):
+    """Run one streamed turn, printing live tool/thinking progress."""
+    for attempt in range(1, MAX_RETRIES + 2):
+        try:
+            last_label = None
+            with client.beta.messages.stream(**params, betas=active_betas()) as stream:
+                for event in stream:
+                    if get_attr(event, "type") != "content_block_start":
+                        continue
+                    blk = event.content_block
+                    btype = get_attr(blk, "type")
+                    if btype == "server_tool_use":
+                        label = f"tool call: {get_attr(blk, 'name')}"
+                    elif btype == "thinking":
+                        label = "thinking ..."
+                    elif btype == "text":
+                        label = "writing ..."
+                    else:
+                        continue
+                    if label != last_label or btype == "server_tool_use":
+                        print(f"[{int(time.time() - t0):>5}s] {label}")
+                        last_label = label
+                return stream.get_final_message()
+        except (APIConnectionError, APITimeoutError) as err:
+            if attempt > MAX_RETRIES:
+                raise
+            wait = min(POLL_INTERVAL * attempt, 60)
+            print(f"[Warning] Stream error ({attempt}/{MAX_RETRIES}): {err}. "
+                  f"Retrying turn in {wait}s ...")
+            time.sleep(wait)
+
+
+def run_stream_mode(client: Anthropic):
+    print(f"Submitting prompt to {MODEL} (stream mode, not resumable) ...\n")
+    state = new_state()
+    t0 = state["job_start"]
+    params = research_params(state)
+
+    def last_id():
+        return state["turns"][-1].get("id") if state["turns"] else None
+
+    try:
+        while True:
+            try:
+                msg = to_plain(stream_turn(client, params, t0))
+            except APIStatusError as err:
+                detail = {"status_code": err.status_code, "message": err.message}
+                overflow = is_context_overflow(detail)
+                if (overflow and state["phase"] == "research"
+                        and WRAP_UP_ENABLED and state["turns"]):
+                    params = start_wrap_up(client, state,
+                                           "context-window overflow on a continuation request")
+                    continue
+                if not state["turns"]:
+                    raise                    # nothing to save; handled in main()
+                if overflow:
+                    state["notes"].append(OVERFLOW_ADVICE)
+                print(f"[Warning] API error {err.status_code}; saving partial output ...")
+                return finish_job(state, "stream", last_id(), "errored", detail, persist=False)
+
+            if state["phase"] == "wrap_up":
+                msg["_wrap_up"] = True
+                record_turn(state, msg)
+                return finish_job(state, "stream", msg.get("id"), wrap_up_status(msg),
+                                  f"stop_reason={msg.get('stop_reason')}", persist=False)
+
+            record_turn(state, msg)
+            action, reason = plan_next_step(client, state, msg)
+
+            if action == "continue":
+                print(f"[Info] pause_turn received; continuing "
+                      f"({len(state['turns'])}/{MAX_CONTINUATIONS}) ...")
+                params = research_params(state)
+                continue
+
+            if action == "wrap_up":
+                params = start_wrap_up(client, state, reason)
+                continue
+
+            stop = msg.get("stop_reason")
+            return finish_job(state, "stream", msg.get("id"), classify_stop(stop),
+                              f"stop_reason={stop}", persist=False)
+
+    except KeyboardInterrupt:
+        print("\n\nInterrupted. Stream-mode jobs cannot be resumed.")
+        if state["turns"]:
+            print("Saving partial output from completed turns ...")
+            return finish_job(state, "stream", last_id(), "interrupted",
+                              "KeyboardInterrupt", persist=False)
+        return None
+
+
+# =============================================================================
+# OUTPUT HANDLING
+# =============================================================================
+
+def download_file(client: Anthropic, file_id: str, out_dir: Path):
+    """Download a sandbox-generated file from the Files API (original name)."""
+    meta = client.beta.files.retrieve_metadata(file_id, betas=BETAS)
+    fname = get_attr(meta, "filename") or file_id
+    target = unique_path(out_dir, safe_filename(fname, default=file_id))
+    client.beta.files.download(file_id, betas=BETAS).write_to_file(target)
+    return target, os.path.basename(fname)
+
+
+def process_response(client: Anthropic, job: dict, out_dir: Path) -> None:
+
+    saved_files = []
+    status = job["status"]
+    turns = job["turns"]
+    notes = job.get("notes") or []
+    context_log = job.get("context_log") or []
+
+    # ---------------------------------------------------------------
+    # 0. RAW JSON + ID (debugging / record keeping)
+    # ---------------------------------------------------------------
+    try:
+        raw_path = out_dir / f"{OUTPUT_LABEL}_raw_response.json"
+        raw_path.write_text(json.dumps(turns, indent=2), encoding="utf-8")
+        saved_files.append(raw_path)
+    except Exception as err:
+        print(f"[Warning] Could not save raw JSON: {err}")
+
+    id_path = out_dir / f"{OUTPUT_LABEL}_response_id.txt"
+    msg_ids = "\n".join(
+        f"message: {get_attr(t, 'id')}"
+        f"{'  (wrap-up)' if get_attr(t, '_wrap_up') else ''}"
+        f"  stop_reason={get_attr(t, 'stop_reason')}"
+        f"  input_tokens={get_attr(get_attr(t, 'usage') or {}, 'input_tokens')}"
+        for t in turns)
+    guard_txt = ("\ncontext guard log:\n" + "\n".join(f"  {c}" for c in context_log)
+                 if context_log else "")
+    id_path.write_text(f"{job['job_id']}\nmode: {job['mode']}\nstatus: {status}\n"
+                       f"web searches used: {job.get('web_searches_used', 0)}"
+                       f"/{WEB_SEARCH_TOTAL_BUDGET}\n{msg_ids}\n{guard_txt}\n",
+                       encoding="utf-8")
+    saved_files.append(id_path)
+
+    # ---------------------------------------------------------------
+    # 0b. STATUS CHECK (+ guard notes)
+    # ---------------------------------------------------------------
+    if status != "completed" or notes:
+        detail = job.get("detail")
+        if status.startswith("completed"):
+            print(f"[Info] Response status is '{status}'.")
+        else:
+            print(f"[Warning] Response status is '{status}'. Details: {detail}")
+        for note in notes:
+            print(f"[Note] {note}")
+        err_path = out_dir / f"{OUTPUT_LABEL}_status_{status}.txt"
+        body = f"status: {status}\ndetails: {detail}\n"
+        if notes:
+            body += "\nnotes:\n" + "\n".join(f"  - {n}" for n in notes) + "\n"
+        if context_log:
+            body += "\ncontext guard log:\n" + "\n".join(f"  {c}" for c in context_log) + "\n"
+        err_path.write_text(body, encoding="utf-8")
+        saved_files.append(err_path)
+        # continue anyway: partial output may still be useful
+
+    # ---------------------------------------------------------------
+    # 1. WALK THROUGH EVERY CONTENT BLOCK OF EVERY TURN
+    # ---------------------------------------------------------------
+    text_parts = []
+    thinking_parts = []
+    prev_was_text = False
+    log_lines = []
+    web_sources = {}              # url -> title
+    file_ids = []                 # sandbox-generated files (Files API ids)
+    reconstructed = {}            # sandbox path -> file text (text-editor tool)
+    tool_index = {}               # tool_use_id -> (code block number, command)
+    code_count = 0
+
+    for turn in turns:
+        if get_attr(turn, "_wrap_up"):
+            bar = "=" * 70
+            text_parts.append(f"\n\n{bar}\nFINAL SYNTHESIS (tool-free wrap-up turn)\n{bar}\n\n")
+            prev_was_text = True
+
+        for block in get_attr(turn, "content") or []:
+            btype = get_attr(block, "type")
+
+            # ---- Text + URL citations ----------------------------------
+            if btype == "text":
+                if not prev_was_text and text_parts:
+                    text_parts.append("\n\n")
+                text_parts.append(get_attr(block, "text") or "")
+                prev_was_text = True
+                for cit in get_attr(block, "citations") or []:
+                    url = get_attr(cit, "url")
+                    if url:
+                        # cited titles take precedence over search-only titles
+                        web_sources[url] = get_attr(cit, "title") or web_sources.get(url, "")
+                continue
+            prev_was_text = False
+
+            if btype == "thinking":
+                if get_attr(block, "thinking"):
+                    thinking_parts.append(get_attr(block, "thinking"))
+
+            # ---- Code the model executed -> .py / .sh -------------------
+            elif btype == "server_tool_use":
+                name = get_attr(block, "name")
+                inp = get_attr(block, "input") or {}
+                tid = get_attr(block, "id")
+
+                if name in ("bash_code_execution", "code_execution"):
+                    code = get_attr(inp, "command") or get_attr(inp, "code")
+                    if code:
+                        code_count += 1
+                        ext = ".sh" if name == "bash_code_execution" else ".py"
+                        code_path = unique_path(out_dir, f"executed_code_{code_count}{ext}")
+                        code_path.write_text(code, encoding="utf-8")
+                        saved_files.append(code_path)
+                        tool_index[tid] = (code_count, code)
+
+                elif name == "text_editor_code_execution":
+                    cmd = get_attr(inp, "command")
+                    path = get_attr(inp, "path")
+                    if cmd == "create" and path:
+                        reconstructed[path] = get_attr(inp, "file_text") or ""
+                    elif cmd == "str_replace" and path in reconstructed:
+                        reconstructed[path] = reconstructed[path].replace(
+                            get_attr(inp, "old_str") or "", get_attr(inp, "new_str") or "", 1)
+
+            # ---- Execution results: logs + generated files --------------
+            elif btype in ("bash_code_execution_tool_result", "code_execution_tool_result"):
+                content = get_attr(block, "content") or {}
+                ctype = get_attr(content, "type") or ""
+                num, cmd = tool_index.get(get_attr(block, "tool_use_id"), ("?", ""))
+                if ctype.endswith("_result"):
+                    stdout = get_attr(content, "stdout") or ""
+                    stderr = get_attr(content, "stderr") or ""
+                    rc = get_attr(content, "return_code")
+                    logs = f"=== Code block {num} (exit {rc}) ===\n$ {cmd}\n"
+                    if stdout:
+                        logs += f"--- stdout ---\n{stdout}\n"
+                    if stderr:
+                        logs += f"--- stderr ---\n{stderr}\n"
+                    log_lines.append(logs)
+                    print("--- CODE EXECUTION LOGS ---")
+                    print(logs)
+                    for item in get_attr(content, "content") or []:
+                        fid = get_attr(item, "file_id")
+                        if fid and fid not in file_ids:
+                            file_ids.append(fid)
+                else:
+                    log_lines.append(f"=== Code block {num} ERROR: "
+                                     f"{get_attr(content, 'error_code')} ===\n")
+
+            elif btype == "text_editor_code_execution_tool_result":
+                content = get_attr(block, "content") or {}
+                if "error" in (get_attr(content, "type") or ""):
+                    log_lines.append(f"=== File-editor ERROR: "
+                                     f"{get_attr(content, 'error_code')} ===\n")
+
+            # ---- Web search results: sources consulted ------------------
+            elif btype == "web_search_tool_result":
+                content = get_attr(block, "content")
+                if isinstance(content, list):
+                    for src in content:
+                        url = get_attr(src, "url")
+                        if url and url not in web_sources:
+                            web_sources[url] = get_attr(src, "title") or ""
+                else:
+                    print(f"[Warning] Web search error: {get_attr(content, 'error_code')}")
+
+    # ---------------------------------------------------------------
+    # 2. TEXT OUTPUT -> .txt
+    # ---------------------------------------------------------------
+    output_text = "".join(text_parts).strip()
+    text_path = out_dir / f"{OUTPUT_LABEL}.txt"
+    text_path.write_text(output_text, encoding="utf-8")
+    saved_files.append(text_path)
+
+    print("--- TEXT OUTPUT ---")
+    print(output_text if output_text else "(no text output)")
+    print()
+
+    if thinking_parts:
+        th_path = out_dir / f"{OUTPUT_LABEL}_thinking.txt"
+        th_path.write_text("\n\n---\n\n".join(thinking_parts), encoding="utf-8")
+        saved_files.append(th_path)
+
+    # ---------------------------------------------------------------
+    # 3. FALLBACK: scan Files API for downloadable files created during job
+    #    (catches files the model saved but that were not listed in results)
+    # ---------------------------------------------------------------
+    if FILES_FALLBACK_SCAN and job.get("job_start"):
+        try:
+            for n, f in enumerate(client.beta.files.list(betas=BETAS)):
+                if n >= FILES_FALLBACK_LIMIT:
+                    break
+                created = get_attr(f, "created_at")
+                fid = get_attr(f, "id")
+                if (get_attr(f, "downloadable") and created
+                        and created.timestamp() >= job["job_start"] - 5
+                        and fid not in file_ids):
+                    file_ids.append(fid)
+        except Exception as err:
+            print(f"[Warning] Files API fallback scan failed: {err}")
+
+    # ---------------------------------------------------------------
+    # 4. DOWNLOAD ALL GENERATED FILES (any type, incl. images)
+    # ---------------------------------------------------------------
+    downloaded_names = set()
+    image_count = 0
+    for fid in file_ids:
+        try:
+            path, orig_name = download_file(client, fid, out_dir)
+            downloaded_names.add(orig_name)
+            saved_files.append(path)
+            if path.suffix.lower() in IMAGE_EXTS:
+                image_count += 1
+                print(f"[Image Output] -> {path.name}")
+            else:
+                print(f"[File Output] -> {path.name}")
+        except Exception as err:
+            print(f"[Warning] Could not download file {fid}: {err}")
+
+        # files written with the text-editor tool but not downloadable
+    for sandbox_path, text in reconstructed.items():
+        name = os.path.basename(sandbox_path)
+        if name in downloaded_names:
+            continue
+        path = unique_path(out_dir, safe_filename(name))
+        path.write_text(text, encoding="utf-8")
+        saved_files.append(path)
+        print(f"[File Output (reconstructed)] -> {path.name}")
+
+    # ---------------------------------------------------------------
+    # 5. EXECUTION LOGS -> .log
+    # ---------------------------------------------------------------
+    if log_lines:
+        log_path = out_dir / f"{OUTPUT_LABEL}_execution.log"
+        log_path.write_text("\n".join(log_lines), encoding="utf-8")
+        saved_files.append(log_path)
+
+    # ---------------------------------------------------------------
+    # 6. WEB SOURCES -> _sources.txt
+    # ---------------------------------------------------------------
+    if web_sources:
+        src_path = out_dir / f"{OUTPUT_LABEL}_sources.txt"
+        lines = [f"{i}. {title}\n   {url}" if title else f"{i}. {url}"
+                 for i, (url, title) in enumerate(web_sources.items(), start=1)]
+        src_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        saved_files.append(src_path)
+
+    # ---------------------------------------------------------------
+    # 7. USAGE + SUMMARY (incl. context growth + context editing)
+    # ---------------------------------------------------------------
+    tot = {"in": 0, "out": 0, "cache_w": 0, "cache_r": 0, "web": 0,
+           "cleared_uses": 0, "cleared_tok": 0}
+    per_turn_in = []
+    for t in turns:
+        u = get_attr(t, "usage") or {}
+        t_in = get_attr(u, "input_tokens") or 0
+        per_turn_in.append(t_in)
+        tot["in"] += t_in
+        tot["out"] += get_attr(u, "output_tokens") or 0
+        tot["cache_w"] += get_attr(u, "cache_creation_input_tokens") or 0
+        tot["cache_r"] += get_attr(u, "cache_read_input_tokens") or 0
+        tot["web"] += web_searches_in(t)
+        cm = get_attr(t, "context_management") or {}
+        for edit in get_attr(cm, "applied_edits") or []:
+            tot["cleared_uses"] += get_attr(edit, "cleared_tool_uses") or 0
+            tot["cleared_tok"] += get_attr(edit, "cleared_input_tokens") or 0
+
+    print("\n==================================")
+    print(f"Turns: {len(turns)}  |  Code blocks: {code_count}  |  "
+          f"Images: {image_count}  |  Web searches: {tot['web']}"
+          f"/{WEB_SEARCH_TOTAL_BUDGET}")
+    print(f"Tokens: input={tot['in']}  output={tot['out']}  "
+          f"cache_write={tot['cache_w']}  cache_read={tot['cache_r']}  "
+          f"total={tot['in'] + tot['out'] + tot['cache_w'] + tot['cache_r']}")
+    if per_turn_in:
+        print(f"Billed input tokens per turn: {per_turn_in}")
+    if tot["cleared_uses"] or tot["cleared_tok"]:
+        print(f"Context editing: cleared {tot['cleared_uses']} tool use(s), "
+              f"{tot['cleared_tok']:,} input tokens")
+    for line in context_log:
+        print(f"[Guard] {line}")
+    if job["mode"] == "batch":
+        print("(Batch mode: token costs billed at 50% of standard rates.)")
+    print(f"Query {status}! {len(saved_files)} file(s) saved to:")
+    print(f"  {out_dir}")
+    for p in saved_files:
+        print(f"    - {p.name}")
+    print("==================================")
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
+
+def main() -> None:
+        # parse_known_args ignores extra arguments Spyder may pass (e.g. --wdir)
+    parser = argparse.ArgumentParser(description="Query Anthropic Claude with multi-file output.")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Show settings without calling the API.")
+    parser.add_argument("--resume", metavar="BATCH_ID", default=None,
+                        help="Collect results of an existing background batch (msgbatch_...).")
+    parser.add_argument("--mode", choices=["batch", "stream"], default=None,
+                        help="Override EXECUTION_MODE.")
+    args, _ = parser.parse_known_args()
+
+    mode = "batch" if args.resume else (args.mode or EXECUTION_MODE)
+
+    if args.dry_run:
+        print("DRY RUN: no API call will be made.\n")
+        print(f"Model:          {MODEL}")
+        print(f"Mode:           {mode}")
+        print(f"Output folder:  {DOC_DIR / (OUTPUT_LABEL + '_<timestamp>')}")
+        print(f"Max tokens:     {MAX_TOKENS}")
+        print(f"Thinking:       {THINKING}")
+        print(f"Web search:     {USE_WEB_SEARCH}  (per turn: {WEB_SEARCH_TOOL.get('max_uses')}, "
+              f"job total: {WEB_SEARCH_TOTAL_BUDGET})")
+        print(f"Tools:          {[t['type'] for t in build_tools()]}")
+        print(f"Betas:          {active_betas()}")
+        print(f"Poll every:     {POLL_INTERVAL}s  (max wait {MAX_WAIT}s)")
+        print(f"Continuations:  {MAX_CONTINUATIONS}")
+        print(f"Context window: {CONTEXT_WINDOW:,}  |  continue guard: "
+              f"{CONTINUE_TOKEN_THRESHOLD:,} tokens")
+        print(f"Context edits:  {json.dumps(CONTEXT_MANAGEMENT) if CONTEXT_MANAGEMENT else None}")
+        print(f"Wrap-up turn:   {WRAP_UP_ENABLED}")
+        print(f"API key found:  {bool(os.getenv('ANTHROPIC_API_KEY'))}")
+        print(f"\nSystem:\n{sys_prompt}")
+        print(f"\nPrompt:\n{user_prompt}")
+        return
+
+        # API_KEY is saved as an ENV VARIABLE on home compu
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        sys.exit("ERROR: ANTHROPIC_API_KEY environment variable is not set.")
+
+    client = Anthropic(api_key=api_key, timeout=API_TIMEOUT, max_retries=MAX_RETRIES)
+
+    # ---- submit/resume + poll (batch) or stream ---------------------
+    try:
+        if mode == "batch":
+            job = run_batch_mode(client, args.resume)
+        else:
+            job = run_stream_mode(client)
+    except APIStatusError as err:
+        msg = f"ERROR: API returned status {err.status_code}: {err.message}"
+        if is_context_overflow({"message": err.message}):
+            msg += f"\n{OVERFLOW_ADVICE}"
+        sys.exit(msg)
+    except APIConnectionError as err:
+        sys.exit(f"ERROR: Could not reach the Anthropic API: {err}")
+
+    if job is None:
+        return
+
+    # ---- save outputs ----------------------------------------------
+    out_dir = make_output_dir(DOC_DIR, OUTPUT_LABEL)
+    process_response(client, job, out_dir)
+
+
+if __name__ == "__main__":
+    main()

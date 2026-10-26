@@ -1,0 +1,872 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created: 20 Oct 2026
+Revised: 20 Oct 2026
+Authors: bmarron, claude-opus-5.5
+
+
+---------------------------------------------
+A_Template_ResearchQuery_anthropic_v3.0.py
+----------------------------------------------
+    1. Submits a query to an Anthropic Claude model via the Messages API in
+       BACKGROUND mode (Message Batches API), with the Code Execution and
+       Web Search server tools enabled.
+    2. Polls the API until the job completes (robust to network drops).
+       Long research turns that hit the server-side tool-loop limit
+       (stop_reason = "pause_turn") are continued automatically.
+    3. Saves the model's text answer to a .txt file.
+    4. Saves any web sources (search results + URL citations) to a _sources.txt file.
+    5. Saves any code/commands that the model executed to .py / .sh files.
+    6. Saves the execution logs (stdout / stderr / exit codes) to a .log file.
+    7. Downloads every file the model generated inside its sandbox
+       (e.g. .png, .csv, .xlsx, .py, .pdf) with its original name and extension.
+       That is, multi-file-type output (text, code, images, data files)
+    8. Saves image outputs (plots). Claude writes plots to files, which are
+       downloaded in step 7 and flagged as [Image Output].
+    9. Saves the raw JSON response(s) for debugging.
+
+    All outputs are written to a time-stamped folder on the Desktop:
+        ~/Desktop/EcosanQuery_Anthropic_YYYYMMDD_HHMMSS/
+
+
+---------------------------------------------------------------------------
+QUICK START
+---------------------------------------------------------------------------
+  1. Check packages installed in venv (ai-apis) and perform updates
+
+<<< bash
+    cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+    pip list &&
+    python3 -m pip install --upgrade pip &&
+    pip install --upgrade anthropic &&
+    deactivate
+>>>
+
+  2. Set your API key as ENV VARIABLE (once):  ANTHROPIC_API_KEY
+  3. Edit sections below, as needed
+    # CONFIGURATION
+    # PROMPT
+
+  4. Run file (runs in Spyder within virtual environment, ai-apis)
+      * To run file w/o CLI toggles
+          a) Click on the green Run file icon in Toolbar or press F5
+    
+      * To run file w/ CLI toggles
+          a) place copy of file on Desktop
+          b) run file using IPython interpreter
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.0.py', args='--dry-run')
+runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.0.py', args='--mode stream')
+
+
+------------------
+EXECUTION MODES
+------------------
+  batch  (default) : Message Batches API. Job runs server-side; no long-held
+                     HTTP connection; resumable; 50% cheaper. Most batches
+                     finish well within an hour (max 24 h).
+  stream           : Direct streaming request. Usually faster to start,
+                     shows live progress, but is NOT resumable.
+
+
+------------------
+IF INTERRUPTED RUN
+-----------------
+If a batch run is interrupted (Ctrl-C, network drop, or polling exceeds
+60 minutes), the job keeps running server-side. The batch ID is printed at
+submission and stored in ~/Desktop/.anthropic_jobs/<batch_id>.json.
+It looks like:
+    msgbatch_013Zva2CMHLNnXjNJJKqJ2EF
+
+Collect the job inside IPython interpreter with copy of file on Desktop:
+    runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.0.py', args='--resume msgbatch_XXXXXXXX')
+
+Batch results remain available for 29 days. Generated files are stored in
+the Files API (they do not expire with the sandbox).
+
+
+-----------
+REVISIONS
+-----------
+Revised: v3.0 (Anthropic port of A_Template_ResearchQuery_openai_v3.0.py)
+    * Background mode via Message Batches API (+ polling, --resume).
+    * Code execution + web search server tools.
+    * Automatic continuation of "pause_turn" responses in the same sandbox.
+    * Generated files downloaded via the Files API; files written with the
+      model's text-editor tool are reconstructed if not otherwise downloadable.
+    * Optional --mode stream for interactive runs.
+
+---------------------------
+Notes before the first run
+----------------------------
+1. **Run `--dry-run` first.** It confirms that `ANTHROPIC_API_KEY` is found and prints the full configuration 
+without calling the API.
+
+2. **Check the tool versions and beta headers for your model.** Anthropic updates these periodically. If the API rejects 
+a tool or header (HTTP 400), update these three constants in the CONFIGURATION section to the versions listed in Anthropic's 
+docs for `claude-fable-5-1`:
+   - `CODE_EXECUTION_TOOL`
+   - `WEB_SEARCH_TOOL`
+   - `BETAS`
+   
+3. **Thinking setting.** `THINKING = {"type": "adaptive"}` is meant for newer models. If your model rejects it, 
+switch to `{"type": "enabled", "budget_tokens": 16000}`.
+
+4. **Choosing a mode.** Batch mode is the robust, resumable equivalent of OpenAI's background mode. For quick tests, 
+`args='--mode stream'` gives faster turnaround and live progress, but it cannot be resumed.
+
+5. **Resuming multi-turn jobs.** The `.anthropic_jobs/` folder on your Desktop stores the conversation state. A resumed job that 
+needed `pause_turn` continuations can then be rebuilt in full. It is safe to delete old entries.
+    
+"""
+
+
+import argparse
+import json
+import os
+import sys
+import time
+import re
+from datetime import datetime
+from pathlib import Path
+
+from anthropic import Anthropic, APIConnectionError, APIStatusError, APITimeoutError
+
+
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
+
+    # model to query
+MODEL = "claude-fable-5-1"
+
+    # base label for all output files
+OUTPUT_LABEL = "ResearchQuery_Anthropic"
+
+    # Desktop directory (falls back to ~/Desktop if the hard-coded path is absent)
+DOC_DIR = Path("/home/bruce-vdb/Desktop")
+if not DOC_DIR.exists():
+    DOC_DIR = Path.home() / "Desktop"
+
+    # where batch job state is kept (needed for --resume of multi-turn jobs)
+JOBS_DIR = DOC_DIR / ".anthropic_jobs"
+
+    # "batch" (background, resumable) or "stream" (direct, not resumable)
+EXECUTION_MODE = "batch"
+
+    # maximum output tokens per turn (includes thinking tokens)
+MAX_TOKENS = 64000
+
+    # extended thinking
+    #   {"type": "adaptive"}                          -> model decides (newer models)
+    #   {"type": "enabled", "budget_tokens": 16000}   -> fixed budget (< MAX_TOKENS)
+    #   None                                          -> off
+THINKING = {"type": "adaptive"}
+
+    # NOTE: Anthropic's code-execution sandbox has a fixed size
+    # (~5 GiB RAM / 5 GiB disk); there is no memory setting equivalent
+    # to OpenAI's CONTAINER_MEMORY.
+
+    # code execution tool (bash + file editing in a sandbox)
+CODE_EXECUTION_TOOL = {"type": "code_execution_20250825", "name": "code_execution"}
+
+    # enable the web search tool (needed for real literature review/citations)
+USE_WEB_SEARCH = True
+WEB_SEARCH_TOOL = {"type": "web_search_20250305", "name": "web_search", "max_uses": 25}
+
+    # beta headers: code execution + Files API (file downloads)
+BETAS = ["code-execution-2025-08-25", "files-api-2025-04-14"]
+
+    # per-HTTP-request timeout (seconds). In batch mode each request is short.
+API_TIMEOUT = 300
+
+    # automatic SDK retries for each individual HTTP request
+MAX_RETRIES = 3
+
+    # polling settings for background (batch) mode
+POLL_INTERVAL = 15          # seconds between status checks
+MAX_WAIT = 60 * 60          # give up polling after this many seconds (job keeps running)
+MAX_POLL_ERRORS = 10        # consecutive network errors tolerated while polling
+
+    # automatic continuations when the model returns stop_reason="pause_turn"
+MAX_CONTINUATIONS = 10
+
+    # fallback: scan the Files API for downloadable files created during the job
+FILES_FALLBACK_SCAN = True
+FILES_FALLBACK_LIMIT = 500   # max file entries to inspect
+
+    # identifier for the single request inside each batch
+CUSTOM_ID = "research_query"
+
+IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tif", ".tiff"}
+
+
+# =============================================================================
+# PROMPT
+# =============================================================================
+
+    # User level message
+user_prompt = (
+    "Design a complete, self-contained home-scale ecosanitation system that "
+    "effectively and efficiently recycles human waste into garden-ready "
+    "fertilizer. The system must be designed so that 1) it can handle human "
+    "waste from three adults; 2) it uses very little electricity and virtually "
+    "no freshwater; 3) it separates urine and feces; 4) it rapidly decomposes "
+    "fecal material using inoculations of specialized bacteria and fungi; and "
+    "5) it has a minimal ecological footprint. To begin exploring design options "
+    "for such a system, review open-source journals, textbooks, and relevant "
+    "source materials for advances in ecosanitation, advances in animal manure "
+    "processing, and advances in bacterial-fungal decomposition of waste "
+    "streams. Provide 1) a high-level conceptual design in both written and "
+    "graphical form; and 2) a list of relevant citations."
+)
+
+    # System level message
+sys_prompt = (
+    "You are an expert in bacterial and fungal decomposition techniques and "
+    "ecological engineering designs. Use web search to find and verify sources; "
+    "cite only sources you have actually located. When a file, chart, table, or "
+    "script would be useful, create it with the code execution tool and save it "
+    "as a file so the user can download it. Save plots as image files "
+    "(e.g. PNG) rather than only displaying them."
+)
+
+
+# =============================================================================
+# HELPER FUNCTIONS
+# =============================================================================
+
+def make_output_dir(base_dir: Path, label: str) -> Path:
+    """Create a unique, time-stamped output folder."""
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_dir = base_dir / f"{label}_{stamp}"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    return out_dir
+
+
+def safe_filename(name: str, default: str = "file") -> str:
+    """Strip path parts and characters that are unsafe in filenames."""
+    name = os.path.basename(name or "").strip()
+    name = re.sub(r"[^\w.\-]+", "_", name)
+    return name or default
+
+
+def unique_path(directory: Path, filename: str) -> Path:
+    """Avoid overwriting files that share the same name."""
+    path = directory / filename
+    stem, suffix = path.stem, path.suffix
+    n = 1
+    while path.exists():
+        path = directory / f"{stem}_{n}{suffix}"
+        n += 1
+    return path
+
+
+def get_attr(obj, key, default=None):
+    """Read a field from either an SDK object or a plain dict."""
+    if obj is None:
+        return default
+    if isinstance(obj, dict):
+        return obj.get(key, default)
+    return getattr(obj, key, default)
+
+
+def to_plain(obj):
+    """Convert an SDK object into JSON-serialisable Python data."""
+    if hasattr(obj, "model_dump"):
+        return obj.model_dump(mode="json")
+    return obj
+
+
+def strip_none(obj):
+    """Recursively remove None values (for sending content blocks back)."""
+    if isinstance(obj, dict):
+        return {k: strip_none(v) for k, v in obj.items() if v is not None}
+    if isinstance(obj, list):
+        return [strip_none(v) for v in obj]
+    return obj
+
+
+def resume_hint(job_id: str) -> str:
+    """Command the user can run to collect a background job later."""
+    script = os.path.basename(__file__) if "__file__" in globals() else "script.py"
+    return (f"python3 {script} --resume {job_id}\n"
+            f"  or in Spyder/IPython:  runfile('<path>/{script}', args='--resume {job_id}')")
+
+
+def initial_messages() -> list:
+    return [{"role": "user", "content": user_prompt}]
+
+
+def classify_stop(stop_reason):
+    """Map Anthropic stop_reason onto the status vocabulary used for output."""
+    if stop_reason in ("end_turn", "stop_sequence"):
+        return "completed"
+    return {
+        "pause_turn": "incomplete_pause_turn",
+        "max_tokens": "incomplete_max_tokens",
+        "refusal": "refused",
+    }.get(stop_reason, f"stopped_{stop_reason}")
+
+
+def save_job_state(job_id: str, state: dict) -> None:
+    JOBS_DIR.mkdir(parents=True, exist_ok=True)
+    (JOBS_DIR / f"{job_id}.json").write_text(json.dumps(state, indent=2), encoding="utf-8")
+
+
+def load_job_state(job_id: str):
+    path = JOBS_DIR / f"{job_id}.json"
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return None
+
+
+# =============================================================================
+# API: REQUEST PARAMETERS
+# =============================================================================
+
+def build_tools() -> list:
+    """Assemble the tool list for the request."""
+    tools = [dict(CODE_EXECUTION_TOOL)]
+    if USE_WEB_SEARCH:
+        tools.append(dict(WEB_SEARCH_TOOL))
+    return tools
+
+
+def build_params(messages: list, container_id=None) -> dict:
+    """Messages API parameters (shared by batch and stream modes)."""
+    params = {
+        "model": MODEL,
+        "max_tokens": MAX_TOKENS,
+        "system": sys_prompt,
+        "messages": messages,
+        "tools": build_tools(),
+    }
+    if THINKING:
+        params["thinking"] = THINKING
+    if container_id:
+        params["container"] = container_id      # reuse sandbox across continuations
+    return params
+
+
+# =============================================================================
+# API: BATCH MODE (BACKGROUND) - SUBMIT + POLL
+# =============================================================================
+
+def submit_batch(client: Anthropic, messages: list, container_id=None) -> str:
+    """
+    Submit the request as a one-item Message Batch.
+    Returns immediately with a batch ID; the model works server-side.
+    """
+    print(f"Submitting prompt to {MODEL} (background / batch mode) ...")
+    batch = client.beta.messages.batches.create(
+        requests=[{"custom_id": CUSTOM_ID, "params": build_params(messages, container_id)}],
+        betas=BETAS,
+    )
+    print(f"Batch ID: {batch.id}")
+    print(f"(If interrupted, collect later with:\n  {resume_hint(batch.id)})\n")
+    return batch.id
+
+
+def wait_for_batch(client: Anthropic, batch_id: str):
+    """
+    Poll a batch until processing has ended.
+    Tolerates transient network errors. Returns the final batch object,
+    or None if MAX_WAIT is exceeded (the job keeps running on the server).
+    """
+    start = time.time()
+    last_status = None
+    poll_errors = 0
+
+    while True:
+        try:
+            batch = client.beta.messages.batches.retrieve(batch_id, betas=BETAS)
+            poll_errors = 0
+        except (APIConnectionError, APITimeoutError) as err:
+            poll_errors += 1
+            if poll_errors > MAX_POLL_ERRORS:
+                print(f"\n[Error] Too many consecutive polling errors: {err}")
+                return None
+            wait = min(POLL_INTERVAL * poll_errors, 60)
+            print(f"[Warning] Polling error ({poll_errors}/{MAX_POLL_ERRORS}): "
+                  f"{err}. Retrying in {wait}s ...")
+            time.sleep(wait)
+            continue
+
+        status = get_attr(batch, "processing_status")
+        elapsed = int(time.time() - start)
+
+        if status != last_status:
+            print(f"[{elapsed:>5}s] status: {status}")
+            last_status = status
+        else:
+            print(f"[{elapsed:>5}s] still {status} ...", end="\r", flush=True)
+
+        if status == "ended":
+            print()
+            return batch
+
+        if elapsed > MAX_WAIT:
+            print(f"\n[Warning] Stopped polling after {MAX_WAIT}s. "
+                  "The job is still running on the server.")
+            return None
+
+        time.sleep(POLL_INTERVAL)
+
+
+def fetch_batch_result(client: Anthropic, batch_id: str):
+    """Return (result_type, message_or_error) for our request in the batch."""
+    for entry in client.beta.messages.batches.results(batch_id, betas=BETAS):
+        if get_attr(entry, "custom_id") == CUSTOM_ID:
+            result = get_attr(entry, "result")
+            rtype = get_attr(result, "type")
+            if rtype == "succeeded":
+                return rtype, get_attr(result, "message")
+            return rtype, get_attr(result, "error")
+    return "missing", "Result for custom_id not found in batch."
+
+
+def run_batch_mode(client: Anthropic, resume_id=None):
+    """Submit (or resume) a batch job, continuing pause_turn responses."""
+    if resume_id:
+        batch_id = resume_id
+        state = load_job_state(batch_id)
+        if state is None:
+            print("[Info] No local state file for this batch; assuming a single-turn job.")
+            state = {"messages": initial_messages(), "turns": [],
+                     "container_id": None, "job_start": None, "batch_ids": [batch_id]}
+        print(f"Resuming background batch {batch_id} ...\n")
+    else:
+        state = {"messages": initial_messages(), "turns": [],
+                 "container_id": None, "job_start": time.time(), "batch_ids": []}
+        batch_id = submit_batch(client, state["messages"])
+        state["batch_ids"].append(batch_id)
+        save_job_state(batch_id, state)
+
+    try:
+        while True:
+            batch = wait_for_batch(client, batch_id)
+            if batch is None:
+                print(f"Collect it later with:\n  {resume_hint(batch_id)}")
+                return None
+
+            if state.get("job_start") is None:
+                created = get_attr(batch, "created_at")
+                state["job_start"] = created.timestamp() if created else time.time()
+
+            rtype, payload = fetch_batch_result(client, batch_id)
+            if rtype != "succeeded":
+                return {"mode": "batch", "job_id": batch_id, "status": rtype,
+                        "detail": to_plain(payload), "turns": state["turns"],
+                        "job_start": state["job_start"]}
+
+            msg = to_plain(payload)
+            state["turns"].append(msg)
+            stop = msg.get("stop_reason")
+            cid = get_attr(msg.get("container"), "id") or state.get("container_id")
+
+            if stop == "pause_turn" and len(state["turns"]) <= MAX_CONTINUATIONS:
+                print(f"[Info] pause_turn received; continuing in same sandbox "
+                      f"({len(state['turns'])}/{MAX_CONTINUATIONS}) ...")
+                state["messages"].append({"role": "assistant",
+                                          "content": strip_none(msg["content"])})
+                state["container_id"] = cid
+                batch_id = submit_batch(client, state["messages"], cid)
+                state["batch_ids"].append(batch_id)
+                save_job_state(batch_id, state)
+                continue
+
+            save_job_state(batch_id, state)
+            return {"mode": "batch", "job_id": batch_id, "status": classify_stop(stop),
+                    "detail": f"stop_reason={stop}", "turns": state["turns"],
+                    "job_start": state["job_start"]}
+
+    except KeyboardInterrupt:
+        print("\n\nInterrupted. The job is still running on the server.")
+        print(f"Collect it later with:\n  {resume_hint(batch_id)}")
+        return None
+
+
+# =============================================================================
+# API: STREAM MODE (DIRECT, NOT RESUMABLE)
+# =============================================================================
+
+def stream_turn(client: Anthropic, messages: list, container_id, t0: float):
+    """Run one streamed turn, printing live tool/thinking progress."""
+    params = build_params(messages, container_id)
+    for attempt in range(1, MAX_RETRIES + 2):
+        try:
+            last_label = None
+            with client.beta.messages.stream(**params, betas=BETAS) as stream:
+                for event in stream:
+                    if get_attr(event, "type") != "content_block_start":
+                        continue
+                    blk = event.content_block
+                    btype = get_attr(blk, "type")
+                    if btype == "server_tool_use":
+                        label = f"tool call: {get_attr(blk, 'name')}"
+                    elif btype == "thinking":
+                        label = "thinking ..."
+                    elif btype == "text":
+                        label = "writing ..."
+                    else:
+                        continue
+                    if label != last_label or btype == "server_tool_use":
+                        print(f"[{int(time.time() - t0):>5}s] {label}")
+                        last_label = label
+                return stream.get_final_message()
+        except (APIConnectionError, APITimeoutError) as err:
+            if attempt > MAX_RETRIES:
+                raise
+            wait = min(POLL_INTERVAL * attempt, 60)
+            print(f"[Warning] Stream error ({attempt}/{MAX_RETRIES}): {err}. "
+                  f"Retrying turn in {wait}s ...")
+            time.sleep(wait)
+
+
+def run_stream_mode(client: Anthropic):
+    print(f"Submitting prompt to {MODEL} (stream mode, not resumable) ...\n")
+    messages = initial_messages()
+    turns, container_id = [], None
+    t0 = time.time()
+    try:
+        while True:
+            msg = to_plain(stream_turn(client, messages, container_id, t0))
+            turns.append(msg)
+            stop = msg.get("stop_reason")
+            container_id = get_attr(msg.get("container"), "id") or container_id
+            if stop == "pause_turn" and len(turns) <= MAX_CONTINUATIONS:
+                print(f"[Info] pause_turn received; continuing "
+                      f"({len(turns)}/{MAX_CONTINUATIONS}) ...")
+                messages.append({"role": "assistant", "content": strip_none(msg["content"])})
+                continue
+            return {"mode": "stream", "job_id": msg.get("id"), "status": classify_stop(stop),
+                    "detail": f"stop_reason={stop}", "turns": turns, "job_start": t0}
+    except KeyboardInterrupt:
+        print("\n\nInterrupted. Stream-mode jobs cannot be resumed.")
+        if turns:
+            print("Saving partial output from completed turns ...")
+            return {"mode": "stream", "job_id": turns[-1].get("id"), "status": "interrupted",
+                    "detail": "KeyboardInterrupt", "turns": turns, "job_start": t0}
+        return None
+
+
+# =============================================================================
+# OUTPUT HANDLING
+# =============================================================================
+
+def download_file(client: Anthropic, file_id: str, out_dir: Path):
+    """Download a sandbox-generated file from the Files API (original name)."""
+    meta = client.beta.files.retrieve_metadata(file_id, betas=BETAS)
+    fname = get_attr(meta, "filename") or file_id
+    target = unique_path(out_dir, safe_filename(fname, default=file_id))
+    client.beta.files.download(file_id, betas=BETAS).write_to_file(target)
+    return target, os.path.basename(fname)
+
+
+def process_response(client: Anthropic, job: dict, out_dir: Path) -> None:
+
+    saved_files = []
+    status = job["status"]
+    turns = job["turns"]
+
+    # ---------------------------------------------------------------
+    # 0. RAW JSON + ID (debugging / record keeping)
+    # ---------------------------------------------------------------
+    try:
+        raw_path = out_dir / f"{OUTPUT_LABEL}_raw_response.json"
+        raw_path.write_text(json.dumps(turns, indent=2), encoding="utf-8")
+        saved_files.append(raw_path)
+    except Exception as err:
+        print(f"[Warning] Could not save raw JSON: {err}")
+
+    id_path = out_dir / f"{OUTPUT_LABEL}_response_id.txt"
+    msg_ids = "\n".join(f"message: {get_attr(t, 'id')}" for t in turns)
+    id_path.write_text(f"{job['job_id']}\nmode: {job['mode']}\nstatus: {status}\n"
+                       f"{msg_ids}\n", encoding="utf-8")
+    saved_files.append(id_path)
+
+    # ---------------------------------------------------------------
+    # 0b. STATUS CHECK
+    # ---------------------------------------------------------------
+    if status != "completed":
+        detail = job.get("detail")
+        print(f"[Warning] Response status is '{status}'. Details: {detail}")
+        err_path = out_dir / f"{OUTPUT_LABEL}_status_{status}.txt"
+        err_path.write_text(f"status: {status}\ndetails: {detail}\n", encoding="utf-8")
+        saved_files.append(err_path)
+        # continue anyway: partial output may still be useful
+
+    # ---------------------------------------------------------------
+    # 1. WALK THROUGH EVERY CONTENT BLOCK OF EVERY TURN
+    # ---------------------------------------------------------------
+    text_parts = []
+    thinking_parts = []
+    prev_was_text = False
+    log_lines = []
+    web_sources = {}              # url -> title
+    file_ids = []                 # sandbox-generated files (Files API ids)
+    reconstructed = {}            # sandbox path -> file text (text-editor tool)
+    tool_index = {}               # tool_use_id -> (code block number, command)
+    code_count = 0
+
+    for turn in turns:
+        for block in get_attr(turn, "content") or []:
+            btype = get_attr(block, "type")
+
+            # ---- Text + URL citations ----------------------------------
+            if btype == "text":
+                if not prev_was_text and text_parts:
+                    text_parts.append("\n\n")
+                text_parts.append(get_attr(block, "text") or "")
+                prev_was_text = True
+                for cit in get_attr(block, "citations") or []:
+                    url = get_attr(cit, "url")
+                    if url:
+                        # cited titles take precedence over search-only titles
+                        web_sources[url] = get_attr(cit, "title") or web_sources.get(url, "")
+                continue
+            prev_was_text = False
+
+            if btype == "thinking":
+                if get_attr(block, "thinking"):
+                    thinking_parts.append(get_attr(block, "thinking"))
+
+            # ---- Code the model executed -> .py / .sh -------------------
+            elif btype == "server_tool_use":
+                name = get_attr(block, "name")
+                inp = get_attr(block, "input") or {}
+                tid = get_attr(block, "id")
+
+                if name in ("bash_code_execution", "code_execution"):
+                    code = get_attr(inp, "command") or get_attr(inp, "code")
+                    if code:
+                        code_count += 1
+                        ext = ".sh" if name == "bash_code_execution" else ".py"
+                        code_path = unique_path(out_dir, f"executed_code_{code_count}{ext}")
+                        code_path.write_text(code, encoding="utf-8")
+                        saved_files.append(code_path)
+                        tool_index[tid] = (code_count, code)
+
+                elif name == "text_editor_code_execution":
+                    cmd = get_attr(inp, "command")
+                    path = get_attr(inp, "path")
+                    if cmd == "create" and path:
+                        reconstructed[path] = get_attr(inp, "file_text") or ""
+                    elif cmd == "str_replace" and path in reconstructed:
+                        reconstructed[path] = reconstructed[path].replace(
+                            get_attr(inp, "old_str") or "", get_attr(inp, "new_str") or "", 1)
+
+            # ---- Execution results: logs + generated files --------------
+            elif btype in ("bash_code_execution_tool_result", "code_execution_tool_result"):
+                content = get_attr(block, "content") or {}
+                ctype = get_attr(content, "type") or ""
+                num, cmd = tool_index.get(get_attr(block, "tool_use_id"), ("?", ""))
+                if ctype.endswith("_result"):
+                    stdout = get_attr(content, "stdout") or ""
+                    stderr = get_attr(content, "stderr") or ""
+                    rc = get_attr(content, "return_code")
+                    logs = f"=== Code block {num} (exit {rc}) ===\n$ {cmd}\n"
+                    if stdout:
+                        logs += f"--- stdout ---\n{stdout}\n"
+                    if stderr:
+                        logs += f"--- stderr ---\n{stderr}\n"
+                    log_lines.append(logs)
+                    print("--- CODE EXECUTION LOGS ---")
+                    print(logs)
+                    for item in get_attr(content, "content") or []:
+                        fid = get_attr(item, "file_id")
+                        if fid and fid not in file_ids:
+                            file_ids.append(fid)
+                else:
+                    log_lines.append(f"=== Code block {num} ERROR: "
+                                     f"{get_attr(content, 'error_code')} ===\n")
+
+            elif btype == "text_editor_code_execution_tool_result":
+                content = get_attr(block, "content") or {}
+                if "error" in (get_attr(content, "type") or ""):
+                    log_lines.append(f"=== File-editor ERROR: "
+                                     f"{get_attr(content, 'error_code')} ===\n")
+
+            # ---- Web search results: sources consulted ------------------
+            elif btype == "web_search_tool_result":
+                content = get_attr(block, "content")
+                if isinstance(content, list):
+                    for src in content:
+                        url = get_attr(src, "url")
+                        if url and url not in web_sources:
+                            web_sources[url] = get_attr(src, "title") or ""
+                else:
+                    print(f"[Warning] Web search error: {get_attr(content, 'error_code')}")
+
+    # ---------------------------------------------------------------
+    # 2. TEXT OUTPUT -> .txt
+    # ---------------------------------------------------------------
+    output_text = "".join(text_parts).strip()
+    text_path = out_dir / f"{OUTPUT_LABEL}.txt"
+    text_path.write_text(output_text, encoding="utf-8")
+    saved_files.append(text_path)
+
+    print("--- TEXT OUTPUT ---")
+    print(output_text if output_text else "(no text output)")
+    print()
+
+    if thinking_parts:
+        th_path = out_dir / f"{OUTPUT_LABEL}_thinking.txt"
+        th_path.write_text("\n\n---\n\n".join(thinking_parts), encoding="utf-8")
+        saved_files.append(th_path)
+
+    # ---------------------------------------------------------------
+    # 3. FALLBACK: scan Files API for downloadable files created during job
+    #    (catches files the model saved but that were not listed in results)
+    # ---------------------------------------------------------------
+    if FILES_FALLBACK_SCAN and job.get("job_start"):
+        try:
+            for n, f in enumerate(client.beta.files.list(betas=BETAS)):
+                if n >= FILES_FALLBACK_LIMIT:
+                    break
+                created = get_attr(f, "created_at")
+                fid = get_attr(f, "id")
+                if (get_attr(f, "downloadable") and created
+                        and created.timestamp() >= job["job_start"] - 5
+                        and fid not in file_ids):
+                    file_ids.append(fid)
+        except Exception as err:
+            print(f"[Warning] Files API fallback scan failed: {err}")
+
+    # ---------------------------------------------------------------
+    # 4. DOWNLOAD ALL GENERATED FILES (any type, incl. images)
+    # ---------------------------------------------------------------
+    downloaded_names = set()
+    image_count = 0
+    for fid in file_ids:
+        try:
+            path, orig_name = download_file(client, fid, out_dir)
+            downloaded_names.add(orig_name)
+            saved_files.append(path)
+            if path.suffix.lower() in IMAGE_EXTS:
+                image_count += 1
+                print(f"[Image Output] -> {path.name}")
+            else:
+                print(f"[File Output] -> {path.name}")
+        except Exception as err:
+            print(f"[Warning] Could not download file {fid}: {err}")
+
+        # files written with the text-editor tool but not downloadable
+    for sandbox_path, text in reconstructed.items():
+        name = os.path.basename(sandbox_path)
+        if name in downloaded_names:
+            continue
+        path = unique_path(out_dir, safe_filename(name))
+        path.write_text(text, encoding="utf-8")
+        saved_files.append(path)
+        print(f"[File Output (reconstructed)] -> {path.name}")
+
+    # ---------------------------------------------------------------
+    # 5. EXECUTION LOGS -> .log
+    # ---------------------------------------------------------------
+    if log_lines:
+        log_path = out_dir / f"{OUTPUT_LABEL}_execution.log"
+        log_path.write_text("\n".join(log_lines), encoding="utf-8")
+        saved_files.append(log_path)
+
+    # ---------------------------------------------------------------
+    # 6. WEB SOURCES -> _sources.txt
+    # ---------------------------------------------------------------
+    if web_sources:
+        src_path = out_dir / f"{OUTPUT_LABEL}_sources.txt"
+        lines = [f"{i}. {title}\n   {url}" if title else f"{i}. {url}"
+                 for i, (url, title) in enumerate(web_sources.items(), start=1)]
+        src_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        saved_files.append(src_path)
+
+    # ---------------------------------------------------------------
+    # 7. USAGE + SUMMARY
+    # ---------------------------------------------------------------
+    tot = {"in": 0, "out": 0, "cache_w": 0, "cache_r": 0, "web": 0}
+    for t in turns:
+        u = get_attr(t, "usage") or {}
+        tot["in"] += get_attr(u, "input_tokens") or 0
+        tot["out"] += get_attr(u, "output_tokens") or 0
+        tot["cache_w"] += get_attr(u, "cache_creation_input_tokens") or 0
+        tot["cache_r"] += get_attr(u, "cache_read_input_tokens") or 0
+        tot["web"] += get_attr(get_attr(u, "server_tool_use") or {}, "web_search_requests") or 0
+
+    print("\n==================================")
+    print(f"Turns: {len(turns)}  |  Code blocks: {code_count}  |  "
+          f"Images: {image_count}  |  Web searches: {tot['web']}")
+    print(f"Tokens: input={tot['in']}  output={tot['out']}  "
+          f"cache_write={tot['cache_w']}  cache_read={tot['cache_r']}  "
+          f"total={tot['in'] + tot['out'] + tot['cache_w'] + tot['cache_r']}")
+    if job["mode"] == "batch":
+        print("(Batch mode: token costs billed at 50% of standard rates.)")
+    print(f"Query {status}! {len(saved_files)} file(s) saved to:")
+    print(f"  {out_dir}")
+    for p in saved_files:
+        print(f"    - {p.name}")
+    print("==================================")
+
+
+# =============================================================================
+# MAIN
+# =============================================================================
+
+def main() -> None:
+        # parse_known_args ignores extra arguments Spyder may pass (e.g. --wdir)
+    parser = argparse.ArgumentParser(description="Query Anthropic Claude with multi-file output.")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Show settings without calling the API.")
+    parser.add_argument("--resume", metavar="BATCH_ID", default=None,
+                        help="Collect results of an existing background batch (msgbatch_...).")
+    parser.add_argument("--mode", choices=["batch", "stream"], default=None,
+                        help="Override EXECUTION_MODE.")
+    args, _ = parser.parse_known_args()
+
+    mode = "batch" if args.resume else (args.mode or EXECUTION_MODE)
+
+    if args.dry_run:
+        print("DRY RUN: no API call will be made.\n")
+        print(f"Model:          {MODEL}")
+        print(f"Mode:           {mode}")
+        print(f"Output folder:  {DOC_DIR / (OUTPUT_LABEL + '_<timestamp>')}")
+        print(f"Max tokens:     {MAX_TOKENS}")
+        print(f"Thinking:       {THINKING}")
+        print(f"Web search:     {USE_WEB_SEARCH}")
+        print(f"Tools:          {[t['type'] for t in build_tools()]}")
+        print(f"Betas:          {BETAS}")
+        print(f"Poll every:     {POLL_INTERVAL}s  (max wait {MAX_WAIT}s)")
+        print(f"Continuations:  {MAX_CONTINUATIONS}")
+        print(f"API key found:  {bool(os.getenv('ANTHROPIC_API_KEY'))}")
+        print(f"\nSystem:\n{sys_prompt}")
+        print(f"\nPrompt:\n{user_prompt}")
+        return
+
+        # API_KEY is saved as an ENV VARIABLE on home compu
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        sys.exit("ERROR: ANTHROPIC_API_KEY environment variable is not set.")
+
+    client = Anthropic(api_key=api_key, timeout=API_TIMEOUT, max_retries=MAX_RETRIES)
+
+    # ---- submit/resume + poll (batch) or stream ---------------------
+    try:
+        if mode == "batch":
+            job = run_batch_mode(client, args.resume)
+        else:
+            job = run_stream_mode(client)
+    except APIStatusError as err:
+        sys.exit(f"ERROR: API returned status {err.status_code}: {err.message}")
+    except APIConnectionError as err:
+        sys.exit(f"ERROR: Could not reach the Anthropic API: {err}")
+
+    if job is None:
+        return
+
+    # ---- save outputs ----------------------------------------------
+    out_dir = make_output_dir(DOC_DIR, OUTPUT_LABEL)
+    process_response(client, job, out_dir)
+
+
+if __name__ == "__main__":
+    main()
+

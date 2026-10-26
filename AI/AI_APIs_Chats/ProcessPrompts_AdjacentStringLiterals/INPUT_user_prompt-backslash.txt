@@ -1,0 +1,14 @@
+Satellite data has been used to evaluate various aspects of agricultural production for some time. Satellite data has \
+also been used to infer soil fecundity and bacterial-fungal ratios as well as other metrics of soil health and \
+composition such as soil organic carbon (SOC), pH, nitrogen, and Cation Exchange Capacity. Examine peer-reviewed \
+journals, textbooks, seminar and conference publications, and all relevant source materials for the use and processing \
+of satellite data in agriculture. With this information at hand, do the following:\
+1) Provide a high-level summary of how satellite data are currently being used in agriculture in .pdf format. \
+2) Provide a detailed account of how satellite data is obtained, processed, and evaluated for agricultural use in pdf format. \
+3) Provide an infographic explaining how satellite data is obtained, processed, and evaluated for agricultural use. \
+The infographic should be developed in a Python script that can be run independently to generate the infographic as \
+a .jpeg file.
+4) Provide a list of foundational and canonical references (open-source peer-reviewed papers and textbooks) that \
+explain the process and theory for obtaining, processing, and evaluating satellite data for agricultural use \
+8) Provide a list of sources for publicly-available satellite data that can be used for agricultural evaluations \
+(eg, Copernicus and Google Earth Engine). Thank you!
