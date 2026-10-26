@@ -1,0 +1,1 @@
+{"custom_id": "research_query", "result": {"error": {"error": {"message": "prompt is too long: 1037825 tokens > 1000000 maximum", "type": "invalid_request_error", "details": null}, "request_id": "workerreq_015PfTmHk51XzB1dj5CSxdVa", "type": "error"}, "type": "errored"}}

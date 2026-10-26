@@ -1,22 +1,8 @@
 
-Satellite data has been used to evaluate agricultural production for some time. 1) Review peer-reviewed journals, textbooks, seminar and conference publications, and all relevant source materials for the use and processing of satellite data as well as for the use and processing of drone data in agriculture. 2) Provide a high level summary of how each type of data source (satellite data, drone data) are currently being used in agriculture. 3) Provide a detailed account of how satellite data and drone data are obtained, processed, and evaluated for agricultural use.
-4) Provide infographics explaining how both satellite data and drone data are obtained, processed, and evaluated for agricultural use. The two infographics should be developed in a Python script that can be run independently to generate the infographics as .jpeg files. 5) Provide a list of foundational and canonical references that explain the process and theory for obtaining, processing, and evaluating satellite data and drone data for agricultural use. 6) Provide a list of sources for satellite data for agricultural use
 
-You are an expert in agriculture, crop and soil science, and geospatial analysis. Use web search to find and verify sources; cite only sources you have actually located.
+IT'S TOO MUCH! break into pieces
 
-
-
-
-
-
-
-
-
-
-
-ERROR
-• The model or API endpoint you are using allows a maximum of 1,000,000 tokens.
-• Your input prompt contained 1,037,825 tokens
+Prompt
 ---------
 Satellite data has been used to evaluate agricultural production for some time. Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and Cation Exchange Capacity. More recently, drone data has also been used evaluate soil health and crop vitality. Review peer-reviewed journals, textbooks, seminar and conference publications, and all relevant source materials for the use and processing of satellite data as well as for the use and processing of drone data in agriculture. With this information at hand, do the following:
 1) Provide a high level summary of how each type of data source (satellite data, drone data) are currently being used in agriculture.
@@ -51,6 +37,10 @@ Batch ID: msgbatch_01URBjcz9SGSZKNVYSFFzHat
 --- TEXT OUTPUT ---
 (no text output)
 
+ERROR
+• The model or API endpoint you are using allows a maximum of 1,000,000 tokens.
+• Your input prompt contained 1,037,825 tokens
+
 
 ==================================
 Turns: 0  |  Code blocks: 0  |  Images: 0  |  Web searches: 0
@@ -63,3 +53,102 @@ Query errored! 4 file(s) saved to:
     - ResearchQuery_Anthropic_status_errored.txt
     - ResearchQuery_Anthropic.txt
 ==================================
+
+
+Yes, you can recover the work already done without wasting your progress or double-spending on tokens.
+When you use Anthropic’s Message Batches API, the system treats your batch as a group of independent requests. Even if parts of the batch fail, expire, or get blocked due to a rate limit, the successful parts are not lost. Anthropic charges your account precisely for the input and output tokens consumed by the individual queries that actually ran.
+
+
+RetrievalQueries
+---------------
+RQ1
+runfile('/home/bruce-vdb/Desktop/A_Template_RetrievalQuery_anthropic_v3.0.py', args='--list')
+Most recent batches (up to 20):
+
+  msgbatch_01URBjcz9SGSZKNVYSFFzHat  created=2026-10-25 02:53:30.335021+00:00  status=ended | total=1 processing=0 succeeded=0 errored=1 canceled=0 expired=0
+An exception has occurred, use %tb to see the full traceback.
+
+SystemExit: 0
+
+
+RQ2
+runfile("/home/bruce-vdb/Desktop/A_Template_RetrievalQuery_anthropic_v3.0.py", "msgbatch_01URBjcz9SGSZKNVYSFFzHat")
+
+Checking batch msgbatch_01URBjcz9SGSZKNVYSFFzHat ...
+  status=ended | total=1 processing=0 succeeded=0 errored=1 canceled=0 expired=0
+
+Batch has ended. Streaming results to: batch_exports/msgbatch_01URBjcz9SGSZKNVYSFFzHat_20261026T012640Z
+
+================ Export complete ================
+  Succeeded : 0  (truncated by max_tokens: 0)
+  Errored   : 1
+  Canceled  : 0
+  Expired   : 0
+  Code files: 0
+  Output    : /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_Queries_Chats+APIs/Anthropic/Queries/BuildQueries/Build_anthropic-Template_RetrievalQuery/Query_01/batch_exports/msgbatch_01URBjcz9SGSZKNVYSFFzHat_20261026T012640Z
+  -> 1 item(s) in needs_fix_custom_ids.txt failed due to invalid requests; fix them before resubmitting.
+An exception has occurred, use %tb to see the full traceback.
+
+SystemExit: 0
+
+
+[SEE batch_exports folder]
+
+
+Check with Claude Chat
+----------------------
+
+Me: 
+A recent query to claude-fable-5-1 failed. Upon trying to retrieve any results I received theses error messages:
+
+* msgbatch_01URBjcz9SGSZKNVYSFFzHat  created=2026-10-25 02:53:30.335021+00:00  status=ended | total=1 processing=0 succeeded=0 errored=1 canceled=0 expired=0
+
+* {"custom_id": "research_query", "result": {"error": {"error": {"message": "prompt is too long: 1037825 tokens > 1000000 maximum", "type": "invalid_request_error", "details": null}, "request_id": "workerreq_015PfTmHk51XzB1dj5CSxdVa", "type": "error"}, "type": "errored"}}
+
+There were no output files created. What happened?
+
+
+
+
+Claude: 
+Thanks, the script answers it, and it changes my earlier guess. Your 381-token prompt was fine. The failing request was almost certainly a continuation turn, not the original submission.
+
+**What happened**
+
+When a turn ends with `stop_reason == "pause_turn"`, `run_batch_mode` appends the model's entire previous output to `messages` and submits a new batch. That output includes:
+
+- every `web_search_tool_result` block (up to 25 searches, each with many results, plus encrypted content that the API needs back)
+- every code execution result and thinking block
+
+All of that counts as input tokens on the next request. Your prompt asks for a literature review plus two infographic scripts, with 25 web searches and up to 10 continuations allowed, so the context snowballs. At some point the resubmitted conversation hit 1,037,825 tokens, over the 1,000,000 limit, and the API rejected it before doing any work. The batch you listed (`total=1, errored=1`) was one of those continuation batches, not the first one.
+
+**Your earlier work is probably recoverable**
+
+Before each continuation is submitted, the script saves the job state, including all completed turns, to `~/Desktop/.anthropic_jobs/<batch_id>.json`. So:
+
+1. Open `~/Desktop/.anthropic_jobs/msgbatch_01URBjcz9SGSZKNVYSFFzHat.json`. Its `turns` list should hold the earlier completed turns (text, search results, code, file IDs), and `batch_ids` lists the earlier batches.
+2. Check each turn's `usage.input_tokens` to see how fast the context grew.
+3. Earlier batches' results stay retrievable for 29 days, and generated files stay in the Files API, so `--resume` on an earlier batch ID (from `batch_ids`) should let you collect that work.
+
+**Why no output folder appeared**
+
+I can't tell from here. On a failed continuation the script should still create the folder and write the raw JSON and a `_status_errored.txt`. If nothing was written, you may have been collecting results some other way, or hit an exception before `process_response` ran. If you tell me the exact command and any console output, I can narrow it down.
+
+**Fixes to the script**
+
+- **Add a token guard.** Before submitting a continuation, check `msg["usage"]["input_tokens"]` (plus cache tokens). If it's above roughly 700k, stop and save what you have instead of continuing.
+- **Reduce `max_uses`** for web search (say 10 to 15) and lower `MAX_CONTINUATIONS` (say 3 to 5).
+- **Split the task.** One request per deliverable, such as satellite writeup plus script, drone writeup plus script, and references, submitted as separate `custom_id`s in one batch. Each stays small and failures are isolated.
+- **Clear old tool results.** Look into Anthropic's context-editing feature for clearing stale tool results in long agentic runs, which is built for this problem.
+
+Also, in your prompt, items 6 and 7 are identical (both ask for satellite references). Item 7 was probably meant to be drone references.
+
+If you share the JSON state file's `usage` numbers per turn, I can tell you exactly where the tokens went.
+
+
+
+
+
+
+
+
