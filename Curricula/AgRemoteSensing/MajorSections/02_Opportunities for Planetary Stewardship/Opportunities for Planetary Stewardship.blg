@@ -1,0 +1,19 @@
+[0] Config.pm:307> INFO - This is Biber 2.19
+[0] Config.pm:310> INFO - Logfile is 'Opportunities for Planetary Stewardship.blg'
+[105] biber:340> INFO - === Sun Jun  7, 2026, 21:38:24
+[127] Biber.pm:419> INFO - Reading 'Opportunities for Planetary Stewardship.bcf'
+[232] Biber.pm:979> INFO - Found 1 citekeys in bib section 0
+[256] Biber.pm:4419> INFO - Processing section 0
+[269] Biber.pm:4610> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[541] bibtex.pm:1713> INFO - LaTeX decoding ...
+[2442] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-mx/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[2598] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2598] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2598] Biber.pm:4239> INFO - Sorting list 'nyt/apasortcite//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[2598] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[2609] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2609] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2609] Biber.pm:4239> INFO - Sorting list 'nyt/global//global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[2609] Biber.pm:4245> INFO - No sort tailoring available for locale 'en-US'
+[2611] bbl.pm:660> INFO - Writing 'Opportunities for Planetary Stewardship.bbl' with encoding 'UTF-8'
+[2612] bbl.pm:763> INFO - Output to Opportunities for Planetary Stewardship.bbl

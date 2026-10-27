@@ -1,0 +1,260 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: bmarron
+% Created: 22 May 2026
+% Modified:
+%
+% 12-point; 1in margins
+% One inch vertical space is 72.27pt
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}       % Document margins
+
+\usepackage{afterpage}
+%\usepackage{datetime2}               % specialty date formats
+\usepackage{lipsum}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+
+
+\usepackage{lineno}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+
+\usepackage{outlines}
+
+
+\usepackage{threeparttable}
+\usepackage{pgfgantt}                 % simple gantt charts
+\usepackage{bigfoot}
+\usepackage{multirow}
+\usepackage{microtype}                % Slightly tweak font spacing for aesthetics
+\usepackage{booktabs}                 % Horizontal rules in tables
+\usepackage{float}                    % specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{paralist}                 % bullet points with less space between them
+\usepackage[hang, 
+            small,
+            labelfont=bf,
+            up,
+            textfont=it,up]{caption}    % Custom captions under/above floats in tables or figures
+
+\usepackage[sc]{mathpazo}             % Use the Palatino font and the Pazo fonts for math
+\linespread{1.05}                     % global setting - Palatino needs more space
+\usepackage{setspace}
+%\doublespacing                       % global setting
+
+\usepackage{abstract}                                               % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}              % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}         % Set the abstract itself to small italic text
+
+\usepackage{titlesec}                                               % Allows customization of titles
+\renewcommand\thesection{\Roman{section}}                           % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{subsection}}                    % Arabic numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}        % Change the look of the section titles
+\titleformat{\subsection}[block]{\large\underline}{\thesubsection}{1em}{}                    % Change the look of the subsection titles
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.25\baselineskip}            % Change spacing after section
+
+
+\usepackage{fancyhdr}                                              % Headers and footers
+\pagestyle{fancy}                                                 % All pages have headers and footers
+%\pagestyle{plain}                                                  % globally set to "plain"
+%\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\fancyhead[L]{Sustainability Now!}                                                                                    
+\fancyhead[R]{Universidad del Medio Ambiente}
+%\fancyhead[C]{}                                                   % Custom header text
+\fancyfoot[C]{\thepage}    
+%\fancyfoot[RO,LE]{\thepage}                                        % Custom footer text
+
+
+
+\usepackage{everypage}                             % Required for watermarks
+\usepackage{draftwatermark}                        % Watermarks or not
+\SetWatermarkLightness{0.95}
+\SetWatermarkScale{0.75}                            % Set to 1.0 for default
+%\SetWatermarkText{FINAL DRAFT}                      % comment out for default (DRAFT)   
+
+%\usepackage{multicol}                                      % Used for the two-column layout of the document
+%\usepackage{hyperref}                                      % Interferes with cite.sty 
+
+
+
+
+%-------------------------------------------------------------
+% NEW COMMANDS
+%---------------------------------------------------------------------
+%This command creates a box marked ``To Do'' around text.
+%To use: 
+% type \todo{  insert text here  }.
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{To Do}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt\begin{center} #1 \end{center}\end{minipage}}\vspace{5 mm}\par}
+
+% This command makes a sun symbol
+% To use:
+% Type \sun
+\newcommand{\sun}{\ensuremath{\odot}}                                   
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% This command creates a custom indent
+% To use:
+%\begin{myindentpar}{2em}
+% blah blah blah
+%\end {myindentpar}
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{14pt}{10pt}
+                    \selectfont \textbf{Course Outline}   % Article title
+                    \vspace{-7mm}
+      } 
+
+\author{
+     \normalsize Bruce D. Marron \\                     % Name in “small caps”
+%     \normalsize FOR 803-001 \\
+%     \vspace{-9mm}
+%      \normalsize North Carolina State University      % Institution or Class ID
+     \vspace{-5mm}
+}
+\date{\normalsize \today}
+
+
+
+%---------------------------------------------------------------------------------------
+% HELPFUL
+%----------------------------------------------------------------------------------------
+
+%\enquote*{text}                                 % single quotes
+%\shortcites{citation}\cite{citation}           % gives Authors et al.
+% Yucat\'{a}n                                    % accents
+%\includegraphics[width=6.0in, height=5in, page=2]{graphics/Problems1.pdf}              % pdf
+%\includegraphics[width=0.35\textwidth, height=0.6\textheight]{graphics/fig1}           % pdf
+%\thispagestyle{plain}                          % headers/footers included page or not (default =TRUE except for 1st)
+
+%\begin{outlines}
+%\end{outlines}
+
+%---------------------------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+
+\begin{singlespacing}
+%\maketitle                                      % insert title or not
+\end{singlespacing}
+\thispagestyle{fancy}                           % headers/footers included or not (default=FALSE for first pg)
+%\linenumbers                                    % line numbers for document or not
+
+%%%%%%%%%%%% DOC TEXT %%%%%%%%%%%%%%%%%%
+
+
+\large
+\begin{flushleft}
+\textit{Civilization and The State of the World: Year 2027}
+\end{flushleft}
+
+\normalsize
+\begin{outline}[enumerate]
+\1 \textbf{We Live in the Anthropocene}\\
+* Humans are now the main drivers of biogeophysical change on Earth, for nearly all biogeophysical processes and at at nearly all spatial scales.\\
+
+* The Anthropocene is a proposed new geological epoch based on the observation that the magnitude, variety and longevity of human-induced changes on essential planetary processes have become so profound that we are no longer in the Holocene.\\
+
+* Human activity is now the driving force in determining the trajectory of the entire Earth System.\\
+
+* Anthropocene begins in the geologic record in either 1610 or in 1964:
+\begin{itemize}
+  \item 1610 (Orbis spike) -- CO2 drop from population crash in the Americas; highlights social concerns, unequal power relationships between different groups of people, economic growth, the impacts of globalized trade, and our current reliance on fossil fuels. The onward effects of the arrival of Europeans in the Americas also highlights a long-term and large-scale example of human actions unleashing processes that are difficult to predict or manage.
+  \item 1964 (atomic bomb spike) -- an elite-driven technological development that threatens planet-wide destruction; highlights the ‘Great Acceleration’ since the 1950s which is marked by a major expansion in human population, large changes in natural processes, and the development of novel materials from minerals to plastics to persistent organic pollutants and inorganic compounds, including these the global fallout from nuclear bomb tests.
+\end{itemize}
+
+\textit{\cite{steffen_2018_trajectories}}\\
+\textit{\cite{lewis_2015_defining}}\\
+
+
+
+\1 \textbf{State of the Earth: Year 2027}\\
+* Rapidly moving to Hot House Earth, freshwater depletion, melted glaciers, Sixth Mass Extinction,
+
+\2 The Atmosphere 
+\2 The Hydrosphere 
+\2 The Cryosphere
+\2 The Biosphere
+\2 The Lithosphere\\
+* Triggered seismicity from mining and extraction\\
+
+* Subsidence, sinking, and erosion effects from the built environment \\
+
+\textit{\cite{mcgarr_2002c_ase}}\\
+\textit{\cite{meijer_global_2018}}\\
+
+
+\1 State of the Humans: Year 2027
+\2 Current Societal Organizing Principles 
+\3 Money
+\4 Capital and Wealth
+\4 Debt-Based, Neo-Liberal Economics
+\3 Status and Power
+\3 Religion
+\3 Government and Empire
+\2 Current Technology
+\2 Current Population
+
+\1 State of Civilization: Year 2027
+\2 Globalized
+\2 Weaponized
+\2 Distracted
+\2 Fragile
+\end{outline}
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}

@@ -1,0 +1,111 @@
+
+
+###############
+Dynamic World Dataset
+################
+a groundbreaking 10-meter near real-time (NRT) global land use and land cover (LULC) dataset produced through a partnership between Google and the World Resources Institute (WRI). By processing European Space Agency (ESA) Sentinel-2 satellite imagery through deep learning models hosted directly on Google Earth Engine, it generates daily land cover predictions for the entire planet. Unlike traditional, static land cover maps that are published annually or once every few years, Dynamic World updates continuously. A new map is created as soon as a fresh, relatively cloud-free Sentinel-2 image is acquired—often within just two to five days of the satellite flying overhead
+
+
+The 9 Core LULC Classes
+
+Every single 10-meter pixel in the dataset is categorized into one of nine land cover types, closely matching International Panel on Climate Change (IPCC) standards:
+• Water: Lakes, rivers, oceans, and reservoirs.
+• Trees: Dense forest cover and canopy layers.
+• Grass: Natural grasslands, lawns, and small pastures.
+• Flooded Vegetation: Mangroves, marshes, swamps, and rice paddies.
+• Crops: Actively managed agricultural fields.
+• Shrub & Scrub: Sparse woody vegetation and arid brush.
+• Built Area: Roads, buildings, urban centers, and infrastructure.
+• Bare Ground: Deserts, dirt, rock outcrops, and beach sand.
+• Snow & Ice: Glaciers, permanent snowpack, and seasonal ice.
+
+What Makes It Unique?
+
+• Probabilistic Framework: Instead of just assigning a single hard label (e.g., "Trees"), Dynamic World outputs nine distinct probability bands (from 0 to 1) for every single pixel. This allows scientists to see the exact mix of a landscape—such as a pixel that is 60% built area and 40% vegetation. It also features a final label band representing the "Top-1" class with the highest probability.
+
+• Cloud & Shadow Resiliency: It leverages artificial intelligence models (including the S2 Cloud Probability algorithm) to dynamically identify, mask, and filter out clouds or terrain shadows that traditionally corrupt optical satellite data.
+
+• Immediate Environmental Tracking: Because it updates constantly, users can track physical changes across the globe almost as they happen. This includes monitoring active wildfire scars, assessing municipal snowstorm impacts, tracking rapid urban sprawl, or calculating agricultural crop harvest cycles.
+
+You can explore the interactive mapping dashboard directly on the Dynamic World App or inspect code structures via the Google Earth Engine Data Catalog.
+
+
+
+###########
+Python Access
+##########
+
+To filter and access Dynamic World data (GOOGLE/DYNAMICWORLD/V1) using Python, you need to use the official Google Earth Engine (GEE) Python API. The complete, copy-pasteable script below authenticates your Earth Engine session, creates a geographic bounding box (Region of Interest), filters the ImageCollection by date and boundary, and prints out metadata for the available imagery. 
+
+Depending on your project's next steps, I can help you extend this template. Would you like me to add code to calculate regional statistics (like land cover percentages), generate a static thumbnail map, or export the filtered raster to Google Drive?
+
+<<<bash
+pip install earthengine-api
+>>>
+
+
+<<<python
+import ee
+
+def filter_dynamic_world_data():
+    # ----------------------------------------------------
+    # 1. AUTHENTICATION & INITIALIZATION
+    # ----------------------------------------------------
+    # Trigger the authentication flow (only needed once per environment)
+    try:
+        ee.Initialize()
+    except Exception as e:
+        print("Authenticating Earth Engine...")
+        ee.Authenticate()
+        # If using a specific cloud project, define it here: ee.Initialize(project='your-project-id')
+        ee.Initialize()
+
+    # ----------------------------------------------------
+    # 2. DEFINE FILTERS (REGION AND DATE RANGE)
+    # ----------------------------------------------------
+    # Define a bounding box region using coordinates: [Min Long, Min Lat, Max Long, Max Lat]
+    # Example: A bounding box area over a section of Mexico City
+    region_coords = [-99.20, 19.35, -99.10, 19.45]
+    roi = ee.Geometry.Rectangle(region_coords)
+
+    # Define date range (Format: 'YYYY-MM-DD')
+    start_date = '2026-01-01'
+    end_date = '2026-06-01'
+
+    print(f"Filtering Dynamic World data from {start_date} to {end_date}...")
+
+    # ----------------------------------------------------
+    # 3. FILTER IMAGE COLLECTION
+    # ----------------------------------------------------
+    # Load the Dynamic World V1 Collection and apply spatial & temporal filters
+    dw_collection = (ee.ImageCollection('GOOGLE/DYNAMICWORLD/V1')
+                     .filterBounds(roi)
+                     .filterDate(start_date, end_date))
+
+    # ----------------------------------------------------
+    # 4. VERIFY RESULTS
+    # ----------------------------------------------------
+    # Get the count of matching images found in the query
+    count = dw_collection.size().getInfo()
+    print(f"Total matching images found: {count}")
+
+    if count > 0:
+        # Get a list of image metadata properties to print a quick summary
+        image_list = dw_collection.toList(5)  # Limit server-side return info to first 5 images
+        info = image_list.getInfo()
+        
+        print("\nMetadata summary for the first few matching images:")
+        for idx, img in enumerate(info):
+            system_id = img.get('id', 'N/A')
+            print(f"[{idx + 1}] ID: {system_id}")
+            
+        # Example: Fetch the first image composite from the filtered results
+        # Select the 'label' band or any probability band ('water', 'trees', 'built', etc.)
+        first_image = dw_collection.first().select('label')
+        print(f"\nSuccessfully selected the 'label' band from the primary image entry.")
+    else:
+        print("No scenes matched your filtering parameters. Try widening your timeline or region.")
+
+if __name__ == '__main__':
+    filter_dynamic_world_data()
+>>>

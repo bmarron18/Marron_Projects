@@ -1,0 +1,105 @@
+
+###########################
+Text Highlights-Info-Notes
+##############################
+
+"Cloud-Based Remote Sensing with Google
+Earth Engine: Fundamentals and Applications"
+
+
+
+
+5.2.1 Section 1: Band Arithmetic in Earth Engine
+	Arithmetic Calculation of NDVI
+
+	Assignment 3. Calculate the Normalized Difference Built-Up Index (NDBI). The NDBI was developed by Zha et al. (2003) to aid in differentiating urban areas (e.g., densely clustered buildings and roads) from other land cover types. The index exploits the fact that urban areas, which generally have a great deal of impervious surface cover, reflect SWIR very strongly.
+
+6.1 Introduction to Theory of Image Classification
+ Here, we will cover the concepts of pixel-based supervised and unsupervised classifications, testing out different classifiers.
+
+ 	Supervised Learning Classifiers
+ 		Classification and Regression Tree (CART) 
+ 		Random Forest (RF)
+
+ 	Unsupervised
+ 		the k-means clustering algorithm 
+
+7 Accuracy Assessment: Quantifying Classification Quality
+Table 7.3 Confusion matrix for a binary classification where the classes are “positive” (forest) and “negative” (non-forest)
+
+• TP: classified as positive, and the actual class is positive
+• FP: classified as positive, and the actual class is negative
+• FN: classified as negative, and the actual class is positive
+• TN: classified as negative, and the actual class is negative.
+
+
+8.3.3 Section 4: Assessing Regression Performance Through RMSE
+
+
+12.2.1 Section 1: Filtering Image Collections in Earth Engine
+The first part of the filter, map, reduce paradigm is “filtering” to get a smaller ImageCollection from a larger one. 
+
+In this chapter, you learned about the paradigm of filter, map, reduce. You learned how to use these tools to sift through, operate on, and summarize a large set of images to suit your purposes. Using the Filter functionality, you learned how to take a large ImageCollection and filter away images that do not meet your criteria, retaining only those images that match a given set of characteristics. Using the Map functionality, you learned how to apply a function to each image in an ImageCollection, treating each image one at a time and executing a requested set of operations on each. Using the Reduce functionality, you learned how to summarize the elements of an ImageCollection, extracting summary values of interest.
+
+13 Exploring Image Collections
+This chapter teaches how to explore image collections, including their spatiotemporal extent, resolution, and values stored in images and image properties. You will learn how to map and inspect image collections using maps, charts, and interactive tools and how to compute different statistics of values stored in image collections using reducers.
+
+
+14 Aggregating Images for Time Series
+
+15 This chapter introduces change detection mapping. It will teach you how to make a two-date land cover change map using image differencing and threshold-based classification
+
+
+18 Fitting Functions to Time Series
+The variables of interest added by the function are: (1) NDVI (Chap. 5),
+(2) a time variable that is the difference between the image’s current year and the
+year 1970 (a start point), and (3) a constant variable with value 1.
+
+Fig. 18.6 Harmonic model of NDVI time series
+Fig. 18.10 Fit with harmonic curves of increasing complexity, fitted for data at a given point
+
+
+19 Interpreting Time Series with CCDC
+Continuous change detection and classification (CCDC) is a land change monitoring
+algorithm designed to operate on time series of satellite data, particularly Landsat
+data.
+
+
+22.1 Introduction to Theory
+In the world of geographic information systems (GIS), data are typically thought
+of in one of two basic data structures: raster and vector. In the previous chapters,
+we have principally been focused on raster data—data using the remote sensing
+vocabulary of pixels, spatial resolution, images, and image collections. 
+
+Working within the vector framework is also a crucial skill to master. If you do not know
+much about GIS, you can find any number of online explainers of the distinctions
+between these data types, their strengths and limitations, and analyzes using both
+data types. Being able to move fluidly between a raster conception and a vector
+conception of the world is powerful and is facilitated with specialized functions
+and approaches in Earth Engine.
+
+
+26 The Google Earth Engine Digitisation Tool (GEEDiT) is built to allow any
+researcher to rapidly access satellite imagery and directly digitize margins as lines or
+polygons. With a simple user interface and no need to download enormous images,
+
+30 Developing an Earth Engine App using Python and geemap.
+Publishing an Earth Engine App using Python and free cloud platforms.
+Installing Python packages and using Jupyter Notebook.
+
+
+31 The purpose of this chapter is to introduce rgee, a non-official API for Earth
+Engine. You will explore the main features available in rgee and how to set up
+an environment that integrates rgee with third-party R and Python packages. After
+this chapter, you will be able to combine R, Python, and JavaScript in the same
+workflow.
+
+31.2.4 Section 4. Integrating rgee with Other Python Packages
+As noted in Sect. 31.2.1, rgee set up a Python environment with NumPy and
+earthengine-api in your system. However, there is no need to limit it to just
+two Python packages. In this section, you will learn how to use the Python
+package ndvi2gif to perform a Normalized Difference Vegetation Index (NDVI)
+
+
+32 Agricultural Environments
+

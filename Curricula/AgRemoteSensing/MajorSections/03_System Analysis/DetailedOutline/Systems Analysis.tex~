@@ -1,0 +1,305 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: bmarron
+% Created: 22 May 2026
+% Modified:
+%
+% 12-point; 1in margins
+% One inch vertical space is 72.27pt
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}       % Document margins
+
+\usepackage{afterpage}
+%\usepackage{datetime2}               % specialty date formats
+\usepackage{lipsum}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+
+
+\usepackage{lineno}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+
+\usepackage{outlines}
+
+
+\usepackage{threeparttable}
+\usepackage{pgfgantt}                 % simple gantt charts
+\usepackage{bigfoot}
+\usepackage{multirow}
+\usepackage{microtype}                % Slightly tweak font spacing for aesthetics
+\usepackage{booktabs}                 % Horizontal rules in tables
+\usepackage{float}                    % specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{paralist}                 % bullet points with less space between them
+\usepackage[hang, 
+            small,
+            labelfont=bf,
+            up,
+            textfont=it,up]{caption}    % Custom captions under/above floats in tables or figures
+
+\usepackage[sc]{mathpazo}             % Use the Palatino font and the Pazo fonts for math
+\linespread{1.05}                     % global setting - Palatino needs more space
+\usepackage{setspace}
+%\doublespacing                       % global setting
+
+\usepackage{abstract}                                               % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}              % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}         % Set the abstract itself to small italic text
+
+\usepackage{titlesec}                                               % Allows customization of titles
+\renewcommand\thesection{\Roman{section}}                           % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{subsection}}                    % Arabic numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}        % Change the look of the section titles
+\titleformat{\subsection}[block]{\large\underline}{\thesubsection}{1em}{}                    % Change the look of the subsection titles
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.25\baselineskip}            % Change spacing after section
+
+
+\usepackage{fancyhdr}                                              % Headers and footers
+\pagestyle{fancy}                                                 % All pages have headers and footers
+%\pagestyle{plain}                                                  % globally set to "plain"
+%\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\fancyhead[L]{Sustainability Now!}                                                                                    
+\fancyhead[R]{Universidad del Medio Ambiente}
+%\fancyhead[C]{}                                                   % Custom header text
+\fancyfoot[C]{\thepage}    
+%\fancyfoot[RO,LE]{\thepage}                                        % Custom footer text
+
+
+
+\usepackage{everypage}                             % Required for watermarks
+\usepackage{draftwatermark}                        % Watermarks or not
+\SetWatermarkLightness{0.95}
+\SetWatermarkScale{0.75}                            % Set to 1.0 for default
+%\SetWatermarkText{FINAL DRAFT}                      % comment out for default (DRAFT)   
+
+%\usepackage{multicol}                                      % Used for the two-column layout of the document
+%\usepackage{hyperref}                                      % Interferes with cite.sty 
+
+
+
+
+%-------------------------------------------------------------
+% NEW COMMANDS
+%---------------------------------------------------------------------
+%This command creates a box marked ``To Do'' around text.
+%To use: 
+% type \todo{  insert text here  }.
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{To Do}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt\begin{center} #1 \end{center}\end{minipage}}\vspace{5 mm}\par}
+
+% This command makes a sun symbol
+% To use:
+% Type \sun
+\newcommand{\sun}{\ensuremath{\odot}}                                   
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% This command creates a custom indent
+% To use:
+%\begin{myindentpar}{2em}
+% blah blah blah
+%\end {myindentpar}
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{14pt}{10pt}
+                    \selectfont \textbf{Systems Analysis Section}   % Article title
+                    \vspace{-7mm}
+      } 
+
+\author{
+     \normalsize Bruce D. Marron \\                     % Name in “small caps”
+%     \normalsize FOR 803-001 \\
+%     \vspace{-9mm}
+%      \normalsize North Carolina State University      % Institution or Class ID
+     \vspace{-5mm}
+  }
+%\date{\normalsize \today}
+
+
+
+%---------------------------------------------------------------------------------------
+% HELPFUL
+%----------------------------------------------------------------------------------------
+
+%\enquote*{text}                                 % single quotes
+%\shortcites{citation}\cite{citation}           % gives Authors et al.
+% Yucat\'{a}n                                    % accents
+%\includegraphics[width=6.0in, height=5in, page=2]{graphics/Problems1.pdf}              % pdf
+%\includegraphics[width=0.35\textwidth, height=0.6\textheight]{graphics/fig1}           % pdf
+%\thispagestyle{plain}                          % headers/footers included page or not (default =TRUE except for 1st)
+
+%\begin{outlines}
+%\end{outlines}
+
+%---------------------------------------------------------------------------------------
+% DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+
+
+\begin{singlespacing}
+%\maketitle                                      % insert title or not
+\end{singlespacing}
+\thispagestyle{fancy}                           % headers/footers included or not (default=FALSE for first pg)
+%\linenumbers                                    % line numbers for document or not
+
+%%%%%%%%%%%% DOC TEXT %%%%%%%%%%%%%%%%%%
+
+\large
+\begin{flushleft}
+\textit{Systems Analysis}
+\end{flushleft}
+
+\normalsize
+\begin{outline}[enumerate]
+\1 Fundamental Systems Concepts and Perspectives 
+
+\textit{\cite{meadows_thinking_2008} [pp.1-203]}\\
+\underline{Mental Models}
+\begin{itemize}
+	\item Mental models: Assumptions, images, stories, "priors"
+	\item Problems when implicit (below conscious awareness)
+	\item If made explcit, create learning organization (tools for personal awareness and reflective skills, institutional practices promote mental models, culture of inquiry and challenge w/o defensiveness or advocacy to win)
+	\item careful with leaps from direct observation to generalization (induction)
+	\item lack of questions = no inquiry
+	\item vulnerability = balance of advocacy and inquiry
+\end{itemize}
+
+\medskip
+
+\textit{\cite{gunderson_panarchy:_2002}}\\
+No system can be understood or managed by focusing on it at a single scale. All systems (and SESs especially) exist and function at multiple scales of space, time and social organization, and the interactions across scales are fundamentally important in determining the dynamics of the system at any particular focal scale. This interacting set of hierarchically structured scales has been termed a "panarchy"\\
+
+Adaptive Cycle. An adaptive cycle that alternates between long periods of aggregation and transformation of resources and shorter periods that create opportunities for innovation, is proposed as a fundamental unit for understanding complex systems from cells to ecosystems to societies.
+
+
+\textit{\cite{lendaris_systemness_1986}}
+\begin{itemize}
+	\item A Problem Solver must first see a system; no such thing as an objective perspective of a system; An observer must be present to assert systemness; systemness is the focus of the observer; Perception always subject to illusion
+	\item Bias = perceptual filters; a fxn of experience, emotional state, expectations, assumptions, desires, attitudes, social role, etc
+	\item Appropriate bias: perceptions generated by explicit personal reflection and selection of perceptual stance = multiple perspectives: Supra-system (context) + System (focus) + sub-system (parts)
+	\item System: 1) a unit with certain attributes perceived relative to its (external) environment; 2) a unit that has the quality that it internally contains subunits that operate together to manifest the perceived attributes of the unit as a whole.
+	\item "Whole greater than parts": greater than used to bridge two different perceptual levels; attributes at Level A cannot be deduced from attributes at Level B; the whole (Level A) has attributes intrinsic to the joint operation of the parts (Level B) which can only be perceived by going up a level (ie greater than); parts operate by an organizing principle and thus can achieve something greater than the sum of the parts
+\end{itemize}
+
+\textit{\cite{bertalanffy_general_1984} [pp. 3-88]}\\
+\begin{itemize}
+	\item The Society for General Systems Research (1954): 1) investigate the isomorphy of concepts, laws and models in various fields; 2) promote the unity of science through improved communication among specialists, help transfer useful ideas between fields; 3) minimize the duplication of efforts
+	\item General Systems research agenda: overcome the limitations of reductionist analytical procedures that assume 1) entity can be resolved into weakly interactive atomics (parts); 2) relations are linear; logico-mathematical foundations for organized complexities (like prob theory is the logico-mathematical foundation for unorganized complexities)
+	\item Approaches: classical (calculus-based) open/closed systems; set theory; graph theory; network theory; cybernetics; information theory; game theory; decision theory; queuing theory; theory of hierarchic order; theory of structure (the order of parts) and function (the order of processes)
+	\item System = organized complexity; nontrivial interactions; a set of simultaneous, coupled differential equations; sets of elements standing in relation; behavior of an isolated element is different than the element embedded in the system\\
+	$ {\displaystyle {\begin{pmatrix}y_{1}^{(n)}\\y_{2}^{(n)}\\\vdots \\y_{m}^{(n)}\end{pmatrix}}={\begin{pmatrix}f_{1}\left(x,\mathbf {y} ,\mathbf {y} ',\mathbf {y} '',\cdots \mathbf {y} ^{(n-1)}\right)\\f_{2}\left(x,\mathbf {y} ,\mathbf {y} ',\mathbf {y} '',\cdots \mathbf {y} ^{(n-1)}\right)\\\vdots \\f_{m}\left(x,\mathbf {y} ,\mathbf {y} ',\mathbf {y} '',\cdots \mathbf {y} ^{(n-1)}\right)\\\end{pmatrix}}}$
+	\item Principle of equifinality: open systems allow for a final state to be reached from multiple initial states and different pathways
+	\item Principle of progressive mechanization: initially systems governed by dynamic relationships between components; later fixed arrangements and conditions provide constraints to make the relationships more efficient; this diminishes the equipotentiality of the whole because parts are fixed
+	\item Principle of progressive mechanization plus centralization $ \equiv $ biological development; entity moves from a state of interaction between equipotential parts to a state of specialization and subordination under dominant parts
+	\item Advocate for ethics and scientific generalists
+	\item Assume the system (the set of coupled differential equations) is developed into a Taylor series then \\
+	1) If the coefficients for all cross terms are zero $ \Rightarrow $ change in each element depends only that element itself $ \equiv $ independence of parts; physical summativity; a "heap" complexity; probabilistic accounting applies; only linear terms implies trivial case \\
+	2) If the coefficients for all cross terms are not constant but decrease with time $ \Rightarrow $ the whole split into independent causal chains; progressive segregation; progressive mechanization; results from increased specialization driven by energy flux of open systems; loss of regulation and potentiality and resilience (parts become irreplaceable if damaged)\\
+	3) If the coefficients for one or two terms increase relative to all others  $ \Rightarrow $ progressive centralization; a centralized system that may experience massive change from small inputs to the central variables; leads to organisms ontogenetically (organism development) and to spp phylogenetically (spp development)\\
+	4) If elements become increasingly specialized $ \Rightarrow $ hierarchical order; each element becomes a system in itself
+	\item Systems that attain a final state (stationary as Le Chatelier) appear to have teleological character where the system seems to "aim" at the final state. In fact, just a distance from equilibrium
+	\item The exponential law and the logistic law are cited as isomorphisms that support a general systems theory b/c they apply across fields  
+\end{itemize}
+
+\textit{\cite{zwick_elements_2014} [pp. 60-71]}\\
+\begin{itemize}
+	\item System: a nexus of structure / function / history; elements and relations (constraints from randomness)
+	\item Model: a set of elements having attributes linked by relations (a system)
+	\item Mario Bunge's epistemological hierarchy:\\
+	1) observables\\
+	2) relations, laws, hypotheses\\
+	3) models\\
+	4) theories 
+	\item Holistic analysis of a system requires consideration of structure and function and history. Structure and function are synchronic (at the same time); History is diachronic (at different times)
+	\item Be aware of simplistic diachronic models (linear change, cyclicity, random drift) and more complex models (nonlinear dynamics, non-equilibrium thermodynamics, generalized evolution) where initial conditions or internal fluctuations may be random but subsequent unfolding is lawful
+	\item What is structural and what is functional depends on the scale at which a phenomenon is viewed which depends on the focal point (the vertex) of the system 
+	\item Systems range from the extreme where structure is far more important than function (materials science) to the extreme where function is far more important than structure (
+	\item Structural analysis (reductionist) is often privileged over function
+	\item Complexity results from:\\
+	1) Higher ordinality relations (greater than diadic or triadic relations)\\
+	2) Non-linear relations\\
+	3) Mutual branching of causality (multiple causes per effect; feedback)\\
+	4) Global causality or the sensitivity and vulnerability of a system (highly networked)\\
+	5) Necessity (determinism) and chance (stochasticity) are both present\\
+	6) Perceptual stance: Course-grained (less complex b/c of aggregation) vs. fine-grained (all elements and relations accounted for)\\
+	7) Hierarchical coupling: If levels of a hierarchy are well-insulated then each level is a whole unto itself. Otherwise, coupling naturally creates multi-scalar entities 
+	\item Emergence is the opposite of reduction $ \Rightarrow $ Reduction looks down from L to L1; Emergence looks up from L1 to L	 
+\end{itemize}
+
+  \cite{ashby_introduction_1955} \textbf{[pp. 86-117, 195-224])}\\
+  \cite{simon_sciences_1996} \textbf{[pp. 169-216])}\\
+  \cite{barabasi_scale-free_2003}\\
+  \cite{barabasi_scale-free_2009}\\
+  \cite{crutchfield_chaos_1986}\\
+  \cite{mitchell_complexity_2009} \textbf{[pp. 94-111; 169-185]}\\
+  \cite{nicolis_exploring_1989} \textbf{[pp. 5-44; 183-192; 217-242]}\\
+  \cite{cover_elements_2006} \textbf{[pp. 1-30; 34-35; 57-60]}
+
+\1 Spatial Scales
+\2 Global
+\2 Regional
+\2 Local
+
+\1 Temporal Scales
+\2 Past
+\2 Present
+\2 Future
+
+\1 Trend Analysis
+
+\end{outline}
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage 
+\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}

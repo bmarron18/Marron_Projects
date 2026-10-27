@@ -1,0 +1,9 @@
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'Slides_Lecture-01.blg'
+[54] biber:342> INFO - === Thu Oct 15, 2026, 17:39:21
+[66] Biber.pm:421> INFO - Reading 'Slides_Lecture-01.bcf'
+[106] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[114] bbl.pm:676> INFO - Writing 'Slides_Lecture-01.bbl' with encoding 'UTF-8'
+[114] bbl.pm:779> INFO - Output to Slides_Lecture-01.bbl
+[114] Biber.pm:132> WARN - The file 'Slides_Lecture-01.bcf' does not contain any citations!
+[114] Biber.pm:134> INFO - WARNINGS: 1

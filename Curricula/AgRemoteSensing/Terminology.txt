@@ -7,11 +7,8 @@ Revised:
 
 
 ###############
-Terminology
+General AI Terms
 ###############
-
-General Terms
---------------
 
 	ML		Machine Lerning
 	LLM		Large Language Model
@@ -26,10 +23,7 @@ General Terms
 
 	client library
 		 For a web service or cloud API, the published package you install via a package manager (like pip) is usually called a client library and functions as the API SDK for that service. However, a full platform SDK (like the Android SDK) contains much more than just a network client—it includes emulators, build toolchains, and local system libraries
-
-	NDVI 	Normalized Difference Vegetation Index
 			
-
 ML
 A subfield of artificial intelligence (AI) that gives computers the ability to learn without explicitly being programmed; the development and study of statistical algorithms that can learn from data and generalize to unseen data, and thus perform tasks without explicit instructions.
 
@@ -50,8 +44,46 @@ MIME
 Many file types can be translated by Google Translate API (NMT model). Translation will keep the original format.
 
 
+
+#############
+Python Script Terms
+############
+Shebang Line 
+(#!/usr/bin/env python3)
+Tells Unix-based operating systems (like Linux and macOS) which interpreter to use to execute the script
+
+
+Encoding Declaration 
+(# -*- coding: utf-8 -*-)
+Explicitly defines the character encoding for the file, preventing issues with non-ASCII characters
+
+Module Docstring 
+(""" ... """)
+A multi-line comment block used for documentation, outlining the script's purpose, usage, and parameters
+
+
+
+################
+Satellite Data Terms
+#####################
+
+NRT
+near real-time
+
+LULC
+land use and land cover
+
+WRI
+World Resources Institute
+
+
+
+EO Data
+Earth Observation (EO) data refers to information collected about the Earth's physical, chemical, and biological systems using remote sensing technologies such as satellites, airborne sensors, and ground-based instruments
+
+
 NVDI
-	a simple remote-sensing metric used to measure and monitor the health, density, and growth of live green veg
+a simple remote-sensing metric used to measure and monitor the health, density, and growth of live green veg
 
 NDVI Value Scale
 • -1.0 to 0: Water bodies, snow, ice, or clouds (negative values typically represent water).
@@ -66,15 +98,24 @@ NDVI Value Scale
 • The Formula: It is calculated using satellite or drone sensor data with the equation:
 \(\text{NDVI}=\frac{\text{NIR}-\text{Red}}{\text{NIR}+\text{Red}}\)
 
-Shebang Line (#!/usr/bin/env python3)
-	Tells Unix-based operating systems (like Linux and macOS) which interpreter to use to execute the script
+
+USGS EROS
+Earth Resources Observation and Science (EROS) Center located in Sioux Falls, South Dakota, is a federal government facility and a global leader in land imaging, remote sensing, and terrestrial change research. Initiated in 1966 and built on decades of historical data, EROS acts as the primary guardian of the world’s largest civilian collection of images of the Earth's surface.
+
+GEE
+Google Earth Engine is now at the forefront of sustainable natural resource management, climate and disaster risk resilience, and sustainable sourcing of commodities to meet zero-deforestation commitments. In addition, new startups are now applying GEE technology to transform science and EO data into innovative sustainability-focused ideas and enterprises.
 
 
-Encoding Declaration (# -*- coding: utf-8 -*-): 
-	Explicitly defines the character encoding for the file, preventing issues with non-ASCII characters
+ GEE community
+ Google Earth Engine (GEE) community is a highly active global ecosystem of remote sensing scientists, GIS professionals, and developers. Because Google Earth Engine hosts the entire historical Landsat and NASA archive natively in the cloud, the community acts as a vital collaborative force for sharing scripts, open-source datasets, and troubleshooting analysis methods. The "Awesome GEE Community Catalog" (https://gee-community-catalog.org/) is a massive community-driven data commons that supplements Earth Engine’s official data repository ==> Community Catalog Tutorials
 
-Module Docstring (""" ... """): 
-	A multi-line comment block used for documentation, outlining the script's purpose, usage, and parameters
+EMAs
+Environmental Monitoring Applications using GEE such as Global Forest Watch, Global Fishing Watch, OpenET, Climate
+Engine, MapBiomas, SDG661.app, Restor.eco, Earth Map, Tracemark
 
 
+Dynamic World
+a groundbreaking 10-meter near real-time (NRT) global land use and land cover (LULC) dataset produced through a partnership between Google and the World Resources Institute (WRI). By processing European Space Agency (ESA) Sentinel-2 satellite imagery through deep learning models hosted directly on Google Earth Engine, it generates daily land cover predictions for the entire planet. Unlike traditional, static land cover maps that are published annually or once every few years, Dynamic World updates continuously. A new map is created as soon as a fresh, relatively cloud-free Sentinel-2 image is acquired—often within just two to five days of the satellite flying overhead
 
+NAIP
+The National Agriculture Imagery Program (NAIP) is a US government program to acquire imagery over the continental USA using airborne sensors. Data are collected for each state approximately every three years. The imagery has a spatial resolution of 0.5–2 m, depending on the state and the date collected.

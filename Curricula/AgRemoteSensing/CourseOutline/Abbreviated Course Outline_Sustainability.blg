@@ -1,0 +1,9 @@
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'Abbreviated Course Outline_Sustainability.blg'
+[33] biber:342> INFO - === Thu Sep 24, 2026, 11:20:47
+[40] Biber.pm:421> INFO - Reading 'Abbreviated Course Outline_Sustainability.bcf'
+[78] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[87] bbl.pm:676> INFO - Writing 'Abbreviated Course Outline_Sustainability.bbl' with encoding 'UTF-8'
+[87] bbl.pm:779> INFO - Output to Abbreviated Course Outline_Sustainability.bbl
+[87] Biber.pm:132> WARN - The file 'Abbreviated Course Outline_Sustainability.bcf' does not contain any citations!
+[87] Biber.pm:134> INFO - WARNINGS: 1
