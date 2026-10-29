@@ -201,7 +201,7 @@ from anthropic import Anthropic, APIConnectionError, APIStatusError, APITimeoutE
 
 
 # =============================================================================
-# CONFIGURATION
+# SECTION I: CONFIGURATION / USER SETTINGS  (edit these)
 # =============================================================================
 
     # model to query
@@ -310,12 +310,13 @@ CUSTOM_ID = "research_query"
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tif", ".tiff"}
 
 
-# =============================================================================
+#############
 # PROMPT
-# =============================================================================
+#############
+# ---- Use adjacent string literals = no stray spaces ----------
 
-    # User level message
-user_prompt = (
+    # User-level message
+usr_msg = (
     "Satellite data has been used to evaluate various aspects of agricultural production for some time. "
     "Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as "
     "other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and "
@@ -334,12 +335,12 @@ user_prompt = (
 )
 
 
-    # System level message
-sys_prompt = (
+    # System-level message
+sys_msg = (
     "You are an expert in agriculture, crop and soil science, and geospatial analysis."
     "Use web search to find and verify sources; cite only sources you have actually located."
     
-    # v3.1: resource discipline (limits context growth inside each turn)
+        # Resource discipline (limits context growth inside each turn)
     "\n\nWork economically: the whole conversation must fit in a fixed context "
     "window. Prefer a few targeted searches over many broad ones, and stop "
     "searching once you have enough well-supported sources. When running code, "
@@ -356,7 +357,7 @@ SEARCH_EXHAUSTED_NOTE = (
 
 
 # =============================================================================
-# HELPER FUNCTIONS
+# SECTION 2 -- HELPER FUNCTIONS / FIXED SETTINGS  (normally no need to edit)
 # =============================================================================
 
 def make_output_dir(base_dir: Path, label: str) -> Path:
@@ -418,7 +419,7 @@ def resume_hint(job_id: str) -> str:
 
 
 def initial_messages() -> list:
-    return [{"role": "user", "content": user_prompt}]
+    return [{"role": "user", "content": usr_msg}]
 
 
 def classify_stop(stop_reason):
@@ -578,7 +579,7 @@ def web_uses_for_next_turn(state: dict) -> int:
 
 
 def wrap_up_system() -> str:
-    return (sys_prompt
+    return (sys_msg
             + "\n\nFINAL STEP: tools are NOT available in this request. Write the "
               "complete final answer from the research notes, sources, and file "
               "list provided. Cite only sources that appear in the provided list.")
@@ -595,7 +596,7 @@ def build_params(messages: list, container_id=None, web_max_uses=None,
     if wrap_up:
         params["system"] = wrap_up_system()           # tool-free: cannot snowball
     else:
-        system = sys_prompt
+        system = sys_msg
         if USE_WEB_SEARCH and web_max_uses is not None and web_max_uses <= 0:
             system += SEARCH_EXHAUSTED_NOTE
         params["system"] = system
@@ -740,7 +741,7 @@ def build_wrap_up_messages(client: Anthropic, turns: list, reason: str) -> list:
         "where relevant (they have already been saved for the user). If a requested "
         "graphic was not generated, describe it and provide a text diagram "
         "(e.g. ASCII or Mermaid).\n\n"
-        f"=== ORIGINAL TASK ===\n{user_prompt}\n\n"
+        f"=== ORIGINAL TASK ===\n{usr_msg}\n\n"
         f"=== RESEARCH NOTES SO FAR ===\n{notes}\n\n"
         f"=== SOURCES LOCATED ({len(src_items)}) ===\n{src_lines}\n\n"
         f"=== FILES ALREADY GENERATED ===\n{file_lines}\n"
@@ -1362,8 +1363,8 @@ def main() -> None:
         print(f"Context edits:  {json.dumps(CONTEXT_MANAGEMENT) if CONTEXT_MANAGEMENT else None}")
         print(f"Wrap-up turn:   {WRAP_UP_ENABLED}")
         print(f"API key found:  {bool(os.getenv('ANTHROPIC_API_KEY'))}")
-        print(f"\nSystem:\n{sys_prompt}")
-        print(f"\nPrompt:\n{user_prompt}")
+        print(f"\nSystem:\n{sys_msg}")
+        print(f"\nPrompt:\n{usr_msg}")
         return
 
         # API_KEY is saved as an ENV VARIABLE on home compu

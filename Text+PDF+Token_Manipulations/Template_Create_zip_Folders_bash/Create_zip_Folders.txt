@@ -1,0 +1,59 @@
+
+
+#####################
+create a universally 
+compatible ZIP file
+#####################
+
+me:
+will the following code create zip files that can be universally opened?
+
+$ zip -9 -y -r -q file.zip folder/
+
+
+Google:
+Yes, this command will create a universally compatible ZIP file.
+The options you selected (-9, -y, -r, -q) use standard ZIP protocol features supported by virtually all modern operating systems (Windows, macOS, Linux) and extraction tools (WinRAR, 7-Zip, Archive Utility).
+Here is how each flag impacts compatibility:
+	• -9 (Maximum Compression): Uses the standard Deflate algorithm at its highest setting. Every standard ZIP unzipper supports this.
+	• -r (Recursive): Travels the directory structure to include all subfolders and files. This is standard behavior.
+	• -q (Quiet mode): Silences command output. It affects the terminal display only, not the archive structure.
+	• -y (Store symbolic links): Stores symlinks as links rather than copying the files they point to.
+
+The One Compatibility Catch: Symbolic Links (-y)
+
+While the ZIP file itself is perfectly standard, how the extraction OS handles symbolic links varies:
+	• Linux / macOS: Will extract the symbolic links perfectly.
+	 Windows: Windows handles symlinks differently. If a Windows user extracts this archive, the symlinks will often be converted into plain text files containing the target path, or the extraction tool might skip them entirely if the user lacks Windows Developer Mode/Administrator privileges.
+
+Recommendations
+	• If the recipient uses Windows: If you want the actual content of those linked files to be readable on Windows, omit the -y flag. This will force the command to resolve the links and copy the actual files into the archive.
+	• For cross-platform absolute safety: Use standard encryption if password protecting, as advanced encryption (like AES-256) sometimes requires third-party tools on older Windows extractions, though standard zip tools handle basic zip encryption fine.
+
+
+$ zip -9 -y -r -q file.zip folder/
+
+-9 Indicates the slowest compression speed (optimal compression, ignores the suffix list)
+-y Store symbolic links as such in the zip archive, instead of compressing and storing the file referred to by the link
+-r Travel the directory structure recursively
+-q Quiet mode
+folder Refers to the folder to be zipped
+
+
+-------------
+QUICK START
+---------------
+	# install zip package
+$ sudo aptitude install zip
+
+
+
+	a. cd to directory with the files to be zipped
+
+	b. zip in place
+$ zip -9r ./files.zip ./
+
+	c. zip and send .zip file to Desktop
+$ zip -9r ~/Desktop/files.zip ./
+
+	c. re-name file.zip, as needed

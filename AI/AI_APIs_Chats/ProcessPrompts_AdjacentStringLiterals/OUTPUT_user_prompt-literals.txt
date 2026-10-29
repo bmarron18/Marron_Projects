@@ -1,4 +1,4 @@
-user_prompt = (
+usr_prompt = (
     "Satellite data has been used to evaluate various aspects of agricultural production for some time. "
     "Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as "
     "other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and "

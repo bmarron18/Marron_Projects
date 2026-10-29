@@ -63,9 +63,7 @@ A multi-line comment block used for documentation, outlining the script's purpos
 
 
 
-################
-Satellite Data Terms
-#####################
+
 
 NRT
 near real-time
@@ -119,3 +117,30 @@ a groundbreaking 10-meter near real-time (NRT) global land use and land cover (L
 
 NAIP
 The National Agriculture Imagery Program (NAIP) is a US government program to acquire imagery over the continental USA using airborne sensors. Data are collected for each state approximately every three years. The imagery has a spatial resolution of 0.5–2 m, depending on the state and the date collected.
+
+
+LAI
+Leaf Area Index, i.e. half the total surface of leaves per unit ground horizontal area. 
+
+fAPAR
+fraction of Absorbed or Intercepted Photosynthetically Active Radiation (PAR domain: 400-700 nm)
+
+RT
+Real Time
+
+CC 
+Crop Cycle
+
+LTDA
+Long Term Data Archive
+
+land Cover
+the physical properties of a land surface
+
+Land Use
+the activities or functions for which humans utilize the land
+
+
+
+
+

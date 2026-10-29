@@ -93,7 +93,7 @@ except ImportError:
 
 
 # =========================================================================
-#  SECTION 1 -- USER SETTINGS  (edit these)
+#  SECTION 1 -- CONFIGURATION / USER SETTINGS  (edit these)
 # =========================================================================
 
 # ---- Directory that holds the input files and receives the output ---------
@@ -157,8 +157,14 @@ INPUT_FILES = [
 #     ("Vector.svg", "document"),        # read SVG markup as text
 #     ("Photo.png", "container"),        # process the image with Python (PIL)
 
-# ---- The prompt (adjacent string literals = no stray spaces) ----------
-PROMPT = (
+
+################
+# PROMPT
+#################
+# ---- Use adjacent string literals = no stray spaces ----------
+
+    # User-level message
+usr_msg = (
     "Review and analyze the attached Python script. The script works perfectly and provides high-level research capacity \
     for invetigation across published and web-based materials. The script has multiple features as described in the \
     Module Docstring. Using the attached script as a template, create an equivalent Python script for using Anthropic \
@@ -166,8 +172,8 @@ PROMPT = (
     script will be, A_Template_ResearchQuery_anthropic_v3.0.py. Thank you!"
 )
 
-# ---- Optional system prompt (None = no system prompt) -----------------
-SYSTEM_PROMPT = "You are an expert Python coder."
+    # System-level message, Optional (None = no system prompt)
+sys_msg = "You are an expert Python coder."
 
 # ---- Output -------------------------------------------------------------
 OUTPUT_FILE = "QueryResponse_Anthropic.txt"
@@ -261,7 +267,7 @@ CONTINUE_PROMPT = (
 
 
 # =========================================================================
-#  SECTION 3 -- FUNCTIONS
+#  SECTION 3 -- HELPER FUNCTIONS
 # =========================================================================
 
 @dataclass
@@ -288,10 +294,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("-d", "--dir", type=Path, default=DOC_DIR,
                    help=f"folder for input/output files (default: {DOC_DIR})")
     p.add_argument("-p", "--prompt", default=None,
-                   help="prompt text (default: PROMPT in the script)")
+                   help="prompt text (default: usr_msg in the script)")
     p.add_argument("--prompt-file", type=Path, default=None,
                    help="read the prompt from a text file")
-    p.add_argument("-s", "--system", default=SYSTEM_PROMPT,
+    p.add_argument("-s", "--system", default=sys_msg,
                    help="optional system prompt")
     p.add_argument("-o", "--output", default=OUTPUT_FILE,
                    help=f"output file name (default: {OUTPUT_FILE})")
@@ -340,7 +346,7 @@ def make_client() -> Anthropic:
 
 
 def resolve_prompt(args: argparse.Namespace) -> str:
-    """Prompt priority: --prompt-file, then --prompt, then PROMPT."""
+    """Prompt priority: --prompt-file, then --prompt, then usr_msg."""
     if args.prompt_file:
         path = args.prompt_file.expanduser()
         if not path.is_absolute():
@@ -348,7 +354,7 @@ def resolve_prompt(args: argparse.Namespace) -> str:
         if not path.is_file():
             sys.exit(f"ERROR: prompt file not found: {path}")
         return path.read_text(encoding="utf-8").strip()
-    return args.prompt if args.prompt else PROMPT
+    return args.prompt if args.prompt else usr_msg
 
 
 # ---- input files ---------------------------------------------------------
