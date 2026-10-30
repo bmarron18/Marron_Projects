@@ -10,6 +10,9 @@ Revised:
 Google Query
 23 Oct 2026
 ############
+
+RESULT: use python for analysis, Jupyter for presentation of results
+
 can I run geospatial analysis through Python scripts on my local computer that access Google Earth Engine API
 --------------
 
@@ -189,12 +192,6 @@ Primary Applications
 (Note: Unlike consumer-facing Google Earth, which is designed to explore a 3D virtual globe, Google Earth Engine is a technical environment built for data science and remote sensing analysis.)
 
 
-
-
-
-
-
-
 Principales formas de usar AlphaEarth Foundations con Python
 
 1. Google Earth Engine (GEE) y Google Colab
@@ -264,8 +261,6 @@ data_list = [f['properties'] for f in features]
 dataset = pd.DataFrame(data_list)
 >>>
 
-
-
 2. Train a Predictive Model in Python
 
 Once you have your tabular data containing the 64 features (A0 to A63) paired with your soil metrics, you can train a Machine Learning model like Random Forest or an Artificial Neural Network (ANN), both of which are the industry standards for this dataset.
@@ -294,20 +289,13 @@ print(f"R² Score: {r2_score(y_test, predictions):.2f}")
 print(f"RMSE: {np.sqrt(mean_squared_error(y_test, predictions)):.2f}")
 >>>
 
-
 3. Generate the Fecundity Map
 
 After checking your validation metrics, you can pass your trained model's weights or structural rules back to an Earth Engine classifier or apply it pixel-by-pixel locally over a regional raster to create your finalized high-resolution soil fertility map.
 
 
 
-
-To write a more tailored script, tell me:
-• Do you already have a ground truth dataset (like a .csv file with soil samples), or do you need to pair this with a public dataset like LUCAS or SoilGrids?
-• Which specific soil parameter are you trying to track (e.g., Organic Carbon, Nitrogen, pH, or moisture)?
-
-
 NVDI
-• Precision Agriculture: Farmers use NDVI maps from the EOS Data Analytics Blog to track crop development, spot early signs of drought or disease, and time irrigation or fertilizer.
-• Environmental & Climate Research: Track seasonal vegetation changes, deforestation, and recovery after natural disasters.
-• Global Monitoring: Agencies like NASA use platforms like the NASA Earthdata NDVI Portal
+    • Precision Agriculture: Farmers use NDVI maps from the EOS Data Analytics Blog to track crop development, spot early signs of drought or disease, and time irrigation or fertilizer.
+    • Environmental & Climate Research: Track seasonal vegetation changes, deforestation, and recovery after natural disasters.
+    • Global Monitoring: Agencies like NASA use platforms like the NASA Earthdata NDVI Portal

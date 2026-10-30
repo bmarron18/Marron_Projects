@@ -1,0 +1,182 @@
+
+#####################################################################################
+Predicting species diversity in agricultural environments using Landsat TM imagery
+######################################################################################
+
+Maps based on classified Earth observation (EO) imagery have been used to model biodiversity, but errors associated with the classification process itself and the resulting discretization of land cover may ultimately limit such efforts. Among other issues, discrete land cover maps can often be costly to produce and validate. Alternatively, the original continuous spectral information in EO imagery can be used. The primary objective of this study was to compare predictors based on continuous and discrete information derived from Landsat TM imagery for modeling biodiversity in agricultural landscapes. In 46 landscapes throughout Eastern Ontario, Canada, landscape metrics (mean field size, the percentage of landscape in agriculture, and crop diversity) derived from a discrete image classification, along with several measures of crop productivity based on the continuous Normalized Difference Vegetation Index (NDVI), were used as predictors of field-based measures of species diversity for birds, butterflies, and plants. Using an Information-Theoretic approach for model-averaging and inference, we compared and interpreted the magnitude and direction of model-averaged coefficients, model evidence ratios, and overall fit of model-averaged predictions. Our findings indicate that when using Landsat TM imagery in agricultural environments, models using predictors derived from continuous information consistently outranked models based on discrete information derived from classified imagery.
+
+trends in biodiversity found that the capacity for agricultural landscapes to support wildlife has declined over the past 20 years (Javorek & Grant, 2011), although such reporting is hampered by the lack of standardized, long-term, and spatially complete information on a range of biodiversity indicators (Federal, Provincial and Territorial Governments of Canada, 2010). 
+
+Fortunately, information obtained from earth observation (EO) platforms can help inform policies that conserve and/or enhance biodiversity assessment and conservation planning over large regional and continental scales (Duro, Coops, Wulder, & Han, 2007; Powers et al., 2012). In agricultural landscapes, areas often characterized by intensive human development at fine spatial scales, the use of EO imagery for biodiversity assessment and conservation planning has remained relatively undeveloped.
+
+Alternatively, the use of continuous information derived from EO imagery has been suggested as a means of overcoming the limitations of traditional classified maps (Nagendra, 2001). Specifically, continuous measures of spectral heterogeneity have gained appeal as viable predictors of species diversity (Rocchini et al., 2010). Many of these measures are based, either implicitly or explicitly, on the spectral variability hypothesis (SVH), which initially proposed that plant species diversity is positively correlated to spectral variation derived from airborne panchromatic imagery
+
+NDVI has become commonplace in biodiversity research in part due to its relationship to several environmental and biophysical processes such as potential evapotranspiration, photosynthetically active radiation, leaf area index, and net primary production. As a tractable proxy for a variety of biophysical and environmental processes, NDVI has also been used to examine the species-energy theory, which postulates that the amount of available energy within an area is indicative of the total amount and variety of resource types, which are in turn considered proximate factors driving species diversity. As a result of its utility, NDVI has seen widespread and successful use in a variety of studies attempting to understand patterns in species diversity of plants
+
+Landsat-5 images were obtained from the US Geological Survey (USGS) Land Processes Distributed Active Archive Center (LP DAAC; http://lpdaac.usgs.gov)
+
+Landsat-5 imagery was selected because of its ubiquity, long-period of record, fine spatial resolution (30 m pixel) relative to the size of crop fields within the study area (median ~ 28,000 m2), and its previous usage in modeling both bird and butterfly species diversity
+
+Comparisons of imagery obtained from multiple acquisition dates and/or sensor types require radiometric calibration (Price, 1987; Teillet, 1986), as spectral information and vegetation indices such as the NDVI (see Section 2.5) are explained by, among several other factors, differences in sensor calibration settings
+
+The Landsat images were processed using the Landsat Ecosystem Disturbance Adaptive Processing System (LEDAPS) (Masek et al., 2006), which utilizes the Simulation of the Satellite Signal in the Solar Spectrum (6S) radiative transfer model (Vermote et al., 1997) for atmospheric corrections.
+
+Given the spatial and spectral resolution of the Landsat TM-5 imagery, only four broad land cover types, representing an intermediate thematic resolution (c.f. Bailey, Herzog, et al., 2007), were used to depict the dominant cropped vegetation types in the study area: corn, soy, hay/pasture, and cereal. All other land cover types within each landscape were considered as “other”. The image classification was carried out using the Support Vector Machine (SVM) algorithm (ITTVIS, 2008), which has been shown to perform at least as well or better than similar nonparametric classifiers when using medium spatial resolution imagery in agricultural environments
+
+In most cases, the CV was selected as an applicable measure of spectral variability, which been shown to relate to biological diversity (i.e., the SVH; Rocchini et al., 2010). In addition, as a summary statistic, the CV allows the variability of NDVI to be standardized and compared among several of our sites, which showed varying degrees of agricultural cover (60–90%) and crop types
+
+Beta and gamma diversity of plants showed a statistically significant positive relationship with M_NDVI, there is moderate support for preferring models based on continuous predictors relative to models based on discrete predictors when modeling the species diversity of non-crop plants.
+
+Our findings indicate that when modeling species diversity of birds and plants in agricultural environments, predictors derived from continuous information of crop productivity (NDVI) were consistently ranked higher than predictors derived from information based on a discrete classification of Landsat imagery. Furthermore, local measures of spatial autocorrelation, specifically the local Moran's I, are useful indicators of spectral heterogeneity, at least on par with existing measures such as simple image-based texture (CV). From a practical standpoint, the use of continuous information is preferable, as discrete land cover classifications involve an inherent level of error and generalization, and can be costly to produce and validate.
+
+
+Google:
+Local Moran’s I is a powerful spatial autocorrelation metric that serves as an effective indicator of spectral heterogeneity in remote sensing and geospatial analysis. While global spatial metrics provide a single summary value for an entire landscape, Local Indicators of Spatial Association (LISA)—such as Local Moran’s I—evaluate spatial variability at the pixel or neighborhood level.
+
+🛰️ Why Local Moran's I is Useful for Spectral Heterogeneity
+
+Spectral heterogeneity refers to the variation in spectral reflectance (or digital numbers) across a geographic space. Local Moran's I measures this by comparing the spectral value of a specific pixel against the values of its neighboring pixels.
+
+1. Identification of Spatial Outliers vs. Spatial Clusters
+
+Unlike simple variance or standard deviation windows, Local Moran's I categorizes spatial structures into four distinct quadrants, making it highly descriptive for landscape complexity:
+	• High-High (Hotspots): Clusters of high spectral values (e.g., dense, uniform forest canopy).
+	• Low-Low (Coldspots): Clusters of low spectral values (e.g., deep water bodies or uniform burn scars).
+	• High-Low / Low-High (Spatial Outliers): A pixel with a high value surrounded by low values, or vice versa (e.g., an isolated building in a forest, or a small clearing). These outliers are direct, explicit indicators of localized spectral heterogeneity.
+
+2. Advanced Eco-Hydrological and Biodiversity Modeling
+
+According to the Spectral Variation Hypothesis (SVH), high spectral heterogeneity correlates strongly with high species richness and structural habitat diversity.
+	• Edge Detection: Local Moran's I excels at delineating ecotones (transition zones between different ecosystems) where spectral heterogeneity spikes.
+	• Disturbance Mapping: It helps detect fine-scale ecosystem disturbances, such as selective logging, insect infestations, or localized wildfire damage, which disrupt uniform spectral patterns.
+
+3. Sensitivity to Scale and Context
+
+Standard texture measures (like variance or standard deviation within a moving window) only capture the magnitude of dispersion. Local Moran’s I accounts for the spatial configuration of that dispersion via a spatial weights matrix (\(W_{ij}\)). This allows researchers to adjust the neighborhood definitions to match the actual spatial scale of the environmental phenomena being studied.
+
+
+Metric	Typology Strengths	Weaknesses
+	* Local Moran's I	Spatial Autocorrelation (LISA)	Differentiates between uniform clusters and true spatial anomalies/outliers.	Computationally intensive for massive, high-resolution satellite imagery.
+
+	* Standard Deviation (Moving Window)	Classical Dispersion Texture	Simple to compute; universally understood.	Loses directional/spatial structure context; sensitive to extreme single-pixel anomalies.
+
+	* Gradients / Edge Detectors (e.g., Sobel)	Edge / Boundary Analysis	Excellent at identifying crisp linear features (e.g., roads, clear-cuts).	Poor at characterizing diffuse, continuous environmental heterogeneity.
+
+	* Getis-Ord Gi*	Spatial Autocorrelation	Excellent at finding the exact boundaries of hot/cold spots.	Does not isolate distinct spatial outliers (High-Low/Low-High mixes) as effectively as Moran's I.
+
+
+🛠️ Practical Implementation Notes
+
+When deploying Local Moran's I to map spectral heterogeneity, your choice of inputs will drastically alter the output:
+	• Input Data: Instead of raw individual bands, Local Moran's I is most effective when run on Vegetation Indices (like NDVI or EVI), or the first principal component (PC1) of a Principal Component Analysis (PCA) to synthesize multi-band heterogeneity into a single layer.
+
+	• Lag Distance: The neighborhood size (e.g., 3×3, 5×5 window) must be calibrated to the spatial resolution of your imagery (e.g., Sentinel, Landsat, or UAV data) and the expected patch size of the landscape features.
+
+Calculating Local Moran's I on gridded imagery requires bridges between the raster domain of Xarray and the vector/graph-based statistical ecosystem of PySAL. Because raster scenes typically contain millions of pixels, calculating individual spatial weights matrices can cause memory exhaustion if handled naively. 
+
+This functional pipeline converts an Xarray DataArray into flat arrays, generates an optimized grid-graph spatial weight using libpysal, executes the Local Indicators of Spatial Association (LISA) routine via esda, and maps the results right back into an Xarray dataset structure for spatial slicing and visualization.
+
+💻 End-to-End Implementation
+
+<<< python
+import numpy as np
+import xarray as xr
+import libpysal
+from esda.moran import Moran_Local
+
+def calculate_raster_local_moran(da, band_dim=None, connections="queen", permutations=999):
+    """
+    Calculates Local Moran's I for a 2D Xarray DataArray (e.g., NDVI or PC1).
+    
+    Parameters:
+        da (xr.DataArray): 2D spatial DataArray with dimensions matching coordinates (e.g., 'y', 'x')
+        connections (str): 'queen' or 'rook' topology for pixel neighborhoods
+        permutations (int): Number of random permutations for pseudo p-values
+    """
+    # 1. Ensure data is strictly 2D and extract structural dimensions
+    if band_dim and band_dim in da.dims:
+        raise ValueError("DataArray must be 2D. Please isolate a single band or index.")
+        
+    y_dim, x_dim = da.dims[0], da.dims[1]
+    shape = da.shape
+    
+    # 2. Mask out non-finite entries (NaN values, e.g., clouds, background)
+    # PySAL weights require trackable structural indexing; we pass a mask array
+    mask = np.isfinite(da.values)
+    flat_values = da.values.flatten()
+    
+    # 3. Create high-efficiency lattice/raster weights matrix
+    # from_raster is highly optimized for gridded datasets compared to vector weights
+    w = libpysal.weights.Raster.from_raster(
+        da.to_iris() if hasattr(da, 'to_iris') else shape, 
+        topology=connections
+    )
+    w.transform = 'r' # Row-standardize: evaluates local mean lag rather than absolute sum
+    
+    # Fill NaNs with the global mean or 0 to safely satisfy PySAL execution parameters
+    clean_values = np.where(np.isfinite(flat_values), flat_values, np.nanmean(flat_values))
+    
+    # 4. Compute Local Moran's I
+    # Seed the permutation generator to guarantee reproducible cluster assignments
+    lm = Moran_Local(clean_values, w, permutations=permutations, seed=42)
+    
+    # 5. Extract output structures and reshape back to original 2D grid dimensions
+    local_I = lm.Is.reshape(shape)
+    p_values = lm.p_sim.reshape(shape) # Use pseudo p-values from simulation over analytical norm
+    quadrants = lm.q.reshape(shape)     # 1: HH, 2: LH, 3: LL, 4: HL
+    
+    # Mask out background/missing entries so they don't pollute final analytics
+    local_I = np.where(mask, local_I, np.nan)
+    p_values = np.where(mask, p_values, np.nan)
+    quadrants = np.where(mask, quadrants, np.nan)
+    
+    # 6. Reassemble into an easily exportable, natively coordinate-aware Xarray Dataset
+    ds_out = xr.Dataset(
+        data_vars={
+            "local_I": ([y_dim, x_dim], local_I, {"description": "Local Moran's I statistic"}),
+            "p_value": ([y_dim, x_dim], p_values, {"description": "Pseudo p-value from permutation test"}),
+            "quadrant": ([y_dim, x_dim], quadrants, {"description": "1:HH, 2:LH, 3:LL, 4:HL"})
+        },
+        coords=da.coords
+    )
+    
+    return ds_out
+>>>
+
+# --- Example Usage ---
+# Assuming 'ndvi_raster' is an xr.DataArray with dimensions ('y', 'x') loaded via rioxarray
+# lisa_ds = calculate_raster_local_moran(ndvi_raster, connections="queen")
+
+
+🔍 Isolating Heterogeneity Outliers Natively in Xarray
+
+Once you have generated the output lisa_ds dataset, you can leverage standard Xarray indexing to extract your spectral spatial outliers. These pixels exhibit localized spectral heterogeneity, identifying features where anomalous conditions exist compared to their surroundings. 
+
+<<< python
+# Define significance threshold
+alpha = 0.05
+
+# Filter down to significant spatial outliers
+# Quadrant 2 = Low-High (Low spectral values surrounded by high values)
+# Quadrant 4 = High-Low (High spectral values surrounded by low values)
+spatial_outliers_mask = (lisa_ds.p_value < alpha) & (lisa_ds.quadrant.isin([2, 4]))
+
+# Extract only the outlier intensities, leaving background areas as NaN
+heterogeneity_outliers = lisa_ds.local_I.where(spatial_outliers_mask)
+
+# Save results down directly to a GeoTIFF using rioxarray extensions
+# heterogeneity_outliers.rio.to_raster("spectral_heterogeneity_outliers.tif")
+>>>
+
+⚙️ Performance Considerations for Imagery
+	• Memory Constraints: If your image resolution exceeds roughly 4000 × 4000 pixels, creating an explicit sparse spatial weights matrix inside libpysal can consume significant system RAM. Consider chunking large setups spatially using da.isel() or downsampling your index layer slightly using Xarray's .coarsen(x=2, y=2).mean() prior to computing spatial autocorrelation.
+
+	• Alternative Packages for Big Data: If you find PySAL bottlenecking on exceptionally vast scenes, consider using wradlib or writing custom moving window operations via xarray.DataArray.rolling(), which computes standard dispersion quickly, though it lacks the definitive statistical pseudo p-value outputs unique to true LISA metrics. 
+
+To optimize this pipeline further, tell me:
+• What are the rough pixel dimensions (X × Y) of your target scene?
+• Are you working with multi-temporal time series grids, or a single processing window?
+
+
+
+

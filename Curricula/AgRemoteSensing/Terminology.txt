@@ -140,7 +140,63 @@ the physical properties of a land surface
 Land Use
 the activities or functions for which humans utilize the land
 
+MODIS
+Moderate Resolution Imaging Spectroradiometer
+	• Platforms: Terra (launched 1999, morning overpass ~10:30 AM) and Aqua (launched 2002, afternoon overpass ~1:30 PM).
+	• Status: Nearing the end of operational life and orbital drift due to fuel limits, with final calibration/reprocessing underway and operations ending around late 2026/early 2027.
+	• Capabilities: 36 spectral bands with resolutions of 250m, 500m, and 1000m
+
+VIIRS 
+Visible Infrared Imaging Radiometer Suite
+	• Spatial Resolution & Sensitivity: VIIRS 375m thermal bands offer higher sensitivity for detecting smaller fires and feature crisper pixels across wider swaths than MODIS 1000m thermal bands.
+	• Orbit Coverage: MODIS provided both morning (Terra) and afternoon (Aqua) local crossing times. VIIRS primarily covers afternoon orbits, with morning sampling supplemented by partners like Sentinel-3.
+	• Data Access: Users are directed to the NASA LAADS DAAC MODIS-to-VIIRS Transition Portal for continuity products, common algorithms, and migration support
+
+EnMAP and PRISMA
+EnMAP (developed by the German Aerospace Center, DLR) and PRISMA (developed by the Italian Space Agency, ASI) are the twin pillars of European spaceborne hyperspectral remote sensing. While most traditional Earth-observation satellites look at the planet in only a handful of broad color bands (multispectral), these two missions use imaging spectroscopy to split reflected light into hundreds of narrow, continuous channels.
+
+	• EnMAP: Heavily optimized for global vegetation, soil chemistry, agriculture, forestry management, and inland/coastal water quality.
+	• PRISMA: Excellent for resource management, land-use studies, mineral mapping, hazard response, and point-source methane leak detection
+
+Both missions have outlived their original nominal lifespans and are operating on extended missions through at least late 2027. They are actively serving as critical bridge data to validate upcoming next-generation hyperspectral constellations, such as the European Space Agency's (ESA) highly anticipated CHIME mission and ASI's own PRISMA Second Generation (PRISMA2GEN) constellation
 
 
+DLR
+German Aerospace Center
 
 
+ASI
+Italian Space Agency
+
+ISS
+International Space Station
+
+EMIT (NASA, on ISS)
+Earth Surface Mineral Dust Source Investigation 
+	• cutting-edge hyperspectral instrument
+	• excels at identifying point-source greenhouse gases, capturing distinct methane (CH₄) and carbon dioxide (CO₂) plume signatures from landfills, agricultural operations, and energy infrastructure.
+	• data is used to track vegetation health, harmful algal blooms, and wildfire characteristics
+
+DESIS (DLR, on ISS)
+Earth Sensing Imaging Spectrometer
+	• cutting-edge hyperspectral instrument
+	• Optimization for coastal and inland water quality, precision agriculture, forestry management, and rapid humanitarian disaster mapping (wildfires, floods, oil spills).
+
+
+Planet Labs
+PlanetScope and SkySat are the foundational commercial constellations operated by Planet Labs. Together, they pioneer a "tip-and-cue" monitoring workflow, where the massive PlanetScope fleet broadly flags daily changes across the globe, prompting the targeted SkySat fleet to zoom in on high-interest areas with sub-meter clarity.
+
+VNIR
+Visible/Near-Infrared
+
+SWIR
+Short-Wave Infrared
+
+LISA
+Local Indicators of Spatial Association
+
+Local Moran’s I
+a powerful spatial autocorrelation metric that serves as an effective indicator of spectral heterogeneity in remote sensing and geospatial analysis. While global spatial metrics provide a single summary value for an entire landscape, Local Indicators of Spatial Association (LISA)—such as Local Moran’s I—evaluate spatial variability at the pixel or neighborhood level.
+
+SVH
+Spectral Variation Hypothesis, high spectral heterogeneity correlates strongly with high species richness and structural habitat diversity.
