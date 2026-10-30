@@ -1,0 +1,74 @@
+
+#####################
+GEE New Acct
+	in Google Cloud Console
+########################
+
+
+BASIC SCHEMATIC
+Step 1: Create a Google Cloud Project (The baseline container)
+  │
+  └───► Step 2: Enable Earth Engine on that Project (Unlocks the data)
+         │
+         └───► Step 3: Create a Service Account inside that Project (The robot user)
+                │
+                └───► Step 4: Generate & download the JSON Key (The local credential)
+
+To assign a billing account to your Google Cloud Project, you need to link it via the Billing section of the Google Cloud Console
+
+
+#######################
+Step-by-Step Workflow
+#########################
+	* to create your new Google Cloud Project, 
+	* link it directly to your existing central billing account, 
+	* enable Earth Engine, and 
+	* extract your secure JSON service account key. 
+
+Step 1: Create the Project and Link it to Your Existing Billing Account
+	a. Go to the Google Cloud Console
+		https://console.cloud.google.com
+		https://console.cloud.google.com/welcome?organizationId=0&supportedpurview=project,folder
+
+	b. Welcome .... 
+		clic "Create or Select a Project"
+
+	c. Select a Name and "No Organization"
+
+	d. Go to the Google Cloud Console Billing Account Management page.
+		https://console.cloud.google.com/billing
+
+	e. Clic on tab, "Your Projects"
+		the new project should already be listed under the billing account
+
+Step 2: Enable and Register Google Earth Engine
+A newly-created project does not have access to Earth Engine by default; you must unlock the API and register your project’s intended use case. 
+	a. Select your newly created project from the top blue project dropdown menu in the Cloud Console.
+		https://console.cloud.google.com/welcome?project=agremotesensing 
+
+	b. Use the top search bar to look for Earth Engine API (in Marketplace) click it, and then click the blue Enable button.
+
+	c. Search "Earth Engine" and select "Earth Engine" (product)
+
+	d. Register your Cloud project 
+		Community / Noncommercial tier: Completely free compute usage if you are doing academic research, teaching, or non-profit exploration. Answer the quick registration summary fields detailing your workload, and click Register to authorize the project to query GEE servers
+
+
+	c. Go to the Google Cloud Console IAM & Admin Service Accounts page
+		Verify that your new project name is visible in the top blue navigation bar dropdown menu.
+
+	d. clic "+ Create Service Account" button at the top
+
+	e. In the Select a role dropdown filter, type Earth Engine and pick the role matching your needs:
+		• Earth Engine Resource Admin: Required if your local code needs full read/write/delete controls over your cloud asset storage directories. 
+
+	f. From the main list, click directly on the newly created service account email string
+		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+
+	g. Navigate to the Keys tab at the top, select the Add Key button dropdown, and click Create new key.
+
+	h. Leave the selection box ticked on JSON and hit Create
+		Downloads a .json file
+
+
+

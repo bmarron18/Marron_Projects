@@ -1,0 +1,118 @@
+
+
+https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
+
+
+#####################
+Google Earth Engine
+#####################
+
+https://developers.google.com/earth-engine
+https://developers.google.com/earth-engine/guides/python_install
+
+Connect to the Earth Engine service through one of the APIs. Client libraries for JavaScript and Python translate complex geospatial analyses to Earth Engine requests. Or connect directly to Earth Engine servers using the REST API. 
+
+You will also need an active Google Cloud Project with the Earth Engine API enabled.
+
+Earth Engine offers free access for non-commercial, research, and educational use. Even if you are using the free tier, Google Cloud still requires a Project linked to a Cloud Billing account to manage resource limits, tracking, and standard cloud logging. You will only incur charges if you exceed free-tier compute limits or use paid commercial Earth Engine licenses.
+
+
+PROJECT (registered in https://console.cloud.google.com)
+	https://console.cloud.google.com/welcome?project=agremotesensing
+
+	Project ID
+		agremotesensing
+
+	Organization
+		No organization
+
+	Project No.
+		1042313423310
+
+
+
+
+BILLING
+https://console.cloud.google.com/billing
+You’ll be charged automatically on the 1st of each month. If your balance reaches your MX$2,000.00 payment threshold before then, you'll be charged immediately. You currently pay in 2 different ways (bc of gemini API). 
+
+CONTRIBUTER
+	Intended for graduate students, nonprofits, and scientific researchers doing noncommercial work. 1,000 EECU-hour limit. An active billing account is required for this tier, but you will not be charged for Earth Engine noncommercial usage. If you exceed the quota limit for this tier, your project will enter restricted mode. You will not accrue any charges for excess usage in restricted mode while your project remains noncommercially registered
+
+Review summary
+Your organization type
+	Which of the following best describes you or your organization?
+		Public or private academic institution (including faculty, staff, students)
+	Noncommercial eligibility
+
+What is the name of your academic institution?
+	Universidad Technologia Americana
+
+Will you receive any payment (including fee-for-service) from commercial entities, operational entities, or government organizations for applications or data created using Earth Engine? Note: This does not include research-only grants.
+	No
+
+How would you describe your use of Earth Engine?
+	Scientific research
+
+What is your research question?
+	Remoste sensing for agroecology
+
+What is the geographic scope of your study?
+	Regional
+
+Please specify the region
+	Mexico
+
+Have you previously published work on this topic that used Earth Engine?
+	No
+
+Your plan
+	Selected quota tier
+	Contributor
+
+Your work
+	Does your work with Earth Engine fall into any of these categories?
+		Adaptation
+
+Will you use Earth Engine for any of the following?
+	Agriculture
+
+
+Change your registration details, or update to commercial use if your project no longer meets noncommercial eligibility requirements . Your project's noncommercial eligibility will expire on Apr 30, 2028. 
+
+
+
+
+
+
+
+	Name 
+		My Billing Account
+
+	Payments account ID
+		5419-4456-1299-7896
+
+	Payments profile ID
+		0942-7649-0810
+
+	Payments Account Nickname
+		Google Cloud 01D4ED-4CA1A4-41985D
+
+
+
+SERVICE ACCOUNT (for credentials)
+
+	Name
+		bmarron18-ag
+	
+	Service Acct ID
+		bmarron18-ag
+
+	Service Acct Description
+		Remote sensing for agroecology
+
+	Email
+		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+
+	.json file Key
+		agremotesensing-a0e16021eb39.json

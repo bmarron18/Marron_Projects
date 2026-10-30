@@ -1,0 +1,142 @@
+
+#########################
+Google Developer Platform
+Google Builders Hub
+#########################
+https://me.developers.google.com/
+
+###########################################
+Google AI Studio vs Google Cloud Console
+###########################################
+
+Google AI Studio and Google Cloud Console are TWO SEPARATE DEVELOPER INTERFACES built on top of the same underlying Google infrastructure. They represent different stages of development and cater to different scales of projects
+Every action you take in Google AI Studio REQUIRES a Google Cloud Project running in the background to handle data routing, manage API traffic, and control access permissions. 
+
+                            🧪 Google AI Studio                 🏢 Google Cloud Console
+Primary Purpose     Fast prototyping, model testing (Gemini)    Full enterprise-grade cloud management (Compute,       
+                     and prompt engineering                     Databases, IAM, Earth Engine).
+
+Target Audience     Individual developers, AI researchers,      Cloud engineers, IT administrators, and enterprise 
+                    and hobbyists.                              operations teams.
+
+Billing & Payments  Managed via a streamlined UI directly       Handled through centralized Cloud Billing Accounts.
+                    inside AI Studio.   
+
+Authentication      Simple API Keys for fast, local access.     Service Accounts and IAM roles for secure, 
+                                                                non-interactive backends.
+
+
+BILLING
+While Google AI Studio features independent billing management to keep things simple for independent developers, its billing engine links straight into Google Cloud's centralized billing infrastructure. Linking an active Cloud Billing account to your underlying project automatically elevates your API access limits from a free testing tier to high-volume production tiers. 
+
+
+RELATIONSHIPS
+     1) Service Account, 
+     2) Project, 
+     3) API key, and 
+     4) Service Account JSON key
+
+To understand how these four components interact, think of your Google Cloud setup as a highly secure research laboratory, where Earth Engine datasets are the locked files inside.
+Here is how Service Accounts, Projects, API keys, and Service Account JSON keys connect to control access to that lab:
+text
+  [ GOOGLE CLOUD PROJECT ] (The Laboratory)
+         │
+         ├──► [ API Key ] ───────────────► identifies the App's traffic (The Name Tag)
+         │
+         └──► [ Service Account ] ───────► has permissions to access data (The Robot Worker)
+                    │
+                    └───► [ JSON Key ] ──► unlocks the account locally (The Physical Keycard)
+
+
+1. The Project is the Core Container
+    The Project is the foundation that holds everything together—it is the "laboratory" itself. Every Service Account, API key, and data quota belongs to a specific Project. When Earth Engine processes a heavy computation, it tracks and bills that usage directly to your Project.
+
+2. The Service Account is the Identity
+    The Service Account is a virtual "robot worker" created inside your Project. It does not have a password and cannot log into a browser. Instead, you use IAM to give this robot specific permissions (like Earth Engine Viewer) so it can access datasets on behalf of your Project.
+
+3. The Service Account JSON Key is the Keycard
+    Because the Service Account is just a digital profile sitting in the cloud, your local Python script needs a way to prove it is that specific robot. The Service Account JSON key is the physical keycard you download. When your local script passes this JSON file to Earth Engine, it unlocks the Service Account, which in turn grants access to the Project.
+
+4. API Keys are a Completely Separate Door
+    An API Key is just a simple string of text used to identify WHERE a request is coming from, NOT WHO is making it. In Earth Engine, API keys cannot bypass login walls or run custom backend python scripts. They are only used to let anonymous public users view a read-only, pre-built Earth Engine Web App that you have already published.
+
+
+
+
+
+##################
+Google AI Studio
+    Gemini API Billing
+    API Keys
+    Projects (linked from Google Cloud Console)
+#################
+https://aistudio.google.com/
+
+ACCT
+    signin automatic when logged into 
+    marron.bruce.mx@gmail.com
+
+BILLING
+You currently pay in 2 different ways. 
+https://console.cloud.google.com/billing
+https://console.cloud.google.com/billing/01D4ED-4CA1A4-41985D/reports/tabular?organizationId=0
+https://aistudio.google.com/billing?billing=01D4ED-4CA1A4-41985D
+
+    Acct No.
+        01D4ED-4CA1A4-41985D
+
+    Tier
+        Paid 1 · MX$4,241.00 Billing Account Tier Cap
+        Cloud Prepay 01D4ED-4CA1A4-41985D
+        Auto-reload: On
+
+    Account Credits Pay for
+        Gemini API services
+        my-project-uteca1
+
+
+API KEYS AND CONNECTED PROJECTS
+    Name
+        Gemini API Key
+    Key
+        ...dtkM
+    Connected to project(s)
+        projects/735387290281
+
+
+GOOGLE CLOUD PROJECTS
+    Name
+        My Project-UTECA1
+    Project name
+        projects/735387290281
+    Project number
+        735387290281
+    Project id
+        my-project-uteca1
+    Created
+        Dec 23, 2024
+
+
+    Name
+        
+    Project name
+        
+    Project number
+        
+    Project id
+        
+    Created
+
+
+####################################################
+ Google Cloud Console 
+    IAM (Identity and Access Management)
+    Admin Service Accounts
+ ###################################################
+https://console.cloud.google.com/billing
+https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project
+
+
+ACCT
+    signin automatic when logged into 
+    marron.bruce.mx@gmail.com
