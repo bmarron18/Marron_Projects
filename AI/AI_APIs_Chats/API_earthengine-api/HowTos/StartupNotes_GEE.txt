@@ -1,0 +1,23 @@
+
+
+###########
+Initial Setup
+#########
+
+	* Create Google Cloud Ptoject
+	* Obtain .json credentials
+	* install 'earthengine-api' and  'geemap' in venv
+
+
+
+
+###########
+Notes
+###########
+
+Google Earth Engine Python API: A Beginner's Tutorial
+-------------------------------------------------------
+https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
+
+	* GEE uses a client (local machine)-server(Google) model
+	

@@ -6,6 +6,7 @@ GEE New Acct
 
 
 BASIC SCHEMATIC
+-----------------
 Step 1: Create a Google Cloud Project (The baseline container)
   │
   └───► Step 2: Enable Earth Engine on that Project (Unlocks the data)
@@ -20,7 +21,7 @@ To assign a billing account to your Google Cloud Project, you need to link it vi
 #######################
 Step-by-Step Workflow
 #########################
-	* to create your new Google Cloud Project, 
+	* create your new Google Cloud Project
 	* link it directly to your existing central billing account, 
 	* enable Earth Engine, and 
 	* extract your secure JSON service account key. 
@@ -51,16 +52,21 @@ A newly-created project does not have access to Earth Engine by default; you mus
 	c. Search "Earth Engine" and select "Earth Engine" (product)
 
 	d. Register your Cloud project 
-		Community / Noncommercial tier: Completely free compute usage if you are doing academic research, teaching, or non-profit exploration. Answer the quick registration summary fields detailing your workload, and click Register to authorize the project to query GEE servers
+		* Community / Noncommercial tier
 
 
-	c. Go to the Google Cloud Console IAM & Admin Service Accounts page
+	c. Go to the "Google Cloud Console IAM & Admin Service Accounts" page
+		https://console.cloud.google.com/iam-admin/iam?project=agremotesensing
 		Verify that your new project name is visible in the top blue navigation bar dropdown menu.
 
 	d. clic "+ Create Service Account" button at the top
+		* Service Account will use .json credentials
 
-	e. In the Select a role dropdown filter, type Earth Engine and pick the role matching your needs:
-		• Earth Engine Resource Admin: Required if your local code needs full read/write/delete controls over your cloud asset storage directories. 
+	e. In the Select a role dropdown filter, type Earth Engine and pick TWO roles:
+		• "Earth Engine Resource Admin" (authority to manage data (Admin)
+		* "Service Usage Consumer" (authority to run up a computing/billing)
+		*  set the same TWO roles for marron.bruce.mx@gmail.com
+		
 
 	f. From the main list, click directly on the newly created service account email string
 		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
