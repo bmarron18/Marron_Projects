@@ -1,8 +1,5 @@
 
 
-https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
-
-
 #####################
 Google Earth Engine
 #####################
@@ -23,6 +20,7 @@ GOOGLE ACCT
 Google Cloud Project (GEE)
 ---------------------
 https://console.cloud.google.com/welcome?project=agremotesensing
+https://console.developers.google.com/iam-admin/iam?project=agremotesensing
 
 	Name
 		AgRemoteSensing
@@ -71,6 +69,24 @@ https://console.cloud.google.com/storage/overview;tab=overview?project=agremotes
 
     Bucket Name
         ag-remote-bucket01 
+
+
+     Principals and Roles
+     	Editors of project: agremotesensing 		
+    		Storage Legacy Bucket Owner
+    		Storage Legacy Object Owner
+    		Storage Object Admin
+
+		
+		Owners of project: agremotesensing 		
+    		Storage Legacy Bucket Owner
+    		Storage Legacy Object Owner
+    		Storage Object Admin
+
+		
+		Viewers of project: agremotesensing 		
+    		Storage Legacy Bucket Reader
+    		Storage Legacy Object Reader 
 
 
 

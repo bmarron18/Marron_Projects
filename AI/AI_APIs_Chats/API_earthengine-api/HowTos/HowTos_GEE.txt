@@ -13,3 +13,220 @@ Quick Start
 ###########
 Notes
 ###########
+
+Export Data
+-------------
+Not directly. Export tasks (`toDrive`, `toCloudStorage`, `toAsset`) run on Google's servers and can only write to Google destinations. They can't write to your local disk. You have three ways to get the data onto your machine.
+Since you use a service account, I'd start with option 1 for smaller areas and option 3 for large ones.
+
+**1. Direct download for small images (no Drive)**
+This works if the result is small (roughly under 32 MB and 10,000 pixels per dimension). With geemap:
+
+```python
+import geemap
+
+geemap.ee_export_image(
+    image,
+    filename="/home/bruce-vdb/Desktop/my_image.tif",
+    scale=30,
+    region=region,      # an ee.Geometry
+    file_per_band=False,
+)
+```
+
+Or with plain `ee`:
+
+```python
+url = image.getDownloadURL({
+    "scale": 30,
+    "region": region,
+    "format": "GEO_TIFF",
+})
+print(url)   # open in a browser, or download with requests/wget
+```
+
+For larger areas, `geemap.download_ee_image(image, "out.tif", region=region, scale=30)` splits the request into tiles and merges them.
+
+**2. `toDrive`, then download**
+
+This is the standard route for large exports:
+
+```python
+task = ee.batch.Export.image.toDrive(
+    image=image,
+    description="my_export",
+    folder="gee_exports",
+    scale=30,
+    region=region,
+    maxPixels=1e13,
+)
+task.start()
+```
+
+Then download the file from drive.google.com, or sync it with Google Drive for desktop or `rclone`.
+
+**Important:** since you authenticate with a **service account**, `toDrive` writes to the *service account's* Drive, not your personal one, so you won't see the file in your own Drive. Either use option 1 or 3, or share a Drive folder with the service account's email and export into it. Exporting to a shared folder can be unreliable, so I'd avoid it.
+
+**3. `toCloudStorage`, then download**
+```python
+task = ee.batch.Export.image.toCloudStorage(
+    image=image,
+    description="my_export",
+    bucket="your-bucket-name",
+    fileNamePrefix="my_export",
+    scale=30,
+    region=region,
+    maxPixels=1e13,
+)
+task.start()
+```
+Then on your computer: 
+<<< bash
+	cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+	gsutil cp gs://your-bucket-name/my_export*.tif /home/bruce-vdb/Desktop/
+>>>
+
+This works well with service accounts, but the bucket may require a billing account on the project, even on the noncommercial tier.
+
+**Monitoring a task:**
+
+```python
+print(task.status())
+```
+
+
+Coordinate Systems
+---------------------
+`EPSG:4326` is the code for **WGS 84**, the standard geographic coordinate system based on latitude and longitude in degrees. It's what GPS uses and what most web maps use for raw coordinates.
+
+- **EPSG** is a registry of coordinate reference systems, and `4326` is the entry for WGS 84.
+- Coordinates are in **decimal degrees**, with longitude (x) first in Earth Engine, e.g. `[-122.082, 37.42]`.
+- It is *not* projected, so a "pixel" is a slice of degrees, not a fixed distance on the ground.
+
+**What this means in your export:**
+
+```python
+ee.batch.Export.image.toDrive(
+    image=image,
+    crs="EPSG:4326",
+    scale=30,          # meters, but see below
+    ...
+)
+```
+
+When you use `crs="EPSG:4326"`, the `scale` is converted to degrees internally (about 30 m ≈ 0.00027°). Pixels are not square on the ground: they get narrower east-west as you move away from the equator. If you need equal-area or equal-distance measurements, use a projected CRS instead.
+
+**Common alternatives:**
+
+- `EPSG:3857`: Web Mercator (Google Maps, tiles). Distorts area heavily at high latitudes.
+- `EPSG:326xx` / `EPSG:327xx`: UTM zones (north/south), in meters. Good for local analysis. 
+-  For Mexico City, `EPSG:32614` (UTM zone 14N).
+- `EPSG:6372`: Mexico's national CRS (ITRF2008 / LCC), common for Mexican datasets.
+
+**Tip:** if you leave `crs` out, Earth Engine uses the image's native projection, which is often the best choice unless you need a specific one. You can check it with `image.projection().getInfo()`.
+
+
+
+Download .TIFF
+-----------------
+That error doesn't come from Google's `gsutil`. Google's tool would complain about credentials or a missing bucket, not ask you to choose among `-b`, `-d`, `-e`, or `-r`. The `/usr/bin/gsutil` on your system is a different program that happens to share the name, probably installed by your Linux distribution. You can confirm with:
+
+```bash
+dpkg -S /usr/bin/gsutil
+```
+
+**Option 1: Python client (works in your venv, no CLI needed)**
+Since you already authenticate with a service account, this reuses the same credentials:
+
+```bash
+pip install google-cloud-storage
+```
+
+```python
+from google.cloud import storage
+
+client = storage.Client(project="your-real-project-id")
+bucket = client.bucket("ag-remote-bucket01")
+
+for blob in client.list_blobs(bucket, prefix="MountainView_NDVI_2022"):
+    if blob.name.endswith(".tif"):
+        blob.download_to_filename(f"/home/bruce-vdb/Desktop/{blob.name}")
+        print("Downloaded", blob.name)
+```
+
+`storage.Client()` picks up `GOOGLE_APPLICATION_CREDENTIALS` automatically. The service account needs a role on the bucket such as **Storage Object Viewer** (or Storage Object Admin, which the export itself needed to write there).
+
+**Option 2: the real Google CLI inside the venv**
+
+```bash
+pip install gsutil
+which gsutil    # should now point inside your venv, not /usr/bin
+gsutil -o "Credentials:gs_service_key_file=/path/to/key.json" \
+  cp "gs://ag-remote-bucket01/MountainView_NDVI_2022*.tif" /home/bruce-vdb/Desktop/
+```
+
+With the venv active, its `bin` comes first on `PATH`, so it overrides `/usr/bin/gsutil`. If `which gsutil` still shows `/usr/bin/gsutil`, run `hash -r` or call `~/path/to/your_venv/bin/gsutil` directly.
+
+**Option 3: Google Cloud SDK (`gcloud`)**
+
+If you install the SDK, the modern command is:
+
+```bash
+gcloud auth activate-service-account --key-file=/path/to/key.json
+gcloud storage cp "gs://ag-remote-bucket01/MountainView_NDVI_2022*.tif" /home/bruce-vdb/Desktop/
+```
+
+The Python client is the simplest fit for your setup. Also note that large exports are often split into several files (`...-0000000000-0000000000.tif`), which is why the prefix loop above is handy.
+
+
+
+The service account (`bmarron18-ag@agremotesensing.iam.gserviceaccount.com`) has no permission to list or read objects in that bucket. The message also says the bucket "may not exist", so check two things.
+
+**1. Confirm the bucket name.** In the Cloud console go to **Cloud Storage → Buckets** and check that `ag-remote-bucket01` is listed, spelled exactly like that, in the project you expect. If it's in a different project, that's fine, but the permission must be granted on that bucket.
+
+**2. Grant the service account read access on the bucket**
+
+Using the console (signed in as your personal account, which owns the project):
+
+1. **Cloud Storage → Buckets → ag-remote-bucket01 → Permissions** tab
+2. Click **Grant access**
+3. **New principals:** `bmarron18-ag@agremotesensing.iam.gserviceaccount.com`
+4. **Role:** **Storage Object Viewer** (this includes `storage.objects.list` and `storage.objects.get`)
+5. Save, then wait a minute or two and retry.
+
+Or from the terminal, if you have `gcloud` installed and are signed in as yourself:
+
+```bash
+gcloud storage buckets add-iam-policy-binding gs://ag-remote-bucket01 \
+  --member="serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+```
+
+**Easiest alternative:** you don't need the service account for downloading at all. Open the bucket in the console, tick the `MountainView_NDVI_2022*.tif` file(s), and click **Download**. Your personal account already has access as project owner.
+
+**One thing to double-check:** if your export to this bucket succeeded using this same service account, it must already have some write role there (for example Storage Object Creator, which can write but not list or read). That would explain why writing worked and listing didn't. If the export itself failed or never started, check `task.status()` for an error and confirm the file actually exists in the bucket.
+
+
+Export Errors
+	  https://console.cloud.google.com/earth-engine/tasks?project=agremotesensing
+-----------
+
+Failed Landsat8_NDVI_Export     3RHL4GMFNWOM24ZFESL7SQOG
+
+<<< python
+import ee
+	# after ee.Initialize(...)
+op = ee.data.getTaskStatus("3RHL4GMFNWOM24ZFESL7SQOG")
+print(op)
+>>>
+
+
+In the Cloud console, signed in as your personal account:
+
+Cloud Storage → Buckets → ag-remote-bucket01 → Permissions tab
+Grant access
+	New principals: bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+	Role: Storage Object Admin (roles/storage.objectAdmin)
+Save, wait a couple of minutes, then re-run the export.
+
+Object Admin covers storage.objects.create, list, and get, so it also fixes the 403 you got when listing and downloading. Storage Object Creator would fix only the write.

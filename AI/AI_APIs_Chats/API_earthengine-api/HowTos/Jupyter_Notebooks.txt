@@ -1,0 +1,172 @@
+
+#####################
+Jupyter Notebooks
+########################
+
+Error
+---------
+Your environment also contains spyder-kernels (the package that lets Spyder run code in this environment), and it requires ipykernel older than version 7. Pip upgraded ipykernel to 7.4.0, which can break Spyder’s console in that environment, so downgrade it:
+
+pip install "ipykernel>=6.29.3,<7"
+
+Both Spyder and JupyterLab work fine with ipykernel 6.29.x, so you lose nothing.
+
+
+ use `jupytext` and Use venv (ai-apis) to open .ipynb
+----------------------------------------------------
+
+ <<< bash
+     cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+     jupytext --to notebook ~/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/TestRuns_Tutorials.py &&
+     jupyter lab ~/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/TestRuns_Tutorials.ipynb
+     deactivate
+ >>>
+
+Use the default “Python 3 (ipykernel)” kernel. Not “existing kernel,” and not a Spyder kernel.
+
+When you launch jupyter lab from the activated venv, that default kernel automatically runs on the venv’s Python, so ee and geemap are available. You don’t need to register anything extra.
+
+When the notebook opens, JupyterLab may show a “Select Kernel” dialog. Choose Python 3 (ipykernel). If it opens without asking, check the kernel name in the top-right corner of the notebook; it should say “Python 3 (ipykernel)”.
+
+
+Create a new notebook from within the activated venv
+-----------------------------------------------
+
+	# open the Jup Launcher (shows running kernel or Console)
+	# clic on "Notebook" to create
+	# CTRL-C in terminal to close
+<<<bash
+cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+jupyter lab ~/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/
+>>>
+
+	#check kernel
+<<< python
+import sys
+print(sys.executable)   # should be inside your venv
+>>>
+
+
+
+Static snapshot vs Shared kernel
+----------------
+Not as a live, interactive object. A `Map` lives in the memory of the Spyder kernel process, and it can't be saved or pickled in a way that restores the working widget elsewhere. There are only two ways to avoid re-running the code.
+
+**1. Static snapshot (no re-running, not interactive)**
+In Spyder:
+```python
+Map.to_html("map.html")
+```
+Then in a Jup notebook cell:
+```python
+from IPython.display import IFrame
+IFrame("/home/bruce-vdb/map.html", width="100%", height=600)
+```
+You see the layers and can pan and zoom, but the inspector, drawing tools, and anything linked back to Python won't work.
+
+
+**2. Share one kernel (live map, no re-running)**
+
+A Jupyter kernel is a standalone Python process, and any number of front ends can connect to it at once (JupyterLab, Spyder, a terminal console). They all send code to the same process, so they share the same variables. Spyder normally starts its own private kernel, but "Connect to an existing kernel" tells it to use the one JupyterLab started instead.
+
+**Steps**
+
+1. In the activated venv, launch JupyterLab and open a notebook (kernel: Python 3 (ipykernel)). This is THE SAME
+KERNEL as is used by Spyder in (ai-apis)
+
+2. In a Jup notebook cell, run all your usual init credentials and pkgs
+   <<< python
+   import ee, geemap
+   ee.Initialize(credentials=..., project="your-real-project-id") 
+
+   %connect_info
+   >>>
+
+   The output includes a connection file name, like `kernel-1234abcd-....json`. You can find the file in the folder printed by
+   <<< bash
+   jupyter --runtime-dir`
+   >>>
+
+3. Open Spyder. Go to **Consoles → Connect to an existing kernel**. Browse to that `.json` file (or paste the path) and click OK. A new console opens in Spyder that is attached to the Jupyter kernel.
+
+4. In the newly-opened Spyder console, create the map:
+   ```python
+   Map = geemap.Map(center=[37.42, -122.082], zoom=10)
+   Map.addLayer(...)
+   ```
+   Spyder shows only the text repr, as before, because it can't render widgets.
+
+5. In the notebook, in a new cell, type:
+   ```python
+   Map
+   ```
+   The notebook displays the same `Map` object that exists in the kernel, now rendered in JupyterLab's front end.
+
+**Caveats**
+
+- Keep the notebook open and connected while you create the map from Spyder. Widget state is sent to the front ends that are connected at the time. If something doesn't render, re-run the cell, or create the `Map` from a notebook cell and keep using Spyder only to modify it.
+- Because the code runs in the Jupyter kernel, Spyder's Variable Explorer and plots pane may be limited or not work with that console.
+- This only works for objects created AFTER you connect. Anything already in Spyder's original kernel stays there.
+- If it feels fiddly, the lower-effort route is still `# %%` cells in Spyder, then `jupytext`, then running the notebook in JupyterLab.
+
+
+
+
+
+Other
+------
+
+**Specify a different location with `--output` (or `-o`):**
+
+```
+jupytext --to notebook my_script.py -o /path/to/notebooks/my_notebook.ipynb
+```
+
+Create the destination folder first if it doesn't exist (`mkdir -p /path/to/notebooks`).
+
+**Where JupyterLab looks:** JupyterLab only shows files inside the directory it was launched from (and its subfolders). So either:
+
+- `cd` into the folder that contains the notebook, then run `jupyter lab`, or
+- launch it with an explicit directory:
+  ```
+  jupyter lab --notebook-dir=/path/to/notebooks
+  ```
+
+**Optional:** to keep the `.py` and `.ipynb` files in sync, use:
+```
+jupytext --set-formats ipynb,py:percent my_script.py
+```
+Then edits in either one can be synced with `jupytext --sync my_script.py`. This is handy if you keep coding in Spyder and viewing in JupyterLab.
+
+
+Open a map as an .html output from Spyder
+------------------------------------------
+The path is being treated as a URL, not a file path. `IFrame` doesn't read your disk; your browser asks the Jupyter server for `http://localhost:8888/home/bruce-vdb/Desktop/map.html`, and Jupyter only serves files inside the folder it was launched from. Anything else gives a 404.
+
+**Fix 1: embed the file contents (works from any location)**
+<<<python
+import html
+from IPython.display import HTML
+
+with open("/home/bruce-vdb/Desktop/map.html", encoding="utf-8") as f:
+    content = f.read()
+
+HTML(f'<iframe srcdoc="{html.escape(content)}" width="100%" height="600" style="border:none;"></iframe>')
+>>>
+This reads the file in Python and embeds it directly, so the server never needs to find it.
+
+
+**Fix 2: put the file inside Jupyter's folder and use the `/files/` URL**
+<<<bash
+cp /home/bruce-vdb/Desktop/map.html /path/to/notebooks/
+>>>
+
+Then in the notebook:
+<<< python
+from IPython.display import IFrame
+IFrame("/files/map.html", width="100%", height=600)
+>>>
+
+In JupyterLab, the `/files/` prefix serves files relative to the folder where you ran `jupyter lab`. 
+If the HTML is in a subfolder, use `/files/subfolder/map.html`.
+

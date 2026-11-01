@@ -36,27 +36,10 @@ QUICK START
 >>>
 
 NB
-Must use name GOOGLE_APPLICATION_CREDENTIALS
-
-When you call ee.Initialize(), the Earth Engine library asks the core Google Authentication system for credentials. 
-Because the environment variable points directly to this file, the system handles the configuration for you:
-    • It reads the client_email to know who is connecting.
-    • It reads the private_key to cryptographically sign the connection request.
-    • It reads the project_id to associate your billing and API quotas.
-
-
-Much cleaner to let Google Cloud handle the credentials globally. 
-
-sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates gnupg curl
-curl https://google.com | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-
-sudo rm -f /etc/apt/sources.list.d/google-cloud-sdk.list &&
-sudo rm -f /etc/apt/sources.list.d/google-cloud-sdk.list.save
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://google.com cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
-sudo apt-get update && sudo apt-get install -y google-cloud-cli
-
-
+    * Must use name GOOGLE_APPLICATION_CREDENTIALS for env variable
+    * The Earth Engine Python API is stateless: ee.Initialize() just stores your credentials and project in 
+      memory and sends independent HTTPS requests to the server whenever you call something like .getInfo() or 
+      start an export. There’s no persistent connection, session, or handle to release.
 
 
 
@@ -69,55 +52,67 @@ https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
 
 
 """
+# %%
 
+'''
+Test Credentials
+'''
+
+import os, json
+
+p = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+print(p)
+d = json.load(open(p))
+print(d["client_email"], d["project_id"])
 
 
 
 # %%
 
+'''
+Test GEE Access
+'''
 
 import os
+import json
 import ee
-import google.auth
 
-    # 1. Fetch the credentials file path from your environment variable
+#==============
+# CREDENTIALS
+#==============
+
+    # Fetch the credentials file details from your environment variable, "GOOGLE_APPLICATION_CREDENTIALS"
 gac_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
 
+    # open .json file
+gac= json.load(open(gac_path))
 
-    # 2. Load the credentials directly from the file path and apply Earth Engine scopes
-    # the comma and underscore credentials, _ = ... are used because google.auth.load_credentials_from_file() 
-    # returns a tuple containing exactly two items, but your code only needs the first one.
-    
-    # Think of your Service Account JSON key as a physical passport, and these Scopes as the visa applications you submit
-    # before traveling:
-credentials, _ = google.auth.load_credentials_from_file(
+    # extract credentials for login
+email = gac["client_email"]
+project_id = gac["project_id"]
+
+credentials = ee.ServiceAccountCredentials(
+    email,
     gac_path,
-    scopes=[
-        "https://www.googleapis.com/auth/cloud-platform",
-        "https://www.googleapis.com/auth/earthengine",
-    ],
 )
 
-# 3. Initialize using the loaded credentials
-ee.Initialize(credentials=credentials, project="your-project-id")
+    # GEE API login 
+ee.Initialize(credentials, project = project_id)
 
+    # check 
 print("Earth Engine initialized successfully using Application Default Credentials!")
 
 
-
 # %%
 
-# Alternative A: Grab the project ID too, instead of throwing it away
-credentials, default_project = google.auth.load_credentials_from_file(...)
+  # Cancel a specific task you started
+ 
+task.cancel()
 
-# Alternative B: Standard indexing (grab just the first item at index 0)
-response = google.auth.load_credentials_from_file(...)
-credentials = response[0]
-
-
-
-
-
+  # Or cancel all active/pending tasks
+for t in ee.batch.Task.list():
+    if t.state in ("READY", "RUNNING"):
+          t.cancel()
 
 
 

@@ -1,0 +1,132 @@
+
+
+Hola hermano!
+
+Aquí te los comparto los "prompts" y los resultados de mis dos"scripts" más poderosas hasta la fecha:
+	1. A_Template_AnalysisQuery_anthropic_v3.4.py
+	2. A_Template_ResearchQuery_anthropic_v3.1.py
+
+Los dos utilizan el "API" de Anthropic. Con el primero se puede subir cualquier número y tipo de documentos y el AI, claude-opus-5.5, los repasarán, revisarán, analizarán, y darle un resúmen de los análisis, comparaciones, contrastes en cual forma, incluyendo tablas, figuras, o infografías. El segundo está diseñado para investigaciones massivos de cualquier tema dirigiendose al claude-fable-5-1. Igualmente, se puede recibir los resultados en cualquier forma. Más especificamente, con ejemplares,
+
+-------------------------------------------------
+A_Template_AnalysisQuery_anthropic_v3.4.py
+(claude-opus-5.5)
+-------------------------------------------------
+  * Send one or more files of ANY permitted type for analysis to Claude
+  * Stream the reply to a text file that includes a) analytical results, and 
+    b) the Python code to generate any requested graphics
+  * Save any files Claude generates
+  * Clean up (remove from storage) the uploaded files
+
+
+################
+# PROMPT
+#################
+# ---- Use adjacent string literals = no stray spaces ----------
+
+    # User-level message
+usr_msg = (
+	"Review and analyze the file, Ashby_Resilience.pdf, which is an excerpt from Ashby's," 
+	"Introduction to Cybernetics. Compare and contrast Ashby's concept of the Law of Requisite"
+	"Variety with the four concepts in Wood's paper, Four concepts for resilience and the" 
+	"implications for the future of resilience engineering. Do the following: 1) Create a single"
+	"diagram that frames The Law of Requisite Variety in terms of resilience, and 2) Create a"
+	"single diagram that compares and contrasts The Law of Requisite Variety with Wood's concepts"
+	"of resilience. The diagrams should be in .jpeg format to be produced from a Python script."
+)
+
+    # System-level message, Optional (None = no system prompt)
+sys_msg = (
+	"You are an expert in sustainability, the analysis of complex adaptive systems,"
+	"and cybernetics. When an additional file, chart, table, or script would be useful,"
+	"create it with the code interpreter and save it as a file so the user can download it."
+)
+
+###########
+# OUTPUT
+############
+AnalysisQuery_Anthropic_20261016_171734.zip
+
+
+
+---------------------------------------------
+A_Template_ResearchQuery_anthropic_v3.1.py
+(claude-fable-5-1)
+----------------------------------------------
+    1. Submits a query to an Anthropic Claude model via the Messages API in
+       BACKGROUND mode (Message Batches API), with the Code Execution and
+       Web Search server tools enabled.
+    2. Polls the API until the job completes (robust to network drops).
+       Long research turns that hit the server-side tool-loop limit
+       (stop_reason = "pause_turn") are continued automatically, subject to
+       CONTEXT GUARDS that stop the conversation from snowballing past the
+       model's context window (see CONTEXT GUARDS below).
+    3. Saves the model's text answer to a .txt file.
+    4. Saves any web sources (search results + URL citations) to a _sources.txt file.
+    5. Saves any code/commands that the model executed to .py / .sh files.
+    6. Saves the execution logs (stdout / stderr / exit codes) to a .log file.
+    7. Downloads every file the model generated inside its sandbox
+       (e.g. .png, .csv, .xlsx, .py, .pdf) with its original name and extension.
+       That is, multi-file-type output (text, code, images, data files)
+    8. Saves image outputs (plots). Claude writes plots to files, which are
+       downloaded in step 7 and flagged as [Image Output].
+    9. Saves the raw JSON response(s) for debugging.
+   10. If the research phase must stop early (token guard, continuation
+       limit, or context-window overflow), a compact, TOOL-FREE "wrap-up"
+       turn writes the final answer from the material already gathered.
+
+    All outputs are written to a time-stamped folder on the Desktop:
+        ~/Desktop/ResearchQuery_Anthropic_YYYYMMDD_HHMMSS/
+
+
+###########
+# PROMPT
+############
+# ---- Use adjacent string literals = no stray spaces ----------
+
+    # User-level message
+usr_prompt = (
+"Satellite data has been used to evaluate various aspects of agricultural production for some time. "
+"Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as "
+"other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and "
+"Cation Exchange Capacity. Examine peer-reviewed journals, textbooks, seminar and conference "
+"publications, and all relevant source materials for the use and processing of satellite data in "
+"agriculture. With this information at hand, do the following: 1) Provide a high-level summary of "
+"how satellite data are currently being used in agriculture in .pdf format. 2) Provide a detailed "
+"account of how satellite data is obtained, processed, and evaluated for agricultural use in pdf "
+"format. 3) Provide an infographic explaining how satellite data is obtained, processed, and "
+"evaluated for agricultural use. The infographic should be developed in a Python script that can be "
+"run independently to generate the infographic as a .jpeg file. 4) Provide a list of foundational "
+"and canonical references (open-source peer-reviewed papers and textbooks) that explain the process "
+"and theory for obtaining, processing, and evaluating satellite data for agricultural use 8) Provide "
+"a list of sources for publicly-available satellite data that can be used for agricultural "
+"evaluations (eg, Copernicus and Google Earth Engine). Thank you!"
+)
+
+
+    # System-level message
+sys_prompt = (
+    "You are an expert in agriculture, crop and soil science, and geospatial analysis."
+    "Use web search to find and verify sources; cite only sources you have actually located."
+    
+    	# Resource discipline (limits context growth inside each turn)
+    "\n\nWork economically: the whole conversation must fit in a fixed context "
+    "window. Prefer a few targeted searches over many broad ones, and stop "
+    "searching once you have enough well-supported sources. When running code, "
+    "keep printed output short (summaries, shapes, or the first few lines). "
+    "Never print whole files, large tables, or long logs; write large outputs "
+    "to files instead."
+)
+
+###########
+# OUTPUT
+############
+ResearchQuery_Anthropic_20261026_140924.zip
+
+
+De verdad, los resultados son asombrosos! Y de verdad, si quisieras que te ayudo con caulquier analisis o investigación, nada más dime lo que te interesa y vamos! 
+
+ok bro have a wonderful day....abrazos!
+
+
+

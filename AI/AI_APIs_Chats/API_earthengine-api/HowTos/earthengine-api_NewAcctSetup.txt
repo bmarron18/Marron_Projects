@@ -45,36 +45,35 @@ Step 1: Create the Project and Link it to Your Existing Billing Account
 Step 2: Enable and Register Google Earth Engine
 A newly-created project does not have access to Earth Engine by default; you must unlock the API and register your project’s intended use case. 
 	a. Select your newly created project from the top blue project dropdown menu in the Cloud Console.
-		https://console.cloud.google.com/welcome?project=agremotesensing 
+	   [https://console.cloud.google.com/welcome?project=agremotesensing]
 
-	b. Use the top search bar to look for Earth Engine API (in Marketplace) click it, and then click the blue Enable button.
+	b. Use the top search bar to look for Earth Engine API (in Marketplace) click it, and then click the blue Enable 
+	   button.
 
 	c. Search "Earth Engine" and select "Earth Engine" (product)
 
 	d. Register your Cloud project 
-		* Community / Noncommercial tier
+		* registered Community / Noncommercial tier
 
+	e. Go to the "Google Cloud Console IAM & Admin Service Accounts" page
+	   [https://console.cloud.google.com/iam-admin/iam?project=agremotesensing]
+	   Verify that your new project name is visible in the top blue navigation bar dropdown menu.
 
-	c. Go to the "Google Cloud Console IAM & Admin Service Accounts" page
-		https://console.cloud.google.com/iam-admin/iam?project=agremotesensing
-		Verify that your new project name is visible in the top blue navigation bar dropdown menu.
-
-	d. clic "+ Create Service Account" button at the top
+	f. clic "+ Create Service Account" button at the top
 		* Service Account will use .json credentials
 
-	e. In the Select a role dropdown filter, type Earth Engine and pick TWO roles:
+	g. In the Select a role dropdown filter, type Earth Engine and pick TWO roles:
 		• "Earth Engine Resource Admin" (authority to manage data (Admin)
 		* "Service Usage Consumer" (authority to run up a computing/billing)
 		*  set the same TWO roles for marron.bruce.mx@gmail.com
 		
+	h. From the main list, click directly on the newly created service account email string
+	   [bmarron18-ag@agremotesensing.iam.gserviceaccount.com]
 
-	f. From the main list, click directly on the newly created service account email string
-		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+	i. Navigate to the Keys tab at the top, select the Add Key button dropdown, and click Create new key.
 
-	g. Navigate to the Keys tab at the top, select the Add Key button dropdown, and click Create new key.
-
-	h. Leave the selection box ticked on JSON and hit Create
-		Downloads a .json file
+	j. Leave the selection box ticked on JSON and hit Create
+	   [agremotesensing-a0e16021eb39.json]
 
 
 
