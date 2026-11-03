@@ -88,6 +88,12 @@ gcloud storage cp --help
 >>>
 
 
+To install or remove components at your current Google Cloud CLI version [591.0.0], run:
+  $ gcloud components install COMPONENT_ID
+  $ gcloud components remove COMPONENT_ID
+
+To update your Google Cloud CLI installation to the latest version [591.0.0], run:
+  $ gcloud components update
 
 
 To delete your Google Cloud project:
@@ -172,23 +178,19 @@ Install
 https://docs.cloud.google.com/sdk/docs/install-sdk
     google-cloud-cli-linux-x86_64.tar.gz
 
+    # unzip in Downloads
 tar -xf google-cloud-cli-linux-x86_64.tar.gz
 
+    #run installer
+./google-cloud-sdk/install.sh
 
-To install or remove components at your current Google Cloud CLI version [591.0.0], run:
-  $ gcloud components install COMPONENT_ID
-  $ gcloud components remove COMPONENT_ID
 
-To update your Google Cloud CLI installation to the latest version [591.0.0], run:
-  $ gcloud components update
-
-Enter a path to an rc file to update, or leave blank to use 
-[/home/bruce-vdb/.bashrc]:  
-Backing up [/home/bruce-vdb/.bashrc] to [/home/bruce-vdb/.bashrc.backup].
 [/home/bruce-vdb/.bashrc] has been updated.
+Backing up [/home/bruce-vdb/.bashrc] to [/home/bruce-vdb/.bashrc.backup].
 
 
 
+START HERE
 Step 2: Run the Interactive Setup (gcloud init)
 Once installed, open a fresh terminal window and run the initialization command:
 
