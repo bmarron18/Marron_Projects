@@ -34,48 +34,37 @@ Your Anthropic Console (API) account and your Claude.ai chat account are separat
         *Prepaid credits
 
 
-############
-Chat with Claude
-##################
-https://claude.ai/login
-https://claude.ai/login?from=logout
-
-Signin w/ Google (marron.bruce.mx@gmail.com)
-
-ADVANTAGES
-    Easy upload files for analysis
-    Keeps log of chats in a project folder
-
-
 
 ##############
 Claude SDK
+for Python
 ###############
 https://platform.claude.com/claude-code
 https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/python
 
-# SDK
+# SDK into venv
 	pip install anthropic
 
-# For improved async performance with aiohttp
-	pip install "anthropic[aiohttp]"
 
 
 ###########
 Using Claude API
 #############
-if your goal is to prevent Claude Code's agentic loop from executing terminal commands, creating local files, or installing dependencies, you can explicitly force it to operate in a "text-only/print" mode.Depending on whether you want to use the Claude Code CLI to output text or prompt the underlying Claude Agent SDK / Messages API programmatically, you can structure your setup using the workflows below.
+if your goal is to prevent Claude Code's agentic loop from executing terminal commands, creating local files, or installing dependencies, you can explicitly force it to operate in a "text-only/print" mode.
 
------------
+Depending on whether you want to use the Claude Code CLI to output text or prompt the underlying Claude Agent SDK / Messages API programmatically, you can structure your setup using the workflows below.
+
+
 Prompting Programmatically via the Claude Agent SDK / Messages API
-    * custom script to prompt Claude via its Developer API? don't use the standard chat interface. 
+-----------
+    * custom script to prompt Claude via its Developer API ==> don't use the standard chat interface. 
     * bypass the agent loop entirely by interacting with the claude_agent_sdk or the raw anthropic 
       messages API.
 
 
----------------
 USE THIS!!
 Standard Anthropic Messages API (Safest for Text-Only Outputs) 
+---------------
     * 100% certainty that no agentic loops, background file writing, or tool calls occur
     * bypass the Claude Code framework entirely and prompt the underlying Claude Messages API using the 
       anthropic Python SDK package
@@ -104,8 +93,9 @@ print(response.content[0].text)
 
 
 
------------------
 DO NOT USE!!
+Claude Code CLI
+-----------------
 Option A: Using the Claude Agent SDK (With a Custom System Prompt)
 Anthropic allows you to modify the system prompt of the Agent SDK. This strips the model of its agentic behavior and enforces standard code generation
 
