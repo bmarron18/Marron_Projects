@@ -2,11 +2,15 @@
 
 Hola hermano!
 
-Aquí te los comparto los "prompts" y los resultados de mis dos"scripts" más poderosas hasta la fecha:
+Aquí te los comparto los "prompts" y los resultados de mis dos"scripts" más poderosas hasta la fecha y tambien hojas de instrucción para preparar tu compu para utilizarlos:
 	1. A_Template_AnalysisQuery_anthropic_v3.4.py
 	2. A_Template_ResearchQuery_anthropic_v3.1.py
+    3. API_Installations-Activations-Preparations.txt
 
-Los dos utilizan el "API" de Anthropic. Con el primero se puede subir cualquier número y tipo de documentos y el AI, claude-opus-5.5, los repasarán, revisarán, analizarán, y darle un resúmen de los análisis, comparaciones, contrastes en cual forma, incluyendo tablas, figuras, o infografías. El segundo está diseñado para investigaciones massivos de cualquier tema dirigiendose al claude-fable-5-1. Igualmente, se puede recibir los resultados en cualquier forma. Más especificamente, con ejemplares,
+Los dos utilizan el "API" de Anthropic. Con el primero se puede subir cualquier número y tipo de documentos y el AI, claude-opus-5.5, los repasarán, revisarán, analizarán, y darle un resúmen de los análisis, comparaciones, contrastes en cual forma, incluyendo tablas, figuras, o infografías. El segundo está diseñado para investigaciones massivos de cualquier tema dirigiendose al claude-fable-5-1. Igualmente, se puede recibir los resultados en cualquier forma (.pdf, .csv, .jpeg, etc)
+
+
+Más especificamente, con ejemplares,
 
 -------------------------------------------------
 A_Template_AnalysisQuery_anthropic_v3.4.py
@@ -124,9 +128,9 @@ sys_prompt = (
 ResearchQuery_Anthropic_20261026_140924.zip
 
 
-De verdad, los resultados son asombrosos! Y de verdad, si quisieras que te ayudo con caulquier analisis o investigación, nada más dime lo que te interesa y vamos! 
+De verdad, los resultados son asombrosos! Y de verdad, si quisieras que te ayudo con cualquier cosa de las instalaciones, dime!! 
 
-ok bro have a wonderful day....abrazos!
+ok man have a wonderful day!
 
 
 

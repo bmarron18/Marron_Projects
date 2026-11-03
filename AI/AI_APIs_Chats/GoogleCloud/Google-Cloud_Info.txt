@@ -1,0 +1,115 @@
+
+#############
+Google Acct 
+(General acct for @gmail etc)
+###################
+
+    * Set 2-Step Verification with "Authenticator"
+
+
+
+
+
+###########
+Google Python SDKs
+#############
+
+Google offers hundreds of specialized Python packages, with one for almost every service on their platform. Since you can't install an all-in-one bundle, you mix and match these depending on what your application needs to do.
+
+
+• pip install google-cloud-aiplatform (Vertex AI): Used to build, train, deploy, and scale machine learning models and manage enterprise pipelines.
+
+• pip install google-genai (Gemini API): The official package for interacting with Google's latest multimodal generative AI models, generating text/images, and working with agent frameworks.
+
+• pip install google-cloud-tasks (Cloud Tasks): Manages asynchronous task execution. Used to offload slow background workers, retry failed operations, or throttle heavy traffic.
+
+• pip install google-cloud-scheduler (Cloud Scheduler): A managed cron job service that automates repeated tasks or triggers webhooks on a strict timeline
+
+• pip install google-cloud-monitoring (Cloud Monitoring): Tracks application health metrics, system performance, uptime, and custom alert thresholds
+
+
+
+=====   Google Cloudshell    ============================
+
+
+  # Google Cloud Services Account
+https://cloud.google.com/
+https://console.cloud.google.com/
+https://cloud.google.com/iam/docs/service-accounts-create
+https://cloud.google.com/iam/docs/service-account-overview
+https://cloud.google.com/resource-manager/docs/creating-managing-projects#before_you_begin
+
+
+  # Installing Google Cloud SDK (includes CLI)
+https://cloud.google.com/sdk
+https://cloud.google.com/sdk/docs/initializing
+https://stackoverflow.com/questions/71086225/how-to-install-or-uninstall-gcloud
+
+
+  # Google Cloud Shell (available from Google Cloud Console)
+  ''' IDE with a command line interface. This virtual machine is loaded with all the 
+  development tools needed. It offers a persistent 5 GB home directory and runs in Google Cloud.
+  Cloud Shell is a Debian-based virtual machine '''
+
+
+  # Google Authentication and Application Default Credentials (ADC)
+https://cloud.google.com/docs/authentication
+https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment
+https://cloud.google.com/docs/authentication/application-default-credentials#personal
+https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment
+https://cloud.google.com/docs/authentication/provide-credentials-adc
+https://cloud.google.com/docs/authentication/provide-credentials-adc#how-to
+https://cloud.google.com/docs/authentication/application-default-credentials
+https://stackoverflow.com/questions/51554341/google-auth-exceptions-defaultcredentialserror
+https://stackoverflow.com/questions/40032678/where-are-google-application-default-credentials-stored
+https://medium.com/datamindedbe/application-default-credentials-477879e31cb5
+https://www.googlecloudcommunity.com/gc/Serverless/Why-i-have-the-error-raise-exceptions-DefaultCredentialsError-in/m-p/726413
+https://stackoverflow.com/questions/73451173/google-auth-exceptions-defaultcredentialserror-could-not-automatically-determin
+https://stackoverflow.com/questions/74502095/setting-application-default-credentials-adc-on-google-cloud
+
+
+  # Google Cloud Storage
+https://cloud.google.com/storage/docs/gsutil/commands/config] 
+
+
+  # Google Cloud Client Libraries -- General
+https://cloud.google.com/sdk/docs/install
+https://cloud.google.com/apis/docs/cloud-client-libraries
+https://cloud.google.com/apis/docs/client-libraries-explained
+https://developers.google.com/api-client-library/
+https://developers.google.com/apis-explorer/
+ 
+
+  # Google Cloud Client Libraries -- Python
+https://cloud.google.com/python
+ https://github.com/googleapis/google-cloud-python
+https://cloud.google.com/python/docs/getting-started
+https://cloud.google.com/python/docs/setup
+https://cloud.google.com/python/docs/reference
+
+
+
+  # Google Zones and Location of Servers for Cloud Computing
+https://cloud.google.com/compute/docs/regions-zones
+https://stackoverflow.com/questions/66841594/google-cloud-translate-400-invalid-resource-name-location-even-though-it-is-vali
+
+
+
+
+
+ 
+
+
+   
+
+
+
+
+
+
+    
+
+
+
+
+    

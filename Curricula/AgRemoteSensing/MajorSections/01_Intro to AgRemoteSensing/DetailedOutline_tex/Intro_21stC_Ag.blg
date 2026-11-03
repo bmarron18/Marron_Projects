@@ -1,0 +1,9 @@
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'Intro_21stC_Ag.blg'
+[53] biber:342> INFO - === Mon Nov  2, 2026, 15:42:26
+[67] Biber.pm:421> INFO - Reading 'Intro_21stC_Ag.bcf'
+[121] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
+[136] bbl.pm:676> INFO - Writing 'Intro_21stC_Ag.bbl' with encoding 'UTF-8'
+[136] bbl.pm:779> INFO - Output to Intro_21stC_Ag.bbl
+[136] Biber.pm:132> WARN - The file 'Intro_21stC_Ag.bcf' does not contain any citations!
+[136] Biber.pm:134> INFO - WARNINGS: 1

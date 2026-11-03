@@ -9,10 +9,16 @@ https://developers.google.com/earth-engine/guides/python_install
 
 Earth Engine offers free access for non-commercial, research, and educational use. Even if you are using the free tier, Google Cloud still requires a Project linked to a Cloud Billing account to manage resource limits, tracking, and standard cloud logging. You will only incur charges if you exceed free-tier compute limits or use paid commercial Earth Engine licenses.
 
+The Earth Engine Python library also ships with its own command-line tool simply called "earthengine". If you want to use that terminal tool for batch uploads or asset management without interactive login prompts, you can pass your JSON file directly to it as well:
+<<< bash
+earthengine --service_account_file=path/to/your/credentials.json ls
+>>>
+
+The earthengine CLI tool is highly specialized. It is built strictly for managing geospatial data and tasks inside Earth Engine's closed environment, not for managing your broader Google Cloud infrastructure
 
 
-GOOGLE ACCT
--------------
+GOOGLE ACCT LINK
+-----------------
     signin automatic when logged into 
     marron.bruce.mx@gmail.com
 
@@ -127,11 +133,19 @@ PAYMENT SETTINGS
 
 
 SERVICE ACCOUNT 
-(for credentials)
------------------
+(for .json file credentials)
+-------------------------------
 	* Used by your backend server to fetch data from Earth Engine seamlessly. Your server requests data from Earth 
 	  Engine on behalf of the app using its Service Account credentials.
-	* OAuth 2.0 Client IDs and Service Accounts are two distinct authentication mechanisms 
+
+	* When you run a Python script using a .json credential file to call "earthengine-api", you are entirely bypassing 
+	  the google-cloud-cli (gcloud) for that runtime. Your code communicates directly with the Earth Engine servers via an embedded Python library (google-auth), without looking at or needing your terminal's gcloud installation.
+
+	* OAuth 2.0 Client IDs (gcloud) and Service Accounts (.json credential file) are two distinct authentication 
+	  mechanisms 
+
+
+
 
 	Name
 		bmarron18-ag

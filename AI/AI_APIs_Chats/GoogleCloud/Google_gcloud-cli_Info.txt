@@ -1,0 +1,242 @@
+
+#############
+Google Acct 
+(General acct for @gmail etc)
+###################
+
+    * Set 2-Step Verification with "Authenticator"
+    * email acct is keyed to gcloud cli
+
+
+
+###################
+Commands
+google-cloud-cli (gcloud)
+########################
+
+⚙️ 1. Environment & Configuration Management
+• gcloud init
+    Initializes or reconfigures the CLI. This kicks off the interactive process to log in and select your default project.
+
+• gcloud config list
+    Displays your currently active configuration settings (shows your current project ID and active account email).
+
+• gcloud config set project [PROJECT_ID]
+    Instantly switches your active terminal context to a different Google Cloud project.
+
+• gcloud config set compute/region us-central1
+    Sets your preferred default geographic region for provisioning cloud resources.
+
+• gcloud info
+    Diagnostics tool that prints out detailed information about your local installation, paths, and network connectivity.
+
+
+🔑 2. Identity, Authentication & Access (IAM)
+• gcloud auth application-default login
+    Generates local Application Default Credentials (ADC) so your local Python scripts can authenticate without hardcoded JSON keys.
+
+• gcloud auth list
+    Lists all credentialed accounts on your local machine and highlights the one currently active.
+
+• gcloud iam service-accounts list
+    Displays all Service Accounts (robot identities) created inside your active project.
+
+• gcloud iam service-accounts keys create ~/keys/key.json --iam-account=[SA-EMAIL]
+    Generates and downloads a new private .json key file for a specific service account.
+
+• gcloud projects get-iam-policy [PROJECT_ID]
+    Returns a YAML table showing exactly who has access to your project and what roles they hold.
+
+
+📦 3. Cloud Storage Management (gcloud storage)
+• gcloud storage buckets create gs://[BUCKET_NAME] --location=[REGION]
+    Creates a brand new, globally unique storage bucket in a specific region.
+
+• gcloud storage buckets list
+    Lists every storage bucket currently available inside your active project.
+
+• gcloud storage cp [LOCAL_FILE] gs://[BUCKET_NAME]/
+    Uploads a file from your local machine directly into a cloud bucket.
+
+• gcloud storage cp -r gs://[BUCKET_NAME]/[FOLDER] [LOCAL_PATH]
+    Recursively downloads an entire folder or dataset from a bucket to your local machine.
+
+• gcloud storage rm -r gs://[BUCKET_NAME]/[FOLDER]
+    Deletes a directory and all of its contents out of a bucket permanently.
+
+
+🗄️ 4. Project & Component Administration
+• gcloud projects list
+    Lists all Google Cloud projects that your logged-in Google account has permission to view.
+
+• gcloud services list --available
+    Displays every single API available on the Google Cloud platform that you can toggle on.
+
+• gcloud services enable ://googleapis.com
+    Programmatically activates a specific API (like Earth Engine) for your project.
+
+• gcloud logging read "resource.type=gce_instance" --limit=10
+    Fetches and prints the last 10 logs matching a specific filter directly into your terminal.
+
+• gcloud components update
+    Upgrades your local installation of the gcloud CLI and all its bundled tools to the latest version.
+
+💡 Quick Terminal Tip
+You can append the --help flag to any gcloud command to instantly pull up its official documentation, required syntax, and usage examples right in your terminal. For example:
+<<< bash
+gcloud storage cp --help
+>>>
+
+
+
+
+To delete your Google Cloud project:
+<<< bash
+PROJECT_ID=$(gcloud config get-value core/project)
+echo $PROJECT_ID
+gcloud projects delete $PROJECT_ID
+>>>
+
+
+$ gcloud auth login
+     # to obtain new credentials.
+     # follow prompts to obtain new credentials (needed every time)
+
+$ gcloud auth list
+    #Cloud Shell needs permission to use your credentials for the gcloud CLI command.
+    #Click Authorize to grant permission to this and future calls. 
+    # NB --- need to activate Free Trial to authenticate account
+    
+    #ACTIVE: *
+    #ACCOUNT: marron.bruce.mx@gmail.com
+
+
+$ gcloud config set account 'ACCOUNT'     # <== retype w/ single quotes ''
+
+$ gcloud config list project
+ 
+
+
+$ gcloud services enable translate.googleapis.com
+
+
+
+
+ ############################
+ google-cloud-cli (gcloud) vs
+ Service Account (.json credential file)
+ #############################
+When you run a Python script using a .json credential file to call earthengine-api, you are entirely bypassing the google-cloud-cli (gcloud) for that runtime. Your code communicates directly with the Earth Engine servers via an embedded Python library (google-auth), without looking at or needing your terminal's gcloud installation.
+The programmatic link between your code, the JSON file, and the CLI exists through the underlying Google Identity and Access Management (IAM) framework.
+
+🔑 1. The Shared Link: The Service Account Identity
+The .json file you are using is a Service Account Key.
+• That Service Account belongs to a Google Cloud Project.
+• If you install and use the google-cloud-cli, you are acting as a Human User (an email account).
+• Your human account and your Python script's service account are two separate "actors" knocking on the same door (the GCP Project).
+
+
+💡 The Takeaway
+Your script doesn't depend on the CLI because your .json file contains its own built-in authentication tokens. The CLI is just a tool you can choose to log into with that same file if you ever need to perform manual system administration tasks (like inspecting Cloud Storage buckets or creating sub-folders) through your terminal
+
+me:
+so I can leave my .json file Service Account credentials in place in Python scripts and just use gcloud cli for general tasks in Google Cloud?
+
+Google:
+Yes, absolutely. You can leave your Python scripts exactly as they are right now—using the hardcoded .json Service Account file—and use the gcloud CLI independently for your manual and administrative tasks.
+The two authentication methods do not conflict with each other. Here is why this works and how they coexist:
+
+🔄 The Separation of Duties
+Google Cloud is built to handle multiple identities simultaneously. On your same computer:
+• Your Python Script: Acts as a Service Account (an automated robot identity). Every time you run the script, it reads the .json file, talks directly to the Earth Engine API, and performs its code tasks. It doesn't know or care if the CLI is installed.
+• Your gcloud CLI Terminal: Acts as You (your human email account). When you open your terminal and run a command (like gcloud storage buckets list), it uses the credentials you gave it via gcloud init or gcloud auth login. It completely ignores your Python script's .json file.
+
+
+
+#############
+Install 
+gcloud CLI
+##############
+
+Credentialing gcloud CLI as a Human Email   <=== USE THIS!!
+-------------------------------
+Here is the streamlined, step-by-step checklist to get the gcloud CLI fully installed, authenticated, and targeted to your project. 
+• Full Administrative Freedom: As a human user (especially if you are the project Owner or Editor), you can seamlessly jump between completely different tasks—like looking at billing, modifying permissions, or spinning up hardware—without changing identities.
+• Enhanced Security (No Keys to Leak): You do not generate or store a dangerous .json file on your hard drive. Your session relies on OAuth tokens managed safely by your operating system, protected by your Google Account’s passwords and phone-based MFA.
+• Clear Accountability: Every single command you execute is stamped directly with your specific email address in the Google Cloud audit logs.
+
+
+
+Install
+----------
+https://docs.cloud.google.com/sdk/docs/install-sdk
+    google-cloud-cli-linux-x86_64.tar.gz
+
+tar -xf google-cloud-cli-linux-x86_64.tar.gz
+
+
+To install or remove components at your current Google Cloud CLI version [591.0.0], run:
+  $ gcloud components install COMPONENT_ID
+  $ gcloud components remove COMPONENT_ID
+
+To update your Google Cloud CLI installation to the latest version [591.0.0], run:
+  $ gcloud components update
+
+Enter a path to an rc file to update, or leave blank to use 
+[/home/bruce-vdb/.bashrc]:  
+Backing up [/home/bruce-vdb/.bashrc] to [/home/bruce-vdb/.bashrc.backup].
+[/home/bruce-vdb/.bashrc] has been updated.
+
+
+
+Step 2: Run the Interactive Setup (gcloud init)
+Once installed, open a fresh terminal window and run the initialization command:
+
+<<<bash
+gcloud init
+>>>
+
+This is an interactive prompt that handles your primary human credentialing. It will perform three actions:
+1. Open a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
+2. Pick a Cloud Project: Back in your terminal window, it will list all available projects. Enter the number corresponding to your Earth Engine Google Cloud project.
+3. Configure default zone (Optional): It may ask you to pick a default compute zone (e.g., us-central1-a). You can safely skip this or select a default close to you.
+
+
+Step 3: Verify Your Active Credentials
+To confirm exactly who the CLI thinks you are and which project it is looking at, run:
+
+<<<bash
+gcloud config list
+>>>
+
+This will print out your active user account identity and the active project = your-project-id on your screen. You are now ready to run your administration and bucket management commands safely.
+Now that your environment is linked, would you like to execute the command to create your first Cloud Storage bucket, or would you like to pull your project's current IAM user list to test the terminal connection?
+
+
+
+
+
+
+
+
+Link Your Existing Service Account (Optional)   <== DO NOT USE!!
+----------------------------------------------
+
+Since you are using a .json Service Account file for your Earth Engine Python scripts, you can explicitly credential your terminal to act as that service account robot instead of your human email.
+To override your human login and authenticate using your file, run:
+<<<bash
+gcloud auth activate-service-account --key-file="/path/to/your/credentials.json"
+>>>
+
+Method 1: Credentialing as a Service Account
+• Crippled gcloud Functionality: Many gcloud commands—especially high-level administrative tasks like creating new projects, modifying billing accounts, or managing organization structures—explicitly block service accounts from running them.
+• No Audit Trail for Individuals: If three different developers use the exact same service account key to make changes via their terminals, the Cloud Logging logs will only show that the robot did it. You lose visibility into which human operator initiated the action.
+
+
+
+
+
+
+
+
+

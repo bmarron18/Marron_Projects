@@ -12,7 +12,18 @@ pip install "ipykernel>=6.29.3,<7"
 Both Spyder and JupyterLab work fine with ipykernel 6.29.x, so you lose nothing.
 
 
- use `jupytext` and Use venv (ai-apis) to open .ipynb
+open .ipynb
+---------------
+
+ <<< bash
+     cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+     jupyter lab ~/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/Untitled.ipynb
+     
+     CTRL-C
+ >>>
+
+
+ use `jupytext` to create .ipynb and Use venv (ai-apis) to open .ipynb
 ----------------------------------------------------
 
  <<< bash
@@ -57,11 +68,21 @@ In Spyder:
 ```python
 Map.to_html("map.html")
 ```
+
+Move your your_map.html file into the exact same folder where your active .ipynb notebook file is saved.
+Add subfolder, Maps
+
 Then in a Jup notebook cell:
-```python
+<<< python
 from IPython.display import IFrame
-IFrame("/home/bruce-vdb/map.html", width="100%", height=600)
-```
+
+# Replace with the path or filename of your HTML map
+IFrame(src="/map.html", width="100%", height=500)
+
+
+from IPython.display import IFrame
+IFrame("/home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/map.html", width="100%", height=600)
+>>>
 You see the layers and can pan and zoom, but the inspector, drawing tools, and anything linked back to Python won't work.
 
 
