@@ -1,0 +1,256 @@
+
+###################
+Commands
+google-cloud-cli (gcloud)
+########################
+https://docs.cloud.google.com/sdk/auth_success
+https://docs.cloud.google.com/sdk/gcloud
+https://docs.cloud.google.com/sdk/docs/initialize
+
+
+⚙️ 1. Environment & Configuration Management
+----------------------------------------------
+• gcloud init
+    Initializes or reconfigures the CLI. This kicks off the interactive process to log in and select your default project.
+
+gcloud init --skip-diagnostics
+
+• gcloud config list
+    Displays your currently active configuration settings (shows your current project ID and active account email).
+
+$ gcloud config list project
+
+• gcloud config set project [PROJECT_ID]
+    Instantly switches your active terminal context to a different Google Cloud project.
+
+$ gcloud config set account 'ACCOUNT'     # <== retype w/ single quotes ''
+
+• gcloud config set compute/region us-central1
+    Sets your preferred default geographic region for provisioning cloud resources.
+
+• gcloud info
+    Diagnostics tool that prints out detailed information about your local installation, paths, and network connectivity.
+
+
+🔑 2. Identity, Authentication & Access (IAM)
+-------------------------------------------------
+$ gcloud auth login
+     # to obtain new credentials.
+     # follow prompts to obtain new credentials
+
+• gcloud auth list
+    Lists all credentialed accounts on your local machine and highlights the one currently active.
+
+• gcloud iam service-accounts list
+    Displays all Service Accounts (robot identities) created inside your active project.
+
+• gcloud projects get-iam-policy [PROJECT_ID]
+    Returns a YAML table showing exactly who has access to your project and what roles they hold.
+
+• gcloud iam service-accounts keys create ~/keys/key.json --iam-account=[SA-EMAIL]
+    Generates and downloads a new private .json key file for a specific service account.
+
+• gcloud auth application-default login     <== DO NOT USE!!!
+    Generates local Application Default Credentials (ADC) so your local Python scripts can authenticate without hardcoded JSON keys.
+
+
+📦 3. Cloud Storage Management (gcloud storage, 5 GiB free)
+--------------------------------------------------------
+**Things to keep in mind**
+    - **Maps vs. data:** interactive maps (geemap/folium) can't be sent to a bucket. Export rasters with `Export.image.toCloudStorage` and vector data with `Export.table.toCloudStorage`. You can render maps from those files afterward.
+
+    - **Service accounts:** if you run scripts non-interactively, the service account must be registered for Earth Engine, have `earthengine.writer`, and have bucket access
+
+    - **Verify:** `gcloud storage ls gs://ag-remote-bucket01/exports/` shows whether the files landed.
+
+Setup
+--------
+**1. Enable the APIs**
+$ gcloud services enable earthengine.googleapis.com storage.googleapis.com --project=agremotesensing
+
+**2. Grant roles on the project**
+Owners already have these. For a Service Account, grant:
+
+$ gcloud projects add-iam-policy-binding agremotesensing \
+  --member="user:marron.bruce.mx@gmail.com" \
+  --role="roles/earthengine.writer"
+
+$ gcloud projects add-iam-policy-binding agremotesensing \
+  --member="user:marron.bruce.mx@gmail.com" \
+  --role="roles/serviceusage.serviceUsageConsumer"
+
+**3. Grant write access on the bucket (the usual culprit for failed exports)**
+Exports write to the bucket as whoever is authenticated, so that identity needs object permissions on `ag-remote-bucket01`:
+
+$ gcloud storage buckets add-iam-policy-binding gs://ag-remote-bucket01 \
+  --member="user:marron.bruce.mx@gmail.com" \
+  --role="roles/storage.objectAdmin"
+
+$ gcloud storage buckets add-iam-policy-binding gs://ag-remote-bucket01 \
+  --member="serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com" \
+  --role="roles/storage.objectAdmin"
+
+
+checks
+-------
+$ gcloud projects get-iam-policy agremotesensing \
+  --flatten="bindings[].members" \
+  --filter="bindings.members:marron.bruce.mx@gmail.com" \
+  --format="table(bindings.role)"
+
+ROLE
+roles/earthengine.admin
+roles/owner
+roles/serviceusage.serviceUsageConsumer
+roles/storage.admin
+
+
+$ gcloud projects get-iam-policy agremotesensing \
+  --flatten="bindings[].members" \
+  --filter="bindings.members:bmarron18-ag@agremotesensing.iam.gserviceaccount.com" \
+  --format="table(bindings.role)"
+
+ROLE
+roles/earthengine.admin
+roles/serviceusage.serviceUsageConsumer
+
+
+
+$ $ gcloud storage buckets get-iam-policy gs://ag-remote-bucket01
+bindings:
+- members:
+  - projectViewer:agremotesensing
+  role: roles/storage.legacyBucketReader
+- members:
+  - projectViewer:agremotesensing
+  role: roles/storage.legacyObjectReader
+- members:
+  - serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+  role: roles/storage.objectAdmin
+etag: CAY=
+
+
+$ gcloud storage buckets get-iam-policy gs://ag-remote-bucket01 | grep -B3 -A3 bmarron18-ag
+  - projectViewer:agremotesensing
+  role: roles/storage.legacyObjectReader
+- members:
+  - serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+  role: roles/storage.objectAdmin
+etag: CAY=
+
+
+
+
+test
+-------
+$ gcloud storage ls gs://ag-remote-bucket01 echo test > t.txt && 
+gcloud storage cp t.txt gs://ag-remote-bucket01/t.txt
+
+Copying file://t.txt to gs://ag-remote-bucket01/t.txt
+  Completed files 1/1 | 5.0B/5.0B 
+
+
+$ gcloud storage rm gs://ag-remote-bucket01/t.txt
+Removing objects:
+Removing gs://ag-remote-bucket01/t.txt...                                           
+  Completed 1/1       
+
+
+**4. Test from Python**
+
+<<< python
+import ee
+ee.Initialize(project='agremotesensing')
+
+region = ee.Geometry.Rectangle([-99.3, 19.3, -99.0, 19.5])
+img = (ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+         .filterBounds(region)
+         .filterDate('2026-09-01', '2026-10-15')
+         .median()
+         .select(['B4', 'B3', 'B2']))
+
+task = ee.batch.Export.image.toCloudStorage(
+    image=img,
+    description='test_export',
+    bucket='ag-remote-bucket01',
+    fileNamePrefix='exports/test_rgb',
+    region=region,
+    scale=10,
+    maxPixels=1e10,
+    fileFormat='GeoTIFF',
+)
+task.start()
+print(task.status())    #`COMPLETED` or `FAILED` w/ an `error_message`
+>>>
+
+
+• gcloud storage buckets create gs://[BUCKET_NAME] --location=[REGION]
+    Creates a brand new, globally unique storage bucket in a specific region.
+
+• gcloud storage buckets list
+    Lists every storage bucket currently available inside your active project.
+
+• gcloud storage cp [LOCAL_FILE] gs://[BUCKET_NAME]/
+    Uploads a file from your local machine directly into a cloud bucket.
+
+• gcloud storage cp -r gs://[BUCKET_NAME]/[FOLDER] [LOCAL_PATH]
+    Recursively downloads an entire folder or dataset from a bucket to your local machine.
+
+• gcloud storage rm -r gs://[BUCKET_NAME]/[FOLDER]
+    Deletes a directory and all of its contents out of a bucket permanently.
+
+$ gcloud storage ls gs://ag-remote-bucket01/exports/` 
+    shows whether the files landed.
+
+
+🗄️ 4. Project & Component Administration
+• gcloud projects list
+    Lists all Google Cloud projects that your logged-in Google account has permission to view.
+
+
+$ gcloud projects describe agremotesensing
+    createTime: '2026-10-30T18:59:37.210Z'
+    lifecycleState: ACTIVE
+    name: ag-remote-01
+    projectId: agremotesensing
+    projectNumber: '1042313423310'
+
+
+• gcloud services list --available
+    Displays every single API available on the Google Cloud platform that you can toggle on.
+
+• gcloud services enable ://googleapis.com
+    Programmatically activates a specific API (like Earth Engine) for your project.
+
+$ gcloud services enable translate.googleapis.com
+
+$ gcloud services enable compute.googleapis.com --project=agremotesensing
+
+$ gcloud compute project-info describe --project=agremotesensing
+
+• gcloud logging read "resource.type=gce_instance" --limit=10
+    Fetches and prints the last 10 logs matching a specific filter directly into your terminal.
+
+To delete your Google Cloud project:
+<<< bash
+PROJECT_ID=$(gcloud config get-value core/project)
+echo $PROJECT_ID
+gcloud projects delete $PROJECT_ID
+>>>
+
+• gcloud components update
+    Upgrades your local installation of the gcloud CLI and all its bundled tools to the latest version.
+
+• gcloud components install COMPONENT_ID
+• gcloud components remove COMPONENT_ID
+
+To revert your CLI to the previously installed version, you may run:
+  $ gcloud components update --version 591.0.0
+
+
+💡 Flags
+ --help 
+<<< bash
+gcloud storage cp --help
+>>>
+

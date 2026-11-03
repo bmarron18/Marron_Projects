@@ -1,14 +1,4 @@
 
-#############
-Google Acct 
-(General acct for @gmail etc)
-###################
-
-    * Set 2-Step Verification with "Authenticator"
-
-
-
-
 
 ###########
 Google Python SDKs
@@ -29,7 +19,7 @@ Google offers hundreds of specialized Python packages, with one for almost every
 
 
 
-=====   Google Cloudshell    ============================
+=====   Google Cloud    ============================
 
 
   # Google Cloud Services Account

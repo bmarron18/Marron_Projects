@@ -6,10 +6,11 @@ Created on Sat Oct 31 14:55:18 2026
 @author: bruce-vdb
 
 ------------
-TestRuns_Tutorials.py
+Tutorial_01.py
 -------------
 
-    * test of various snippets for GEE use
+    * Google Earth Engine Python API: A Beginner's Tutorial
+    https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
     
     
 ---------------------------------------------------------------------------
@@ -50,16 +51,6 @@ NB
     * The Earth Engine Python API is stateless: ee.Initialize() just stores your credentials and project in 
       memory and sends independent HTTPS requests to the server whenever you call something like .getInfo() or 
       start an export. There’s no persistent connection, session, or handle to release.
-
-
-
-    
-=========
-SOURCE
-=========
-Google Earth Engine Python API: A Beginner's Tutorial
-https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
-
 
 """
 # %%
