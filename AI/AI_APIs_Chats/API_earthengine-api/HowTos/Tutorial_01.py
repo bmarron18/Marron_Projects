@@ -24,7 +24,6 @@ QUICK START
     
     python3 -m pip install --upgrade pip &&
     pip install --upgrade pip earthengine-api geemap jupyterlab ipyleaflet jupytext "ipykernel>=6.29.3,<7" google-cloud-storage && 
-    earthengine authenticate --project agremotesensing &&
     pip check &&
     pip list | grep -i -E "ipykernel|spyder-kernels|jupyterlab"
     
@@ -39,6 +38,7 @@ spyder-kernels            3.1.5
 >>>
 
   2.  Permanently set the environment variable GOOGLE_APPLICATION_CREDENTIALS in ~/.bashrc and check
+      The env variable is keyed to a .json file used for authetication with Service Accounts
   
 <<< bash
     echo 'export GOOGLE_APPLICATION_CREDENTIALS="/home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/Credentials/agremotesensing-a0e16021eb39.json"' >> ~/.bashrc &&
@@ -66,11 +66,16 @@ from google.cloud import storage
 # CREDENTIALS
 #==============
 
-    # Fetch the credentials file details from your environment variable, "GOOGLE_APPLICATION_CREDENTIALS"
+    # Path to Service Account credentials .json file
 gac_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
 
-    # open .json file
-gac= json.load(open(gac_path))
+    # open the Service Account credentials .json file
+with open(gac_path) as f:
+    gac = json.load(f)
+    
+    if not gac_path:
+        raise RuntimeError("GOOGLE_APPLICATION_CREDENTIALS is not set")
+
 
     # extract credentials for login
 email = gac["client_email"]
@@ -84,8 +89,19 @@ credentials = ee.ServiceAccountCredentials(
     # GEE API login 
 ee.Initialize(credentials, project = project_id)
 
-    # check 
-print("Earth Engine initialized successfully using Application Default Credentials!")
+#======================
+#GEE  Functionality Checks
+#=======================
+    # make small, server-side calls to check GEE functionaslity
+print(ee.Number(1).add(1).getInfo())  # should print 2
+
+img = ee.Image("USGS/SRTMGL1_003")
+print(img.bandNames().getInfo())  # should print ['elevation']
+
+
+
+
+
 
 # %%
 
