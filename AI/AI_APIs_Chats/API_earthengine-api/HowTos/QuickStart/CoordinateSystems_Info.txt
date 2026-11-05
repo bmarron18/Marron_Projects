@@ -1,0 +1,43 @@
+Title:          GPS Coordinate Systems
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
+
+###########
+Coordinate Systems
+###########
+
+
+
+Coordinate Systems
+---------------------
+`EPSG:4326` is the code for **WGS 84**, the standard geographic coordinate system based on latitude and longitude in degrees. It's what GPS uses and what most web maps use for raw coordinates.
+
+- **EPSG** is a registry of coordinate reference systems, and `4326` is the entry for WGS 84.
+- Coordinates are in **decimal degrees**, with longitude (x) first in Earth Engine, e.g. `[-122.082, 37.42]`.
+- It is *not* projected, so a "pixel" is a slice of degrees, not a fixed distance on the ground.
+
+**What this means in your export:**
+
+```python
+ee.batch.Export.image.toDrive(
+    image=image,
+    crs="EPSG:4326",
+    scale=30,          # meters, but see below
+    ...
+)
+```
+
+When you use `crs="EPSG:4326"`, the `scale` is converted to degrees internally (about 30 m ≈ 0.00027°). Pixels are not square on the ground: they get narrower east-west as you move away from the equator. If you need equal-area or equal-distance measurements, use a projected CRS instead.
+
+**Common alternatives:**
+
+- `EPSG:3857`: Web Mercator (Google Maps, tiles). Distorts area heavily at high latitudes.
+- `EPSG:326xx` / `EPSG:327xx`: UTM zones (north/south), in meters. Good for local analysis. 
+-  For Mexico City, `EPSG:32614` (UTM zone 14N).
+- `EPSG:6372`: Mexico's national CRS (ITRF2008 / LCC), common for Mexican datasets.
+
+**Tip:** if you leave `crs` out, Earth Engine uses the image's native projection, which is often the best choice unless you need a specific one. You can check it with `image.projection().getInfo()`.
+
+

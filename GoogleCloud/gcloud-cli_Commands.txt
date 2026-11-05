@@ -1,3 +1,9 @@
+Title:          gcloud CLI Commands
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
+
 
 ###################
 Commands
@@ -32,11 +38,20 @@ $ gcloud config set account 'ACCOUNT'     # <== retype w/ single quotes ''
     Diagnostics tool that prints out detailed information about your local installation, paths, and network connectivity.
 
 
-🔑 2. Identity, Authentication & Access (IAM)
+🔑 2a. Identity, Authentication & Access (IAM) for gcloud CLI    <== USE THIS!!!
+    Option 1: Act as You
+        * uses human email account (...@gmail.com) as basis for credentials
+        * uses Application Default Credentials (ADC) and OAuth tokens for authorization 
+        * protected by Google Account’s passwords and phone-based MFA (on the ...@gmail.com account)
+        * Full administrative freedom
+        * Every command logged into Google Cloud audit logs and time-stamped with human email address
 -------------------------------------------------
+
+
+$ gcloud init
+
 $ gcloud auth login
      # to obtain new credentials.
-     # follow prompts to obtain new credentials
 
 • gcloud auth list
     Lists all credentialed accounts on your local machine and highlights the one currently active.
@@ -52,6 +67,24 @@ $ gcloud auth login
 
 • gcloud auth application-default login     <== DO NOT USE!!!
     Generates local Application Default Credentials (ADC) so your local Python scripts can authenticate without hardcoded JSON keys.
+
+
+
+🔑 2b. Identity, Authentication & Access (IAM) in gcloud CLI Terminal
+    Option 2: Acts as an automated robot identity
+        * uses a Service Account Key (a hard-coded .json file) that contains robot identity email and the project ID
+        * Service Accounts allow scripts to authenticate automatically without manual intervention
+        * Google Cloud IAM roles and permissions are bound directly to the Service Account. This limits GEE access and 
+          improves overall security (compared to using a personal account with broad access)
+        * Service Accounts integrate natively with Google Cloud infrastructure
+----------------------------------------------------------------------------
+
+$ gcloud auth activate-service-account --key-file=/path/to/key.json
+
+    # USE THIS
+$ gcloud services enable compute.googleapis.com --project=agremotesensing
+
+
 
 
 📦 3. Cloud Storage Management (gcloud storage, 5 GiB free)
@@ -202,6 +235,7 @@ print(task.status())    #`COMPLETED` or `FAILED` w/ an `error_message`
 $ gcloud storage ls gs://ag-remote-bucket01/exports/` 
     shows whether the files landed.
 
+$ gcloud storage cp "gs://ag-remote-bucket01/MountainView_NDVI_2022*.tif" /home/bruce-vdb/Desktop/
 
 🗄️ 4. Project & Component Administration
 • gcloud projects list

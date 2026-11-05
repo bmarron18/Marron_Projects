@@ -1,0 +1,225 @@
+Title:          Installing google-cloud-sdk
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
+
+
+
+
+#############
+Install 
+google-cloud-sdk
+##############
+
+
+Download .tar.gz file
+----------
+https://docs.cloud.google.com/sdk/docs/install-sdk
+    download ==> google-cloud-cli-linux-x86_64.tar.gz
+
+    # unzip in Downloads
+tar -xf google-cloud-cli-linux-x86_64.tar.gz
+
+    #run installer
+./google-cloud-sdk/install.sh
+
+
+[/home/bruce-vdb/.bashrc] has been updated.
+Backing up [/home/bruce-vdb/.bashrc] to [/home/bruce-vdb/.bashrc.backup].
+
+
+
+checks
+------
+$ subl ~/.bashrc
+
+
+$ gcloud --version
+Google Cloud SDK 592.0.0
+bq 2.1.41
+bundled-python3-unix 3.14.9
+core 2026.10.30
+gcloud-crc32c 1.0.0
+gsutil 5.38
+
+
+
+Credentials and Setup
+-------------------------
+Note that authetication and credentials are through the (human) Google Workspace aaccount because
+    • Full Administrative Freedom: As a human user (especially if you are the project Owner or Editor), you can seamlessly jump between completely different tasks—like looking at billing, modifying permissions, or spinning up hardware—without changing identities.
+
+    • Enhanced Security (No Keys to Leak): You do not generate or store a dangerous .json file on your hard drive. Your session relies on OAuth tokens managed safely by your operating system, protected by your Google Account’s passwords and phone-based MFA.
+
+    • Clear Accountability: Every single command you execute is stamped directly with your specific email address in the Google Cloud audit logs.
+
+
+
+
+Interactive Setup (gcloud init)
+--------------------------------
+Once installed, open a fresh terminal window and run the initialization command:
+
+<<<bash
+gcloud init
+>>>
+
+This is an interactive prompt that handles your primary human credentialing. It will perform three actions:
+    1. Open a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
+
+    2. Pick a Cloud Project: Back in your terminal window, it will list all available projects. Enter the number corresponding to your Earth Engine Google Cloud project.
+
+    3. Configure default zone (Optional): It may ask you to pick a default compute zone (e.g., us-central1-a). You can safely skip this or select a default close to you.
+
+
+
+**One related tip**
+Google now recommends `gcloud storage` over `gsutil` for new work. It's faster and ships with gcloud itself, so it doesn't need a `.boto` file. The commands map closely:
+
+```
+gsutil ls gs://my-bucket          ->  gcloud storage ls gs://my-bucket
+gsutil cp file gs://my-bucket/    ->  gcloud storage cp file gs://my-bucket/
+gsutil rsync -r dir gs://bucket   ->  gcloud storage rsync -r dir gs://bucket
+```
+
+If you only use `gcloud storage`, you can ignore the `.boto` file entirely. And if you ever see odd credential errors from gsutil, that file (or a leftover `GOOGLE_APPLICATION_CREDENTIALS` variable) is the first place to look.
+
+
+
+Output
+-------
+The Google Cloud CLI is configured and ready to use!
+
+
+
+
+move to new directory (from Downloads)
+---------------------------------------
+
+Yes, the install is tied to where it was unpacked (`~/Downloads/google-cloud-sdk`), and your PATH entry points there. It works, but if you clean out Downloads, gcloud breaks. The fix is to move it somewhere permanent. Your login and project settings live in `~/.config/gcloud`, so you won't need to re-authenticate.
+
+    **1. Move the SDK folder**
+$ mv ~/Downloads/google-cloud-sdk ~/google-cloud-sdk
+
+    **2. Re-run the installer from the new location**
+$ ~/google-cloud-sdk/install.sh
+
+Answer **yes** to updating your PATH and enabling shell completion, and accept the suggested rc file (`~/.bashrc` on Ubuntu).
+
+    **3. Remove the old PATH lines**
+The installer from the Downloads folder already added a block to `~/.bashrc`, and it still points to the old path. Find it:
+
+$ grep -n "google-cloud-sdk" ~/.bashrc
+
+
+You'll see a block like this, with paths containing `Downloads`:
+    # The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/bruce-vdb/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '...'; fi
+
+    # The next line enables shell command completion for gcloud.
+if [ -f '/home/bruce-vdb/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '...'; fi
+
+
+Open `~/.bashrc` in an editor (`subl ~/.bashrc`) and delete the old block, keeping only the new one that points to `/home/bruce-vdb/google-cloud-sdk/`.
+
+    **4. Reload and verify**
+$ source ~/.bashrc
+hash -r
+which -a gcloud gsutil
+gcloud info | grep "Installation Root"
+
+    /home/bruce-vdb/google-cloud-sdk/bin/gcloud
+    /home/bruce-vdb/google-cloud-sdk/bin/gsutil
+    Installation Root: [/home/bruce-vdb/google-cloud-sdk]
+
+`Installation Root` should now show `/home/bruce-vdb/google-cloud-sdk`, and `which` should list only that location (plus `/usr/bin/gsutil` if you haven't removed the old apt copy yet).
+
+
+
+Verify Your Active Credentials
+-------------------------------
+To confirm exactly who the CLI thinks you are and which project it is looking at, run:
+
+<<<bash
+gcloud config list
+>>>
+
+[core]
+account = marron.bruce.mx@gmail.com
+disable_usage_reporting = False
+project = agremotesensing
+
+Your active configuration is: [default]
+
+
+This will print out your active user account identity and the active project = your-project-id on your screen. You are now ready to run your administration and bucket management commands safely.
+
+
+Your active configuration is named **default**, and it holds three settings:
+
+- **account:** `marron.bruce.mx@gmail.com`, the identity gcloud uses for every command
+- **project:** `agremotesensing`, so you don't need `--project=agremotesensing` on each command
+- **disable_usage_reporting:** `False`, meaning gcloud sends anonymous usage statistics to Google. Set it to `True` if you'd rather not: `gcloud config set disable_usage_reporting true`
+
+The configuration is stored at `~/.config/gcloud/configurations/config_default`, which is outside the SDK folder. That's why moving the SDK won't affect it.
+
+Since you work on one project, `default` is all you need. If you ever juggle several projects or accounts, you can create named configurations and switch between them:
+
+```
+gcloud config configurations create other-project
+gcloud config configurations list
+gcloud config configurations activate default
+```
+
+A couple of useful related commands:
+
+```
+gcloud config get-value project
+gcloud config set project NEW_PROJECT_ID
+```
+
+One thing worth knowing: `gcloud config` only affects the gcloud tools. Your Python Earth Engine scripts take their project from `ee.Initialize(project='agremotesensing')`, so set that explicitly in your code.
+
+
+
+
+Display name vs Project ID
+--------------------------
+Partly. The project **ID** can never be changed, but the **display name** can be changed freely without affecting anything. You keep using the project ID, agremotesensing. The display name is only a label in the console, and gcloud never uses it to identify a project.
+    - **Project ID** (`agremotesensing`): permanent. It's what gcloud, Earth Engine (`ee.Initialize(project=...)`), IAM, and API calls use.
+    - **Project number**: also permanent, and used internally by Google.
+    - **Display name**: a cosmetic label shown in the console. Changing it affects no authentication, IAM bindings, APIs, or your bucket.
+
+**Change the display name**
+
+```
+gcloud projects update agremotesensing --name="ag-remote-01"
+```
+
+
+**If you really need a different ID**
+The only route is to create a new project and migrate:
+
+    - Register the new project for Earth Engine and enable the APIs again.
+    - Re-grant IAM roles and relink billing.
+    - Copy your data to a bucket in the new project. Bucket names are global and can't be renamed, so `gcloud storage cp -r gs://ag-remote-bucket01 gs://new-bucket` or `gcloud storage rsync` would be needed.
+    - Update `ee.Initialize(project=...)` and your gcloud config in every script.
+
+Since everything is working now, I'd just change the display name if the label bothers you, and keep the ID as is.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

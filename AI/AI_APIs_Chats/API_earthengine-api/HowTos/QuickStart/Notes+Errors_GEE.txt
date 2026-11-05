@@ -1,32 +1,16 @@
-
+Title:          Script Notes and Errors
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
 
 ###########
-Notes
+Notes and Errors
 ###########
 
-authentication
------------------
-You don’t need "earthengine authenticate" at all when you’re using a service account.
-
-No, `earthengine authenticate` is not a gcloud command. It's part of the `earthengine-api` Python package, which installs the `earthengine` command-line tool.
-
-The reason gcloud appeared in your output is that, depending on the options, `earthengine authenticate` can use gcloud behind the scenes. In your case it printed "Fetching credentials using gcloud" because gcloud is installed, so the Earth Engine CLI called it to obtain Application Default Credentials. That's why the prompt talked about `~/.config/gcloud/application_default_credentials.json` and the `GOOGLE_APPLICATION_CREDENTIALS` variable, which are gcloud/Google auth concepts.
-
-So the relationship is:
-
-- **`earthengine ...`**: Earth Engine's own CLI, installed via pip with `earthengine-api`.
-- **`gcloud ...`**: Google Cloud's CLI, installed separately (apt, snap, or the Google installer).
-
-`earthengine authenticate` just borrows gcloud for the login step when it's available. If you want to skip that, you can add `--auth_mode=notebook` (or `localhost`) to use the browser-based flow instead, but again, none of this is needed for service account authentication.
 
 
-That command is only for the OAuth user flow. It would generate a separate set of user credentials at ~/.config/gcloud/application_default_credentials.json, which you don’t want. Even if you said Y, the warning is telling you that your GOOGLE_APPLICATION_CREDENTIALS variable would take priority over them anyway, so they’d just sit there unused.
-
-earthengine authenticate is a one-time setup that stores OAuth credentials on your machine (in ~/.config/earthengine/credentials on Linux/macOS, or the equivalent user profile folder on Windows). Those credentials live in your user directory, not in the venv, so once you’ve authenticated, they’re available to any Python environment on that machine.
-
-Why the venv still matters: the earthengine command-line tool is installed with the earthengine-api package. So you need to run the command from an environment where that package is installed. If you only installed earthengine-api in your venv, activate the venv first, then run the command.
-
-Export Data
+Exporting Data
 -------------
 Not directly. Export tasks (`toDrive`, `toCloudStorage`, `toAsset`) run on Google's servers and can only write to Google destinations. They can't write to your local disk. You have three ways to get the data onto your machine.
 Since you use a service account, I'd start with option 1 for smaller areas and option 3 for large ones.
@@ -220,7 +204,6 @@ gcloud storage buckets add-iam-policy-binding gs://ag-remote-bucket01 \
 
 
 Export Errors
-	  https://console.cloud.google.com/earth-engine/tasks?project=agremotesensing
 -----------
 
 Failed Landsat8_NDVI_Export     3RHL4GMFNWOM24ZFESL7SQOG

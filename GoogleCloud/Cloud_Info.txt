@@ -1,0 +1,216 @@
+Title:          Google Cloud Info
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
+
+
+############################
+Google Cloud (Services)
+vs
+Google Cloud Platform (GCP)
+#########################
+Brand-name for all Google's cloud-based offerings vs access point for some of Google's cloud-based services
+
+Google Cloud (Service)
+----------------------
+https://cloud.google.com/
+
+The overarching brand name. Covers services in Google Cloud Platform (GCP) as well as Google’s other cloud-based business solutions, such as Google Workspace (Gmail, Docs, Drive) and identity/maps APIs.
+
+
+Google Cloud Platform (GCP)
+----------------------
+The suite of over 100 cloud services (like virtual machines, databases, AI tools, and APIs such as GEE, Compute Engine, BigQuery, and Vertex AI) that are available outside of Google Workspace offerings (eg, @gmail.com). Access to the GCP is EITHER via Google Cloud Console OR via gcloud CLI
+
+
+#######################
+Google Cloud Console
+vs 
+gcloud CLI
+#######################
+Google Cloud Console and gcloud cli are two EQUIVALENT ways of accessing the Google Cloud Platform (GCP)
+
+Google Cloud Console
+--------------------
+https://console.cloud.google.com/
+
+The web-based user interface to manage GCP. It is the visual dashboard, menus, and buttons that you click in your browser to interact with those underlying GCP services. Use google-cloud-cli (gcloud commands) INSTEAD of the Google Cloud Console webpages.
+    
+
+Google Cloud CLI (gcloud)
+-------------------------
+https://cloud.google.com/sdk
+https://docs.cloud.google.com/sdk/docs/install-sdk
+https://cloud.google.com/sdk/docs/initializing
+https://stackoverflow.com/questions/71086225/how-to-install-or-uninstall-gcloud
+
+A command-line tool for managing GCP resources via terminal text commands. gcloud is available by installing google-cloud-sdk. Note credentials in google-cloud-sdk are keyed to a (human) Google Workspace accout. Best to set up Multifactor Verification (MFA) with "Authenticator" app for the Google Workspace account
+    
+
+
+
+#################################
+Services Available on the 
+Google Cloud Platform (GCP)
+#################################
+Google Cloud Platform (GCP) an extensive catalog of over 100 products and services organized into core engineering and functional categories.
+
+https://docs.cloud.google.com/docs/product-list
+
+
+The "Compute" Category
+-----------------------
+  * Compute Engine (virtual machines; Cloud Shell Linux-based machines; IDE with a command line interface; loaded with development tools; offers a persistent 5 GB home directory) 
+
+
+The "App Hosting" Category
+----------------------------
+  * Cloud Run (serverless compute).  Google Earth Engine (GEE) operates here, on a managed, serverless-style cloud architecture where Google handles all the underlying infrastructure, server provisioning, and cluster scaling automatically.
+
+
+The "Cloud Storage" Category
+----------------------------
+https://cloud.google.com/storage/
+  * Cloud Storage (unstructured file storage, buckets)
+
+
+
+########################
+A Google Cloud Project
+#########################
+A Cloud Project (project) on the GCP gives you access to all of Google Cloud products. A project acts as the fundamental organizing entity and security boundary. Think of it as a workspace or a container. When you create a project, the entire catalog of Google Cloud services becomes available to that project. 
+
+https://cloud.google.com/resource-manager/docs/creating-managing-projects
+
+A few important details regarding how you actually interact with APIs :
+  • API Activation Required: By default, most services (APIs) are turned off to prevent accidental usage. To use a specific product like GEE, BigQuery or Compute Engine, you simply have to enable the corresponding API
+
+  • Billing Connection: While you can create a project for free, you must link a valid Billing Account to the project to use resources beyond the "Always Free" tier or your initial free trial credits.
+
+  • Identity and Access Management (IAM): As the creator of the project, you are automatically granted the "Owner" role, giving you full permission to enable, configure, and use any product within that container.
+
+
+################################
+A Google Cloud Services Account
+################################
+A special, non-human Google account used by applications, virtual machines (VMs), and automated scripts to interact with and make API calls to Google Cloud Platform (GCP) resources safely
+
+https://cloud.google.com/iam/docs/service-account-overview
+https://cloud.google.com/iam/docs/service-accounts-create
+
+Key Characteristics
+  • Non-Human Identity: a workload, an app, or a compute instance rather than an individual person.
+
+  • Email Identification: Identified by a unique email address, such as PROJECT_ID@appspot.gserviceaccount.com or PROJECT_NUMBER-compute@developer.gserviceaccount.com.
+
+  • Permissions via IAM: Must assign specific Cloud IAM roles to a service account (such as Cloud Storage Admin or Compute Instance Admin) to control exactly what actions it can or cannot perform.
+
+  • cf Google Workspace Membership: Service accounts do not count as members of your organization's Google Workspace domain and cannot directly own Workspace files or calendar events.
+
+
+#####################
+(Google) SDKs
+vs
+(Google) Cloud Client Libraries
+######################
+A Cloud Software Development Kit (SDK) is the entire toolkit or "toolbox," while a Cloud Client Library is a specific, specialized tool inside that toolbox designed for writing application code in a particular language. An SDK is an all-in-one package: it contains the platform's CLI tools, local emulators, documentation, and the actual client libraries themselves. Cloud Client Libraries are the recommended option for accessing Cloud APIs programmatically.
+
+https://cloud.google.com/apis/docs/cloud-client-libraries
+https://docs.cloud.google.com/apis/docs/client-libraries-explained
+https://docs.cloud.google.com/code/docs/shell/client-libraries
+
+https://cloud.google.com/python
+https://cloud.google.com/python/docs/getting-started
+https://github.com/googleapis/google-cloud-python
+
+
+Example SDKs (available for Python)
+-------------------------
+google-cloud-sdk
+    gcloud (primary cloud management CLI)
+    gsutil (CLI tool for Cloud Storage)
+    bq (CLI tool for BigQuery)
+
+
+google-genai (Gemini API)
+
+
+earthengine-api (Google Earth Engine)
+  earthengine (CLI tool for GEE)
+
+
+
+
+#######################
+Google Cloud Authentication Options
+  Use Application Default Credentials (ADC) for gcloud CLI
+  Use Service Account Key (.json file )for Python scripts
+##################################################
+https://cloud.google.com/docs/authentication
+https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment
+https://cloud.google.com/docs/authentication/application-default-credentials#personal
+https://cloud.google.com/docs/authentication/set-up-adc-local-dev-environment
+https://cloud.google.com/docs/authentication/provide-credentials-adc
+https://cloud.google.com/docs/authentication/provide-credentials-adc#how-to
+https://cloud.google.com/docs/authentication/application-default-credentials
+https://stackoverflow.com/questions/51554341/google-auth-exceptions-defaultcredentialserror
+https://stackoverflow.com/questions/40032678/where-are-google-application-default-credentials-stored
+https://medium.com/datamindedbe/application-default-credentials-477879e31cb5
+https://www.googlecloudcommunity.com/gc/Serverless/Why-i-have-the-error-raise-exceptions-DefaultCredentialsError-in/m-p/726413
+https://stackoverflow.com/questions/73451173/google-auth-exceptions-defaultcredentialserror-could-not-automatically-determin
+https://stackoverflow.com/questions/74502095/setting-application-default-credentials-adc-on-google-cloud
+
+
+When you run a Python script using a .json credential file (a Service Account Key) to call the GEE API using the earthengine-api SDK, you are entirely bypassing the google-cloud-sdk for that runtime. Your Python code communicates directly with the Earth Engine servers via an embedded Python library (google-auth) that is installed in the earthengine-api SDK. The embedded Python library, google-auth, does not look at or need your terminal's gcloud installation. Your human account and your Service Account are TWO SEPARATE "actors" knocking on the same door: the GCP Project.
+
+The programmatic link between your code, the JSON file, and the CLI exists through the underlying Google Identity and Access Management (IAM) framework.
+
+🔑 Identities and Authentication 
+  • The Service Account is a robot entity tied to a Cloud project via an email account. The Service Account generates a Service Account Key (.json file). The Service Account Key contains the credentials for authentication needed to access GEE.
+
+  • google-cloud-sdk uses OAuth tokens for authentication. The OAuth tokens are generated from the email and other credentials in the human Google Workspace account.
+
+
+💡 The Takeaway
+Google Cloud is built to handle multiple identities simultaneously. Python scripts can be written using the hardcoded .json Service Account file. Use the gcloud CLI independently for your manual and administrative tasks. The two authentication methods do not conflict with each other:
+    • Python Script: Acts as a Service Account (an automated robot identity). Every time you run the script, it reads the .json file, talks directly to the Earth Engine API, and performs its code tasks. It doesn't know or care if the gcloud CLI is installed. The Python script does not interact with the Google Cloud Platform (GCP) beyond accessing a GCP project.
+
+    • Your gcloud CLI Terminal: Acts as You (your human email account) and talks directly to the GCP. When you open your terminal and run a command (like "gcloud storage buckets list"), it uses the credentials you gave it via "gcloud init" or "gcloud auth login". It completely ignores your Python script's .json file.
+
+
+
+
+
+  
+
+#################################
+Zones and Locations 
+of Servers for Cloud Computing
+################################
+https://cloud.google.com/compute/docs/regions-zones
+https://stackoverflow.com/questions/66841594/google-cloud-translate-400-invalid-resource-name-location-even-though-it-is-vali
+
+
+
+
+
+
+
+
+ 
+
+
+   
+
+
+
+
+
+
+    
+
+
+
+
+    

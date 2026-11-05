@@ -1,8 +1,15 @@
+Title:          GPS Coordinate Systems
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
+
 
 #####################
-GEE New Acct
-	in Google Cloud Console
+Project with GEE Permissions
+in Google Cloud Console
 ########################
+
 
 
 BASIC SCHEMATIC
@@ -52,7 +59,7 @@ A newly-created project does not have access to Earth Engine by default; you mus
 
 	c. Search "Earth Engine" and select "Earth Engine" (product)
 
-	d. Register your Cloud project 
+	d. Register your GEE-enabled project 
 		* registered Community / Noncommercial tier
 
 	e. Go to the "Google Cloud Console IAM & Admin Service Accounts" page
@@ -67,13 +74,13 @@ A newly-created project does not have access to Earth Engine by default; you mus
 		* "Service Usage Consumer" (authority to run up a computing/billing)
 		*  set the same TWO roles for marron.bruce.mx@gmail.com
 		
-	h. From the main list, click directly on the newly created service account email string
+	h. From the main list, click directly on the newly created Service Account email string
 	   [bmarron18-ag@agremotesensing.iam.gserviceaccount.com]
 
 	i. Navigate to the Keys tab at the top, select the Add Key button dropdown, and click Create new key.
 
 	j. Leave the selection box ticked on JSON and hit Create
-	   [agremotesensing-a0e16021eb39.json]
+	   
 
 
 

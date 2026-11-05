@@ -6,8 +6,15 @@ Google Earth Engine
 
 https://developers.google.com/earth-engine
 https://developers.google.com/earth-engine/guides/python_install
+https://docs.cloud.google.com/s/results?q=Google%20Earth%20Engine&text=Google%20Earth%20Engine
+
+Description
+------------
+Google Earth Engine is a geospatial processing service powered by Google Cloud Platform that enables large-scale analysis of Earth's surface. It features a massive public data archive containing over 40 years of historical imagery and scientific datasets—such as Landsat, Copernicus, and JAXA data—which are updated and expanded daily. Users can interact with the platform through tools like the JavaScript API, and the service is supported by a community presence on GitHub, YouTube, and various social media forums.
 
 Earth Engine offers free access for non-commercial, research, and educational use. Even if you are using the free tier, Google Cloud still requires a Project linked to a Cloud Billing account to manage resource limits, tracking, and standard cloud logging. You will only incur charges if you exceed free-tier compute limits or use paid commercial Earth Engine licenses.
+
+Google Earth Engine offers both JavaScript and Python APIs that are functionally similar but differ in syntax and execution environments. The JavaScript API is primarily used within the web-based Earth Engine Code Editor, while the Python API is typically utilized in environments like Google Colab or local IDEs. Key differences include syntax conventions for calling functions and properties, as well as authentication workflows, where the Python API requires specific installation and setup. Despite these differences, the core client libraries are consistent enough that geospatial analyses, such as processing Sentinel-1 imagery, can be implemented in either language with minimal logic changes.
 
 The Earth Engine Python library also ships with its own command-line tool simply called "earthengine". If you want to use that terminal tool for batch uploads or asset management without interactive login prompts, you can pass your JSON file directly to it as well:
 <<< bash
@@ -17,19 +24,38 @@ earthengine --service_account_file=path/to/your/credentials.json ls
 The earthengine CLI tool is highly specialized. It is built strictly for managing geospatial data and tasks inside Earth Engine's closed environment, not for managing your broader Google Cloud infrastructure
 
 
-GOOGLE ACCT LINK
------------------
-    signin automatic when logged into 
+How GEE Compute Works
+----------------------
+Google Earth Engine (GEE) operates on a managed, serverless-style cloud architecture where Google handles all the underlying infrastructure, server provisioning, and cluster scaling automatically.
+
+	• No Server Management: You do not provision, configure, or maintain virtual machines (VMs), clusters, or hardware to run GEE scripts.
+
+	• Automatic Parallelization: When you write and execute code in the GEE JavaScript Code Editor or Python API, GEE automatically breaks your geospatial computations into parallel tasks and distributes them across Google's distributed cloud infrastructure.
+
+	• On-Demand Execution: You pay for or access compute resources as queries and analyses run, without managing idle servers (though commercial/noncommercial access rules and quotas apply). 
+
+	• Integration with Serverless Tools: You can wrap GEE workflows inside serverless Google Cloud services like Cloud Run or Cloud Functions to trigger spatial analyses programmatically. [2] (https://cloud.google.com/blog/products/data-analytics/analyzing-satellite-images-in-google-earth-engine-with-bigquery-sql)
+
+
+
+##############
+GEE Account
+#############
+
+
+
+Google Acct for ADC credentials (used by gcloud cli)
+-----------------------------------------------
     marron.bruce.mx@gmail.com
 
 
-Google Cloud Project (GEE)
----------------------
+Google Cloud Project for (or linked to) GEE API
+--------------------------------------------
 https://console.cloud.google.com/welcome?project=agremotesensing
 https://console.developers.google.com/iam-admin/iam?project=agremotesensing
 
 	Name
-		AgRemoteSensing
+		ag-remote-o1
 
 	Project ID
 		agremotesensing
@@ -40,13 +66,13 @@ https://console.developers.google.com/iam-admin/iam?project=agremotesensing
 	Created
         30 Oct 2026
 
-    Organization
+    Organization tied to project
 		No organization
 
 
 GEE Project Noncommercial Eligibility
 ----------------------------------
-Your organization type
+Organization type
 	* Public or private academic institution (including faculty, staff, students)
 	* Universidad Technologia Americana
 	* No payment (including fee-for-service) from commercial entities
@@ -145,8 +171,6 @@ SERVICE ACCOUNT
 	  mechanisms 
 
 
-
-
 	Name
 		bmarron18-ag
 	
@@ -163,7 +187,3 @@ SERVICE ACCOUNT
 		agremotesensing-a0e16021eb39.json
 
 
-APIs & Services 
-----------------
-	Logs usage across all APIs
-		see Google Earth Engine API in the list
