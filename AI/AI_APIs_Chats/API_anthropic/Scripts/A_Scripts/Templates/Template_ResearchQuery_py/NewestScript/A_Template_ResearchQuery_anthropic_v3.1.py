@@ -222,7 +222,7 @@ JOBS_DIR = DOC_DIR / ".anthropic_jobs"
 EXECUTION_MODE = "batch"
 
     # maximum output tokens per turn (includes thinking tokens)
-MAX_TOKENS = 64000
+MAX_TOKENS = 128000
 
     # extended thinking
     #   {"type": "adaptive"}                          -> model decides (newer models)

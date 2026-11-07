@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  2 NOV 2026 16:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  6 NOV 2026 20:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1366,7 +1366,15 @@ ocal/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 ]
 
-LaTeX Warning: Empty bibliography on input line 265.
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[2]
+
+LaTeX Warning: Empty bibliography on input line 282.
 
 (./Intro_21stC_Ag.aux)
  ***********
@@ -1378,21 +1386,21 @@ Package logreq Info: Writing requests to 'Intro_21stC_Ag.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33207 strings out of 467099
- 664047 string characters out of 5408266
- 1725728 words of memory out of 5000000
+ 33217 strings out of 467099
+ 664130 string characters out of 5408266
+ 1727728 words of memory out of 5000000
  61949 multiletter control sequences out of 15000+600000
- 647599 words of font info for 93 fonts, out of 8000000 for 9000
+ 648143 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  107i,12n,108p,1011b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/
 local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
 exlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/
 2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Intro_21stC_Ag.pdf (1 page, 62589 bytes).
+Output written on Intro_21stC_Ag.pdf (2 pages, 65707 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 35 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  34829 words of extra memory for PDF output out of 35830 (max. 10000000)
 

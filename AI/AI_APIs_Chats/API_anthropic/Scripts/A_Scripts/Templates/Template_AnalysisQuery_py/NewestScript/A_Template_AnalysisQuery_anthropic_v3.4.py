@@ -188,7 +188,7 @@ UNKNOWN_TYPE_POLICY = "container"
 
 # ---- Model / output size -----------------------------------------------
 MODEL = "claude-opus-5-5"   # or another current model id
-MAX_TOKENS = 64000          # lower this if the API rejects it for your model
+MAX_TOKENS = 128000          # lower this if the API rejects it for your model
 MAX_CONTINUATIONS = 3       # extra passes if the reply is cut off / paused
 
 

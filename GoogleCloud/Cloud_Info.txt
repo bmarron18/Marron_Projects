@@ -46,8 +46,11 @@ https://cloud.google.com/sdk/docs/initializing
 https://stackoverflow.com/questions/71086225/how-to-install-or-uninstall-gcloud
 
 A command-line tool for managing GCP resources via terminal text commands. gcloud is available by installing google-cloud-sdk. Note credentials in google-cloud-sdk are keyed to a (human) Google Workspace accout. Best to set up Multifactor Verification (MFA) with "Authenticator" app for the Google Workspace account
-    
-
+  * uses human email account (...@gmail.com) as basis for credentials
+  * uses Application Default Credentials (ADC) and OAuth tokens for authorization 
+  * protected by Google Account’s passwords and phone-based MFA (on the ...@gmail.com account)
+  * Full administrative freedom
+  * Every command logged into Google Cloud audit logs and time-stamped with human email address
 
 
 #################################
@@ -167,9 +170,14 @@ When you run a Python script using a .json credential file (a Service Account Ke
 The programmatic link between your code, the JSON file, and the CLI exists through the underlying Google Identity and Access Management (IAM) framework.
 
 🔑 Identities and Authentication 
-  • The Service Account is a robot entity tied to a Cloud project via an email account. The Service Account generates a Service Account Key (.json file). The Service Account Key contains the credentials for authentication needed to access GEE.
+* The Service Account is a robot entity tied to a Cloud project via an email account. The Service Account generates a Service Account Key (.json file). The Service Account Key contains the credentials for authentication needed to access GEE.
+        * uses a Service Account Key (a hard-coded .json file) that contains robot identity email and the project ID
+        * Service Accounts allow scripts to authenticate automatically without manual intervention
+        * Google Cloud IAM roles and permissions are bound directly to the Service Account. This limits GEE access and 
+          improves overall security (compared to using a personal account with broad access)
+        * Service Accounts integrate natively with Google Cloud infrastructure
 
-  • google-cloud-sdk uses OAuth tokens for authentication. The OAuth tokens are generated from the email and other credentials in the human Google Workspace account.
+* google-cloud-sdk uses OAuth tokens for authentication. The OAuth tokens are generated from the email and other credentials in the human Google Workspace account.
 
 
 💡 The Takeaway

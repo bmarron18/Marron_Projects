@@ -14,7 +14,7 @@ OUTPUT_FILE="OUTPUT_user_prompt-literals.txt"
 
 # Process the text file and output adjacent string literal format to the new file
 {
-    echo "usr_prompt = ("
+    echo "usr_msg = ("
     cat "$INPUT_FILE" |  tr -d '\\' |  tr '\n' ' ' |  sed 's/  */ /g' |  awk '
         {
             line = ""
