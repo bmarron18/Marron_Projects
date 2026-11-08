@@ -37,3 +37,112 @@ Most recent batches (up to 20):
 An exception has occurred, use %tb to see the full traceback.
 
 SystemExit: 0
+
+
+Cluade Chat
+------------
+
+me:
+ok ... from the usage logs, on Nov 6 claude-fable-5-1 had  an token input of 27234  tokens and an output of 53139 tokens....is there nothing recoverable?
+
+Claude:
+No, I don't think the response itself can be recovered. Those numbers do tell us something useful, though.
+
+**What they show:** the request reached Anthropic, and the model generated about 53k output tokens before the connection dropped. So this wasn't a batch that failed to get created. That matches the streaming scenario: the output went to your machine as it was generated, and Anthropic doesn't keep a retrievable copy of regular (non-batch) responses. Only batches keep results server-side, which is why your recovery script found nothing. I'm not aware of any API or Console feature that returns the text of a past streaming call. The Console's Usage page only records token counts.
+
+**What you might still have:**
+
+1. **`Partial_Response.txt`**: check its size. As a rough guide, 53k output tokens is on the order of 200k characters of plain text. If your file is close to that, you may have lost little or nothing. If the model used extended thinking, part of those 53k tokens was thinking, so the visible text would be shorter than that estimate.
+2. **Your terminal or Spyder console history**, if the script printed the stream as it went.
+
+**If the partial file is much shorter than expected:**
+
+- You can resume by sending the original prompt plus the partial output, and asking the model to continue exactly where it stopped. That costs input tokens again, but only for the missing portion of the output.
+- You could also ask Anthropic support whether anything can be done about the billing for the lost output. I can't promise they'll do anything, but they can see your account.
+
+**For next time:**
+
+- Use the Batches API for long analyses, since it survives a dropped connection.
+- If you keep streaming, write each chunk to disk as it arrives and flush it, which your partial file may already do.
+
+If you paste the part of v3.4 that makes the API call, I can check whether it saves the stream the way you intend and help you set up a "continue from partial" function.
+
+
+me: ok
+
+Claude:
+Your script streams with `client.beta.messages.stream`, which confirms the streaming scenario. It also shows where your partial output should be.
+
+**Where the output is**
+
+The script writes each text chunk to `QueryResponse_Anthropic.txt` in your Desktop folder and flushes it immediately. That file, not `Partial_Response.txt` (which is only an input), holds everything received before the connection dropped. Append mode is on, so open it and find the header `Run: 2026-11-06 10:53:11`. Everything between that header and the next `=====` block (or the end of the file) is the partial response. Compare its size to the 53,139 output tokens in your usage log, which would be roughly 200k characters of plain text. The Console total for Nov 6 may also include other runs from that day.
+
+**Two other things the script does when the connection drops**
+
+1. **Uploaded files may still be in your Files workspace.** A dropped connection raises `APIConnectionError`, which the script catches with `anthropic.APIError`. The `finally` block then tries to delete the uploads, and that call can fail too if the internet is still down. To check, run the script with `--purge-all`, or list the files in your workspace and delete the four you uploaded.
+2. **It doesn't try to resume.** The script only continues on `max_tokens` or `pause_turn`, never after a network failure.
+
+**Adding auto-resume**
+
+In `run_query`, collect the text of each pass, and on a connection error send what you have back as an assistant turn plus your existing `CONTINUE_PROMPT`. It also needs `import time` at the top:
+
+```python
+partial = []
+try:
+    with client.beta.messages.stream(**request) as stream:
+        for event in stream:
+            if event.type == "content_block_start" and \
+                    event.content_block.type == "server_tool_use":
+                out.write("\n[... Claude is running code in the sandbox ...]\n")
+                out.flush()
+            elif event.type == "content_block_delta" and \
+                    event.delta.type == "text_delta":
+                out.write(event.delta.text)
+                out.flush()
+                partial.append(event.delta.text)
+        final = stream.get_final_message()
+except anthropic.APIConnectionError:
+    text = "".join(partial).rstrip()
+    if not text or attempt == max_continuations:
+        raise
+    print("Connection lost -- resuming from partial output...")
+    messages.append({"role": "assistant", "content": text})
+    messages.append({"role": "user", "content": CONTINUE_PROMPT})
+    time.sleep(10)
+    continue
+```
+
+I used the "assistant turn, then user continue prompt" pattern rather than ending the request on a partial assistant message. You already use it for `max_tokens`, and it works whether or not the model accepts a prefilled reply. A resume costs input tokens for the original files plus the partial output, so expect it to be pricey on a long run like this one. If the internet is down for longer than a few retries, the script will still stop. The partial text will be safe in your output file, though.
+
+To finish the interrupted run, you could paste the partial file's tail and the original prompt into a short script that sends only the continuation request. I can write that for you if you'd like.
+
+
+Me: yes please
+
+Claude:
+The resume script is ready: `A_Template_ResumeQuery_anthropic_v1.0.py`. It compiles, and I tested the part that pulls the partial reply out of your output file on a made-up file with two runs. I did not run it against the live API.
+
+**How to use it**
+
+1. Copy it to your Desktop. It's already set to `RUN_STAMP = "2026-11-06 10:53:11"`, the same four input files, the same prompt and system message, and `claude-fable-5-1`.
+2. Preview first:
+   `runfile('/home/bruce-vdb/Desktop/A_Template_ResumeQuery_anthropic_v1.0.py', args='--dry-run')`
+   This sends nothing. It prints the size of the partial reply and its last 400 characters, so you can confirm it grabbed the right run and see where the text stopped. If the run stamp is wrong, `--list-runs` shows the stamps found in your output file.
+3. Run it with F5 or `runfile(...)` and no arguments.
+
+**What it does**
+
+- It extracts that run's partial text from `QueryResponse_Anthropic.txt`.
+- It re-sends your files and prompt, then the partial text as the assistant's turn, then asks the model to continue exactly where it stopped, finishing any cut-off word or line first.
+- It streams only the new text to `Resumed_Response_continuation.txt`, flushing every chunk.
+- It writes `Resumed_Response_merged.txt`, which is the partial plus the continuation. This is written even if the run is interrupted.
+- If the connection drops again, it retries up to 5 times and resumes from everything received so far.
+
+**Before you run it**
+
+- The four input files and the prompt must match what the original run used. You've been editing v3.4, so if that file or the others changed since Nov 6, restore them first. Otherwise the model will continue against different context.
+- The files are sent inline instead of through the Files API, so nothing is uploaded and nothing needs cleaning up. It supports text, PDF and image files, but not the sandbox-only formats.
+- Check the junction in the merged file. If the original text stopped mid-word, the model should pick up mid-word, but read the seam to be sure.
+- This is a fresh paid call: you pay input tokens for the files and partial text again, plus output only for the missing part.
+
+The Files API uploads from the dropped run may still be sitting in your workspace. Running v3.4 with `--purge-all` clears them.
