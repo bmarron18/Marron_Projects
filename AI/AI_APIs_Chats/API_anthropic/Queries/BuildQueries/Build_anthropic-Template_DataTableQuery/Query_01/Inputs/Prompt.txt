@@ -8,7 +8,6 @@ Review the following attached documents: a)Partial_QueryResponse.txt, b)Analysis
 
 IPython output 01
 MODEL = "claude-opus-5-5"   # or another current model id
-#MODEL = "claude-fable-5-1" 
 ----------------
 %runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_anthropic/Queries/BuildQueries/Build_anthropic-Template_DataTableQuery/Query_01/A_Template_AnalysisQuery_anthropic_v3.4.py --wdir
 
@@ -31,7 +30,10 @@ Deleted Script.txt (file_01CxLfm1w9EuP7jenmReeZhi)
 Deleted A_Template_AnalysisQuery_anthropic_v3.4.py (file_0139C66b9X8gbrXfgUY8fF84)
 
 
-================ CHAT MODEL = "claude-sonnet-5-5" ======================
+
+#######################
+Chat Claude "claude-sonnet-5-5"
+#######################
 **ADD code ???**
 ------------
         if message.stop_reason == "refusal":
@@ -51,7 +53,7 @@ Constraints: stdlib plus `anthropic` only; save partial output if interrupted; [
 
 
 ============ RUN 02 MODEL = "claude-fable-5-1" =================================
-script ready
+script re-written
 -------------
 usr_msg = (
     "Review a) Partial_QueryResponse.txt (sample of a truncated run), b) Analysis.txt (analysis of what "
@@ -73,11 +75,8 @@ usr_msg = (
 sys_msg = "You are an expert analyst and Python coder."
 
 
-======================================================================
- Run: 2026-11-06 10:53:11  |  Model: claude-fable-5-1
- Files: Partial_Response.txt [document], Analysis.txt [document], Script.txt [document], A_Template_AnalysisQuery_anthropic_v3.4.py [document]
-======================================================================
-
+IPython Output
+---------------
 %runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_anthropic/Queries/BuildQueries/Build_anthropic-Template_DataTableQuery/Query_01/A_Template_AnalysisQuery_anthropic_v3.4.py --wdir
 
 file                                     route      mime
@@ -91,3 +90,7 @@ A_Template_AnalysisQuery_anthropic_v3.4. document   text/plain
 INTERNET FAILURE !!!
 RECOVER???
 
+======================================================================
+ Run: 2026-11-06 10:53:11  |  Model: claude-fable-5-1
+ Files: Partial_Response.txt [document], Analysis.txt [document], Script.txt [document], A_Template_AnalysisQuery_anthropic_v3.4.py [document]
+======================================================================

@@ -1,0 +1,234 @@
+
+-------------------------------------------------
+A_Template_ResumeQuery_anthropic_v1.0.py
+-------------------------------------------------
+  * Finish a streamed run that was cut off (internet failure, crash, etc.)
+  * Pulls the partial reply for ONE run out of the output file written by
+    A_Template_AnalysisQuery_anthropic_v3.4.py (found by its "Run:" timestamp)
+  * Re-sends the ORIGINAL files + prompt, then the partial reply as the
+    assistant's turn, then asks the model to continue exactly where it stopped
+  * Streams only the NEW text to a continuation file (flushed on every chunk)
+  * Writes a merged file = partial + continuation
+  * If the connection drops again, it retries and resumes from everything
+    received so far (nothing is lost, nothing is re-generated)
+
+  COST NOTE: the original files and the partial reply are sent again as INPUT
+  tokens. You pay for the input again, but only for the MISSING part as output.
+
+
+-----------
+Quick Start
+------------
+
+**Before you run it**
+
+- The original input files, the original output file, and the original prompt must match EXACTLY what the original run used. You've been editing v3.4, so if that file or the others changed since Nov 6, restore them first. Otherwise the model will continue against different context.
+
+
+The required inputs (from "A_Template_ResumeQuery_anthropic_v1.0.py" )
+    # ---- Output file written by the original run -----------------------
+    PARTIAL_FILE = "QueryResponse_Anthropic.txt"
+
+    # ---- Which run to resume: the time shown in its header --------------------
+    #      ( Run: 2026-11-06 10:53:11  |  Model: ... )
+    RUN_STAMP = "2026-11-06 10:53:11"
+
+    # ---- Input files: the SAME ones the original run used ----------------------
+    INPUT_FILES = [
+       "Partial_Response.txt",
+        "Analysis.txt",
+        "Script.txt",
+        "A_Template_AnalysisQuery_anthropic_v3.4.py",
+    ]
+
+
+
+The Files API uploads from the dropped run may still be sitting in your workspace. Running v3.4 with `--purge-all` clears them.
+
+- The files are sent inline instead of through the Files API, so nothing is uploaded and nothing needs cleaning up. It supports text, PDF and image files, but not the sandbox-only formats.
+
+- Check the junction in the merged file. If the original text stopped mid-word, the model should pick up mid-word, but read the seam to be sure.
+
+- This is a fresh paid call: you pay input tokens for the files and partial text again, plus output only for the missing part.
+
+
+
+
+**How to use it**
+
+1. Copy it to your Desktop. It's already set to `RUN_STAMP = "2026-11-06 10:53:11"`, the same four input files, the same prompt and system message, and `claude-fable-5-1`.
+
+2. Preview first:
+	a. This sends nothing. It prints the size of the partial reply and its last 400 characters, so you can confirm it grabbed the right run and see where the text stopped. If the run stamp is wrong,
+
+	<<< IPython
+ 	runfile('/home/bruce-vdb/Desktop/A_Template_ResumeQuery_anthropic_v1.0.py', args='--dry-run')
+ 	>>
+
+    b. Shows the stamps found in your output file.
+
+    <<< IPython
+ 	runfile('/home/bruce-vdb/Desktop/A_Template_ResumeQuery_anthropic_v1.0.py', args='--list-runs')
+ 	>>>
+
+
+
+3. Run it with no arguments.
+
+	<<< IPython
+ 	runfile('/home/bruce-vdb/Desktop/A_Template_ResumeQuery_anthropic_v1.0.py')
+ 	>>>
+
+
+**What it does**
+
+- It extracts that run's partial text from `QueryResponse_Anthropic.txt`.
+- It re-sends your files and prompt, then the partial text as the assistant's turn, then asks the model to continue exactly where it stopped, finishing any cut-off word or line first.
+- It streams only the new text to `Resumed_Response_continuation.txt`, flushing every chunk.
+- It writes `Resumed_Response_merged.txt`, which is the partial plus the continuation. This is written even if the run is interrupted.
+- If the connection drops again, it retries up to 5 times and resumes from everything received so far.
+
+
+------------------
+Possible Outputs
+-------------------
+runfile('/home/bruce-vdb/Desktop/A_Template_ResumeQuery_anthropic_v1.0.py')
+An exception has occurred, use %tb to see the full traceback.
+
+SystemExit: ERROR: that run has no reply text -- nothing to resume.
+
+
+
+
+The script found a run with that timestamp, but the text it extracted as the reply was empty (or only whitespace), so it stopped on purpose. Sending an empty assistant turn would be rejected by the API anyway.
+
+**How the script gets there**
+
+`extract_partial()` works in three steps:
+1. It finds ` Run: 2026-11-06 10:53:11` in `QueryResponse_Anthropic.txt`.
+2. It skips to the next line of 70 `=` characters (the end of the header).
+3. It takes everything from there up to the next run header, or to the end of the file.
+
+The "no reply text" error means steps 2 and 3 yielded nothing.
+
+**Likely causes, most likely first**
+
+1. **The original run died before the first chunk was written.** The header is written up front, so a connection failure before any streamed text leaves a header with nothing under it. In that case there is nothing to resume, and you should simply re-run v3.4.
+2. **The stamp is the template default.** `RUN_STAMP` in the script is still `2026-11-06 10:53:11`. It was found, so a run with that time exists, but it may not be the run you meant. `--list-runs` will show you.
+3. **The header layout differs from what the parser expects.** The parser assumes one `Run:` line, then a closing bar. If v3.4 writes extra lines (for example a Files: line, or another bar between them), it could stop at the wrong bar and extract the wrong slice.
+4. **The file was overwritten.** If v3.4 ran in overwrite mode afterwards, the partial reply from the cut-off run may be gone.
+
+**To check, run these two:**
+
+```python
+runfile('/home/bruce-vdb/Desktop/A_Template_ResumeQuery_anthropic_v1.0.py', args='--list-runs')
+```
+
+Then, in the console, print what follows the stamp:
+
+```python
+t = open('/home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt', encoding='utf-8').read()
+i = t.find(' Run: 2026-11-06 10:53:11')
+print(repr(t[i-100:i+800]))
+```
+
+- If you see only a header and then the next header or the end of the file, it's cause 1 or 4.
+
+'==========================\n\n'
+
+- If you see reply text sitting after a differently shaped header, it's cause 3. Paste me that output, or the header-writing part of v3.4, and I'll adjust `extract_partial()` to match.
+
+I can't see your local files from here, so I can't tell which cause it is without that output.
+
+
+
+
+That output '==========================\n\n' tells us the file no longer holds the partial reply.
+
+My snippet used `t.find(...)`, which returns `-1` when the stamp isn't found. A slice like `t[-101:799]` on a file that short just returns the whole file. So you're seeing the entire contents of `QueryResponse_Anthropic.txt` as it is right now: a bar of `=` characters and two newlines, with no `Run:` header and no reply text.
+
+That doesn't match the earlier error, because the script only reaches "no reply text" after it finds the stamp. So the file changed between that run and now, or the two runs read different files. The most likely explanation is that **the file was overwritten or truncated**, for example by another run of v3.4 in overwrite mode that started writing and was cut off again before any text arrived. If so, the original partial reply is gone from this file.
+
+**To confirm, check:**
+
+```python
+import os
+p = '/home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt'
+print(os.path.getsize(p), os.path.getmtime(p))
+import time; print(time.ctime(os.path.getmtime(p)))
+print(sorted(os.listdir('/home/bruce-vdb/Desktop')))
+```
+
+- **Modified time:** if it's recent (today), something rewrote the file after the cut-off run.
+- **Other files on the Desktop:** look for backups, copies, or a differently named output file from the original run, such as `Partial_Response.txt`. Your prompt calls that file a "sample of a truncated run". If the full partial reply from the 2026-11-06 run was saved there, point `--partial-file` at it. The parser would then need a small change, since that file probably has no `Run:` header.
+- **Editor history:** Spyder, or a file-sync or version-history tool, may have an earlier copy.
+
+**If no copy exists**, there is nothing to resume, and the way forward is to re-run v3.4. To avoid this next time, set v3.4 to append mode, or write each run to a timestamped file, so a failed run can't wipe an earlier partial.
+
+If you find a copy and it lacks the header, send me its first ~20 lines and I'll adapt `extract_partial()` to read it.
+
+
+
+Me:
+Is the attached script (A_Template_AnalysisQuery_anthropic_v3.4.py) already set for Append Mode? Please check.
+
+Claude:
+Yes. `APPEND_MODE = True` in SECTION 1, and `main()` picks the file mode with:
+
+```python
+mode = "w" if (args.overwrite or not APPEND_MODE) else "a"
+```
+
+So a normal run, including F5 in Spyder, appends. The file is only overwritten if you pass `--overwrite` or set `APPEND_MODE = False`.
+
+**Two things this changes in my earlier diagnosis**
+
+1. **"Overwritten by v3.4" is now unlikely**, unless you ran it with `--overwrite`. Nothing else in v3.4 or the resume script truncates that file. Manual edits or a sync tool are the remaining ways it could have changed.
+
+2. **I misread your last output.** If `find()` returns `-1`, `t[i-100:i+800]` becomes `t[-101:799]`, which is the last ~100 characters of the file, not the whole file. So `'====...\n\n'` means the file *ends* with a closing bar and a blank line. That is exactly what a header with no reply text looks like. Also, your output showed 26 `=` characters, while v3.4 writes 70, so the paste may have been cut off.
+
+**What this points to:** the original run most likely died after writing its header but before any streamed text arrived, which would also explain your first error. If so, there is no partial reply to resume, and you should re-run v3.4. The header format v3.4 writes (bar, `Run:` line, `Files:` line, bar) is what the parser expects, so the parser itself is fine.
+
+To confirm, run this:
+
+```python
+p = '/home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt'
+t = open(p, encoding='utf-8').read()
+print(len(t))
+for m in __import__('re').finditer(r'^ Run: .*$', t, flags=__import__('re').M):
+    nxt = t.find('\n\n' + '='*70 + '\n Run:', m.end())
+    end = nxt if nxt >= 0 else len(t)
+    print(m.group(0), '| chars until next run/EOF:', end - m.end())
+```
+
+Any run showing only about 150 characters or fewer is a header with no reply. A run with thousands of characters is a real partial you can resume with that stamp. Paste the output if it's unclear.
+
+
+
+`A_Template_ResumeQuery_anthropic_v1.1.py` is ready. It is v1.0 with one functional change, and I haven't run it.
+
+**The change**
+`extract_partial()` now strips the `[message id: msg_...]` line at the start of the reply and the `[Runtime: ...]` line at the end, using two regexes defined in SECTION 2. The strip happens before the "no reply text" check, so a run containing only those lines is correctly reported as empty. Output from v3.4, which has neither line, works as before.
+
+I also updated the header (revised date, version name, run command, a REVISIONS entry) and the docstring now mentions v3.5 output files.
+
+**Before you use it**
+- `RUN_STAMP` and `INPUT_FILES` still hold the values from v1.0 (`2026-11-06 10:53:11` and the four files). Set them to match the run you actually want to resume. Use `--list-runs` first to see which stamps are in the file.
+- Given the earlier "no reply text" error, that run may have had no reply at all, in which case v1.1 will report the same thing and a re-run with v3.5 is the way forward.
+
+
+
+
+`A_Template_ResumeQuery_anthropic_v1.2.py` is ready. It is v1.1 plus the refusal check, and I haven't run it.
+
+**What the check does**
+- `extract_partial()` looks for the `[REFUSED BY SAFETY SYSTEM ...]` block in the selected run, before it strips the bookkeeping lines or checks for empty text.
+- If the block is there, the script exits with a clear error. The error includes the message ID from the block, says that resuming would be refused again, and suggests a different model such as `claude-opus-5-5` or different input files, then a re-run with v3.6.
+- The check runs on the raw text, so it also triggers when real reply text comes before the block. That happens when a later continuation pass is refused.
+- To force a resume anyway, delete the `[REFUSED BY SAFETY SYSTEM ...]` line from `QueryResponse_Anthropic.txt`.
+
+**Other changes**
+The docstring and REVISIONS now cover v1.2 and mention v3.6 output files, and the run command points to v1.2. The `--list-runs` option still lists all stamps without flagging refused runs. If you'd like refused runs marked in that list, I can add that.
+
+**What to do with your current file**
+Your 14:26 run was refused, so it has that block. Pointing v1.2 at that run's stamp will stop with the new message. That run was made with v3.5, which doesn't write the block, so v1.2 would instead report "no reply text". The new check only applies to runs made with v3.6 or later.

@@ -1,0 +1,53 @@
+
+============ RUN 01 MODEL = "claude-opus-5-5" =================================
+
+IPython output
+---------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_anthropic/Queries/BuildQueries/Build_anthropic-Template_DataTableQuery/Query_02/A_Template_AnalysisQuery_anthropic_v3.5.py --wdir
+
+file                                     route      mime
+---------------------------------------- ---------- ----------------------------
+Partial_Response.txt                     document   text/plain
+Analysis.txt                             document   text/plain
+Script.txt                               document   text/plain
+A_Template_AnalysisQuery_anthropic_v3.4. document   text/plain
+
+Uploaded Partial_Response.txt [document] -> file_013qyfjUq7JDYqGBd8N1X4Nf
+Uploaded Analysis.txt [document] -> file_01DB1ppwX7k5MWFpDKngC14k
+Uploaded Script.txt [document] -> file_01KyVoFBPeoQgnRHw3s7wey2
+Uploaded A_Template_AnalysisQuery_anthropic_v3.4.py [document] -> file_01BBhbbRk5F7pyTgcxbZhWom
+Pass 1: message id = msg_011Cgr5wfGNouVRRgz2QkmE2
+Pass 1: stop_reason = refusal, input tokens = 27234, output tokens = 0
+Runtime: 1s
+Response written to /home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt
+Deleted Partial_Response.txt (file_013qyfjUq7JDYqGBd8N1X4Nf)
+Deleted Analysis.txt (file_01DB1ppwX7k5MWFpDKngC14k)
+Deleted Script.txt (file_01KyVoFBPeoQgnRHw3s7wey2)
+Deleted A_Template_AnalysisQuery_anthropic_v3.4.py (file_01BBhbbRk5F7pyTgcxbZhWom)
+
+Me:
+ran call with v3.5, here's the ouput,
+what happened???
+
+Claude:
+The script worked. The model refused the request, which is why nothing came back.
+
+**What the output shows**
+- `stop_reason = refusal` with `output tokens = 0` and a 1-second runtime means the API's safety system stopped the response before the model wrote anything. This was not a crash, a dropped connection, or a bug in v3.5. The new message ID and runtime lines both worked: `msg_011Cgr5wfGNouVRRgz2QkmE2` is the ID to quote if you contact support.
+- Your output file now holds only a header, the message ID line and the runtime line, with no reply text.
+
+**Likely link to your earlier problem**
+The original 2026-11-06 run probably ended the same way. That would explain why the file had a header and no reply, and why the resume script found nothing to resume. I can't confirm that from here, but it fits.
+
+**Why it may have happened**
+`claude-fable-5-1` has extra safety measures for biology, cybersecurity, and LLM R&D. Your inputs are scripts that call the API, plus analyses of why runs were cut off, which could trip the LLM R&D filter. That's a guess, since I haven't seen the contents of `Partial_Response.txt` or `Analysis.txt` and the API doesn't say which rule fired. It may be a false positive.
+
+**What to try**
+1. **Switch models.** Your prompt already targets `claude-opus-5-5`, and it doesn't carry Fable's extra filters. Run:
+   ```python
+   runfile('/home/bruce-vdb/Desktop/Marron_Projects/.../A_Template_AnalysisQuery_anthropic_v3.5.py', args='-m claude-opus-5-5')
+   ```
+   Or change `MODEL` in SECTION 1.
+2. **If Opus also refuses**, resend the same inputs one file at a time to find which one triggers it, starting with `Partial_Response.txt`.
+3. **If you think it's a false positive**, send the message ID to Anthropic support, and use the thumbs-down in any Claude app if you hit it there.
+

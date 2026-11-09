@@ -1,0 +1,49 @@
+
+============ RUN 01 MODEL = "claude-opus-5-5" =================================
+
+IPython output
+---------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_anthropic/Queries/BuildQueries/Build_anthropic-Template_DataTableQuery/Query_03/A_Template_AnalysisQuery_anthropic_v3.6.py --wdir
+
+file                                     route      mime
+---------------------------------------- ---------- ----------------------------
+Partial_Response.txt                     document   text/plain
+Analysis.txt                             document   text/plain
+Script.txt                               document   text/plain
+A_Template_AnalysisQuery_anthropic_v3.4. document   text/plain
+
+Uploaded Partial_Response.txt [document] -> file_016Ug3yAfnyhgoD3c8r6KxSW
+Uploaded Analysis.txt [document] -> file_01GueKiWRb6REraBgwDqFEDm
+Uploaded Script.txt [document] -> file_019yUeGhN6cWpdQRcJDG8gvu
+Uploaded A_Template_AnalysisQuery_anthropic_v3.4.py [document] -> file_01CcMGrkraofb9JNFWvi6EWj
+Pass 1: message id = msg_011Cgr7SgduHAX6GvwdRJXeW
+Pass 1: stop_reason = refusal, input tokens = 27234, output tokens = 0
+
+======================================================================
+ REFUSED BY SAFETY SYSTEM
+======================================================================
+ The API stopped this request (stop_reason = refusal).
+ This is NOT a crash or a connection problem.
+
+ Message ID   : msg_011Cgr7SgduHAX6GvwdRJXeW
+ Pass         : 1
+ Model        : claude-opus-5-5
+ Output tokens: 0
+Details      : BetaRefusalStopDetails(category='reasoning_extraction', explanation="This request was blocked as it seems to violate Anthropic's Terms of Service restrictions on reverse engineering or duplicating model outputs. To learn more, visit https://www.anthropic.com/legal/commercial-terms. API integrators: you can reduce refusals for your users by configuring a fallback model — see https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback", fallback_credit_token=None, fallback_has_prefill_claim=None, recommended_model=None, type='refusal')
+
+ What to try:
+   1. Run with another model, e.g.  -m claude-opus-5-5
+   2. Send the input files one at a time to find which one triggers it
+   3. If you believe it is a false positive, quote the message ID to
+      Anthropic support
+======================================================================
+
+Runtime: 1s
+Response written to /home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt
+Deleted Partial_Response.txt (file_016Ug3yAfnyhgoD3c8r6KxSW)
+Deleted Analysis.txt (file_01GueKiWRb6REraBgwDqFEDm)
+Deleted Script.txt (file_019yUeGhN6cWpdQRcJDG8gvu)
+Deleted A_Template_AnalysisQuery_anthropic_v3.4.py (file_01CcMGrkraofb9JNFWvi6EWj)
+An exception has occurred, use %tb to see the full traceback.
+
+SystemExit: 3

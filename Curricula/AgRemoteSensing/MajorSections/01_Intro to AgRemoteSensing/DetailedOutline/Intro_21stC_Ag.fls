@@ -488,6 +488,10 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmri.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplb9e.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmb.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri9e.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplri9e.vf
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri8r.tfm
+INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmri.tfm
 INPUT Intro_21stC_Ag.aux
 INPUT Intro_21stC_Ag.run.xml
 OUTPUT Intro_21stC_Ag.run.xml

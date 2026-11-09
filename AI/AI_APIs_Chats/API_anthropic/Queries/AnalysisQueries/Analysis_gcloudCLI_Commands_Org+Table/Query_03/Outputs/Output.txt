@@ -1,0 +1,31 @@
+
+IPython output (w/ second file)
+--------------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_anthropic/Queries/AnalysisQueries/Analysis_gcloudCLI_Commands_Org+Table/Query_03/table_template_v1.2.py --wdir
+
+stop_reason: refusal | usage: Usage(cache_creation=CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0), cache_creation_input_tokens=0, cache_read_input_tokens=0, inference_geo='global', input_tokens=12918, output_tokens=0, output_tokens_details=None, server_tool_use=None, service_tier='standard', speed='standard')
+0 rows written to /home/bruce-vdb/Desktop/gcloud_commands_table.md / .txt / .csv
+
+
+
+
+Modified table_template_v1.2.py
+-------------------------------
+ WTF....."gcloud_CLI_List.txt" throws a "refusal" from the API....why???
+
+
+#PARTIAL = "/home/bruce-vdb/Desktop/gcloud_CLI_List.txt"      # b) earlier partial solution (optional; skipped if missing)
+PARTIAL = ""
+
+
+
+IPython output (w/ only one file)
+--------------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_anthropic/Queries/AnalysisQueries/Analysis_gcloudCLI_Commands_Org+Table/Query_03/table_template_v1.2.py --wdir
+Note:  not found; continuing without it.
+
+stop_reason: end_turn | usage: Usage(cache_creation=CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0), cache_creation_input_tokens=0, cache_read_input_tokens=0, inference_geo='global', input_tokens=3971, output_tokens=6272, output_tokens_details=OutputTokensDetails(thinking_tokens=812), server_tool_use=None, service_tier='standard', speed='standard')
+69 rows written to /home/bruce-vdb/Desktop/gcloud_commands_table.md / .txt / .csv
+
+
+SUCCESS!!!

@@ -1,0 +1,63 @@
+
+
+original prompt
+---------
+usr_msg = (
+    "Review a) gcloud-cli_Commands.txt, an incomplete list; and b) gcloud_CLI_List.txt, a partial solution"
+    "for organizing the gcloud commands into useful categories based on functionality with the most commonly"
+    "used commands at the top and least used commands at the bottom. Do the following 1) insert any common and"
+    "useful commands that do not appear in the list; 2) for each command provide a brief explanation and a sample"
+    "of usage; and 3) organize the entire data structure into two different table formats: .csv, and .md. The final output"
+    "should provide the Python code used to create the table in the two different formats when given a .txt file of data"
+    "as well as the individual, separate .csv, and .md files "
+
+
+sys_msg = (
+    "You are an expert in Google Cloud gcloud CLI. When "
+    "an additional file, chart, table, or script would be useful, create it with the code interpreter "
+    "and save it as a file so the user can download it."
+)
+
+
+
+Claude review
+--------------
+The prompt will probably work, but it has a few bugs, and its goal doesn't match your `table_template.py` pipeline.
+
+**Bugs in the string itself**
+- **Missing spaces:** Python joins adjacent string literals with no separator, so the model receives "solutionfor", "commonlyused", "anduseful", "sampleof", "outputshould" and "dataas well". Models usually cope, but it's sloppy. End each line with a trailing space.
+- **No closing parenthesis:** the last line also lacks one.
+- **Placeholder never filled:** the prompt has no `{text}` placeholder, so the file contents would never be inserted. The commands need to be injected inside tags, as in your template.
+
+**Problems with the request**
+1. **File b is never supplied.** If `gcloud_CLI_List.txt` isn't included in the call, the model can't review it. Either include both files, each in its own tag, or drop that file from the prompt.
+2. **It asks for code and data in one response.** This is the biggest conflict. Your parser expects only delimited rows, so any Python code or explanation in the reply would corrupt the table. The code already exists in `table_template.py`. Drop that requirement from the API prompt.
+3. **It names two formats, but you now produce three.** The script writes `.csv`, `.md` and `.txt`. The model shouldn't be producing the files at all. It should return rows, and the script does the formatting.
+4. **No output format is defined.** The prompt doesn't give the model the column layout or separator. The script needs `Category ¦ Command ¦ Tier ¦ Explanation ¦ Example`.
+5. **"Most commonly used" is undefined.** Without a scale, the ordering will be inconsistent. A numeric tier works better, and the script sorts on it.
+6. **Added commands aren't flagged.** Your script marks new commands through a `+` prefix on the tier, but this prompt never asks for it, so the "Added" column would stay empty.
+7. **"Brief" and "sample" are vague.** Specify one sentence and one realistic invocation.
+8. **Output isn't constrained.** Without "no preamble, no commentary", models often add an intro line.
+
+**Suggested replacement.** Use this in `table_template.py` and keep `SYSTEM` as is. I used string concatenation with explicit spaces:
+
+```python
+USER_TMPL = (
+    "I am giving you two files.\n\n"
+    "<commands_list>\n{text}\n</commands_list>\n\n"
+    "<partial_solution>\n{partial}\n</partial_solution>\n\n"
+    "The first is an incomplete list of gcloud CLI commands. The second is an earlier, "
+    "partial attempt to organize them. Use both as source material, and correct any errors.\n\n"
+    "Produce one row per command, one per line, using the character ¦ as the separator, in exactly this format:\n"
+    "Category ¦ Command ¦ Tier ¦ Explanation ¦ Example\n"
+    "- Category: a functional category (e.g. Config, Auth, IAM, Storage, Compute, Networking, Logging).\n"
+    "- Tier: 1 = used daily, 2 = common, 3 = occasional or rare.\n"
+    "- Explanation: one sentence.\n"
+    "- Example: one realistic invocation. Do not use the ¦ character inside any field.\n\n"
+    "Cover every command in both files, merging duplicates into a single row. "
+    "Then add common, useful commands that are missing from both, marking their Tier with a '+' prefix (e.g. +1). "
+    "Output only the rows, with no header, preamble, or commentary."
+)
+```
+
+You'd also need to read the second file and pass it in with `USER_TMPL.format(text=..., partial=...)`. If `gcloud_CLI_List.txt` doesn't exist or isn't useful, remove the `<partial_solution>` block and the first two sentences. The script takes care of sorting, the three file formats and the Python code.

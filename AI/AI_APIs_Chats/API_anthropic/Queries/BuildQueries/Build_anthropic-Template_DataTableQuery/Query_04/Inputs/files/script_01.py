@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Nov  8 14:48:49 2026
+
+@author: bruce-vdb
+"""
+
+import csv
+import anthropic
+
+MODEL = "claude-opus-5-5"
+SRC = "gcloud-cli_Commands.txt"
+
+sys_msg = (
+    "You are an expert in the Google Cloud gcloud CLI. "
+    "Output only the requested pipe-delimited rows, with no preamble or commentary."
+)
+
+usr_tmpl = (
+    "Below is a partial, semi-organized list of gcloud CLI commands.\n\n"
+    "<commands>\n{text}\n</commands>\n\n"
+    "Produce one row per command, one per line, in exactly this format:\n"
+    "Category | Command | Tier | Explanation | Example\n"
+    "- Category: a functional category (e.g. Compute, IAM, Storage, Networking).\n"
+    "- Tier: 1 = used daily/very common, 2 = common, 3 = occasional/rare.\n"
+    "- Explanation: one sentence. Example: one realistic invocation.\n"
+    "Cover every command in the list. Then add common, useful commands that are "
+    "missing from the list, marking their Tier with a '+' prefix (e.g. +1)."
+)
+
+# ---- 1. Call the API (single request) ----
+
+with client.messages.stream(
+    model="claude-opus-5.5",
+    max_tokens=64000,
+    messages=messages,
+    # plus your existing system/params
+) as stream:
+    for text in stream.text_stream:
+        out.write(text)          # also gives you partial output if it dies midway
+    final = stream.get_final_message()
+
+print(final.stop_reason, final.usage)
+
+
+
+
+client = anthropic.Anthropic(timeout=1800.0)   # explicit long timeout
+text = open(SRC, encoding="utf-8").read()
+
+resp = client.messages.create(
+    model=MODEL,
+    max_tokens=32000,
+    system=sys_msg,
+    messages=[{"role": "user", "content": usr_tmpl.format(text=text)}],
+)
+raw = "".join(b.text for b in resp.content if b.type == "text")
+print("stop_reason:", resp.stop_reason, "| usage:", resp.usage)
+
+open("raw_response.txt", "w", encoding="utf-8").write(raw)   # keep the raw output
+
+# ---- 2. Parse rows (split on first 4 pipes only) ----
+parsed = []
+for line in raw.splitlines():
+    if line.count("|") < 4:
+        continue
+    cat, cmd, tier, expl, ex = [c.strip() for c in line.split("|", 4)]
+    if cat.lower() == "category" or set(cat) <= set("-: "):   # skip header/separator
+        continue
+    added = "yes" if tier.startswith("+") else ""
+    tier = tier.lstrip("+")
+    parsed.append([cat, cmd, int(tier) if tier.isdigit() else 3, added, expl, ex])
+
+# ---- 3. Sort: most common first ----
+parsed.sort(key=lambda r: (r[2], r[0], r[1]))
+
+HEADER = ["Category", "Command", "Tier", "Added", "Explanation", "Example"]
+
+# ---- 4. Markdown ----
+def to_md(rows):
+    lines = ["| Category | Command | Tier | Explanation | Example |",
+             "|---|---|---|---|---|"]
+    for r in rows:
+        cells = [c.strip().replace("|", "\\|") for c in r.split("|")]
+        cells[4] = f"`{cells[4]}`"          # example in code font
+        lines.append("| " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+open("gcloud_commands_table.md", "w", encoding="utf-8").write(to_md(rows))
+
+with open("gcloud_commands_table.md", "w", encoding="utf-8") as f:
+    f.write("| " + " | ".join(HEADER) + " |\n")
+    f.write("|" + "---|" * len(HEADER) + "\n")
+    for r in parsed:
+        cells = [str(c).replace("|", "\\|") for c in r]
+        cells[5] = f"`{cells[5]}`"
+        f.write("| " + " | ".join(cells) + " |\n")
+
+# ---- 5. CSV ----
+with open("gcloud_commands_table.csv", "w", encoding="utf-8-sig", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(HEADER)
+    w.writerows(parsed)
+
+print(f"{len(parsed)} rows written.")

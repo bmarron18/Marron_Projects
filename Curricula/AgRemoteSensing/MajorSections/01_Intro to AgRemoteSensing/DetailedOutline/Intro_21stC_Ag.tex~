@@ -198,7 +198,8 @@
 
 \1 \textbf{Satellites, Data, and Maps}
 \2 Satellites
-\3
+\3 Sentinel-2: the pivotal sensor: by providing freely accessible multispectral imagery with 10–20 m spatial resolution, frequent revisit times, and red-edge bands, Sentinel-2 has enabled a shift from regional assessments toward field-level and within-field yield monitoring, and its red-edge bands are also effective for monitoring nitrogen status.
+\3 Landsat 8
 \2 Satellite Data
 \3 
 \2 Maps from Satellite Data

@@ -1,0 +1,62 @@
+
+============ RUN 01 MODEL = "claude-opus-5-5" =================================
+
+prompt
+---------
+usr_msg = (
+    "Review a) script_01.py (a script for generating a data table), b) gcloud-cli_Commands.txt (incomplete data in a general format), and Write a new script named `A_Template_DataTableQuery_anthropic_v1.0.py` for "
+    "`claude-opus-5-5` that turns given, partial, or sourced data (user to specify: files / URL / web "
+    "search) into an organized table. Requirements: (1) stream the API call; (2) the model emits one "
+    "JSON object per line for each chunk, and Python parses, de-duplicates, sorts and merges them, "
+    "tolerating a cut-off final line; and "
+    "(3) script_01.py's parse/sort/write logic, fixing the script_01 bugs listed below. Ignore the "
+    "code_interpreter wrappers and /mnt/data paths in script_02.py; produce one standalone .py.\n"
+    "JSON line schema: {\"category\":str,\"command\":str,\"tier\":1|2|3,\"added\":bool,"
+    "\"flag\":\"\"|\"!\",\"explanation\":str,\"example\":str}. No header line; finish with "
+    "{\"_done\":true}. Map script_02's [+] to `added` and [!] to `flag`.\n"
+    "Category order: use a CATEGORY_ORDER setting (list); unlisted categories follow alphabetically. "
+    "Within a category, sort by tier, then command.\n"
+    "Do not hardcode project IDs, buckets or emails; take them from settings.\n"
+    "fixing c)'s bugs; (4) write three files: `.md` table, `.csv` table, and `.txt` commentary covering "
+    "data sufficiency, completeness, accuracy, table construction, legend and flags. Data source, "
+    "columns, key column, sort order and overwrite/ append are all per-run settings, editable in SECTION "
+    "1 and overridable by CLI flags. When left blank, columns are inferred from the first chunk, "
+    "de-duplication uses the whole row, and order is the arrival order. Constraints: stdlib plus "
+    "`anthropic` only; save partial output if interrupted; [overwrite/append]; keep header and "
+    "docstring style."
+)
+
+sys_msg = "You are an expert analyst and Python coder."
+
+
+I am trying to build a template for collecting and organizing data into a data table that can be accessed in various formats (.md, .txt,  and, .csv). I have a basic design example and a basic script. (attached)
+
+
+Claude:
+I'll write a cleaned-up version of your script and run it against a sample response to check the parsing and output.
+
+I rebuilt your script as a template, `table_template.py`. It writes `.md`, `.txt` and `.csv` files from one parsed table. I ran only the parsing and output steps, using a five-row sample response I wrote myself, and all three files came out correctly. I did not call the API, since I can't run your key here.
+
+**Problems I fixed in your original script:**
+- **Undefined names:** the streaming block at the top used `client`, `messages` and `out` before they existed, so the script would crash on its first call.
+- **Duplicate request:** a second `messages.create` call followed the streaming one. The template makes a single streamed request.
+- **Wrong model string:** `"claude-opus-5.5"` should be `"claude-opus-5-5"`, with hyphens.
+- **Broken `to_md` function:** it referenced an undefined `rows` and then got overwritten by the second markdown write.
+- **Pipe separator:** `|` shows up in real commands such as `gcloud auth list | grep ACTIVE`, and it was corrupting the columns. I switched the separator to `¦`. The script also escapes `|` in the markdown output.
+- **Column index error:** the markdown code-font step pointed at the wrong column once you added the "Added" column.
+
+**What it does now:**
+- **Edit only the CONFIG block:** the model, source file, column names, separator, sort order and which columns get code formatting are all set there, so you can reuse it for other projects.
+- **Three output formats:** `.md` is a pipe table with backticks around commands, `.txt` is a wrapped box-drawn table, and `.csv` is UTF-8 with a byte-order mark so Excel opens it correctly.
+- **Streamed output:** it writes `raw_response.txt` as it streams, so you keep partial output if the connection dies.
+- **Truncation warning:** it prints a warning if the response hit `max_tokens`.
+- **No-API rebuild:** `python table_template.py --parse-only raw_response.txt` regenerates all three files from a saved response without another API call. That's the quick way to tweak formatting.
+
+**Things to know:**
+- **Duplicate commands:** your source list has a few repeats, such as `gcloud init` and `gcloud auth login`. The script doesn't deduplicate them.
+- **Unusable key line:** the command file contains `gcloud services enable ://googleapis.com`. That looks like a typo for `<api>.googleapis.com`, and the model may reproduce it as written.
+
+I haven't confirmed that `claude-opus-5-5` is the right model string for your account, so check that if the call errors out.
+
+Files are in /tmp/outputs:
+- table_template.py

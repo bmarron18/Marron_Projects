@@ -1,11 +1,12 @@
 # Fdb version 4
-["biber Intro_21stC_Ag"] 1793655745.5373 "Intro_21stC_Ag.bcf" "Intro_21stC_Ag.bbl" "Intro_21stC_Ag" 1794019250.10766 0
-  "Intro_21stC_Ag.bcf" 1794019249.93898 133407 b9542947e353646677ad03326b3398a4 "pdflatex"
+["biber Intro_21stC_Ag"] 1794190644.57098 "Intro_21stC_Ag.bcf" "Intro_21stC_Ag.bbl" "Intro_21stC_Ag" 1794190647.68165 0
+  "/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib" 1794188395.62358 664432 174c6e932d07769cccc92b413a678362 ""
+  "Intro_21stC_Ag.bcf" 1794190647.53072 133703 3cf97181a27eb37955a496e329550f38 "pdflatex"
   (generated)
   "Intro_21stC_Ag.bbl"
   "Intro_21stC_Ag.blg"
   (rewritten before read)
-["pdflatex"] 1794019249.21361 "Intro_21stC_Ag.tex" "Intro_21stC_Ag.pdf" "Intro_21stC_Ag" 1794019250.10793 0
+["pdflatex"] 1794190646.78511 "Intro_21stC_Ag.tex" "Intro_21stC_Ag.pdf" "Intro_21stC_Ag" 1794190647.68191 0
   "/usr/local/share/texmf/tex/latex/biblatex/latex/bbx/standard.bbx" 1756502253.24981 25680 409c3f3d570418bc545e8065bebd0688 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.cfg" 1756502253.24981 69 249fa6df04d948e51b6d5c67bea30c42 ""
   "/usr/local/share/texmf/tex/latex/biblatex/latex/biblatex.def" 1756502253.24981 96838 ffbc2c4ed45b0b76660254a85df40e90 ""
@@ -207,10 +208,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1788581441 5609353 13863466be7e2f3222bf573e23e6e97d ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1788581470 3658238 4e535c84a4e2b98eb209584d747fd9b2 ""
   "/usr/local/texlive/2026/texmf.cnf" 1788631954.43217 490 bda3fb63e318ca41966f63cd33cd8534 ""
-  "Intro_21stC_Ag.aux" 1794019249.93698 736 87d527a087364de051c552fba36ccb86 "pdflatex"
-  "Intro_21stC_Ag.bbl" 1793655746.27905 466 76d65a242ec496c9b4361af646ff12cb "biber Intro_21stC_Ag"
-  "Intro_21stC_Ag.run.xml" 1794019249.94022 2519 253fb485cdf05e682d6d2d2b4cfec29e "pdflatex"
-  "Intro_21stC_Ag.tex" 1794019249.10998 9680 37d82b8a17330470b8705db2dddef0fb ""
+  "Intro_21stC_Ag.aux" 1794190647.52972 1692 310f06dede08411a6cf440c9e3d203eb "pdflatex"
+  "Intro_21stC_Ag.bbl" 1794190645.86371 5718 bfe03ef7a6678bc2741ab688837d00d3 "biber Intro_21stC_Ag"
+  "Intro_21stC_Ag.run.xml" 1794190647.53251 2519 253fb485cdf05e682d6d2d2b4cfec29e "pdflatex"
+  "Intro_21stC_Ag.tex" 1794190643.55768 11676 dd29fd23362c614962e10d8caca8266c ""
   (generated)
   "Intro_21stC_Ag.aux"
   "Intro_21stC_Ag.bcf"

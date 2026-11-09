@@ -1,0 +1,81 @@
+
+
+-------------------------------------------------
+A_Template_AnalysisQuery_anthropic_v3.4.py
+-------------------------------------------------
+  * Send one or more files of ANY permitted type for analysis to Claude
+  * Stream the reply to a text file that includes a) analytical results, and 
+    b) the Python code to generate any requested graphics
+  * Save any files Claude generates
+  * Clean up (remove from storage) the uploaded files
+
+------------
+Claude Chat
+-------------
+Your script streams with `client.beta.messages.stream`, which confirms the streaming scenario. It also shows where your partial output should be.
+
+**Where the output is**
+
+The script writes each text chunk to `QueryResponse_Anthropic.txt` in your Desktop folder and flushes it immediately. That file, not `Partial_Response.txt` (which is only an input), holds everything received before the connection dropped. Append mode is on, so open it and find the header `Run: 2026-11-06 10:53:11`. Everything between that header and the next `=====` block (or the end of the file) is the partial response. Compare its size to the 53,139 output tokens in your usage log, which would be roughly 200k characters of plain text. The Console total for Nov 6 may also include other runs from that day.
+
+**Two other things the script does when the connection drops**
+
+1. **Uploaded files may still be in your Files workspace.** A dropped connection raises `APIConnectionError`, which the script catches with `anthropic.APIError`. The `finally` block then tries to delete the uploads, and that call can fail too if the internet is still down. To check, run the script with `--purge-all`, or list the files in your workspace and delete the four you uploaded.
+
+2. **It doesn't try to resume.** The script only continues on `max_tokens` or `pause_turn`, never after a network failure.
+
+
+Notes
+--------
+
+This script DOES NOT use the Batches API (`client.messages.batches` / `client.beta.messages.batches`). Both make streaming calls, so there is no batch ID to print. If you meant a batch ID (`msgbatch_...`), that requires a different design: the script would submit requests through the Batches API and poll for results, instead of streaming. That would not fit the streaming and resume workflow you have now,
+
+**What v3.4 prints that looks like an ID**
+- `Uploaded <name> [route] -> file_...` is the Files API ID of each upload.
+- `Deleted <name> (file_...)` is the same ID at cleanup.
+- `Pass N: stop_reason = ..., input tokens = ..., output tokens = ...` has no ID.
+
+It does not print the message ID (`msg_...`) of the response either. The resume script prints no IDs at all.
+
+**Adding the message ID to v3.4**
+
+If you want the `msg_...` ID for support or debugging, the useful place is the start of the stream. A run that gets cut off never reaches `get_final_message()`, so an ID printed there would be missing in exactly the case you care about. In `run_query()`, inside the `for event in stream:` loop, add a first branch:
+
+```python
+                if event.type == "message_start":
+                    print(f"Message id: {event.message.id}")
+                    out.write(f"[message id: {event.message.id}]\n")
+                    out.flush()
+                elif event.type == "content_block_start" and \
+                        event.content_block.type == "server_tool_use":
+                    ...
+```
+
+Change the existing `if` on the next line to `elif`, as shown. This prints the ID as soon as the stream opens and also writes it to the output file, so it survives a dropped connection.
+
+
+
+`A_Template_AnalysisQuery_anthropic_v3.5.py` is ready. It is v3.4 plus the two changes, and I haven't run it.
+
+**What changed**
+- **Message ID:** it prints `Pass N: message id = msg_...` to the console as soon as each stream opens. The first pass's ID is also written to the output file as `[message id: msg_...]`. Later continuation passes print to the console only, because their text continues the reply and a line inserted there would break it mid-sentence.
+- **Runtime:** a `fmt_elapsed()` helper and a `time` import were added. The streaming call is timed, and the console prints `Runtime: ...`. The output file ends with `[Runtime: ...]`. This is written in a `finally`, so it also appears after an API error, a dropped connection, or Ctrl+C. Uploads are not included in the timing.
+- **Docstring:** I updated the header (revised date, filename, run command) and added a REVISIONS entry for v3.5. The file list and prompt still point at `A_Template_AnalysisQuery_anthropic_v3.4.py`, so nothing else changes until you edit them.
+
+
+
+`A_Template_AnalysisQuery_anthropic_v3.6.py` is ready. It is v3.5 plus refusal handling, and I haven't run it.
+
+**What it does on a refusal**
+- **Console:** a boxed block reads `REFUSED BY SAFETY SYSTEM`. It states that this is not a crash or a connection problem, then shows the message ID, pass number, model, output tokens, and three things to try. If the API supplies `stop_details`, they are printed too (the script reads that field defensively, since I'm not certain it is always present).
+- **Output file:** a line `[REFUSED BY SAFETY SYSTEM -- ... | message id: msg_...]` is written, followed by the usual `[Runtime: ...]` line. A refusal on a later continuation pass is handled the same way.
+- **Exit code:** the script now exits with code 3 on a refusal. In Spyder's `runfile` this may show up as `SystemExit: 3`, like the other non-zero exits.
+- **Cleanup:** generated files are still saved and uploads are still deleted.
+
+To support this, `run_query()` now returns `(file ids, stop_reason)`, and `main()` uses the stop reason to pick the exit code.
+
+**One thing to know about the resume script**
+`A_Template_ResumeQuery_anthropic_v1.1.py` strips the message-id and Runtime lines but does not recognize the REFUSED block. A refused run that has this block would no longer look empty, so the resume script would treat the block as reply text. A refused run has nothing to continue anyway, so don't resume one. I can add a check to the resume script that stops with a clear message when it sees the block, as a v1.2, if you'd like.
+
+**Next step**
+Your last run used `claude-fable-5-1`, so to avoid the refusal, run v3.6 with `-m claude-opus-5-5`, or edit `MODEL` in SECTION 1.

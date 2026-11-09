@@ -1,9 +1,19 @@
 [0] Config.pm:329> INFO - This is Biber 2.22
 [0] Config.pm:332> INFO - Logfile is 'Intro_21stC_Ag.blg'
-[53] biber:342> INFO - === Mon Nov  2, 2026, 15:42:26
-[67] Biber.pm:421> INFO - Reading 'Intro_21stC_Ag.bcf'
-[121] Biber.pm:1002> INFO - Found 0 citekeys in bib section 0
-[136] bbl.pm:676> INFO - Writing 'Intro_21stC_Ag.bbl' with encoding 'UTF-8'
-[136] bbl.pm:779> INFO - Output to Intro_21stC_Ag.bbl
-[136] Biber.pm:132> WARN - The file 'Intro_21stC_Ag.bcf' does not contain any citations!
-[136] Biber.pm:134> INFO - WARNINGS: 1
+[33] biber:342> INFO - === Sun Nov  8, 2026, 20:17:25
+[40] Biber.pm:421> INFO - Reading 'Intro_21stC_Ag.bcf'
+[78] Biber.pm:1002> INFO - Found 1 citekeys in bib section 0
+[86] Biber.pm:4487> INFO - Processing section 0
+[91] Biber.pm:4680> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[182] bibtex.pm:1713> INFO - LaTeX decoding ...
+[749] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[799] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[799] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[799] Biber.pm:4307> INFO - Sorting list 'nyt/apasortcite//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[799] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[803] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[803] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[803] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[804] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[805] bbl.pm:676> INFO - Writing 'Intro_21stC_Ag.bbl' with encoding 'UTF-8'
+[805] bbl.pm:779> INFO - Output to Intro_21stC_Ag.bbl
