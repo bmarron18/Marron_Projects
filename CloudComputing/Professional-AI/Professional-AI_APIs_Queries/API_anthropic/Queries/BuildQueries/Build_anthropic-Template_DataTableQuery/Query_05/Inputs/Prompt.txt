@@ -1,0 +1,16 @@
+
+============ RUN 01 MODEL = "claude-fable-5-1" =================================
+
+prompt
+---------
+usr_msg = (
+    "Review (a) A_Template_DataTableQuery_anthropic_v1.2.py (a functional script for generating"
+    "a data table), and (b) A_Template_AnalysisQuery_anthropic_v3.6.py (a functional script for performing"
+    "analysis of files). Modify, update, revise, and reorganize document (a) using document (b) as a style guide. The cleaned up document (a) should be named A_Template_DataTableQuery_anthropic_v2.0.py.Thank"
+    you!"
+)
+
+sys_msg = "You are an expert analyst and Python coder."
+
+
+

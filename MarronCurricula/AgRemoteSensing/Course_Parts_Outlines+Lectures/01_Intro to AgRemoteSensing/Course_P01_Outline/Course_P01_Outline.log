@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  9 NOV 2026 10:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  9 NOV 2026 17:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1356,7 +1356,7 @@ Package microtype Info: Character `029' is missing
 <graphics/UMA_Logo.png, id=4, 495.8525pt x 158.5925pt>
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 267.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 261.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 
@@ -1372,7 +1372,7 @@ ocal/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
  <./graphics/UMA_Logo.png>]
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 296.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 311.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 
@@ -1384,11 +1384,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [2]
 LaTeX Font Info:    Trying to load font information for TS1+pplx on input line 
-309.
+330.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1pplx.fd
 File: ts1pplx.fd 2004/09/06 font definitions for TS1/pplx.
 ) [3]
-[4
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 370.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[4] [5
 
 ] (./Course_P01_Outline.aux)
  ***********
@@ -1400,11 +1412,11 @@ Package logreq Info: Writing requests to 'Course_P01_Outline.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33634 strings out of 467099
- 671527 string characters out of 5408266
- 1727981 words of memory out of 5000000
- 62240 multiletter control sequences out of 15000+600000
- 668106 words of font info for 184 fonts, out of 8000000 for 9000
+ 33627 strings out of 467099
+ 671431 string characters out of 5408266
+ 1727988 words of memory out of 5000000
+ 62239 multiletter control sequences out of 15000+600000
+ 666071 words of font info for 181 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  107i,16n,108p,1015b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/
@@ -1412,10 +1424,10 @@ local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
 exlive/2026/texmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb></usr/local/texlive
 /2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2026/t
 exmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Course_P01_Outline.pdf (4 pages, 110192 bytes).
+Output written on Course_P01_Outline.pdf (5 pages, 111688 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
- 30 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 32 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 73746 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 67602 words of extra memory for PDF output out of 74296 (max. 10000000)
 

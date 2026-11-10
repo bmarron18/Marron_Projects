@@ -6,7 +6,7 @@ Revised:  08 Nov 2026
 Authors : bruce-vdb, claude-opus-5-5
 
 -------------------------------------------------
-A_Template_AnalysisQuery_anthropic_v3.5.py
+A_Template_AnalysisQuery_anthropic_v3.6.py
 -------------------------------------------------
   * Send one or more files of ANY permitted type for analysis to Claude
   * Stream the reply to a text file that includes a) analytical results, and 
@@ -14,6 +14,7 @@ A_Template_AnalysisQuery_anthropic_v3.5.py
   * Save any files Claude generates
   * Clean up (remove from storage) the uploaded files
   * Print / record the message ID (msg_...) of each pass, and the run time
+  * Report clearly when the API's safety system refuses the request
 
 
 ---------------------------------------------------------------------------
@@ -41,7 +42,7 @@ QUICK START
       * To run file w/ CLI toggles
           a) place copy of file on Desktop
           b) run file using IPython interpreter
-runfile('/home/bruce-vdb/Desktop/A_Template_AnalysisQuery_anthropic_v3.5.py', args='--dry-run')
+runfile('/home/bruce-vdb/Desktop/A_Template_AnalysisQuery_anthropic_v3.6.py', args='--dry-run')
 
   Command-line examples (CLI files replace INPUT_FILES for that run):
      ./A_Template_...py report.pdf notes.txt -p "Summarize these files"
@@ -70,7 +71,7 @@ HOW FILES ARE SENT TO CLAUDE  (chosen automatically from the extension)
                                  code-execution tool is enabled automatically.        
 
 ---------------------------------------------------------------------------
-ID AND RUN-TIME LINES  (new in v3.5)
+ID, RUN-TIME AND REFUSAL LINES
 ---------------------------------------------------------------------------
   * Message ID : printed to the console at the START of every pass, as soon
                  as the stream opens (so it is available even if the
@@ -82,10 +83,17 @@ ID AND RUN-TIME LINES  (new in v3.5)
                      [Runtime: 4m 12s]
                  This is written even if the run fails or is interrupted.
                  (Uploads are not included in the timing.)
+  * Refusal    : if the API stops a pass with stop_reason == "refusal" (the
+                 safety system declined to answer), a boxed message with the
+                 message ID is printed to the console and a matching
+                 "[REFUSED BY SAFETY SYSTEM ...]" block is written to the
+                 output file.  The script then exits with code 3.  The
+                 message ID is what to quote if you contact Anthropic support.
 
-  NOTE for A_Template_ResumeQuery_anthropic_v1.0.py: these two bracketed
-  lines are NOT part of the model's reply.  Have extract_partial() strip them
-  (or delete them from the output file) before resuming a run.
+  NOTE for A_Template_ResumeQuery_anthropic_v1.1.py: the bracketed lines are
+  NOT part of the model's reply.  v1.1 strips the message-id and Runtime
+  lines, but it does NOT recognise the REFUSED block.  Do not try to resume a
+  run that was refused: there is nothing to continue.
 
 -----------
 REVISIONS
@@ -95,6 +103,10 @@ Revised : v3.3 -- all permitted file types, per-type examples,
 Revised : v3.5 -- message ID (msg_...) printed per pass and written to the
                   output file; elapsed run time printed and written to the
                   output file (also on failure / interrupt)
+Revised : v3.6 -- stop_reason == "refusal" is detected and reported clearly
+                  (console box + block in the output file, with the message
+                  ID); run_query() now returns (file ids, final stop_reason);
+                  exit code 3 on refusal
 """
 
 from __future__ import annotations
@@ -238,6 +250,8 @@ CODE_EXECUTION_TOOL = {"type": "code_execution_20250825", "name": "code_executio
 MAX_UPLOAD_BYTES = 500 * 1024 * 1024        # Files API per-file limit
 
 ROUTES = ("document", "image", "container")
+
+EXIT_REFUSED = 3                            # exit code when the API refuses
 
 # Text-like files -> document block with MIME text/plain
 TEXT_EXTENSIONS = {
@@ -593,15 +607,56 @@ def find_generated_file_ids(message) -> list[str]:
     return ids
 
 
+# ---- refusal reporting ---------------------------------------------------
+
+def report_refusal(out, message, msg_id: str, pass_no: int, model: str) -> None:
+    """Tell the user, on the console and in the output file, that the API's
+    safety system refused (stop_reason == 'refusal'). Includes the message ID."""
+    bar = "=" * 70
+    # Optional extra detail; printed only if the API supplies it.
+    details = getattr(message, "stop_details", None)
+    detail_line = f"Details      : {details}\n" if details else ""
+    out_tokens = getattr(message.usage, "output_tokens", "?")
+
+    console = (
+        f"\n{bar}\n"
+        f" REFUSED BY SAFETY SYSTEM\n"
+        f"{bar}\n"
+        f" The API stopped this request (stop_reason = refusal).\n"
+        f" This is NOT a crash or a connection problem.\n"
+        f"\n"
+        f" Message ID   : {msg_id}\n"
+        f" Pass         : {pass_no}\n"
+        f" Model        : {model}\n"
+        f" Output tokens: {out_tokens}\n"
+        f"{detail_line}"
+        f"\n"
+        f" What to try:\n"
+        f"   1. Run with another model, e.g.  -m claude-opus-5-5\n"
+        f"   2. Send the input files one at a time to find which one triggers it\n"
+        f"   3. If you believe it is a false positive, quote the message ID to\n"
+        f"      Anthropic support\n"
+        f"{bar}\n"
+    )
+    print(console)
+
+    out.write(
+        f"\n\n[REFUSED BY SAFETY SYSTEM -- stop_reason = refusal | "
+        f"pass {pass_no} | model {model} | message id: {msg_id}]\n"
+    )
+    out.flush()
+
+
 def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
               max_tokens: int, max_continuations: int, system: str | None,
-              use_code_execution: bool) -> list[str]:
+              use_code_execution: bool) -> tuple[list[str], str | None]:
     """Stream the reply to `out`. Continues automatically if the reply is cut
     off (max_tokens) or paused by a long tool run (pause_turn).
-    Returns the ids of any files Claude generated."""
+    Returns (ids of any files Claude generated, final stop_reason)."""
     betas = [FILES_API_BETA] + ([CODE_EXECUTION_BETA] if use_code_execution else [])
     container_id = None
     generated: list[str] = []
+    stop_reason: str | None = None
 
     for attempt in range(max_continuations + 1):
         request = dict(model=model, max_tokens=max_tokens,
@@ -613,6 +668,7 @@ def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
         if container_id:
             request["container"] = container_id       # reuse the same sandbox
 
+        msg_id = "unknown"
         with client.beta.messages.stream(**request) as stream:
             for event in stream:
                 if event.type == "message_start":
@@ -634,6 +690,7 @@ def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
                     out.flush()                       # nothing lost if the run dies
             final = stream.get_final_message()
 
+        stop_reason = final.stop_reason
         print(f"Pass {attempt + 1}: stop_reason = {final.stop_reason}, "
               f"input tokens = {final.usage.input_tokens}, "
               f"output tokens = {final.usage.output_tokens}")
@@ -643,8 +700,13 @@ def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
             container_id = container.id
         generated.extend(find_generated_file_ids(final))
 
+        if final.stop_reason == "refusal":            # safety system said no
+            report_refusal(out, final, msg_id if msg_id != "unknown" else final.id,
+                           attempt + 1, model)
+            return generated, stop_reason
+
         if final.stop_reason not in ("max_tokens", "pause_turn"):
-            return generated                          # finished normally
+            return generated, stop_reason             # finished normally
 
         if attempt == max_continuations:              # out of retries
             warning = ("\n\n[WARNING: reply still incomplete "
@@ -653,12 +715,12 @@ def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
                        "MAX_CONTINUATIONS.]\n")
             out.write(warning)
             print(warning)
-            return generated
+            return generated, stop_reason
 
         blocks = assistant_blocks(final)
         if not blocks:
             print("Reply was empty -- cannot continue.")
-            return generated
+            return generated, stop_reason
         messages.append({"role": "assistant", "content": blocks})
 
         if final.stop_reason == "max_tokens":
@@ -667,7 +729,7 @@ def run_query(client: Anthropic, messages: list[dict], out, *, model: str,
         else:  # pause_turn: resend as-is so Claude resumes its own turn
             print("Long tool run paused -- resuming...")
 
-    return generated
+    return generated, stop_reason
 
 
 # ---- generated files / cleanup ------------------------------------------
@@ -761,7 +823,7 @@ def main() -> int:
             )
             t0 = time.perf_counter()                  # times the streaming call only
             try:
-                generated = run_query(
+                generated, stop_reason = run_query(
                     client, messages, out,
                     model=args.model,
                     max_tokens=args.max_tokens,
@@ -779,6 +841,9 @@ def main() -> int:
 
         if generated and DOWNLOAD_GENERATED_FILES:
             save_generated_files(client, generated, args.dir)
+
+        if stop_reason == "refusal":
+            return EXIT_REFUSED
         return 0
 
     except anthropic.APIError as e:

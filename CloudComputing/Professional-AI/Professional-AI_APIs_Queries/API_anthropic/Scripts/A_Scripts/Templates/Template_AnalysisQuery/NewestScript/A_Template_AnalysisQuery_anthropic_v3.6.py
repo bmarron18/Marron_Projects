@@ -233,8 +233,8 @@ GENERATED_PREFIX = "generated_" # prefix for those saved files
 UNKNOWN_TYPE_POLICY = "container"
 
 # ---- Model / output size -----------------------------------------------
-#MODEL = "claude-opus-5-5"   # or another current model id
-MODEL = "claude-fable-5-1" 
+MODEL = "claude-opus-5-5"   # or another current model id
+#MODEL = "claude-fable-5-1" 
 MAX_TOKENS = 128000          # lower this if the API rejects it for your model
 MAX_CONTINUATIONS = 3       # extra passes if the reply is cut off / paused
 

@@ -1,0 +1,44 @@
+=====================================
+TIFF FILE: MountainView_NDVI_2022.tif
+Path: /home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/Professional-AI_APIs_RemoteSensing/API_earthengine-api/HowTos/Maps/MountainView_NDVI_2022.tif
+Pages: 1
+=====================================
+
+--- Page 0 ---
+shape: (669, 836), dtype: float32, compression: LZW
+min: -0.2801677882671356, max: 0.518807590007782, mean: 0.1004
+ImageWidth: 836
+ImageLength: 669
+BitsPerSample: 32
+Compression: 5
+PhotometricInterpretation: 1
+SamplesPerPixel: 1
+PlanarConfiguration: 1
+Predictor: 1
+TileWidth: 256
+TileLength: 256
+TileOffsets: (810, 161799, 426045, 640905, 658379, 914795, 1189729, 1467542, 1529443, 1594260, 1751507, 1856406)
+TileByteCounts: (160989, 264246, 214860, 17474, 256416, 274934, 277813, 61901, 64817, 157247, 104899, 1840)
+SampleFormat: 3
+ModelPixelScaleTag: (0.00026949458523585647, 0.00026949458523585647, 0.0)
+ModelTiepointTag: (0.0, 0.0, 0.0, -122.19450433222728, 37.51014283522316, 0.0)
+GeoKeyDirectoryTag: (1, 1, 0, 7, 1024, 0, 1, 2, 1025, 0, 1, 1, 2048, 0, 1, 4326, 2049, 34737, 7, 0, 2054, 0, 1, 9102, 2057, 34736, 1, 1, 2059, 34736, 1, 0)
+GeoDoubleParamsTag: (298.257223563, 6378137.0)
+GeoAsciiParamsTag: WGS 84|
+GDAL_METADATA: <GDALMetadata>
+  <Item name="DESCRIPTION" sample="0" role="description">NDVI</Item>
+</GDALMetadata>
+
+--- GeoTIFF metadata ---
+KeyDirectoryVersion: 1
+KeyRevision: 1
+KeyRevisionMinor: 0
+GTModelTypeGeoKey: 2
+GTRasterTypeGeoKey: 1
+GeographicTypeGeoKey: 4326
+GeogCitationGeoKey: WGS 84
+GeogAngularUnitsGeoKey: 9102
+GeogSemiMajorAxisGeoKey: 6378137.0
+GeogInvFlatteningGeoKey: 298.257223563
+ModelPixelScale: [0.00026949458523585647, 0.00026949458523585647, 0.0]
+ModelTiepoint: [0.0, 0.0, 0.0, -122.19450433222728, 37.51014283522316, 0.0]

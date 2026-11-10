@@ -1,19 +1,19 @@
 [0] Config.pm:329> INFO - This is Biber 2.22
 [0] Config.pm:332> INFO - Logfile is 'Course_P01_Outline.blg'
-[33] biber:342> INFO - === Mon Nov  9, 2026, 09:36:21
-[41] Biber.pm:421> INFO - Reading 'Course_P01_Outline.bcf'
-[79] Biber.pm:1002> INFO - Found 1 citekeys in bib section 0
+[33] biber:342> INFO - === Mon Nov  9, 2026, 17:28:54
+[40] Biber.pm:421> INFO - Reading 'Course_P01_Outline.bcf'
+[78] Biber.pm:1002> INFO - Found 1 citekeys in bib section 0
 [87] Biber.pm:4487> INFO - Processing section 0
-[92] Biber.pm:4680> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
-[186] bibtex.pm:1713> INFO - LaTeX decoding ...
-[750] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
-[800] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[800] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[800] Biber.pm:4307> INFO - Sorting list 'nyt/apasortcite//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[800] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
-[805] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[805] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[805] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
-[805] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
-[806] bbl.pm:676> INFO - Writing 'Course_P01_Outline.bbl' with encoding 'UTF-8'
-[807] bbl.pm:779> INFO - Output to Course_P01_Outline.bbl
+[91] Biber.pm:4680> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[182] bibtex.pm:1713> INFO - LaTeX decoding ...
+[744] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[794] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[794] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[794] Biber.pm:4307> INFO - Sorting list 'nyt/apasortcite//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[794] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[798] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[798] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[798] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[798] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[799] bbl.pm:676> INFO - Writing 'Course_P01_Outline.bbl' with encoding 'UTF-8'
+[800] bbl.pm:779> INFO - Output to Course_P01_Outline.bbl

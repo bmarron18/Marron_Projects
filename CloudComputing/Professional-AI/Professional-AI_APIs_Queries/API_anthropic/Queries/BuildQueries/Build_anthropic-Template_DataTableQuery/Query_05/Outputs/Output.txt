@@ -1,0 +1,23 @@
+
+IPython output
+----------------
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/Professional-AI_APIs_Queries/API_anthropic/Queries/BuildQueries/Build_anthropic-Template_DataTableQuery/Query_05/A_Template_AnalysisQuery_anthropic_v3.6.py --wdir
+
+file                                     route      mime
+---------------------------------------- ---------- ----------------------------
+A_Template_DataTableQuery_anthropic_v1.2 document   text/plain
+A_Template_AnalysisQuery_anthropic_v3.6. document   text/plain
+
+Uploaded A_Template_DataTableQuery_anthropic_v1.2.py [document] -> file_01BFXDC8eENTRrNhCFHrxGKR
+Uploaded A_Template_AnalysisQuery_anthropic_v3.6.py [document] -> file_011u9Q2d6oxpafdwAjGyqfA3
+Pass 1: message id = msg_011CgtTsJBKbJ2b1En8FH29f
+Pass 1: stop_reason = end_turn, input tokens = 17595, output tokens = 23941
+Runtime: 4m 24s
+Response written to /home/bruce-vdb/Desktop/QueryResponse_Anthropic.txt
+Deleted A_Template_DataTableQuery_anthropic_v1.2.py (file_01BFXDC8eENTRrNhCFHrxGKR)
+Deleted A_Template_AnalysisQuery_anthropic_v3.6.py (file_011u9Q2d6oxpafdwAjGyqfA3)
+
+
+
+
+

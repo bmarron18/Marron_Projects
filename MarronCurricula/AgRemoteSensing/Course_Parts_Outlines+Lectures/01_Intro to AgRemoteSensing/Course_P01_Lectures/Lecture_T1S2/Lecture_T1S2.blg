@@ -1,0 +1,19 @@
+[0] Config.pm:329> INFO - This is Biber 2.22
+[0] Config.pm:332> INFO - Logfile is 'Lecture_T1S2.blg'
+[33] biber:342> INFO - === Mon Nov  9, 2026, 16:38:40
+[40] Biber.pm:421> INFO - Reading 'Lecture_T1S2.bcf'
+[78] Biber.pm:1002> INFO - Found 1 citekeys in bib section 0
+[87] Biber.pm:4487> INFO - Processing section 0
+[92] Biber.pm:4680> INFO - Looking for bibtex file '~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib' for section 0
+[196] bibtex.pm:1713> INFO - LaTeX decoding ...
+[776] bibtex.pm:1519> INFO - Found BibTeX data source '/home/bruce-vdb/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib'
+[825] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[826] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[826] Biber.pm:4307> INFO - Sorting list 'nyt/apasortcite//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[826] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[830] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[830] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[830] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'en-US'
+[830] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[831] bbl.pm:676> INFO - Writing 'Lecture_T1S2.bbl' with encoding 'UTF-8'
+[832] bbl.pm:779> INFO - Output to Lecture_T1S2.bbl

@@ -1,4 +1,4 @@
-PWD /home/bruce-vdb/Desktop/Marron_Projects/Curricula/AgRemoteSensing/Course_Parts_Outlines+Lectures/01_Intro to AgRemoteSensing/Course_P01_Outline
+PWD /home/bruce-vdb/Desktop/Marron_Projects/MarronCurricula/AgRemoteSensing/Course_Parts_Outlines+Lectures/01_Intro to AgRemoteSensing/Course_P01_Outline
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
@@ -507,20 +507,20 @@ INPUT ./graphics/UMA_Logo.png
 INPUT ./graphics/UMA_Logo.png
 INPUT ./graphics/UMA_Logo.png
 INPUT ./graphics/UMA_Logo.png
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri9e.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1pplx.fd
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1pplx.fd
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1pplx.fd
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplr9c.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplb9e.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplri9e.vf
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri8r.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmri.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplr9c.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplrc8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplb9e.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/mathpazo/fplmb.tfm
+INPUT ./graphics/UMA_Logo.png
+INPUT ./graphics/UMA_Logo.png
+INPUT ./graphics/UMA_Logo.png
+INPUT ./graphics/UMA_Logo.png
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri9e.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/palatino/pplri9e.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/palatino/pplri8r.tfm
