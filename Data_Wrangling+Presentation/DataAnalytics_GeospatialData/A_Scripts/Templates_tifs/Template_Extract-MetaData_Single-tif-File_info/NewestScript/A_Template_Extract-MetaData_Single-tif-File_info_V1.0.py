@@ -32,9 +32,7 @@ import tifffile
 import imagecodecs  # makes sure the LZW codec is available to tifffile
 from pathlib import Path
 
-tif_path = Path("/home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/"
-                "Professional-AI_APIs_RemoteSensing/API_earthengine-api/HowTos/Maps/"
-                "MountainView_NDVI_2022.tif")
+tif_path = Path("/home/bruce-vdb/Desktop/MountainView_NDVI_2022.tif")
 out_path = Path("/home/bruce-vdb/Desktop") / f"{tif_path.stem}_tags.txt"
 
 MAX_LEN = 500  # truncate very long tag values (e.g. strip offsets)

@@ -15,7 +15,8 @@ Created on Sun Feb 14 15:17:10 2016
 
 #%%
 """
-ArcPy is part of ArcGIS, which is not free software. You need to obtain a license for ArcGIS to use ArcPy.
+ArcPy is part of ArcGIS, which is not free software. You need to obtain a license for ArcGIS
+to use ArcPy.
 
 There's not really any "raw string"; there are raw string literals, 
 which are exactly the string literals marked by a 'r' before the opening quote.

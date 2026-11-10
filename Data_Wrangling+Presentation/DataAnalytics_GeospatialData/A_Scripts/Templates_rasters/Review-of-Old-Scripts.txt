@@ -1,0 +1,109 @@
+###########
+UPDATE
+##########
+I've rewritten the old script as `A_Template_Raster-to-RGB-GeoTIFF_v1.0.py`, in the same Spyder/venv-friendly style, and attached it. The colour ramp logic passes a quick test, but I couldn't test the full script because `rasterio` isn't installed in my workspace.
+
+- **Configuration cell:** `INPUT_FILE`, `OUTPUT_DIR`, `CRS_OVERRIDE`, `VALUE_MIN` and `VALUE_MAX` sit at the top, followed by the colour ramp and the nodata settings. Edit `INPUT_FILE` before the first run. It's still the placeholder `your_file.asc`.
+- **Colour ramp:** it replaces the missing `MakeColor` function. The ramp is a list of (fraction of the value range, RGB) stops, and the default runs dark green, light green, pale yellow, brown, white. It stretches to your data's min and max unless you set `VALUE_MIN` and `VALUE_MAX`.
+- **Nodata:** those cells get a fixed colour (`NODATA_COLOR`, black by default). With `NODATA_TRANSPARENT = True`, the output also gets an alpha band so they show as transparent in GIS software.
+- **Output:** a compressed 8-bit GeoTIFF, `<name>_rgb.tif`, with the input's georeferencing. If your `.asc` has no `.prj` file, set `CRS_OVERRIDE` (for example `"EPSG:32614"`). Otherwise the output has correct cell positions but no coordinate system.
+- **Spyder:** the `rgb` array stays in the console, and the script has the same venv setup instructions and clear error messages as v1.1.
+
+The test used a small array with a stubbed `rasterio`. The lowest, middle and highest values gave the expected ramp colours, nodata cells came out black, and a flat raster worked without dividing by zero. The file writing and CRS handling haven't been run, so if you send a sample `.asc` I can test the full path.
+
+###########
+UPDATE
+#############
+I've saved the Spyder/venv version as `A_Template_ExtractData_Single-asc-File_data_v1.1.py` (bumped from v1.0) and attached it. I haven't run it, since I have no `.asc` file or Spyder here to test with.
+
+**What changed for Spyder**
+- **Configuration cell:** `INPUT_FILE` and `OUTPUT_DIR` now sit at the top, because Spyder doesn't pass command-line arguments the way a terminal does. Edit `INPUT_FILE` to point at your `.asc` file, then press F5.
+- **Cells:** the file is split into `#%%` cells (configuration, imports, function, run), so you can run them one at a time.
+- **Result in the console:** `xyz` stays in the Spyder console after the run, so you can look at it in the Variable Explorer.
+- **Command line still works:** if you pass a path in a terminal, it overrides `INPUT_FILE`.
+- **Clearer errors:** you get a plain message if `rasterio` is missing from the interpreter Spyder is using, or if `INPUT_FILE` doesn't exist.
+- **Header:** the docstring now has the correct usage lines and a venv setup section.
+
+**Venv setup** (also in the docstring)
+1. Create and activate the venv, then run `pip install numpy rasterio spyder-kernels`.
+2. In Spyder, go to Tools > Preferences > Python interpreter and select the venv's `python`.
+3. Restart the kernel.
+
+If Spyder complains about the `spyder-kernels` version, the Preferences page tells you which one to install.
+
+You'll need to change `INPUT_FILE` from the placeholder `your_file.asc` before the first run.
+
+
+
+############
+UPDATE
+##########
+I've written `ascii_grid_to_xyz.py` and attached it here. I haven't run it, since I don't have a sample `.asc` file to test against.
+
+- **Docstring header:** it explains what the script does, how to run it from a terminal or import it, the requirements (Python 3, numpy, rasterio), and a few caveats about ASCII grids.
+- **Rasterio:** it replaces the GDAL calls, and cell-centre coordinates now come from the raster's affine transform. This fixes the coordinate math from the original ArcPy script.
+- **Desktop output:** the script writes two files to `/home/bruce-vdb/Desktop` by default. `<name>_xyz.csv` has x, y and value for every valid cell (nodata cells are skipped), and `<name>_summary.txt` has the size, CRS, cell size, bounds, nodata value and basic stats. You can pass a different output folder as a second argument.
+
+I can't write to your desktop myself, because this plan doesn't include access to files on your computer. Download the script and run it on your machine, and the outputs will land on your desktop. If `rasterio` isn't installed there, run `pip install rasterio` first.
+
+If you send me a small `.asc` file, I can test it and adjust anything that doesn't work.
+
+
+
+###########
+OLD SCRIPT REVIEW
+###############
+Both scripts are about getting raster/ASCII grid data (the `.asc` format used in GIS) into Python so you can work with it as arrays. They look like lab/coursework from 2016 (a FRAGSTATS landscape-metrics workflow, judging by the paths), and they're partly unfinished.
+
+## ASCII_data1.py (ArcPy + NumPy)
+
+**What it does:** Takes two ArcGIS rasters, builds an array of cell-centre coordinates, converts both rasters to NumPy arrays, and stacks everything into one array where each cell holds `[Y, X, value1, value2]`.
+
+**Problems:**
+- **The coordinate math is wrong.** `numpy.fromfunction` passes in *index grids* (row and column numbers), but the functions then add `rasHeight`/`rasWidth`, which are the grid *dimensions*, shadowing the arguments. The intended formula is:
+  ```python
+  coordX = rasXmin + (col_index + 0.5) * cellWidth
+  coordY = rasYmin + (row_index + 0.5) * cellHeight
+  ```
+  As written, every cell gets the same constant offset, not a per-cell coordinate.
+- **Parameter order is confused.** `fromfunction` calls the function with `(row_idx, col_idx)`, so the first argument is rows (Y direction) and the second is columns (X direction). The code names them the other way round, which is why the comment says "Y before X" and then has to explain `dstack` order.
+- **Transposes look suspect.** `inRasterArray.T` swaps axes so the shape no longer matches the `(rows, cols, 2)` coordinate stack. It would raise a shape error unless the raster is square.
+- **Dependency:** ArcPy requires a licensed ArcGIS install (the docstring notes this), so it won't run on a plain Python setup.
+
+## ASCII_data2.py (GDAL / astropy)
+
+**What it does:** Reads an ESRI ASCII grid (`.asc`) with GDAL, reports its size, band count and driver, then prints the geotransform (origin and pixel size).
+
+**Problems:**
+- **Python 2 syntax.** `print geotransform[0]` is a syntax error in Python 3. Use `print(geotransform[0])`.
+- **Outdated import.** `from gdalconst import *` is deprecated; use `from osgeo import gdalconst`.
+- **Unused/inconsistent bits:** the `astropy` read (`ascii.read`) points at a different file (`rck_crk06_rcl.asc`) than the GDAL one (`rck2_crk06_rcl.asc`), and astropy would not parse a georeferenced grid properly anyway. `ogr`, `osr`, `np` and `gdal_version` are imported/computed but never used.
+- **It stops early.** It never reads the actual cell values; you'd want `dataset.GetRasterBand(1).ReadAsArray()` to get the data.
+- Hardcoded absolute paths to a machine you probably no longer use.
+
+## How I'd use them today
+
+For the open-source route, a cleaned-up version of script 2 does what script 1 was trying to do, without ArcGIS:
+
+<<< python
+from osgeo import gdal
+import numpy as np
+
+gdal.UseExceptions()
+ds = gdal.Open("your_file.asc")
+gt = ds.GetGeoTransform()
+band = ds.GetRasterBand(1)
+arr = band.ReadAsArray()
+nodata = band.GetNoDataValue()
+
+rows, cols = arr.shape
+col_idx, row_idx = np.meshgrid(np.arange(cols), np.arange(rows))
+x = gt[0] + (col_idx + 0.5) * gt[1]
+y = gt[3] + (row_idx + 0.5) * gt[5]   # gt[5] is negative for north-up rasters
+
+stacked = np.dstack((y, x, arr))
+>>>
+
+Alternatively, `rasterio` is a friendlier modern wrapper around GDAL for this kind of work.
+
+If you tell me what you're trying to do (landscape metrics, extracting coordinates for points, resampling, etc.), I can adapt one of these into a working script, and if you attach a sample `.asc` file I can test it.

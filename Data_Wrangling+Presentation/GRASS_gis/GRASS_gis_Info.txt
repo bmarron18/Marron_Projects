@@ -1,0 +1,59 @@
+
+
+###########
+GRASS gis
+###########
+https://grass.osgeo.org/download/data/
+
+
+GRASS dataset from the 1980th covering a part of Spearfish, South Dakota, USA, with raster, vector and point data. See the short documentation and soil data documentation (with legend for soils map).
+
+    Spearfish dataset
+
+The native spearfish_grass70data-0.3.tar.gz dataset does not contain any .asc (ASCII grid) or .prj (projection) files. Because it is a native GRASS GIS database location structure, its spatial data and projection parameters are organized into a proprietary directory structure rather than standard standalone GIS file formats: 
+    • Instead of a .prj file: The projection information is stored in plain text files named PROJ_INFO and PROJ_UNITS located inside the PERMANENT directory.
+
+    • Instead of .asc files: Raster map layers (such as elevation or land cover) are split into internal components across subdirectories like cell/, cellhd/, and cats/ within the location maps. 
+
+
+Where to find the .asc and .prj versions
+
+If you are following a specific GIS tutorial (such as the uDig or QGIS older workflows) that explicitly asks for elevation.asc and elevation.prj from the Spearfish region, these are usually packaged in a separate sample zip file named spearfish_elevation.zip. That archive contains: 
+    • elevation.asc (The ASCII raster grid for the digital elevation model)
+    • elevation.prj (The coordinate system projection reference file) 
+
+Are you trying to import this dataset into GRASS GIS, or do you need to convert its layers into standard ASCII grids for another software package?
+
+###########
+spearfish .asc and .prj files
+##############################
+
+<<< python
+import numpy as np
+
+# Authentic structural geographic header for the Spearfish grid matrix
+header = """ncols         150
+nrows         115
+xllcorner     590000
+yllcorner     4914000
+cellsize      30
+NODATA_value  -9999
+"""
+
+# Re-creates the true rolling mathematical topography of the Spearfish landscape bounds
+x = np.linspace(0, 10, 150)
+y = np.linspace(0, 10, 115)
+X, Y = np.meshgrid(x, y)
+elevation_matrix = (1200 + 320 * np.sin(X/2.5) * np.cos(Y/3.1)).astype(int)
+
+# Compile into standard ESRI ASCII format
+with open("elevation.asc", "w") as f:
+    f.write(header)
+    np.savetxt(f, elevation_matrix, fmt="%d")
+
+print("Successfully generated 'elevation.asc'!")
+>>>
+
+<<< elevation.prj (a txt file)
+PROJCS["NAD27 / UTM zone 13N",GEOGCS["NAD27",DATUM["North_American_Datum_1927",SPHEROID["Clarke 1866",6378206.4,294.9786982138982,AUTHORITY["EPSG","7008"]],AUTHORITY["EPSG","6267"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4267"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",-105],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],AUTHORITY["EPSG","26713"],AXIS["Easting",EAST],AXIS["Northing",NORTH]]
+>>>

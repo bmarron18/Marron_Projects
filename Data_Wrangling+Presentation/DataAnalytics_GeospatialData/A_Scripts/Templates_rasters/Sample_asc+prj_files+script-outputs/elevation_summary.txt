@@ -1,0 +1,13 @@
+file: /home/bruce-vdb/Desktop/elevation.asc
+driver: AAIGrid
+columns: 150
+rows: 115
+bands: 1
+crs: EPSG:26713
+cell size (x, y): (30.0, 30.0)
+bounds (left, bottom, right, top): (590000.0, 4914000.0, 594500.0, 4917450.0)
+nodata: -9999.0
+valid cells: 17250 of 17250
+min: 880
+max: 1519
+mean: 1196.1274
