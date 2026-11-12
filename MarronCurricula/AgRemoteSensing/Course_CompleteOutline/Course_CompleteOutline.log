@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  9 NOV 2026 09:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  10 NOV 2026 16:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1356,7 +1356,7 @@ Package microtype Info: Character `029' is missing
 <graphics/UMA_Logo.png, id=4, 495.8525pt x 158.5925pt>
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 272.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 246.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 
@@ -1370,14 +1370,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 ocal/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
  <./graphics/UMA_Logo.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 292--293
-
- []
-
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 323.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 293.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 36.06796pt, for example:
@@ -1386,34 +1383,8 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
 
 [2]
-File: graphics/UMA_Logo.png Graphic file (type png)
-<use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 381.
-(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 36.06796pt, for example:
-(fancyhdr)                \setlength{\headheight}{36.06796pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
-
-[3]
-File: graphics/UMA_Logo.png Graphic file (type png)
-<use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 399.
-(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 36.06796pt, for example:
-(fancyhdr)                \setlength{\headheight}{36.06796pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
-
-[4]
-
-LaTeX Warning: Empty bibliography on input line 401.
+LaTeX Warning: Empty bibliography on input line 295.
 
 (./Course_CompleteOutline.aux)
  ***********
@@ -1425,21 +1396,21 @@ Package logreq Info: Writing requests to 'Course_CompleteOutline.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 33230 strings out of 467099
- 664660 string characters out of 5408266
- 1728787 words of memory out of 5000000
- 61964 multiletter control sequences out of 15000+600000
- 651527 words of font info for 99 fonts, out of 8000000 for 9000
+ 33275 strings out of 467099
+ 665142 string characters out of 5408266
+ 1726787 words of memory out of 5000000
+ 61973 multiletter control sequences out of 15000+600000
+ 660432 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  107i,16n,108p,1019b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/
 local/texlive/2026/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/t
-exlive/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/
-2026/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Course_CompleteOutline.pdf (4 pages, 93406 bytes).
+exlive/2026/texmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb></usr/local/texlive
+/2026/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
+Output written on Course_CompleteOutline.pdf (2 pages, 90280 bytes).
 PDF statistics:
- 44 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 38 PDF objects out of 1000 (max. 8388607)
+ 23 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 38930 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 55314 words of extra memory for PDF output out of 61914 (max. 10000000)
 

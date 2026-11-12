@@ -1,0 +1,2802 @@
+
+$ gcloud iam list-grantable-roles //cloudresourcemanager.googleapis.com/projects/agremotesensing
+
+OPTIONAL ROLES
+---
+description: Access to edit and deploy an action
+name: roles/actions.Admin
+title: Actions Admin
+---
+description: Access to view an action
+name: roles/actions.Viewer
+title: Actions Viewer
+---
+description: Full administrative control to view, create, update, delete, and manage
+  permissions for most GCP resources.
+name: roles/admin
+title: Admin
+---
+description: Grants Agent Gateway Service Agent permissions required to do DNS peering.
+name: roles/agentgateway.serviceAgent
+title: Agent Gateway Service Agent
+---
+description: Grants AI Edge Portal Service Agent permissions required to read/write
+  data to GCS buckets
+name: roles/aiedgeportal.serviceAgent
+title: AI Edge Portal Service Agent
+---
+description: Vertex AI Service Agent used to access Agent Sandbox managed resources
+  in consumer project with restricted permissions.
+name: roles/aiplatform.agentSandboxServiceAgent
+title: Vertex AI Agent Sandbox Service Agent
+---
+description: Vertex AI Batch Prediction Service Agent for serving batch prediction
+  requests.
+name: roles/aiplatform.batchPredictionServiceAgent
+title: Vertex AI Batch Prediction Service Agent
+---
+description: Gives Vertex AI Colab the proper permissions to function.
+name: roles/aiplatform.colabServiceAgent
+title: Vertex AI Colab Service Agent
+---
+description: Gives Vertex AI Custom Code the proper permissions. The aiplatform.customJobs.create
+  IAM permission is highly privileged. Through Vertex AI Custom Training jobs, it
+  effectively grants editor-level access to other services activated for the consumer
+  project, such as GCS and BigQuery.
+name: roles/aiplatform.customCodeServiceAgent
+title: Vertex AI Custom Code Service Agent
+---
+description: Gives Vertex AI Extension that executes custom code the permissions it
+  needs to function.
+name: roles/aiplatform.extensionCustomCodeServiceAgent
+title: Vertex AI Extension Custom Code Service Agent
+---
+description: Gives Vertex AI Extension the permissions it needs to function.
+name: roles/aiplatform.extensionServiceAgent
+title: Vertex AI Extension Service Agent
+---
+description: Gives Vertex AI Model Monitoring the permissions it needs to function.
+name: roles/aiplatform.modelMonitoringServiceAgent
+title: Vertex AI Model Monitoring Service Agent
+---
+description: Vertex AI Service Agent used to run Notebook managed resources in user
+  project with restricted permissions.
+name: roles/aiplatform.notebookServiceAgent
+title: Vertex AI Notebook Service Agent
+---
+description: Gives Vertex AI Online Prediction the permissions it needs to function.
+name: roles/aiplatform.onlinePredictionServiceAgent
+title: Vertex AI Online Prediction Service Agent
+---
+description: Vertex AI Service Agent used by Vertex RAG to access user imported data,
+  Vertex AI, Document AI processors, and Vector Search in the project
+name: roles/aiplatform.ragServiceAgent
+title: Vertex AI RAG Data Service Agent
+---
+description: Vertex AI Service Agent used by GenAI Rapid Evaluation Service to access
+  publisher model endpoints in the user project
+name: roles/aiplatform.rapidevalServiceAgent
+title: Vertex AI Rapid Eval Service Agent
+---
+description: Gives Vertex AI Reasoning Engine the proper permissions to function.
+  The aiplatform.reasoningEngines.create IAM permission implies read access to the
+  GCS objects of the consumer project through this service agent.
+name: roles/aiplatform.reasoningEngineServiceAgent
+title: Vertex AI Reasoning Engine Service Agent
+---
+description: Gives Vertex AI the permissions it needs to function.
+name: roles/aiplatform.serviceAgent
+title: Vertex AI Service Agent
+---
+description: Allows Vertex AI Telemetry Service Agent to access telemetry data.
+name: roles/aiplatform.telemetryServiceAgent
+title: Vertex AI Telemetry Service Agent
+---
+description: Vertex AI Service Agent used for tuning in user project.
+name: roles/aiplatform.tuningServiceAgent
+title: Vertex AI Tuning Service Agent
+---
+description: Grants FlowService Service Agent permissions to manage resources in the
+  consumer project.
+name: roles/aisandbox.serviceAgent
+title: FlowService Service Agent
+---
+description: Gives the AlloyDB service account permission to manage customer resources
+name: roles/alloydb.serviceAgent
+title: AlloyDB Service Agent
+---
+description: Administer Data Exchanges and Listings
+name: roles/analyticshub.admin
+title: Analytics Hub Admin
+---
+description: Editor role for Analytics Hub
+name: roles/analyticshub.editor
+title: Analytics Hub Editor
+---
+description: Grants full control over the Listing, including updating, deleting and
+  setting ACLs
+name: roles/analyticshub.listingAdmin
+title: Analytics Hub Listing Admin
+---
+description: Can publish to Data Exchanges thus creating Listings
+name: roles/analyticshub.publisher
+title: Analytics Hub Publisher
+---
+description: Grants Analytics Hub Service Agent permissions required to manage resources
+  in the consumer project.
+name: roles/analyticshub.serviceAgent
+title: Analytics Hub Service Agent
+---
+description: Can browse Data Exchanges and subscribe to Listings
+name: roles/analyticshub.subscriber
+title: Analytics Hub Subscriber
+---
+description: Grants full control over the Subscription, including updating and deleting
+name: roles/analyticshub.subscriptionOwner
+title: Analytics Hub Subscription Owner
+---
+description: Can browse Data Exchanges and Listings
+name: roles/analyticshub.viewer
+title: Analytics Hub Viewer
+---
+description: Gives the Anthos service agent access to Cloud Platformresources.
+name: roles/anthos.serviceAgent
+title: Anthos Service Agent
+---
+description: Gives the Anthos Audit service agent access toCloud Platform resources.
+name: roles/anthosaudit.serviceAgent
+title: Anthos Audit Service Agent
+---
+description: Gives the Anthos Config Management service agent access toCloud Platform
+  resources.
+name: roles/anthosconfigmanagement.serviceAgent
+title: Anthos Config Management Service Agent
+---
+description: Gives the Anthos Identity service agent access to Cloud Platform resources.
+name: roles/anthosidentityservice.serviceAgent
+title: Anthos Identity Service Agent
+---
+description: Gives the Anthos Policy Controller service agent access toCloud Platform
+  resources.
+name: roles/anthospolicycontroller.serviceAgent
+title: Anthos Policy Controller Service Agent
+---
+description: Gives the Anthos Service Mesh service agent access to Cloud Platform
+  resources.
+name: roles/anthosservicemesh.serviceAgent
+title: Anthos Service Mesh Service Agent
+---
+description: ' Gives the Anthos Support Service Agent access to Cloud Platform resource.'
+name: roles/anthossupport.serviceAgent
+title: Anthos Support Service Agent
+---
+description: Gives Cloud API Gateway service account access to Service Management
+  check and reports as well as impersonation on user-specified service accounts.
+name: roles/apigateway.serviceAgent
+title: Cloud API Gateway Service Agent
+---
+description: Gives Cloud API Gateway service account access to retrieve aService configuration.
+name: roles/apigateway_management.serviceAgent
+title: Cloud API Gateway Management Service Agent
+---
+description: Service agent that grants access to the resources for managing the lifecyle
+  for Apigee APIM Service Extensions.
+name: roles/apigee.apimServiceExtensionServiceAgent
+title: Apigee APIM Service Extension Service Agent
+---
+description: Service agent that grants access to Apigee resources - API Products,
+  Developers, Developer Apps, App Keys, and Apigee Environments (without granting
+  impersonation permissions).
+name: roles/apigee.coreServiceAgent
+title: Apigee Core Service Agent
+---
+description: Service agent that grants access to Apigee resources - API Products,
+  Developers, Developer Apps, and App Keys.
+name: roles/apigee.serviceAgent
+title: Apigee Service Agent
+---
+description: Gives API-Hub Service Account access to runtime project resources.
+name: roles/apihub.runtimeProjectServiceAgent
+title: API-Hub Runtime Project Service Agent
+---
+description: Gives APIM the ability to manage resources in consumer project
+name: roles/apim.apiDiscoveryServiceAgent
+title: APIM API Discovery Service Agent
+---
+description: Give the App Development Experience service agent access toCloud Platform
+  resources.
+name: roles/appdevelopmentexperience.serviceAgent
+title: App Development Experience Service Agent
+---
+description: Full management of App Engine apps (but not storage).
+name: roles/appengine.appAdmin
+title: App Engine Admin
+---
+description: Ability to create the App Engine resource for the project.
+name: roles/appengine.appCreator
+title: App Engine Creator
+---
+description: Ability to view App Engine app status.
+name: roles/appengine.appViewer
+title: App Engine Viewer
+---
+description: Ability to view App Engine app status and deployed source code.
+name: roles/appengine.codeViewer
+title: App Engine Code Viewer
+---
+description: Necessary permissions to deploy new code to App Engine, and remove old
+  versions.
+name: roles/appengine.deployer
+title: App Engine Deployer
+---
+description: Can view and change traffic splits, scaling settings, and delete old
+  versions; can't create new versions.
+name: roles/appengine.serviceAdmin
+title: App Engine Service Admin
+---
+description: Give App Engine Standard Environment service account access to managed
+  resources. Includes access to service accounts.
+name: roles/appengine.serviceAgent
+title: App Engine Standard Environment Service Agent
+---
+description: Can edit and manage App Engine Flexible Environment apps. Includes access
+  to service accounts.
+name: roles/appengineflex.serviceAgent
+title: App Engine flexible environment Service Agent
+---
+description: Full access to App Topology resources.
+name: roles/apptopology.admin
+title: App Topology Admin
+---
+description: Readonly access to App Topology resources.
+name: roles/apptopology.viewer
+title: App Topology Viewer
+---
+description: Gives the Artifact Registry service account access to managed resources.
+name: roles/artifactregistry.serviceAgent
+title: Artifact Registry Service Agent
+---
+description: Access to use Assured OSS and manage configuration.
+name: roles/assuredoss.projectAdmin
+title: Assured OSS Project Admin
+---
+description: Gives the Assured Workloads service account access to create CAIS feed
+  and monitor Assured Workloads.
+name: roles/assuredworkloads.monitoringServiceAgent
+title: Assured Workloads Monitoring Service Agent
+---
+description: Grants read access to all Assured Workloads resources and CRM resources
+  - project/folder
+name: roles/assuredworkloads.reader
+title: Assured Workloads Reader
+---
+description: Gives the Assured Workloads service account access to create KMS keyrings
+  and keys, monitor Assured Workloads and read Organization Policies.
+name: roles/assuredworkloads.serviceAgent
+title: Assured Workloads Service Agent
+---
+description: Grants Audit Manager Service Agent access to various list/get rpcs of
+  products to perform an audit.
+name: roles/auditmanager.serviceAgent
+title: Audit Manager Auditing Service Agent
+---
+description: AutoML service agent can act as Cloud Storage admin and export BigQuery
+  tables, which can be backed by Cloud Storage and Cloud Bigtable.
+name: roles/automl.serviceAgent
+title: AutoML Service Agent
+---
+description: Recommendations AI service uploads catalog feeds from Cloud Storage,
+  reports results to the customer Cloud Storage bucket, writes logs to customer projects,
+  and writes and reads Stackdriver metrics for customer projects.
+name: roles/automlrecommendations.serviceAgent
+title: Recommendations AI Service Agent
+---
+description: 'Provides full access to all Backup and DR resources. '
+name: roles/backupdr.admin
+title: Backup and DR Admin
+---
+description: Allows a Backup and DR service account to discover and backup AlloyDB
+  clusters.
+name: roles/backupdr.alloydbOperator
+title: Backup and DR AlloyDB Operator
+---
+description: Provides read access to resource backup config. Resource backup config
+  has the metadata of a Google Cloud resource that can be backed up, along with its
+  backup configurations.
+name: roles/backupdr.backupConfigViewer
+title: Backup and DR Backup Config Viewer
+---
+description: Allows the user to apply existing backup plans. This role cannot create
+  backup plans or restore from a backup.
+name: roles/backupdr.backupUser
+title: Backup and DR Backup User
+---
+description: Allows the Backup Appliance permissions to create and manage backups
+  in a backup vault.
+name: roles/backupdr.backupvaultAccessor
+title: Backup and DR Backup Vault Accessor
+---
+description: Allows the Backup Appliance full administrative control of backup vault
+  resources.
+name: roles/backupdr.backupvaultAdmin
+title: Backup and DR Backup Vault Admin
+---
+description: Allows the Backup Appliance permission to list backup vaults in a given
+  project.
+name: roles/backupdr.backupvaultLister
+title: Backup and DR Backup Vault Lister
+---
+description: Allows read-only permissions to access backup vault resources and backups.
+name: roles/backupdr.backupvaultViewer
+title: Backup and DR Backup Vault Viewer
+---
+description: Allows a Backup and DR service account to discover and backup Cloud SQL
+  instances.
+name: roles/backupdr.cloudSqlOperator
+title: Backup and DR Cloud SQL Operator
+---
+description: Allows a Backup and DR service account to store and manage data (backups
+  or metadata) in Cloud Storage.
+name: roles/backupdr.cloudStorageOperator
+title: Backup and DR Cloud Storage Operator
+---
+description: Allows a Backup and DR service account to discover, back up, and restore
+  Compute Engine VM instances.
+name: roles/backupdr.computeEngineOperator
+title: Backup and DR Compute Engine Operator
+---
+description: Allows a Backup and DR service account to store and manage data (backups
+  or metadata) in Disk.
+name: roles/backupdr.diskOperator
+title: Backup and DR Disk Operator
+---
+description: Editor role for backupdr
+name: roles/backupdr.editor
+title: Backupdr Editor
+---
+description: Allows a Backup and DR service account to discover and backup Filestore
+  instances.
+name: roles/backupdr.filestoreOperator
+title: Backup and DR Filestore Operator
+---
+description: Grants the Backup and DR management server access role to Backup Appliances.
+name: roles/backupdr.managementServerAccessor
+title: Backup and DR Management Server Accessor
+---
+description: Allows the user to mount from a backup. This role cannot create a backup
+  plan or restore from a backup.
+name: roles/backupdr.mountUser
+title: Backup and DR Mount User
+---
+description: Allows the user to restore or mount from a backup. This role cannot create
+  a backup plan.
+name: roles/backupdr.restoreUser
+title: Backup and DR Restore User
+---
+description: Grants the Backup and DR Service access to discover and protect GCP resources.
+name: roles/backupdr.serviceAgent
+title: Backup and DR Service Agent
+---
+description: Provides access to management console. Granular Backup and DR permissions
+  depend on ACL configuration provided by Backup and DR admin within the management
+  console.
+name: roles/backupdr.user
+title: Backup and DR User
+---
+description: Provides full access to Backup and DR resources except deploying and
+  managing backup infrastructure, expiring backups, changing data sensitivity and
+  configuring on-premises billing.
+name: roles/backupdr.userv2
+title: Backup and DR User V2
+---
+description: Provides read-only access to all Backup and DR resources.
+name: roles/backupdr.viewer
+title: Backup and DR Viewer
+---
+description: Gives permission to manage network resources such as interconnect pairing
+  keys, required for Bare Metal Solution.
+name: roles/baremetalsolution.serviceAgent
+title: Bare Metal Solution Service Agent
+---
+description: Gives Google Batch account access to manage customer resources.
+name: roles/batch.serviceAgent
+title: Google Batch Service Agent
+---
+description: Administer all BigQuery resources and data
+name: roles/bigquery.admin
+title: BigQuery Admin
+---
+description: Grants Connected Sheets Service Account access to create and manage BigQuery
+  jobs on the customers resources.
+name: roles/bigquery.connectedSheetsServiceAgent
+title: Connected Sheets Service Agent
+---
+description: Grants full control over BigQuery connections.
+name: roles/bigquery.connectionAdmin
+title: BigQuery Connection Admin
+---
+description: Allows users to use BigQuery connections.
+name: roles/bigquery.connectionUser
+title: BigQuery Connection User
+---
+description: Access to edit all the contents of datasets
+name: roles/bigquery.dataEditor
+title: BigQuery Data Editor
+---
+description: Full access to datasets and all of their contents
+name: roles/bigquery.dataOwner
+title: BigQuery Data Owner
+---
+description: Access to view datasets and all of their contents
+name: roles/bigquery.dataViewer
+title: BigQuery Data Viewer
+---
+description: Access to view filtered table data defined by a row access policy
+name: roles/bigquery.filteredDataViewer
+title: BigQuery Filtered Data Viewer
+---
+description: Access to run jobs
+name: roles/bigquery.jobUser
+title: BigQuery Job User
+---
+description: Access to view metadata of dataset, table, model, routine, and property
+  graph
+name: roles/bigquery.metadataViewer
+title: BigQuery Metadata Viewer
+---
+description: Administer ObjectRef resources that includes read and write permissions
+name: roles/bigquery.objectRefAdmin
+title: BigQuery ObjectRef Admin
+---
+description: Role for reading referenced objects via ObjectRefs in BigQuery
+name: roles/bigquery.objectRefReader
+title: BigQuery ObjectRef Reader
+---
+description: Access to create and use read sessions
+name: roles/bigquery.readSessionUser
+title: BigQuery Read Session User
+---
+description: Administers BigQuery workloads, including slot assignments, commitments,
+  and reservations.
+name: roles/bigquery.resourceAdmin
+title: BigQuery Resource Admin
+---
+description: Manages BigQuery workloads, but is unable to create or modify slot commitments.
+name: roles/bigquery.resourceEditor
+title: BigQuery Resource Editor
+---
+description: Can view BigQuery workloads, but cannot create or modify slot reservations
+  or commitments.
+name: roles/bigquery.resourceViewer
+title: BigQuery Resource Viewer
+---
+description: ' Role for Authorized Routine to administer supported resources'
+name: roles/bigquery.routineAdmin
+title: BigQuery Authorized Routine Admin
+---
+description: ' Role for Authorized Routine to edit contents of supported resources'
+name: roles/bigquery.routineDataEditor
+title: BigQuery Authorized Routine Data Editor
+---
+description: ' Role for Authorized Routine to view data and contents of supported
+  resources'
+name: roles/bigquery.routineDataViewer
+title: BigQuery Authorized Routine Data Viewer
+---
+description: ' Role for Authorized Routine to view metadata of supported resources'
+name: roles/bigquery.routineMetadataViewer
+title: BigQuery Authorized Routine Metadata Viewer
+---
+description: Administer all BigQuery security controls
+name: roles/bigquery.securityAdmin
+title: BigQuery Security Admin
+---
+description: Combination role of BigQuery Admin, Dataform Admin, Notebook Runtime
+  Admin and Dataproc Serverless Editor.
+name: roles/bigquery.studioAdmin
+title: BigQuery Studio Admin
+---
+description: Combination role of BigQuery Job User, BigQuery Read Session User, Dataform
+  Code Creator, Notebook Runtime User and Dataproc Serverless Editor.
+name: roles/bigquery.studioUser
+title: BigQuery Studio User
+---
+description: When applied to a project, access to run queries, create datasets, read
+  dataset metadata, and list tables, models and property graphs. When applied to a
+  dataset, access to read dataset metadata and list tables, models, routines and property
+  graphs within the dataset.
+name: roles/bigquery.user
+title: BigQuery User
+---
+description: Gives BigQuery Connection Service access to Cloud SQL instances in user
+  projects.
+name: roles/bigqueryconnection.serviceAgent
+title: BigQuery Connection Service Agent
+---
+description: Gives BigQuery Continuous Query access to the service accounts in the
+  user project.
+name: roles/bigquerycontinuousquery.serviceAgent
+title: BigQuery Continuous Query Service Agent
+---
+description: Role for managing Data Policies in BigQuery
+name: roles/bigquerydatapolicy.admin
+title: BigQuery Data Policy Admin
+---
+description: Editor role for BigQuery Data Policy
+name: roles/bigquerydatapolicy.editor
+title: BigQuery Data Policy Editor
+---
+description: Masked read access to sub-resources tagged by the policy tag associated
+  with a data policy, for example, BigQuery columns
+name: roles/bigquerydatapolicy.maskedReader
+title: Masked Reader
+---
+description: Raw read access to sub-resources associated with a data policy, for example,
+  BigQuery columns
+name: roles/bigquerydatapolicy.rawDataReader
+title: Raw Data Reader
+---
+description: Role for viewing Data Policies in BigQuery
+name: roles/bigquerydatapolicy.viewer
+title: BigQuery Data Policy Viewer
+---
+description: 'Gives BigQuery Data Transfer Service access to start bigquery jobs in
+  consumer project. '
+name: roles/bigquerydatatransfer.serviceAgent
+title: BigQuery Data Transfer Service Agent
+---
+description: Admin role for bigquerymigration
+name: roles/bigquerymigration.admin
+title: Bigquerymigration Admin
+---
+description: Editor of EDW migration workflows.
+name: roles/bigquerymigration.editor
+title: MigrationWorkflow Editor
+---
+description: Admin of EDW migrations.
+name: roles/bigquerymigration.migrationEditor
+title: Migration Management Editor
+---
+description: Viewer of EDW migrations.
+name: roles/bigquerymigration.migrationViewer
+title: Migration Management Viewer
+---
+description: Orchestrator of EDW migration tasks.
+name: roles/bigquerymigration.orchestrator
+title: Task Orchestrator
+---
+description: Access required for the BigQuery Migration Service to perform data discovery,
+  metadata registration, and manage data transfers.
+name: roles/bigquerymigration.serviceAgent
+title: BigQuery Migration Service Agent
+---
+description: User of EDW migration interactive SQL translation service.
+name: roles/bigquerymigration.translationUser
+title: Migration Translation User
+---
+description: Viewer of EDW migration MigrationWorkflow.
+name: roles/bigquerymigration.viewer
+title: MigrationWorkflow Viewer
+---
+description: Worker that executes EDW migration subtasks.
+name: roles/bigquerymigration.worker
+title: Task Worker
+---
+description: Gives BigQuery Omni access to tables in user projects.
+name: roles/bigqueryomni.serviceAgent
+title: BigQuery Omni Service Agent
+---
+description: Gives BigQuery Spark access to the service accounts in the user project.
+name: roles/bigqueryspark.serviceAgent
+title: BigQuery Spark Service Agent
+---
+description: Can assign a project's billing account or disable its billing.
+name: roles/billing.projectManager
+title: Project Billing Manager
+---
+description: Can read Notes and Occurrences from the Container Analysis Service to
+  find and verify signatures.
+name: roles/binaryauthorization.serviceAgent
+title: Binary Authorization Service Agent
+---
+description: Grants Blockchain Node Engine access to metrics in user project
+name: roles/blockchainnodeengine.serviceAgent
+title: Blockchain Node Engine Service Agent
+---
+description: Access to browse GCP resources.
+name: roles/browser
+title: Browser
+---
+description: Gives Business AI Code Assist the permissions to call Vertex and Discovery
+  Engine Settings API.
+name: roles/businessaicode.serviceAgent
+title: Business AI Code Service Agent
+---
+description: Grants Certificate Manager access to services and APIs in the user project.
+name: roles/certificatemanager.serviceAgent
+title: Certificate Manager Service Agent
+---
+description: Allows Customer Engagement Suite Service Account to access to dependent
+  resources.
+name: roles/ces.serviceAgent
+title: Customer Engagement Suite Service Agent
+---
+description: Gives Secops Service Agent access to organization level resources like
+  CAI.
+name: roles/chronicle.orgServiceAgent
+title: Chronicle Organization Service Agent
+---
+description: Grants Chronicle global data access to customer project
+name: roles/chronicle.serviceAgent
+title: Chronicle Service Agent
+---
+description: Gives Chronicle SOAR the ability to perform remediation on Cloud Platform
+  resources.
+name: roles/chronicle.soarServiceAgent
+title: Chronicle SOAR Service Agent
+---
+description: Gives CIEM Service Account permission to access GCP resources
+name: roles/ciem.serviceAgent
+title: CIEM Service Agent
+---
+description: Gives Gemini for Google Cloud components the proper permissions to function.
+name: roles/cloudaicompanion.serviceAgent
+title: Gemini for Google Cloud Service Agent
+---
+description: Give effective policy service account access to search all resources
+  and IAM policies.
+name: roles/cloudasset.effectivePolicyServiceAgent
+title: Effective Policies Service Agent
+---
+description: Gives Cloud Asset service agent permissions to Cloud Storage and BigQuery
+  for exporting Assets, and permission to publish to Cloud Pub/Sub topics for Asset
+  Real Time Feed.
+name: roles/cloudasset.serviceAgent
+title: Cloud Asset Service Agent
+---
+description: Gives the Cloud Build logging-specific service account access to write
+  logs.
+name: roles/cloudbuild.loggingServiceAgent
+title: Cloud Build Logging Service Agent
+---
+description: Gives Cloud Build service account access to managed resources.
+name: roles/cloudbuild.serviceAgent
+title: Cloud Build Service Agent
+---
+description: Gives Infrastructure Manager service agent access to managed resources
+name: roles/cloudconfig.serviceAgent
+title: Infrastructure Manager Service Agent
+---
+description: Gives the Partner Console service account access to read Access Approval
+  Requests for workloads associated with a partner.
+name: roles/cloudcontrolspartner.accessApprovalServiceAgent
+title: Cloud Controls Partner Access Approval Service Agent
+---
+description: Gives Cloud Controls Partner service agent permission to list EKM connections,
+  get EKM connection status, and provide EKM diagnostic information.
+name: roles/cloudcontrolspartner.ekmServiceAgent
+title: Cloud Controls Partner EKM Service Agent
+---
+description: Gives the Partner Console service account access to support cases for
+  workloads associated with a partner.
+name: roles/cloudcontrolspartner.supportCaseServiceAgent
+title: Cloud Controls Partner Support Case Service Agent
+---
+description: Gives Cloud Deploy Service Account access to managed resources.
+name: roles/clouddeploy.serviceAgent
+title: Cloud Deploy Service Agent
+---
+description: Allows Deployment Manager service to actuate resources across DM projects
+  and folders
+name: roles/clouddeploymentmanager.serviceAgent
+title: Cloud Deployment Manager Service Agent
+---
+description: 'DEPRECATED: This role is deprecated. Please use roles/cloudfunctions.standardServiceAgent
+  for the Cloud Functions service agent.Gives Cloud Functions service account access
+  to managed resources.'
+name: roles/cloudfunctions.serviceAgent
+title: (Deprecated) Cloud Functions Service Agent
+---
+description: Gives Cloud Functions service account access to managed resources.
+name: roles/cloudfunctions.standardServiceAgent
+title: Cloud Functions Service Agent
+---
+description: Allows users to view and interact with Cloud Hub.
+name: roles/cloudhub.operator
+title: Cloud Hub Operator
+---
+description: 'Grants the ability to manage Cloud IoT Core resources, including publishing
+  data to Cloud Pub/Sub and writing device activity logs to Stackdriver. Warning:
+  If this role is removed from the Cloud IoT service account, Cloud IoT Core will
+  be unable to publish data or write device activity logs.'
+name: roles/cloudiot.serviceAgent
+title: Cloud IoT Core Service Agent
+---
+description: Enables Decrypt operations via other GCP services
+name: roles/cloudkms.cryptoKeyDecrypterViaDelegation
+title: Cloud KMS CryptoKey Decrypter Via Delegation
+---
+description: Enables Encrypt and Decrypt operations via other GCP services
+name: roles/cloudkms.cryptoKeyEncrypterDecrypterViaDelegation
+title: Cloud KMS CryptoKey Encrypter/Decrypter Via Delegation
+---
+description: Enables Encrypt operations via other GCP services
+name: roles/cloudkms.cryptoKeyEncrypterViaDelegation
+title: Cloud KMS CryptoKey Encrypter Via Delegation
+---
+description: Gives Cloud KMS organization-level service account access to managed
+  resources.
+name: roles/cloudkms.orgServiceAgent
+title: Cloud KMS Organization Service Agent
+---
+description: Gives Cloud KMS service account access to managed resources.
+name: roles/cloudkms.serviceAgent
+title: Cloud KMS Service Agent
+---
+description: Grants Cloud KMS KACLS Service Agent access to KMS resource permissions
+  to perform DEK encryption/decryption.
+name: roles/cloudkmskacls.serviceAgent
+title: Cloud KMS KACLS Service Agent
+---
+description: Grants Cloud Optimization Service Account access to read and write data
+  in the user project.
+name: roles/cloudoptimization.serviceAgent
+title: Cloud Optimization Service Agent
+---
+description: Grants Cloud Scheduler Service Account access to manage resources.
+name: roles/cloudscheduler.serviceAgent
+title: Cloud Scheduler Service Agent
+---
+description: Gives CSC Service Account access to consumer resources.
+name: roles/cloudsecuritycompliance.serviceAgent
+title: Cloud Security Compliance Service Agent
+---
+description: Full access to all Web Security Scanner resources
+name: roles/cloudsecurityscanner.editor
+title: Web Security Scanner Editor
+---
+description: Read access to Scan and ScanRun, plus the ability to start scans
+name: roles/cloudsecurityscanner.runner
+title: Web Security Scanner Runner
+---
+description: Read access to all Web Security Scanner resources
+name: roles/cloudsecurityscanner.viewer
+title: Web Security Scanner Viewer
+---
+description: Grants Cloud SQL access to services and APIs in the user project
+name: roles/cloudsql.serviceAgent
+title: Cloud SQL Service Agent
+---
+description: Full read-write access to advisory support cases applicable for GCP Customer
+  Care.
+name: roles/cloudsupport.advisorySupportEditor
+title: Advisory Support Editor
+---
+description: Read-only access to advisory support cases applicable for GCP Customer
+  Care.
+name: roles/cloudsupport.advisorySupportViewer
+title: Advisory Support Viewer
+---
+description: Full read-write access to technical support cases (applicable for GCP
+  Customer Care and Maps support).
+name: roles/cloudsupport.techSupportEditor
+title: Tech Support Editor
+---
+description: Read-only access to technical support cases (applicable for GCP Customer
+  Care and Maps support).
+name: roles/cloudsupport.techSupportViewer
+title: Tech Support Viewer
+---
+description: Grants Cloud Tasks Service Account access to manage resources.
+name: roles/cloudtasks.serviceAgent
+title: Cloud Tasks Service Agent
+---
+description: Give Cloud TPUs service account access to managed resources
+name: roles/cloudtpu.serviceAgent
+title: Cloud TPU V2 API Service Agent
+---
+description: Admin access to Cloud Trace.
+name: roles/cloudtrace.admin
+title: Cloud Trace Admin
+---
+description: Agent access to Cloud Trace. Can write trace data.
+name: roles/cloudtrace.agent
+title: Cloud Trace Agent
+---
+description: User access to Cloud Trace. Can view traces, insights and stats. Can
+  create, list, view, and delete tasks.
+name: roles/cloudtrace.user
+title: Cloud Trace User
+---
+description: Gives Cloud Translation Service Account access to consumer resources.
+name: roles/cloudtranslate.serviceAgent
+title: Cloud Translation API Service Agent
+---
+description: Gives Compliance Scanning the access it needs to analyze containers and
+  VMs for compliance and create occurrences using the Container Analysis API
+name: roles/compliancescanning.serviceAgent
+title: Compliance Scanning Service Agent
+---
+description: Cloud Composer API service agent can manage environments.
+name: roles/composer.serviceAgent
+title: Cloud Composer API Service Agent
+---
+description: Full control of all Compute Engine resources.
+name: roles/compute.admin
+title: Compute Admin
+---
+description: Editor role for compute
+name: roles/compute.editor
+title: Compute Editor
+---
+description: Administrator of folder level zone/global VM extension policies.
+name: roles/compute.folderVmExtensionPolicyAdmin
+title: Folder level Compute VM extension policies admin
+---
+description: View folder level zone/global VM extension policies.
+name: roles/compute.folderVmExtensionPolicyViewer
+title: Folder level Compute VM extension policies viewer
+---
+name: roles/compute.futureReservationAdmin
+title: Compute Future Reservation Admin
+---
+name: roles/compute.futureReservationUser
+title: Compute Future Reservation User
+---
+name: roles/compute.futureReservationViewer
+title: Compute Future Reservation Viewer
+---
+description: Read and use image resources.
+name: roles/compute.imageUser
+title: Compute Image User
+---
+description: Full control of Compute Engine instance resources.
+name: roles/compute.instanceAdmin
+title: Compute Instance Admin (beta)
+---
+description: Full control of Compute Engine instances, instance groups, disks, snapshots,
+  and images. Read access to all Compute Engine networking resources.
+name: roles/compute.instanceAdmin.v1
+title: Compute Instance Admin (v1)
+---
+description: Role containing all permissions required by Managed Instance Groups to
+  create and managed instances.
+name: roles/compute.instanceGroupManagerServiceAgent
+title: Instance Group Manager Service Agent
+---
+description: Analyze Interconnect Attachment Groups via their GetOperationalStatus
+  method.
+name: roles/compute.interconnectAttachmentGroupAnalyzer
+title: Interconnect Attachment Group Analyzer
+---
+description: Analyze Interconnect Groups via their GetOperationalStatus method.
+name: roles/compute.interconnectGroupAnalyzer
+title: Interconnect Group Analyzer
+---
+description: Full control of Compute Engine resources related to load balancer.
+name: roles/compute.loadBalancerAdmin
+title: Compute Load Balancer Admin
+---
+description: Permissions to use services from a load balancer in other projects.
+name: roles/compute.loadBalancerServiceUser
+title: Compute Load Balancer Services User
+---
+description: Full control of Compute Engine networking resources.
+name: roles/compute.networkAdmin
+title: Compute Network Admin
+---
+description: Access to use Compute Engine networking resources.
+name: roles/compute.networkUser
+title: Compute Network User
+---
+description: Read-only access to Compute Engine networking resources.
+name: roles/compute.networkViewer
+title: Compute Network Viewer
+---
+description: Full control of Compute Engine Organization Firewall Policies.
+name: roles/compute.orgFirewallPolicyAdmin
+title: Compute Organization Firewall Policy Admin
+---
+description: View or use Compute Engine Firewall Policies to associate with the organization
+  or folders.
+name: roles/compute.orgFirewallPolicyUser
+title: Compute Organization Firewall Policy User
+---
+description: Full control of Compute Engine Organization Security Policies.
+name: roles/compute.orgSecurityPolicyAdmin
+title: Compute Organization Security Policy Admin
+---
+description: View or use Compute Engine Security Policies to associate with the organization
+  or folders.
+name: roles/compute.orgSecurityPolicyUser
+title: Compute Organization Security Policy User
+---
+description: Full control of Compute Engine Firewall Policy associations to the organization
+  or folders.
+name: roles/compute.orgSecurityResourceAdmin
+title: Compute Organization Resource Admin
+---
+description: Administrator of organization level zone/global VM extension policies.
+name: roles/compute.orgVmExtensionPolicyAdmin
+title: Organization level Compute VM extension policies admin
+---
+description: View organization level zone/global VM extension policies.
+name: roles/compute.orgVmExtensionPolicyViewer
+title: Organization level Compute VM extension policies viewer
+---
+description: Access to log in to a Compute Engine instance as an administrator user.
+name: roles/compute.osAdminLogin
+title: Compute OS Admin Login
+---
+description: Access to log in to a Compute Engine instance as a standard (non-administrator)
+  user.
+name: roles/compute.osLogin
+title: Compute OS Login
+---
+description: Specify resources to be mirrored.
+name: roles/compute.packetMirroringAdmin
+title: Compute packet mirroring admin
+---
+description: Use Compute Engine packet mirrorings.
+name: roles/compute.packetMirroringUser
+title: Compute packet mirroring user
+---
+description: Use subnetwork whose PURPOSE is "PEER_MIGRATION"
+name: roles/compute.peerSubnetMigrationAdmin
+title: Compute Peer Subnet Migration Admin
+---
+description: Full control of public IP address management for Compute Engine.
+name: roles/compute.publicIpAdmin
+title: Compute Public IP Admin
+---
+description: Full control of Compute Engine security resources.
+name: roles/compute.securityAdmin
+title: Compute Security Admin
+---
+description: Gives Compute Engine Service Account access to assert service account
+  authority. Includes access to service accounts.
+name: roles/compute.serviceAgent
+title: Compute Engine Service Agent
+---
+description: Permissions to view sole tenancy node groups
+name: roles/compute.soleTenantViewer
+title: Compute Sole Tenant Viewer
+---
+description: Full control of Compute Engine storage resources.
+name: roles/compute.storageAdmin
+title: Compute Storage Admin
+---
+description: Read-only access to get and list information about all Compute Engine
+  resources, including instances, disks, and firewalls. Allows getting and listing
+  information about disks, images, and snapshots, but does not allow reading the data
+  stored on them.
+name: roles/compute.viewer
+title: Compute Viewer
+---
+description: Administer zone/global VM extension policies.
+name: roles/compute.vmExtensionPolicyAdmin
+title: Compute VM extension policy admin
+---
+description: View zone/global VM extension policies.
+name: roles/compute.vmExtensionPolicyViewer
+title: Compute VM extension policy viewer
+---
+description: 'Gives the Config Delivery service account permission to manage resources '
+name: roles/configdelivery.serviceAgent
+title: Config Delivery Service Agent
+---
+description: Grants Connectors Platform service account to manage customer resources
+name: roles/connectors.serviceAgent
+title: Connectors Platform Service Agent
+---
+description: Grants read and write access to Authorized resources.
+name: roles/contactcenterinsights.authorizedEditor
+title: Contact Center AI Insights authorized editor
+---
+description: Grants read access to Authorized resources.
+name: roles/contactcenterinsights.authorizedViewer
+title: Contact Center AI Insights authorized viewer
+---
+description: Allows Contact Center AI to read and write APIs including BigQuery, Dialogflow,
+  and Storage.
+name: roles/contactcenterinsights.serviceAgent
+title: Contact Center AI Insights Service Agent
+---
+description: Minimal set of permissions required by a GKE node to support standard
+  capabilities such as logging and monitoring. Replaces the container.nodeServiceAgent
+  role with a reduced permission set.
+name: roles/container.defaultNodeServiceAgent
+title: Kubernetes Engine Default Node Service Agent
+---
+description: Minimal set of permission required by a GKE node to support standard
+  capabilities such as logging and monitoring export, and image pulls.
+name: roles/container.nodeServiceAgent
+title: '[Deprecated] Kubernetes Engine Node Service Agent'
+---
+description: Gives Kubernetes Engine account access to manage cluster resources. Includes
+  access to service accounts.
+name: roles/container.serviceAgent
+title: Kubernetes Engine Service Agent
+---
+description: Gives Container Analysis API the access it needs to function
+name: roles/containeranalysis.ServiceAgent
+title: Container Analysis Service Agent
+---
+description: Access for Container Registry
+name: roles/containerregistry.ServiceAgent
+title: Container Registry Service Agent
+---
+description: Gives Container Scanner the access it needs to analyzecontainers for
+  vulnerabilities and create occurrences using the Container Analysis API
+name: roles/containerscanning.ServiceAgent
+title: Container Scanner Service Agent
+---
+description: Gives Container Threat Detection service account access to enable/disable
+  Container Threat Detection and manage the Container Threat Detection Agent on Google
+  Kubernetes Engine clusters.
+name: roles/containerthreatdetection.serviceAgent
+title: Container Threat Detection Service Agent
+---
+description: Gives the Content Warehouse service account to manage customer resources
+name: roles/contentwarehouse.serviceAgent
+title: Content Warehouse Service Agent
+---
+description: Default role for the Database Insights service agent.
+name: roles/databaseinsights.serviceAgent
+title: Database Insights Service Agent
+---
+description: Gives Data Connectors service agent permission to access the virtual
+  private cloud
+name: roles/dataconnectors.serviceAgent
+title: Data Connectors Service Agent
+---
+description: Gives Cloud Dataflow service account access to managed resources. Includes
+  access to service accounts.
+name: roles/dataflow.serviceAgent
+title: Cloud Dataflow Service Agent
+---
+description: Full access to all Dataform resources.
+name: roles/dataform.admin
+title: Dataform Admin
+---
+description: Permissions to comment, at the repository level. Grants CRUD access over
+  commentThread and comment resources.
+name: roles/dataform.codeCommenter
+title: Code Commenter
+---
+description: Access only to private and shared code resources. The permissions in
+  the Code Creator let you create and list code in Dataform, and access only the code
+  that you created and code that was explicitly shared with you.
+name: roles/dataform.codeCreator
+title: Code Creator
+---
+description: Edit access code resources.
+name: roles/dataform.codeEditor
+title: Code Editor
+---
+description: Full access to code resources.
+name: roles/dataform.codeOwner
+title: Code Owner
+---
+description: Access for scheduling workflows and releases.
+name: roles/dataform.codeScheduler
+title: Code Scheduler
+---
+description: Read-only access to all code resources.
+name: roles/dataform.codeViewer
+title: Code Viewer
+---
+description: Edit access to Workspaces and Repositories.
+name: roles/dataform.editor
+title: Dataform Editor
+---
+description: Gives permission for the Dataform API to access a secret from Secret
+  Manager
+name: roles/dataform.serviceAgent
+title: Dataform Service Agent
+---
+description: View and comment access to a team folder and its contents.
+name: roles/dataform.teamFolderCommenter
+title: Team Folder Commenter
+---
+description: Edit access to a team folder and its contents.
+name: roles/dataform.teamFolderContributor
+title: Team Folder Contributor
+---
+description: Access to create new team folders.
+name: roles/dataform.teamFolderCreator
+title: Team Folder Creator
+---
+description: Full access to a team folder and its contents. Can share the team folder
+  and its contents.
+name: roles/dataform.teamFolderOwner
+title: Team Folder Owner
+---
+description: View access to a team folder and its contents.
+name: roles/dataform.teamFolderViewer
+title: Team Folder Viewer
+---
+description: Read-only access to all Dataform resources.
+name: roles/dataform.viewer
+title: Dataform Viewer
+---
+description: Gives Cloud Data Fusion service account access to Service Networking,
+  Cloud Dataproc, Cloud Storage, BigQuery, Cloud Spanner, and Cloud Bigtable resources.
+name: roles/datafusion.serviceAgent
+title: Cloud Data Fusion API Service Agent
+---
+description: Gives Data Labeling service account read/write access to Cloud Storage,
+  read/write BigQuery, update CMLE model versions, editor access to Annotation service
+  and AutoML service.
+name: roles/datalabeling.serviceAgent
+title: Data Labeling Service Agent
+---
+description: Gives Cloud Database Migration service account access to Cloud SQL resources.
+name: roles/datamigration.serviceAgent
+title: Database Migration Service Agent
+---
+description: Gives Datapipelines service permissions to create Dataflow & Cloud Scheduler
+  jobs in the user project.
+name: roles/datapipelines.serviceAgent
+title: Datapipelines Service Agent
+---
+description: Full access to Dataplex Universal Catalog resources, except for catalog
+  resources like entries and entry groups.
+name: roles/dataplex.admin
+title: Dataplex Administrator
+---
+description: Grants access to creating and managing Aspect Types. Does not give the
+  right to create/modify Entries.
+name: roles/dataplex.aspectTypeOwner
+title: Dataplex Aspect Type Owner
+---
+description: Grants access to use Aspect Types to create/modify Entries with the corresponding
+  aspects.
+name: roles/dataplex.aspectTypeUser
+title: Dataplex Aspect Type User
+---
+description: Full access on DataAttribute Binding resources.
+name: roles/dataplex.bindingAdmin
+title: Dataplex Binding Administrator
+---
+description: Full access to catalog resources, including entries, entry groups, and
+  glossaries.
+name: roles/dataplex.catalogAdmin
+title: Dataplex Catalog Admin
+---
+description: Write access to catalog resources, including entries, entry groups, and
+  glossaries. Cannot set IAM policies on resources.
+name: roles/dataplex.catalogEditor
+title: Dataplex Catalog Editor
+---
+description: Read access to catalog resources, including entries, entry groups, and
+  glossaries. Can view IAM policies on catalog resources.
+name: roles/dataplex.catalogViewer
+title: Dataplex Catalog Viewer
+---
+description: Grants Change Request creator necessary permissions on a created ChangeRequest
+  instance.
+name: roles/dataplex.changeRequestOwner
+title: Dataplex Change Request Owner
+---
+description: Grants full lifecycle ownership, IAM sharing (getIamPolicy/setIamPolicy),
+  context entry management, curation specification updates, and deletion rights on
+  a specific Context Set.
+name: roles/dataplex.contentAdmin
+title: Dataplex Content Admin
+---
+description: Authorizes users to create new Context Sets within a project.
+name: roles/dataplex.contentCreator
+title: Dataplex Content Creator
+---
+description: Authorizes context engineers, curators, and agents to modify context
+  entries, author guidelines, and update curation specifications without administrative
+  IAM sharing or container deletion capabilities.
+name: roles/dataplex.contentEditor
+title: Dataplex Content Editor
+---
+description: Authorizes consumers, business analysts, and 1P/3P AI agents to read
+  context entries and documentation within specific Context Sets, and to submit feedback
+  or modification proposals.
+name: roles/dataplex.contentUser
+title: Dataplex Content User
+---
+description: Enables discovery of content containers (Context Sets) within a project
+  or catalog without granting access to the underlying sensitive context entries.
+name: roles/dataplex.contentViewer
+title: Dataplex Content Viewer
+---
+description: Allows full management of the Data Domain and its bindings.
+name: roles/dataplex.dataDomainAdmin
+title: Dataplex Data Domain Admin
+---
+description: Allows updating the Data Domain as well as full management of its bindings.
+name: roles/dataplex.dataDomainEditor
+title: Dataplex Data Domain Configuration Editor
+---
+description: Allows discovering and viewing the Data Domain, its subdomains, and metadata
+  of all its resources.
+name: roles/dataplex.dataDomainEntryReader
+title: Dataplex Data Domain Entry Reader
+---
+description: Allows viewing the configuration of the Data Domain and its bindings.
+name: roles/dataplex.dataDomainViewer
+title: Dataplex Data Domain Configuration Viewer
+---
+description: Owner access to data. To be granted to Dataplex Universal Catalog resources
+  Lake, Zone or Asset only.
+name: roles/dataplex.dataOwner
+title: Dataplex Data Owner
+---
+description: Full access to Data Products.
+name: roles/dataplex.dataProductsAdmin
+title: Dataplex Data Products Admin
+---
+description: Restricted read access, intended for consumers of Data Products.
+name: roles/dataplex.dataProductsConsumer
+title: Dataplex Data Products Consumer
+---
+description: Write access to Data Products.
+name: roles/dataplex.dataProductsEditor
+title: Dataplex Data Products Editor
+---
+description: Read access to Data Products.
+name: roles/dataplex.dataProductsViewer
+title: Dataplex Data Products Viewer
+---
+description: Read only access to data. To be granted to Dataplex Universal Catalog
+  resources Lake, Zone or Asset only.
+name: roles/dataplex.dataReader
+title: Dataplex Data Reader
+---
+description: Full access to DataScan resources.
+name: roles/dataplex.dataScanAdmin
+title: Dataplex DataScan Administrator
+---
+description: Access to create new DataScan resources.
+name: roles/dataplex.dataScanCreator
+title: Dataplex DataScan Creator
+---
+description: Read access to DataScan resources, including the results.
+name: roles/dataplex.dataScanDataViewer
+title: Dataplex DataScan DataViewer
+---
+description: Write access to DataScan resources.
+name: roles/dataplex.dataScanEditor
+title: Dataplex DataScan Editor
+---
+description: Read access to DataScan resources, excluding the results.
+name: roles/dataplex.dataScanViewer
+title: Dataplex DataScan Viewer
+---
+description: Write access to data. To be granted to Dataplex Universal Catalog resources
+  Lake, Zone or Asset only.
+name: roles/dataplex.dataWriter
+title: Dataplex Data Writer
+---
+description: Allows running data analytics workloads in a lake.
+name: roles/dataplex.developer
+title: Dataplex Developer
+---
+description: Gives the Dataplex Discovery Service Agent permissions to use bigquery
+  connection.
+name: roles/dataplex.discoveryBigLakePublishingServiceAgent
+title: Dataplex Discovery BigLake Publishing Service Agent
+---
+description: Gives the Dataplex Discovery Service Agent dataset create and get permissions.
+name: roles/dataplex.discoveryPublishingServiceAgent
+title: Dataplex Discovery Publishing Service Agent
+---
+description: Gives the Dataplex Discovery Service Agent bucket read permissions.
+name: roles/dataplex.discoveryServiceAgent
+title: Dataplex Discovery Service Agent
+---
+description: Write access to Dataplex Universal Catalog resources, except for catalog
+  resources like entries, entry groups, and glossaries.
+name: roles/dataplex.editor
+title: Dataplex Editor
+---
+description: Gives user permissions to manage encryption configurations.
+name: roles/dataplex.encryptionAdmin
+title: Dataplex Encryption Admin
+---
+description: Grants access to export this entry group for Metadata Job processing.
+name: roles/dataplex.entryGroupExporter
+title: Dataplex Entry Group Exporter
+---
+description: Grants access to import this entry group for Metadata Job processing.
+name: roles/dataplex.entryGroupImporter
+title: Dataplex Entry Group Importer
+---
+description: Owns Entry Groups and Entries inside of them.
+name: roles/dataplex.entryGroupOwner
+title: Dataplex Entry Group Owner
+---
+description: Grants access to creating and managing Entry Link Types. Does not give
+  the right to create/modify Entry Links.
+name: roles/dataplex.entryLinkTypeOwner
+title: Dataplex Entry Link Type Owner
+---
+description: Grants access to use Entry Link Types to create EntryLinks of those types.
+name: roles/dataplex.entryLinkTypeUser
+title: Dataplex Entry Link Type User
+---
+description: Owns Metadata Entries and EntryLinks.
+name: roles/dataplex.entryOwner
+title: Dataplex Entry and EntryLink Owner
+---
+description: Grants access to creating and managing Entry Types. Does not give the
+  right to create/modify Entries.
+name: roles/dataplex.entryTypeOwner
+title: Dataplex Entry Type Owner
+---
+description: Grants access to use Entry Types to create/modify Entries of those types.
+name: roles/dataplex.entryTypeUser
+title: Dataplex Entry Type User
+---
+description: Grants access to creating and managing Metadata Feeds. Does not give
+  the right to create/modify Entry Groups.
+name: roles/dataplex.metadataFeedOwner
+title: Dataplex Metadata Feed Owner
+---
+description: Read access to Metadata Feed resources.
+name: roles/dataplex.metadataFeedViewer
+title: Dataplex Metadata Feed Viewer
+---
+description: Grants access to creating and managing Metadata Jobs. Does not give the
+  right to create/modify Entry Groups.
+name: roles/dataplex.metadataJobOwner
+title: Dataplex Metadata Job Owner
+---
+description: Read access to Metadata Job resources.
+name: roles/dataplex.metadataJobViewer
+title: Dataplex Metadata Job Viewer
+---
+description: Read only access to metadata within table and fileset entities and partitions.
+name: roles/dataplex.metadataReader
+title: Dataplex Metadata Reader
+---
+description: Write and read access to metadata within table and fileset entities and
+  partitions.
+name: roles/dataplex.metadataWriter
+title: Dataplex Metadata Writer
+---
+description: Permissions configure ResourceAccess and DataAccess Specs on Data Attributes.
+name: roles/dataplex.securityAdmin
+title: Dataplex Security Administrator
+---
+description: Gives the Dataplex service account access to project resources. This
+  access will be used in data discovery, data management and data workload management.
+name: roles/dataplex.serviceAgent
+title: Cloud Dataplex Service Agent
+---
+description: Owner access to data.  Should not be used directly. This role is granted
+  by Dataplex Universal Catalog to managed resources like Cloud Storage buckets, BigQuery
+  datasets etc.
+name: roles/dataplex.storageDataOwner
+title: Dataplex Storage Data Owner
+---
+description: Read only access to data. Should not be used directly. This role is granted
+  by Dataplex Universal Catalog to managed resources like Cloud Storage buckets, BigQuery
+  datasets etc.
+name: roles/dataplex.storageDataReader
+title: Dataplex Storage Data Reader
+---
+description: Write access to data. Should not be used directly. This role is granted
+  by Dataplex Universal Catalog to managed resources like Cloud Storage buckets, BigQuery
+  datasets etc.
+name: roles/dataplex.storageDataWriter
+title: Dataplex Storage Data Writer
+---
+description: Full access to DataTaxonomy, DataAttribute resources.
+name: roles/dataplex.taxonomyAdmin
+title: Dataplex Taxonomy Administrator
+---
+description: Read access on DataTaxonomy, DataAttribute resources.
+name: roles/dataplex.taxonomyViewer
+title: Dataplex Taxonomy Viewer
+---
+description: Read access to Dataplex Universal Catalog resources, except for catalog
+  resources like entries, entry groups, and glossaries.
+name: roles/dataplex.viewer
+title: Dataplex Viewer
+---
+description: Full access to Change Requests in Approval Workflows.
+name: roles/dataplex.workflowAdmin
+title: Dataplex Workflow Admin
+---
+description: Access to approve/reject/revoke Change Requests in Approval Workflows.
+name: roles/dataplex.workflowApprover
+title: Dataplex Workflow Approver
+---
+description: Dataprep service identity. Includes access to service accounts.
+name: roles/dataprep.serviceAgent
+title: Dataprep Service Agent
+---
+description: Gives Dataproc Service Account access to service accounts, compute resources,
+  storage resources, and kubernetes resources. Includes access to service accounts.
+name: roles/dataproc.serviceAgent
+title: Dataproc Service Agent
+---
+description: Dataproc Resource Manager Node Service Agent used to run managed resources
+  in user project with restricted permissions.
+name: roles/dataprocrm.nodeServiceAgent
+title: Dataproc Resource Manager Node Service Agent
+---
+description: Admin role for Cloud Datastore
+name: roles/datastore.admin
+title: Cloud Datastore Admin
+---
+description: Manage backup schedules in Cloud Datastore.
+name: roles/datastore.backupSchedulesAdmin
+title: Cloud Datastore Backup Schedules Admin
+---
+description: Read access to backup schedules in Cloud Datastore.
+name: roles/datastore.backupSchedulesViewer
+title: Cloud Datastore Backup Schedules Viewer
+---
+description: Read/Write access to metadata about backups in Cloud Datastore but restore
+  is not allowed.
+name: roles/datastore.backupsAdmin
+title: Cloud Datastore Backups Admin
+---
+description: Read access to metadata about backups in Cloud Datastore.
+name: roles/datastore.backupsViewer
+title: Cloud Datastore Backups Viewer
+---
+description: Full access to manage bulk operations.
+name: roles/datastore.bulkAdmin
+title: Cloud Datastore Bulk Admin
+---
+description: Clone Cloud Datastore Databases.
+name: roles/datastore.cloneAdmin
+title: Cloud Datastore Clone Admin
+---
+description: Editor role for Cloud Datastore
+name: roles/datastore.editor
+title: Cloud Datastore Editor
+---
+description: Full access to manage imports and exports.
+name: roles/datastore.importExportAdmin
+title: Cloud Datastore Import Export Admin
+---
+description: Full access to manage index definitions.
+name: roles/datastore.indexAdmin
+title: Cloud Datastore Index Admin
+---
+description: Full access to Key Visualizer scans.
+name: roles/datastore.keyVisualizerViewer
+title: Cloud Datastore Key Visualizer Viewer
+---
+description: Full access to Cloud Datastore.
+name: roles/datastore.owner
+title: Cloud Datastore Owner
+---
+description: Restore into Cloud Datastore Databases from Cloud Datastore Backups.
+name: roles/datastore.restoreAdmin
+title: Cloud Datastore Restore Admin
+---
+description: Provides read/write access to data in a Cloud Datastore database. Intended
+  for application developers and service accounts.
+name: roles/datastore.user
+title: Cloud Datastore User
+---
+description: Manage user creds in Cloud Datastore.
+name: roles/datastore.userCredsAdmin
+title: Cloud Datastore User Creds Admin
+---
+description: Read access to user creds in Cloud Datastore.
+name: roles/datastore.userCredsViewer
+title: Cloud Datastore User Creds Viewer
+---
+description: Read access to all Cloud Datastore resources.
+name: roles/datastore.viewer
+title: Cloud Datastore Viewer
+---
+description: Grants Cloud Datastream permissions to write data in the user project.
+name: roles/datastream.serviceAgent
+title: Datastream Service Agent
+---
+description: Grants Data Studio Service Account access to manage resources in the
+  user project.
+name: roles/datastudio.managedStorageServiceAgent
+title: Data Studio Managed Storage Service Agent
+---
+description: Grants Data Studio Service Account access to manage resources.
+name: roles/datastudio.serviceAgent
+title: Data Studio Service Agent
+---
+description: Gives the DesignCenter API Service Account access to necessary GCP resources.
+name: roles/designcenter.serviceAgent
+title: DesignCenter Service Agent
+---
+description: Gives the Developer Connect API Service Account access to necessary GCP
+  resources.
+name: roles/developerconnect.serviceAgent
+title: Developer Connect Service Agent
+---
+description: Grants Device Run Service Agent permissions required to manage resources
+  in the consumer project.
+name: roles/devicerun.serviceAgent
+title: Device Run Service Agent
+---
+description: Gives Dialogflow Service Account access to resources on behalf of user
+  project for Integrations (Facebook Messenger, Slack, Telephony, etc.), BigQuery,
+  Discovery Engine, Integration Connectors, Application Integration, and Vertex.
+name: roles/dialogflow.serviceAgent
+title: Dialogflow Service Agent
+---
+description: Discovery Engine service uploads documents and user events from Cloud
+  Storage and BigQuery, reports results to the customer Cloud Storage bucket, writes
+  logs to customer projects using Cloud Logging, and writes and reads metrics for
+  customer using Cloud Monitoring.
+name: roles/discoveryengine.serviceAgent
+title: Discovery Engine Service Agent
+---
+description: Gives Cloud DLP service agent permissions for BigQuery, Cloud Storage,
+  Datastore, Pub/Sub and Cloud KMS.
+name: roles/dlp.serviceAgent
+title: DLP API Service Agent
+---
+description: Gives Cloud DNS Service Agent access to Cloud Platform resources.
+name: roles/dns.serviceAgent
+title: Cloud DNS Service Agent
+---
+description: Gives DocumentAI Core Service Account access to consumer resources.
+name: roles/documentaicore.serviceAgent
+title: DocumentAI Core Service Agent
+---
+description: Gives DSPM Service Account access to consumer resources.
+name: roles/dspm.serviceAgent
+title: DSPM Service Agent
+---
+description: Full access to all Earth Engine resource features
+name: roles/earthengine.admin
+title: Earth Engine Resource Admin
+---
+description: Publisher of Earth Engine Apps
+name: roles/earthengine.appsPublisher
+title: Earth Engine Apps Publisher
+---
+description: Editor role for Earth Engine
+name: roles/earthengine.editor
+title: Earth Engine Resource Editor
+---
+description: Viewer of all Earth Engine resources
+name: roles/earthengine.viewer
+title: Earth Engine Resource Viewer
+---
+description: Writer of all Earth Engine resources
+name: roles/earthengine.writer
+title: Earth Engine Resource Writer
+---
+description: Grants the Edge Container Cluster Service Account access to manage resources.
+name: roles/edgecontainer.clusterServiceAgent
+title: Edge Container Cluster Service Agent
+---
+description: Grants the Edge Container Service Account access to manage resources.
+name: roles/edgecontainer.serviceAgent
+title: Edge Container Service Agent
+---
+description: 'View, create, update, and delete most Google Cloud resources. See the
+  list of included permissions. Legacy role: consider using the updated roles/writer
+  instead.'
+name: roles/editor
+title: Editor (Legacy)
+---
+description: Gives the Cloud Endpoints service account access to Endpoints services
+  and the ability to act as a service controller.
+name: roles/endpoints.serviceAgent
+title: Cloud Endpoints Service Agent
+---
+description: Can access information about Endpoints services for consumer portal management,
+  and can read Source Repositories for consumer portal custom content.
+name: roles/endpointsportal.serviceAgent
+title: Endpoints Portal Service Agent
+---
+description: Gives Enterprise Knowledge Graph Service Account access to consumer resources.
+name: roles/enterpriseknowledgegraph.serviceAgent
+title: Enterprise Knowledge Graph Service Agent
+---
+description: Administrative access to Error Reporting.
+name: roles/errorreporting.admin
+title: Error Reporting Admin
+---
+description: User access to Error Reporting. Can list all errors and update their
+  metadata. Can delete error events.
+name: roles/errorreporting.user
+title: Error Reporting User
+---
+description: Read-only access to all Error Reporting data.
+name: roles/errorreporting.viewer
+title: Error Reporting Viewer
+---
+description: Can send error events to Error Reporting. Intended for service accounts.
+name: roles/errorreporting.writer
+title: Error Reporting Writer
+---
+description: Full access to all essential contacts
+name: roles/essentialcontacts.admin
+title: Essential Contacts Admin
+---
+description: Viewer for all essential contacts
+name: roles/essentialcontacts.viewer
+title: Essential Contacts Viewer
+---
+description: Gives Eventarc service account access to managed resources.
+name: roles/eventarc.serviceAgent
+title: Eventarc Service Agent
+---
+name: roles/externalexposure.serviceAgent
+title: External Exposure Service Agent
+---
+description: Gives Cloud Filestore service account access to managed resources.
+name: roles/file.serviceAgent
+title: Cloud Filestore Service Agent
+---
+description: Read and write access to Firebase App Distribution with the Admin SDK
+name: roles/firebase.appDistributionSdkServiceAgent
+title: Firebase App Distribution Admin SDK Service Agent
+---
+description: Access to create new service agents for Firebase projects; assign roles
+  to service agents; provision GCP resources as required by Firebase services.
+name: roles/firebase.managementServiceAgent
+title: Firebase Service Management Service Agent
+---
+description: Read and write access to Firebase products available in the Admin SDK
+name: roles/firebase.sdkAdminServiceAgent
+title: Firebase Admin SDK Administrator Service Agent
+---
+description: Access to provision apps with the Admin SDK.
+name: roles/firebase.sdkProvisioningServiceAgent
+title: Firebase SDK Provisioning Service Agent
+---
+description: Grants Firebase App Check Service Account access to consumer app attestation
+  resources, such as reCAPTCHA Enterprise and Play Integrity API.
+name: roles/firebaseappcheck.serviceAgent
+title: Firebase App Check Service Agent
+---
+description: Gives Firebase App Hosting access to resource for Building & Deploying
+  Backends.
+name: roles/firebaseapphosting.serviceAgent
+title: Firebase App Hosting Service Agent
+---
+description: Access to BigQuery export for Crashlytics
+name: roles/firebasecrashlytics.serviceAgent
+title: Firebase Crashlytics Service Agent
+---
+description: Access to publish triggers
+name: roles/firebasedatabase.serviceAgent
+title: Firebase Realtime Database Service Agent
+---
+description: Gives Firebase Data Connect access to administer Cloud SQL instances.
+name: roles/firebasedataconnect.serviceAgent
+title: Firebase Data Connect Service Agent
+---
+description: Access to Cloud ML and AI resources used by Firebase AI Logic
+name: roles/firebaseml.serviceAgent
+title: Firebase AI Logic Service Agent
+---
+description: Grants Firebase Extensions API Service Account access to manage resources.
+name: roles/firebasemods.serviceAgent
+title: Firebase Extensions API Service Agent
+---
+description: Grants Firebase Security Rules access to Firestore for providing cross-service
+  Rules.
+name: roles/firebaserules.firestoreServiceAgent
+title: Firebase Rules Firestore Service Agent
+---
+description: Read/write/list access for Datastore entities and Cloud Storage objects,
+  as well as get/list/publish access for PubSub topics.
+name: roles/firebaserules.system
+title: Firebase Rules System
+---
+description: Access to Cloud Storage for Firebase through API and SDK.
+name: roles/firebasestorage.serviceAgent
+title: Cloud Storage for Firebase Service Agent
+---
+description: Access to Cloud Storage, Monitoring and Logging for Firebase Telemetry
+name: roles/firebasetelemetry.serviceAgent
+title: Firebase Telemetry Service Agent
+---
+description: Gives Firestore service account access to managed resources.
+name: roles/firestore.serviceAgent
+title: Firestore Service Agent
+---
+description: Gives Cloud Firewall Insights service agent permissions to retrieve Firewall,
+  VM and route resources on user behalf.
+name: roles/firewallinsights.serviceAgent
+title: Cloud Firewall Insights Service Agent
+---
+description: Grants the FleetEngine Service Account access to manage resources.
+name: roles/fleetengine.serviceAgent
+title: FleetEngine Service Agent
+---
+description: Grants Flow Service Agent permissions to manage resources in the consumer
+  project.
+name: roles/flow.serviceAgent
+title: Flow Service Agent
+---
+description: Gives Game Services Service Account access to GCP resources.
+name: roles/gameservices.serviceAgent
+title: Game Services Service Agent
+---
+description: Gives Gemini Code Assist Management Service Agent access to Cloud Platform
+  resources.
+name: roles/geminicodeassistmanagement.serviceAgent
+title: Gemini Code Assist Management Service Agent
+---
+description: Grants Generative Language Service Agent permissions required to read
+  data from GCS buckets
+name: roles/generativelanguage.serviceAgent
+title: Generative Language Service Agent
+---
+description: Gives Genomics Service Account access to compute resources. Includes
+  access to service accounts.
+name: roles/genomics.serviceAgent
+title: Genomics Service Agent
+---
+description: Grants permissions to execute Backup for GKE resources across projects.
+name: roles/gkebackup.crossProjectServiceAgent
+title: Backup for GKE Cross Project Service Agent
+---
+description: Grants the Backup for GKE Service Account access to managed resources.
+name: roles/gkebackup.serviceAgent
+title: Backup for GKE Service Agent
+---
+description: Gives the Warp Run service agent access to Cloud Platform resources.
+name: roles/gkedataplanemanagement.warpRunServiceAgent
+title: Warp Run Service Agent
+---
+description: Gives the GKE Hub service agent permission to manage the project for
+  cross-project fleet registration.
+name: roles/gkehub.crossProjectServiceAgent
+title: GKE Hub Cross Project Service Agent
+---
+description: Gives the GKE Hub service agent access to Cloud Platform resources.
+name: roles/gkehub.serviceAgent
+title: GKE Hub Service Agent
+---
+description: Grants the Anthos Multi-Cloud Container Service Account access to manage
+  resources.
+name: roles/gkemulticloud.containerServiceAgent
+title: Anthos Multi-Cloud Container Service Agent
+---
+description: Grants the Anthos Multi-Cloud Control Plane Machine Service Account access
+  to manage resources.
+name: roles/gkemulticloud.controlPlaneMachineServiceAgent
+title: Anthos Multi-Cloud Control Plane Machine Service Agent
+---
+description: Grants the Anthos Multi-Cloud Node Pool Machine Service Account access
+  to manage resources.
+name: roles/gkemulticloud.nodePoolMachineServiceAgent
+title: Anthos Multi-Cloud Node Pool Machine Service Agent
+---
+description: Grants the Anthos Multi-Cloud Service Account access to manage resources.
+name: roles/gkemulticloud.serviceAgent
+title: Anthos Multi-Cloud Service Agent
+---
+description: Gives the GKE On-Prem service agent access to Cloud Platform resources.
+name: roles/gkeonprem.serviceAgent
+title: GKE On-Prem Service Agent
+---
+description: Gives the Healthcare Service Account access to networks, Kubernetes engine,
+  and Pub/Sub resources.
+name: roles/healthcare.serviceAgent
+title: Healthcare Service Agent
+---
+description: Grants Cluster Director Service Agent access to necessary GCP resources.
+name: roles/hypercomputecluster.serviceAgent
+title: Cluster Director Service Agent
+---
+description: Grants Cluster Director Service Agent access to necessary GCP resources
+  in Shared VPC host project.
+name: roles/hypercomputecluster.sharedVpcServiceAgent
+title: Cluster Director Shared VPC Service Agent
+---
+description: Access to administer all custom roles in the project.
+name: roles/iam.roleAdmin
+title: Role Administrator
+---
+description: Read access to all custom roles in the project.
+name: roles/iam.roleViewer
+title: Role Viewer
+---
+description: Security reviewer role, with permissions to get any IAM policy.
+name: roles/iam.securityReviewer
+title: Security Reviewer
+---
+description: Create and manage service accounts.
+name: roles/iam.serviceAccountAdmin
+title: Service Account Admin
+---
+description: Create and delete service account API Key bindings
+name: roles/iam.serviceAccountApiKeyBindingAdmin
+title: Service Account API Key Binding Admin
+---
+description: Access to create service accounts.
+name: roles/iam.serviceAccountCreator
+title: Create Service Accounts
+---
+description: Access to delete service accounts.
+name: roles/iam.serviceAccountDeleter
+title: Delete Service Accounts
+---
+description: Create and manage (and rotate) service account keys.
+name: roles/iam.serviceAccountKeyAdmin
+title: Service Account Key Admin
+---
+description: Create OpenID Connect (OIDC) identity tokens
+name: roles/iam.serviceAccountOpenIdTokenCreator
+title: Service Account OpenID Connect Identity Token Creator
+---
+description: Impersonate service accounts (create OAuth2 access tokens, sign blobs
+  or JWTs, etc).
+name: roles/iam.serviceAccountTokenCreator
+title: Service Account Token Creator
+---
+description: Run operations as the service account.
+name: roles/iam.serviceAccountUser
+title: Service Account User
+---
+description: Read access to service accounts, metadata, and keys.
+name: roles/iam.serviceAccountViewer
+title: View Service Accounts
+---
+description: Impersonate service accounts from federated workloads.
+name: roles/iam.workloadIdentityUser
+title: Workload Identity User
+---
+description: Gives Identity Platform service account access to customer project resources.
+name: roles/identitytoolkit.serviceAgent
+title: Identity Platform Service Agent
+---
+description: A user that has full access to all Security integrations.
+name: roles/integrations.securityIntegrationAdmin
+title: Security Integration Admin
+---
+description: Service agent that grants access to execute an integration.
+name: roles/integrations.serviceAgent
+title: Application Integration Service Agent
+---
+description: Grants permissions to resources managed by AnthosApiEndpoint.
+name: roles/krmapihosting.anthosApiEndpointServiceAgent
+title: KRM API Hosting AnthosApiEndpoint Service Agent
+---
+description: Gives KRM API Hosting service account access to managed resource.
+name: roles/krmapihosting.serviceAgent
+title: KRM API Hosting Service Agent
+---
+description: Service account role used to setup authentication for the control plane
+  used by KubeRun Events.
+name: roles/kuberun.eventsControlPlaneServiceAgent
+title: KubeRun Events Control Plane Service Agent
+---
+description: Service account role used to setup authentication for the data plane
+  used by KubeRun Events.
+name: roles/kuberun.eventsDataPlaneServiceAgent
+title: KubeRun Events Data Plane Service Agent
+---
+description: Gives Cloud Life Sciences Service Account access to compute resources.
+  Includes access to service accounts.
+name: roles/lifesciences.serviceAgent
+title: Cloud Life Sciences Service Agent
+---
+description: Uploads media files to customer GCS buckets.
+name: roles/livestream.serviceAgent
+title: Live Stream Service Agent
+---
+description: Access to all logging permissions, and dependent permissions.
+name: roles/logging.admin
+title: Logging Admin
+---
+description: Ability to write logs to a log bucket.
+name: roles/logging.bucketWriter
+title: Logs Bucket Writer
+---
+description: Access to configure log exporting and metrics.
+name: roles/logging.configWriter
+title: Logs Configuration Writer
+---
+description: Ability to read restricted fields in a log bucket.
+name: roles/logging.fieldAccessor
+title: Log Field Accessor
+---
+description: Ability to see links for a bucket.
+name: roles/logging.linkViewer
+title: Log Link Accessor
+---
+description: Access to write logs.
+name: roles/logging.logWriter
+title: Logs Writer
+---
+description: Access to view all logs, including logs with private contents.
+name: roles/logging.privateLogViewer
+title: Private Logs Viewer
+---
+description: Grants a Cloud Logging Service Account the ability to create and link
+  datasets.
+name: roles/logging.serviceAgent
+title: Cloud Logging Service Agent
+---
+description: Ability to write SQL Alerts.
+name: roles/logging.sqlAlertWriter
+title: SQL Alert Writer
+---
+description: Ability to read logs in a view.
+name: roles/logging.viewAccessor
+title: Logs View Accessor
+---
+description: Access to view logs, except for logs with private contents.
+name: roles/logging.viewer
+title: Logs Viewer
+---
+description: Gives the Looker service account permission to manage customer resources.
+  Does not include permissions to access BigQuery
+name: roles/looker.restrictedServiceAgent
+title: Looker Service Agent
+---
+description: Legacy role that gives the Looker service account permission to manage
+  customer resources, including BigQuery
+name: roles/looker.serviceAgent
+title: (Legacy) Looker Service Agent
+---
+description: Gives Managed Flink Service Agent access to Cloud Platform resources.
+name: roles/managedflink.serviceAgent
+title: Managed Flink Service Agent
+---
+description: Gives Managed Identities service account access to managed resources.
+name: roles/managedidentities.serviceAgent
+title: Cloud Managed Identities Service Agent
+---
+description: Provides read and write access to Kafka Connect clusters. Intended for,
+  e.g., IT Departments that provision Kafka Connect clusters, but need not be able
+  to read or modify connectors.
+name: roles/managedkafka.connectClusterEditor
+title: Managed Kafka Connect Cluster Editor
+---
+description: Provides read and write access to connectors. Intended for, e.g., developers
+  who configure and operate connectors.
+name: roles/managedkafka.connectorEditor
+title: Managed Kafka Connector Editor
+---
+description: Full access to schemas, schema versions and configs
+name: roles/managedkafka.schemaRegistryAdmin
+title: Schema Registry Admin
+---
+description: View and edit schemas and schema versions
+name: roles/managedkafka.schemaRegistryEditor
+title: Schema Registry Editor
+---
+description: View schemas and schema versions
+name: roles/managedkafka.schemaRegistryViewer
+title: Schema Registry Viewer
+---
+description: Gives Managed Kafka Service Agent access to Cloud Platform resources.
+name: roles/managedkafka.serviceAgent
+title: Managed Kafka Service Agent
+---
+description: Downloads and uploads media files from and to customer GCS buckets.
+name: roles/mediaasset.serviceAgent
+title: Media Asset Service Agent
+---
+description: Gives Cloud Memorystore Memcached service account access to managed resource
+name: roles/memcache.serviceAgent
+title: Cloud Memorystore Memcached Service Agent
+---
+description: Gives Cloud Memorystore service account access to managed resource
+name: roles/memorystore.serviceAgent
+title: Cloud Memorystore Service Agent
+---
+description: Apply mesh configuration
+name: roles/meshconfig.serviceAgent
+title: Mesh Config Service Agent
+---
+description: Anthos Service Mesh Managed Control Plane Agent
+name: roles/meshcontrolplane.serviceAgent
+title: Mesh Managed Control Plane Service Agent
+---
+description: Run user-space Istio components
+name: roles/meshdataplane.serviceAgent
+title: Mesh Data Plane Service Agent
+---
+description: Gives the Dataproc Metastore service account access to managed resources.
+name: roles/metastore.serviceAgent
+title: Dataproc Metastore Service Agent
+---
+description: Gives Migration Center Service Account access to objects storedin object
+  store and Cloud Migration products.
+name: roles/migrationcenter.serviceAgent
+title: Migration Center Service Agent
+---
+description: AI Platform service agent can act as log writer, Cloud Storage admin,
+  Artifact Registry Reader, BigQuery writer, and service account access token creator.
+name: roles/ml.serviceAgent
+title: AI Platform Service Agent
+---
+description: Gives Model Armor Service Account permission to make DLP calls.
+name: roles/modelarmor.serviceAgent
+title: Model Armor Service Agent
+---
+description: All current and future monitoring permissions.
+name: roles/monitoring.admin
+title: Monitoring Admin
+---
+description: Read/write access to alerting policies.
+name: roles/monitoring.alertPolicyEditor
+title: Monitoring AlertPolicy Editor
+---
+description: Read-only access to alerting policies.
+name: roles/monitoring.alertPolicyViewer
+title: Monitoring AlertPolicy Viewer
+---
+description: Read access to alerts.
+name: roles/monitoring.alertViewer
+title: Monitoring Alert Viewer
+---
+description: Read/write access to incidents from Cloud Console.
+name: roles/monitoring.cloudConsoleIncidentEditor
+title: Monitoring Cloud Console Incident Editor
+---
+description: Read access to incidents from Cloud Console.
+name: roles/monitoring.cloudConsoleIncidentViewer
+title: Monitoring Cloud Console Incident Viewer
+---
+description: Read/write access to dashboard configurations.
+name: roles/monitoring.dashboardEditor
+title: Monitoring Dashboard Configuration Editor
+---
+description: Read-only access to dashboard configurations.
+name: roles/monitoring.dashboardViewer
+title: Monitoring Dashboard Configuration Viewer
+---
+description: Read/write access to all monitoring data and configuration.
+name: roles/monitoring.editor
+title: Monitoring Editor
+---
+description: Write-only access to metrics.  This provides exactly the permissions
+  needed by the Stackdriver agent and other systems that send metrics.
+name: roles/monitoring.metricWriter
+title: Monitoring Metric Writer
+---
+description: Access to add and remove monitored projects from metrics scopes.
+name: roles/monitoring.metricsScopesAdmin
+title: Monitoring Metrics Scopes Admin
+---
+description: Read-only access to metrics scopes and their monitored projects.
+name: roles/monitoring.metricsScopesViewer
+title: Monitoring Metrics Scopes Viewer
+---
+description: Read/write access to notification channels.
+name: roles/monitoring.notificationChannelEditor
+title: Monitoring NotificationChannel Editor
+---
+description: Read-only access to notification channels.
+name: roles/monitoring.notificationChannelViewer
+title: Monitoring NotificationChannel Viewer
+---
+description: Grants Cloud Monitoring and Cloud Alerting permission to access consumer
+  resources and track usage.
+name: roles/monitoring.notificationServiceAgent
+title: Monitoring Service Agent
+---
+description: Read/write access to services.
+name: roles/monitoring.servicesEditor
+title: Monitoring Services Editor
+---
+description: Read-only access to services.
+name: roles/monitoring.servicesViewer
+title: Monitoring Services Viewer
+---
+name: roles/monitoring.snoozeEditor
+title: Monitoring Snooze Editor
+---
+name: roles/monitoring.snoozeViewer
+title: Monitoring Snooze Viewer
+---
+description: Read/write access to uptime check configurations.
+name: roles/monitoring.uptimeCheckConfigEditor
+title: Monitoring Uptime Check Configuration Editor
+---
+description: Read-only access to uptime check configurations.
+name: roles/monitoring.uptimeCheckConfigViewer
+title: Monitoring Uptime Check Configuration Viewer
+---
+description: Read-only access to get and list information about all monitoring data
+  and configuration.
+name: roles/monitoring.viewer
+title: Monitoring Viewer
+---
+description: Gives the Multi Cluster Ingress service agent access to CloudPlatform
+  resources.
+name: roles/multiclusteringress.serviceAgent
+title: Multi Cluster Ingress Service Agent
+---
+description: Gives the Multi-cluster metering service agent access to CloudPlatform
+  resources.
+name: roles/multiclustermetering.serviceAgent
+title: Multi-cluster metering Service Agent
+---
+description: Gives the Multi-Cluster Service Discovery service access to Cloud Platform
+  resources.
+name: roles/multiclusterservicediscovery.serviceAgent
+title: Multi-Cluster Service Discovery Service Agent
+---
+description: Gives Network Actions service account access to read required resources.
+name: roles/networkactions.serviceAgent
+title: Network Actions Service Agent
+---
+description: Grants the Network Connectivity API authority to read some networking
+  resources. It does not mutate these resources.
+name: roles/networkconnectivity.serviceAgent
+title: Network Connectivity Service Agent
+---
+description: Grants the GCP Network Management API the authority to complete analysis
+  based on network configurations from Compute Engine and Container Engine.
+name: roles/networkmanagement.serviceAgent
+title: GCP Network Management Service Agent
+---
+description: Allows the Network Security service to access dependent resources
+name: roles/networksecurity.authzServiceAgent
+title: Network Security Authz Service Agent
+---
+description: Provide access for notebooks service agent to manage notebook instances
+  in user projects
+name: roles/notebooks.serviceAgent
+title: AI Platform Notebooks Service Agent
+---
+description: Grants Observability service account the ability to list, create and
+  link datasets in the consumer project.
+name: roles/observability.serviceAgent
+title: Observability Service Agent
+---
+description: Grants Oracle Database@Google Cloud access to services and APIs in the
+  user project
+name: roles/oci.serviceAgent
+title: Oracle Database@Google Cloud Service Agent
+---
+description: Access to view Organization Policies on resources.
+name: roles/orgpolicy.policyViewer
+title: Organization Policy Viewer
+---
+description: Grants OS Config Rollout Service Account access to zonal OS Config resources.
+name: roles/osconfig.rolloutServiceAgent
+title: Cloud OS Config Rollout Service Agent
+---
+description: Grants OS Config Service Account access to Google Compute Engine instances.
+name: roles/osconfig.serviceAgent
+title: Cloud OS Config Service Agent
+---
+description: 'Full access to most Google Cloud resources. See the list of included
+  permissions. Legacy role: consider using the updated roles/admin instead.'
+name: roles/owner
+title: Owner (Legacy)
+---
+description: Gives the Parallelstore service agent ability to access customer resources.
+name: roles/parallelstore.serviceAgent
+title: Parallelstore Service Agent
+---
+description: Grants read access to ParameterManager TemplateVersion resources. Intended
+  for users & applications that need to perform read operations on TemplateVersions
+  only.
+name: roles/parametermanager.templateAccessor
+title: Parameter Manager Template Accessor
+---
+description: Grants read & write access to all Parameter Manager TemplateVersion resources.
+  Intended for users & applications that need to view Templates and perform create/read/update/delete/list
+  operations on TemplateVersions only.
+name: roles/parametermanager.templateVersionManager
+title: Parameter Manager Template Version Manager
+---
+description: Grants read access to Parameter Manager Template & TemplateVersion resources.
+  Intended for users & applications that need to perform read/list operations on Templates
+  and TemplateVersions only.
+name: roles/parametermanager.templateViewer
+title: Parameter Manager Template Viewer
+---
+description: Gives privileged access manager service account access to modify IAM
+  policies on GCP organizations
+name: roles/privilegedaccessmanager.organizationServiceAgent
+title: Privileged Access Manager Organization Service Agent
+---
+description: Gives privileged access manager service account access to modify IAM
+  policies on GCP projects
+name: roles/privilegedaccessmanager.projectServiceAgent
+title: Privileged Access Manager Project Service Agent
+---
+description: Gives privileged access manager service account access to modify IAM
+  policies on GCP resources
+name: roles/privilegedaccessmanager.serviceAgent
+title: Privileged Access Manager Service Agent
+---
+description: Readonly access to Privileged Access Manager Settings & Effective Settings.
+name: roles/privilegedaccessmanager.settingsViewer
+title: Privileged Access Manager Settings Viewer
+---
+description: Gives Progressive Rollout the ability to roll out a customer change.
+name: roles/progressiverollout.serviceAgent
+title: Progressive Rollout Service Agent
+---
+description: Grants Cloud Pub/Sub Service Account access to manage resources.
+name: roles/pubsub.serviceAgent
+title: Cloud Pub/Sub Service Agent
+---
+description: Grants Pub/Sub Lite Service Agent access to project resources.
+name: roles/pubsublite.serviceAgent
+title: Pub/Sub Lite Service Agent
+---
+description: Gives RMA service account access to MC resources.
+name: roles/rapidmigrationassessment.serviceAgent
+title: RMA Service Agent
+---
+description: Read-only access to view, list, and inspect most GCP resources.
+name: roles/reader
+title: Reader
+---
+description: Gives Cloud Memorystore Redis service account access to managed resource
+name: roles/redis.serviceAgent
+title: Cloud Memorystore Redis Service Agent
+---
+description: Gives Remote Build Execution service account access to managed resources.
+name: roles/remotebuildexecution.serviceAgent
+title: Remote Build Execution Service Agent
+---
+description: Grants Chrome Remote Desktop Service Agent access to Google Compute Engine
+  metadata.
+name: roles/remotingcloud.serviceAgent
+title: Remoting Cloud Service Agent
+---
+description: Access to manage Resource Manager resources
+name: roles/resourcemanager.editor
+title: Resource Manager Editor
+---
+description: Access to modify Liens on projects.
+name: roles/resourcemanager.lienModifier
+title: Project Lien Modifier
+---
+description: Access to manage IAM policies and view organization policies for organizations,
+  folders, and projects.
+name: roles/resourcemanager.organizationAdmin
+title: Organization Administrator
+---
+description: Access to delete GCP projects.
+name: roles/resourcemanager.projectDeleter
+title: Project Deleter
+---
+description: Access and administer a project IAM policies.
+name: roles/resourcemanager.projectIamAdmin
+title: Project IAM Admin
+---
+description: Access to create, delete, update, and manage access to Tags
+name: roles/resourcemanager.tagAdmin
+title: Tag Administrator
+---
+description: Access to create, delete and list TagHolds under a TagValue
+name: roles/resourcemanager.tagHoldAdmin
+title: Tag Hold Administrator
+---
+description: Access to list Tags and manage their associations with resources
+name: roles/resourcemanager.tagUser
+title: Tag User
+---
+description: Access to list Tags and their associations with resources
+name: roles/resourcemanager.tagViewer
+title: Tag Viewer
+---
+description: Access to view Resource Manager resources
+name: roles/resourcemanager.viewer
+title: Resource Manager Viewer
+---
+description: Retail service uploads product feeds and user events from Cloud Storage
+  and BigQuery, reports results to the customer Cloud Storage bucket, writes logs
+  to customer projects, and writes and reads Stackdriver metrics for customer projects.
+name: roles/retail.serviceAgent
+title: Retail Service Agent
+---
+description: Service agent that grants Risk Manager service access to fetch findings
+  for generating Reports
+name: roles/riskmanager.serviceAgent
+title: Risk Manager Service Agent
+---
+description: Grants Route Optimization Service Account access to read and write GCS
+  objects in the host project.
+name: roles/routeoptimization.serviceAgent
+title: Route Optimization Service Agent
+---
+description: Gives Cloud Run service account access to managed resources.
+name: roles/run.serviceAgent
+title: Cloud Run Service Agent
+---
+description: Deploy and manage Cloud Run source deployed resources.
+name: roles/run.sourceDeveloper
+title: Cloud Run Source Developer
+---
+description: View Cloud Run source deployed resources.
+name: roles/run.sourceViewer
+title: Cloud Run Source Viewer
+---
+description: Gives Serverless Integrations Service Account access to customer project
+  resources.
+name: roles/runapps.serviceAgent
+title: Serverless Integrations Service Agent
+---
+description: Service Agent used by SaaS Service Management.
+name: roles/saasservicemgmt.serviceAgent
+title: SaaS Service Management Service Agent
+---
+description: Service agent used by SecLM to access resources used by SecLM Workbenches.
+name: roles/seclm.serviceAgent
+title: SecLM Service Agent
+---
+description: Grants Secured Landing Zone service account permissions to manage resources
+  in the customer project
+name: roles/securedlandingzone.serviceAgent
+title: Secured Landing Zone Service Agent
+---
+description: Gives Secure Source Manager service account access to managed resources.
+name: roles/securesourcemanager.serviceAgent
+title: Secure Source Manager Service Agent
+---
+description: Admin(super user) access to security center
+name: roles/securitycenter.admin
+title: Security Center Admin
+---
+description: Admin Read-write access to security center
+name: roles/securitycenter.adminEditor
+title: Security Center Admin Editor
+---
+description: Admin Read access to security center
+name: roles/securitycenter.adminViewer
+title: Security Center Admin Viewer
+---
+description: Write access to asset security marks
+name: roles/securitycenter.assetSecurityMarksWriter
+title: Security Center Asset Security Marks Writer
+---
+description: Run asset discovery access to assets
+name: roles/securitycenter.assetsDiscoveryRunner
+title: Security Center Assets Discovery Runner
+---
+description: Read access to assets
+name: roles/securitycenter.assetsViewer
+title: Security Center Assets Viewer
+---
+description: Gives Mandiant Attack Surface Management the ability to scan Cloud Platform
+  resources.
+name: roles/securitycenter.attackSurfaceManagementScannerServiceAgent
+title: Attack Surface Management Scanner Service Agent
+---
+description: Security Center automation service agent can configure GCP resources
+  to enable security scanning.
+name: roles/securitycenter.automationServiceAgent
+title: Security Center Automation Service Agent
+---
+description: Read-Write access to security center BigQuery Exports
+name: roles/securitycenter.bigQueryExportsEditor
+title: Security Center BigQuery Exports Editor
+---
+description: Read access to security center BigQuery Exports
+name: roles/securitycenter.bigQueryExportsViewer
+title: Security Center BigQuery Exports Viewer
+---
+description: Security Center Control service agent can monitor and configure GCP resources
+  and import security findings.
+name: roles/securitycenter.controlServiceAgent
+title: Security Center Control Service Agent
+---
+description: Write access to security center external systems
+name: roles/securitycenter.externalSystemsEditor
+title: Security Center External Systems Editor
+---
+description: Write access to finding security marks
+name: roles/securitycenter.findingSecurityMarksWriter
+title: Security Center Finding Security Marks Writer
+---
+description: Ability to mute findings in bulk
+name: roles/securitycenter.findingsBulkMuteEditor
+title: Security Center Findings Bulk Mute Editor
+---
+description: Read-write access to findings
+name: roles/securitycenter.findingsEditor
+title: Security Center Findings Editor
+---
+description: Set mute access to findings
+name: roles/securitycenter.findingsMuteSetter
+title: Security Center Findings Mute Setter
+---
+description: Set state access to findings
+name: roles/securitycenter.findingsStateSetter
+title: Security Center Findings State Setter
+---
+description: Read access to findings
+name: roles/securitycenter.findingsViewer
+title: Security Center Findings Viewer
+---
+description: Gives Security Center access to execute Integrations.
+name: roles/securitycenter.integrationExecutorServiceAgent
+title: Security Center Integration Executor Service Agent
+---
+description: Read-Write access to security center mute configurations
+name: roles/securitycenter.muteConfigsEditor
+title: Security Center Mute Configurations Editor
+---
+description: Read access to security center mute configurations
+name: roles/securitycenter.muteConfigsViewer
+title: Security Center Mute Configurations Viewer
+---
+description: Write access to notification configurations
+name: roles/securitycenter.notificationConfigEditor
+title: Security Center Notification Configurations Editor
+---
+description: Read access to notification configurations
+name: roles/securitycenter.notificationConfigViewer
+title: Security Center Notification Configurations Viewer
+---
+description: Security Center service agent can publish notifications to Pub/Sub topics.
+name: roles/securitycenter.notificationServiceAgent
+title: Security Center Notification Service Agent
+---
+description: Test access to Security Health Analytics Custom Modules
+name: roles/securitycenter.securityHealthAnalyticsCustomModulesTester
+title: Security Health Analytics Custom Modules Tester
+---
+description: Security Health Analytics service agent can scan GCP resource metadata
+  to find security vulnerabilities.
+name: roles/securitycenter.securityHealthAnalyticsServiceAgent
+title: Security Health Analytics Service Agent
+---
+description: Gives Playbook Runner permissions to execute all Google authored Playbooks.
+  This role will keep evolving as we add more playbooks
+name: roles/securitycenter.securityResponseServiceAgent
+title: Google Cloud Security Response Service Agent
+---
+description: Security Center service agent can scan GCP resources and import security
+  scans.
+name: roles/securitycenter.serviceAgent
+title: Security Center Service Agent
+---
+description: Admin(super user) access to security center settings
+name: roles/securitycenter.settingsAdmin
+title: Security Center Settings Admin
+---
+description: Read-Write access to security center settings
+name: roles/securitycenter.settingsEditor
+title: Security Center Settings Editor
+---
+description: Read access to security center settings
+name: roles/securitycenter.settingsViewer
+title: Security Center Settings Viewer
+---
+description: Admin access to sources
+name: roles/securitycenter.sourcesAdmin
+title: Security Center Sources Admin
+---
+description: Read-write access to sources
+name: roles/securitycenter.sourcesEditor
+title: Security Center Sources Editor
+---
+description: Read access to sources
+name: roles/securitycenter.sourcesViewer
+title: Security Center Sources Viewer
+---
+description: Give the Service Directory service agent access to Cloud Platform resources.
+name: roles/servicedirectory.serviceAgent
+title: Service Directory Service Agent
+---
+description: Full control of Google Service Management resources.
+name: roles/servicemanagement.admin
+title: Service Management Administrator
+---
+description: Access to update the service config and create rollouts.
+name: roles/servicemanagement.configEditor
+title: Service Config Editor
+---
+description: Editor role for Service Management.
+name: roles/servicemanagement.editor
+title: Service Management Editor
+---
+description: Access to administer service quotas.
+name: roles/servicemanagement.quotaAdmin
+title: Quota Administrator
+---
+description: Access to view service quotas.
+name: roles/servicemanagement.quotaViewer
+title: Quota Viewer
+---
+description: Viewer role for Service Management.
+name: roles/servicemanagement.viewer
+title: Service Management Viewer
+---
+description: Admin role for Service Networking
+name: roles/servicenetworking.admin
+title: Service Networking Admin
+---
+description: Editor role for Service Networking
+name: roles/servicenetworking.editor
+title: Service Networking Editor
+---
+description: Full control of service networking with projects.
+name: roles/servicenetworking.networksAdmin
+title: Service Networking Admin
+---
+description: Gives permission to manage network configuration, such as establishing
+  network peering, necessary for service producers
+name: roles/servicenetworking.serviceAgent
+title: Service Networking Service Agent
+---
+description: Viewer role for Service Networking
+name: roles/servicenetworking.viewer
+title: Service Networking Viewer
+---
+description: Ability to create, delete, update, get and list API keys for a project.
+name: roles/serviceusage.apiKeysAdmin
+title: API Keys Admin
+---
+description: Ability to get and list API keys for a project.
+name: roles/serviceusage.apiKeysViewer
+title: API Keys Viewer
+---
+description: Ability to enable, disable, and inspect service states, inspect operations,
+  and consume quota and billing for a consumer project.
+name: roles/serviceusage.serviceUsageAdmin
+title: Service Usage Admin
+---
+description: Ability to inspect service states and operations, and consume quota and
+  billing for a consumer project.
+name: roles/serviceusage.serviceUsageConsumer
+title: Service Usage Consumer
+---
+description: Ability to inspect service states and operations for a consumer project.
+name: roles/serviceusage.serviceUsageViewer
+title: Service Usage Viewer
+---
+description: Allow Cloud Source Repositories to integrate with other Cloud services.
+name: roles/sourcerepo.serviceAgent
+title: Cloud Source Repositories Service Agent
+---
+description: Cloud Spanner API Service Agent
+name: roles/spanner.serviceAgent
+title: Cloud Spanner API Service Agent
+---
+description: Gives Spectrum SAS Service Account access to enable analytics on behalf
+  of users.
+name: roles/spectrumsas.serviceAgent
+title: Spectrum SAS Service Agent
+---
+description: Gives Speech-to-Text service account access to GCS resources.
+name: roles/speech.serviceAgent
+title: Cloud Speech-to-Text Service Agent
+---
+description: Write-only access to resource metadata.  This provides exactly the permissions
+  needed by the Stackdriver metadata agent and other systems that send metadata.
+name: roles/stackdriver.resourceMetadata.writer
+title: Stackdriver Resource Metadata Writer
+---
+description: Grants full control of buckets and objects.
+name: roles/storage.admin
+title: Storage Admin
+---
+description: Grants all permissions needed to generate annotations for objects in
+  a bucket.
+name: roles/storage.annotationGeneratorService
+title: Storage Annotation Generator Service
+---
+description: Grants permission to view buckets and their metadata, excluding IAM policies.
+name: roles/storage.bucketViewer
+title: Storage Bucket Viewer
+---
+description: Editor role for storage
+name: roles/storage.editor
+title: Storage Editor
+---
+description: Grants permission to Express Mode service accounts at a managed folder
+  so they can create objects but not read them on input folders.
+name: roles/storage.expressModeServiceInput
+title: Storage Express Mode Service Input
+---
+description: Grants permission to Express Mode service accounts at a managed folder
+  so they can read objects but not write them on output folders.
+name: roles/storage.expressModeServiceOutput
+title: Storage Express Mode Service Output
+---
+description: Grants permission to Express Mode accounts at the project level so they
+  can read, list, create and delete any object in any of their buckets in Express
+  Mode.
+name: roles/storage.expressModeUserAccess
+title: Storage Express Mode User Access
+---
+description: Grants full control over folders and objects, including listing, creating,
+  viewing, and deleting objects.
+name: roles/storage.folderAdmin
+title: Storage Folder Admin
+---
+description: Grants full control over HMAC keys in a project.
+name: roles/storage.hmacKeyAdmin
+title: Storage HMAC Key Admin
+---
+description: Grants read access to object metadata in inventory reports.
+name: roles/storage.insightsCollectorService
+title: Storage Insights Collector Service
+---
+description: Gives Google Cloud Storage Malware Scanner Service Agent access to read
+  object contents and write scan verdicts to object contexts.
+name: roles/storage.malwareScannerServiceAgent
+title: GCS Malware Scanner Service Agent
+---
+description: Grants full control over objects, including listing, creating, viewing,
+  and deleting objects.
+name: roles/storage.objectAdmin
+title: Storage Object Admin
+---
+description: Allows users to create objects. Does not give permission to view, delete,
+  or replace objects.
+name: roles/storage.objectCreator
+title: Storage Object Creator
+---
+description: Access to create, read, update and delete objects and multipart uploads
+  in GCS.
+name: roles/storage.objectUser
+title: Storage Object User
+---
+description: Grants access to view objects and their metadata, excluding ACLs. Can
+  also list the objects in a bucket.
+name: roles/storage.objectViewer
+title: Storage Object Viewer
+---
+description: Viewer role for storage
+name: roles/storage.viewer
+title: Storage Viewer
+---
+description: Permissions for Insights to write reports into customer project
+name: roles/storageinsights.serviceAgent
+title: StorageInsights Service Agent
+---
+description: Create, update and manage transfer jobs and operations.
+name: roles/storagetransfer.admin
+title: Storage Transfer Admin
+---
+description: Grants Storage Transfer Service Agent permissions required to run transfers
+name: roles/storagetransfer.serviceAgent
+title: Storage Transfer Service Agent
+---
+description: Perform transfers from an agent.
+name: roles/storagetransfer.transferAgent
+title: Storage Transfer Agent
+---
+description: Create and update storage transfer jobs and operations.
+name: roles/storagetransfer.user
+title: Storage Transfer User
+---
+description: Read access to storage transfer jobs and operations.
+name: roles/storagetransfer.viewer
+title: Storage Transfer Viewer
+---
+description: Gives Immersive Stream for XR access to the required resources.
+name: roles/stream.serviceAgent
+title: Stream Service Agent
+---
+description: Admin role for telemetry
+name: roles/telemetry.admin
+title: Telemetry Admin
+---
+description: Grants permission management access to consumer resources.
+name: roles/telemetry.consumerAdmin
+title: Consumer Admin
+---
+description: Editor role for telemetry
+name: roles/telemetry.editor
+title: Telemetry Editor
+---
+description: Access to write logs.
+name: roles/telemetry.logsWriter
+title: Cloud Telemetry Logs Writer
+---
+description: Access to write metrics.
+name: roles/telemetry.metricsWriter
+title: Cloud Telemetry Metrics Writer
+---
+description: Allows an onboarded service to write log data to a destination.
+name: roles/telemetry.serviceLogsWriter
+title: Integrated Service Telemetry Logs Writer
+---
+description: Allows an onboarded service to write metrics data to a destination.
+name: roles/telemetry.serviceMetricsWriter
+title: Integrated Service Telemetry Metrics Writer
+---
+description: Allows an onboarded service to write all telemetry data to a destination.
+name: roles/telemetry.serviceTelemetryWriter
+title: Integrated Service Telemetry Writer
+---
+description: Allows an onboarded service to write trace data to a destination.
+name: roles/telemetry.serviceTracesWriter
+title: Integrated Service Telemetry Traces Writer
+---
+description: Access to write trace spans.
+name: roles/telemetry.tracesWriter
+title: Cloud Telemetry Traces Writer
+---
+description: Full access to write all telemetry data.
+name: roles/telemetry.writer
+title: Cloud Telemetry Writer
+---
+description: Give Cloud TPUs service account access to managed resources
+name: roles/tpu.serviceAgent
+title: Cloud TPU API Service Agent
+---
+description: Downloads and uploads media files from and to customer GCS buckets. Publishes
+  status updates to customer Pub/Sub.
+name: roles/transcoder.serviceAgent
+title: Transcoder Service Agent
+---
+description: Admin of Translation Hub
+name: roles/translationhub.admin
+title: Translation Hub Admin
+---
+description: Portal user of Translation Hub
+name: roles/translationhub.portalUser
+title: Translation Hub Portal User
+---
+description: Gives Vector Search access to read Cloud Storage buckets, read/create
+  objects, use Vertex Models, and call Discovery Engine RankService.
+name: roles/vectorsearch.serviceAgent
+title: Vector Search Service Agent
+---
+description: 'View most Google Cloud resources. See the list of included permissions.
+  Legacy role: consider using the updated roles/reader instead.'
+name: roles/viewer
+title: Viewer (Legacy)
+---
+description: Grants Cloud Vision AI service account permissions to manage resources
+  in consumer project
+name: roles/visionai.serviceAgent
+title: Cloud Vision AI Service Agent
+---
+description: Grants Visual Inspection AI Service Agent admin roles for accessing/exporting
+  training data, pushing containers artifacts to GCR and ArtifactsRegistry, and Vertex
+  AI for storing data and running training jobs.
+name: roles/visualinspection.serviceAgent
+title: Visual Inspection AI Service Agent
+---
+description: Grants VM Migration Service Account access to create migrated VMs, disks
+  and images in the user project.
+name: roles/vmmigration.serviceAgent
+title: VM Migration Service Agent
+---
+description: Gives permission to manage network configuration, such as establishing
+  network peering, necessary for GCVE
+name: roles/vmwareengine.serviceAgent
+title: VMware Engine Service Agent
+---
+description: Can create and manage resources to support serverless application to
+  connect to virtual private cloud.
+name: roles/vpcaccess.serviceAgent
+title: Serverless VPC Access Service Agent
+---
+description: Gives the Cloud Web Security Scanner service account access to compute
+  engine details and app engine details.
+name: roles/websecurityscanner.serviceAgent
+title: Cloud Web Security Scanner Service Agent
+---
+description: Gives Cloud Workflows service account access to managed resources.
+name: roles/workflows.serviceAgent
+title: Cloud Workflows Service Agent
+---
+description: Gives the Workload Certificate service agent access to Cloud Platform
+  resources.
+name: roles/workloadcertificate.serviceAgent
+title: Workload Certificate Service Agent
+---
+description: Gives Workload Manager Service Agent access to CAI export functions and
+  Cloud Monitoring.
+name: roles/workloadmanager.serviceAgent
+title: Workload Manager Service Agent
+---
+description: Grants the Workstations Service Account access to manage resources in
+  consumer project.
+name: roles/workstations.serviceAgent
+title: Workstations Service Agent
+---
+description: Full read and write access to view, create, update, and delete most GCP
+  resources.
+name: roles/writer
+title: Writer

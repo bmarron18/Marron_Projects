@@ -1,0 +1,551 @@
+
+
+########################################################
+Create a Google Cloud Project named, "agremotesensing" 
+that has access to the earthengine-api (ie, Google Earth Engine)
+########################################################
+
+BASIC SCHEMATIC
+-----------------
+Step 1: Create a Google Cloud Project (The baseline container)
+  │
+  └───► Step 2: Enable Earth Engine on that Project (Unlocks the data)
+         │
+         └───► Step 3: Create a Service Account inside that Project (The robot user)
+                │
+                └───► Step 4: Generate & download the JSON Key (The local credential)
+
+To assign a billing account to your Google Cloud Project, you need to link it via the Billing section of the Google Cloud Console
+
+
+#######################
+Step-by-Step Workflow
+#########################
+	* create your new Google Cloud Project
+	* link it directly to your existing central billing account, 
+	* enable Earth Engine, and 
+	* extract your secure JSON service account key. 
+
+Step 1: Create the Project and Link it to Your Cloud Billing Account
+	a. Go to the Google Cloud Console
+		https://console.cloud.google.com
+		https://console.cloud.google.com/welcome?organizationId=0&supportedpurview=project,folder
+
+	b. Welcome .... 
+		clic "Create or Select a Project"
+
+	c. Select a Name and "No Organization"
+
+	d. Go to the Google Cloud Console Billing Account Management page.
+		https://console.cloud.google.com/billing
+
+	e. Clic on tab, "Your Projects"
+		the new project should already be listed under the billing account
+
+Step 2: Enable and Register Google Earth Engine
+A newly-created project does not have access to Earth Engine by default; you must unlock the API and register your project’s intended use case. 
+	a. Select your newly created project from the top blue project dropdown menu in the Cloud Console.
+	   [https://console.cloud.google.com/welcome?project=agremotesensing]
+
+	b. Use the top search bar to look for Earth Engine API (in Marketplace) click it, and then click the blue Enable 
+	   button.
+
+	c. Search "Earth Engine" and select "Earth Engine" (product)
+
+	d. Register your GEE-enabled project 
+		* registered Community / Noncommercial tier
+
+	e. Go to the "Google Cloud Console IAM & Admin Service Accounts" page
+	   [https://console.cloud.google.com/iam-admin/iam?project=agremotesensing]
+	   Verify that your new project name is visible in the top blue navigation bar dropdown menu.
+
+	f. clic "+ Create Service Account" button at the top
+		* Service Account will use .json credentials
+
+	g. In the Select a role dropdown filter, type Earth Engine and pick TWO roles:
+		• "Earth Engine Resource Admin" (authority to manage data (Admin)
+		* "Service Usage Consumer" (authority to run up a computing/billing)
+		*  set the same TWO roles for marron.bruce.mx@gmail.com
+		
+	h. From the main list, click directly on the newly created Service Account email string
+	   [bmarron18-ag@agremotesensing.iam.gserviceaccount.com]
+
+	i. Navigate to the Keys tab at the top, select the Add Key button dropdown, and click Create new key.
+
+	j. Leave the selection box ticked on JSON and hit Create
+	   
+
+
+#########################################################
+Creation and Configuration of "agremotesensing" (a GCP)
+to be used for accessing the earthengine-api
+###########################################################
+
+-------------------------
+INSTALL google-cloud-sdk
+and INITIALIZE
+--------------------------
+	$ gcloud init
+
+	$ gcloud components update
+
+
+
+
+------------------------------
+USER ACCOUNT AND CREDENTIALS
+-------------------------------
+	* the acct used by gcloud cli to allow basic changes to a Google Cloud Project
+	* A Google Workspace Acct, (ie a email@gmail.com acct)
+	* File: ~/.config/gcloud/credentials.db
+	* uses OAuth 2.0 Client IDs
+	
+
+gcloud CLI
+	$ gcloud config get-value core/account
+	$ gcloud auth list
+	$ gcloud auth login
+
+
+
+
+
+------------------------------------------
+CREATE GOOGLE CLOUD PROJECT (GCP)
+--------------------------------------------
+The Google Cloud Platform Console
+	https://console.cloud.google.com/
+	
+
+using gcloud CLI
+
+		#CREATE PROJECT
+	$ gcloud projects create agremotesensing \
+	--name"ag-remote-01" \
+	--set-as-default
+
+
+	$ gcloud info
+		Google Cloud SDK [593.0.0]
+		Platform: [Linux, x86_64] uname_result(system='Linux', node='brucevdb-HP-Laptop-15-fd0xxx', release='7.0.0-43-generic', version='#43~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Sat Oct 31 06:52:47 UTC 2', machine='x86_64')
+		Locale: ('en_US', 'UTF-8')
+		Python Version: [3.14.9 (main, Oct 24 2026, 02:42:07) [Clang 23.1.3 ]]
+		Python Location: [/home/bruce-vdb/google-cloud-sdk/platform/bundledpythonunix/bin/python3]
+		OpenSSL: [OpenSSL 3.5.9 29 Sep 2026]
+		Requests Version: [2.32.3]
+		urllib3 Version: [2.8.0]
+		Default CA certs file: [/home/bruce-vdb/google-cloud-sdk/lib/third_party/certifi/cacert.pem]
+		Site Packages: [Enabled]
+
+		Installation Root: [/home/bruce-vdb/google-cloud-sdk]
+		Installed Components:
+		  gsutil: [5.38]
+		  gcloud-crc32c: [1.0.0]
+		  bq: [2.1.42]
+		  bundled-python3-unix: [3.14.9]
+		  core: [2026.11.06]
+		System PATH: [/home/bruce-vdb/google-cloud-sdk/bin:/usr/local/texlive/2026/bin/x86_64-linux:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin]
+		Python PATH: [/home/bruce-vdb/google-cloud-sdk/lib/third_party:/home/bruce-vdb/google-cloud-sdk/lib:/home/bruce-vdb/google-cloud-sdk/platform/bundledpythonunix/lib/python314.zip:/home/bruce-vdb/google-cloud-sdk/platform/bundledpythonunix/lib/python3.14:/home/bruce-vdb/google-cloud-sdk/platform/bundledpythonunix/lib/python3.14/lib-dynload:/home/bruce-vdb/google-cloud-sdk/platform/bundledpythonunix/lib/python3.14/site-packages]
+		Cloud SDK on PATH: [True]
+		Kubectl on PATH: [False]
+
+		Installation Properties: [/home/bruce-vdb/google-cloud-sdk/properties]
+		User Config Directory: [/home/bruce-vdb/.config/gcloud]
+		Active Configuration Name: [default]
+		Active Configuration Path: [/home/bruce-vdb/.config/gcloud/configurations/config_default]
+
+		Account: [marron.bruce.mx@gmail.com]
+		Project: [agremotesensing]
+		Universe Domain: [googleapis.com]
+
+		Current Properties:
+		  [core]
+		    account: [marron.bruce.mx@gmail.com] (property file)
+		    disable_usage_reporting: [False] (property file)
+		    project: [agremotesensing] (property file)
+
+		Logs Directory: [/home/bruce-vdb/.config/gcloud/logs]
+		Last Log File: [/home/bruce-vdb/.config/gcloud/logs/2026.11.12/14.05.08.685796.log]
+
+		git: [git version 2.43.0]
+		ssh: [OpenSSH_9.6p1 Ubuntu-3ubuntu13.20, OpenSSL 3.0.13 30 Jan 2024
+
+
+
+	$ gcloud config list
+		[core]
+		account = marron.bruce.mx@gmail.com
+		disable_usage_reporting = False
+		project = agremotesensing
+		Your active configuration is: [default]
+
+	$ gcloud config configurations list
+		NAME     IS_ACTIVE  ACCOUNT                    PROJECT          COMPUTE_DEFAULT_ZONE  COMPUTE_DEFAULT_REGION
+		default  True       marron.bruce.mx@gmail.com  agremotesensing
+
+
+
+	$ gcloud projects list
+		PROJECT_ID         NAME               PROJECT_NUMBER  ENVIRONMENT
+		agremotesensing    ag-remote-01       1042313423310
+		my-project-uteca1  My Project-UTECA1  735387290281
+
+
+
+	$ gcloud projects describe agremotesensing
+		createTime: '2026-10-30T18:59:37.210Z'
+		lifecycleState: ACTIVE
+		name: ag-remote-01
+		projectId: agremotesensing
+		projectNumber: '1042313423310'
+
+
+	$ gcloud projects describe 1042313423310
+		createTime: '2026-10-30T18:59:37.210Z'
+		lifecycleState: ACTIVE
+		name: ag-remote-01
+		projectId: agremotesensing
+		projectNumber: '1042313423310'
+
+
+
+
+	$ gcloud logging logs list
+		NAME
+		projects/agremotesensing/logs/cloudaudit.googleapis.com%2Factivity
+
+		# LOGS
+	$ cd /home/bruce-vdb/.config/gcloud/logs
+
+
+
+
+------------------------------------------------------------
+(default) SERVICE ACCOUNT CREDENTIALS
+------------------------------------------------------------
+	* Application Default Credentials (ADC), the default credentials used by 
+	  a Google Cloud Project to access APIs via google-cloud-sdk
+	* Compute Engine default service account (default name)
+	* the default .json file can generate a token to be used to run API scripts IFF the 
+	  GOOGLE_APPLICATION_CREDENTIALS environment variable is NOT set
+	* Google-Managed Key (.json file): NOT AVAILABLE
+	* Google-Managed Key has 2-year expiration window, the standard lifecycle for Google-managed keys (Google 
+	  automatically rotates for you)
+
+
+from the Console
+
+
+
+using gcloud CLI
+	$ gcloud iam service-accounts list
+	$ gcloud iam service-accounts describe 1042313423310-compute@developer.gserviceaccount.com
+	$ gcloud iam service-accounts keys list --iam-account=1042313423310-compute@developer.gserviceaccount.com
+	$ gcloud auth application-default
+			login 			Acquire new user credentials to use for Application Default Credentials.
+			print-access-token   Print an access token for your current Application Default Credentials.
+			revoke               Revoke previously generated Application Default Credentials.
+
+	
+
+
+Outputs
+	Name
+		projects/agremotesensing/serviceAccounts/1042313423310-compute@developer.gserviceaccount.com 
+
+	Service Acct ID
+		Compute Engine default service account
+
+	Email
+		1042313423310-compute@developer.gserviceaccount.com
+
+	Oauth2ClientId
+		110754189245665621297
+
+	UniqueId: 
+		110754189245665621297
+
+	KEY_ID
+		c3ca45cf28b6a115a3852356e87e081af2550f27	<== Google-Managed Key (original)
+		c3a4e98ed63d50dd5c7e0134c48b0e5f5f11cdb5	<== Google-Managed Key (new) from
+														$ gcloud auth application-default login
+
+	Created
+		2026-10-30T19:45:35Z  
+		2026-11-03T14:10:12Z
+
+	Expiration
+		2028-10-29T19:45:35Z
+		2028-11-02T14:10:12Z
+
+	(keyed to) ProjectId: 
+		agremotesensing
+
+	
+
+
+---------------------------------------------
+(hard-coded) SERVICE ACCOUNT CREDENTIALS
+----------------------------------------------
+	* hard-coded credentials used by a Google Cloud Project to access APIs bypassing google-cloud-sdk
+	* a downloaded .json file used to run API scripts by setting the GOOGLE_APPLICATION_CREDENTIALS 
+	  environment variable in local computer
+	* running Python script using a .json service account credential file to call "earthengine-api", entirely 
+	  bypasses google-cloud-sdk credentials for that runtime. Your code communicates directly with the Earth Engine servers via an embedded Python library (google-auth), without looking at or needing your credentials in
+	  the google-cloud-sdk
+	* User-Managed Key (.json file): ~/some-folder/agremotesensing-a0e16021eb39.json
+	* User-Managed Keys: typically show an expiration year of 9999 unless your organization enforces a custom 
+	  key-expiration policy.
+
+
+from the Console
+
+
+
+using gcloud CLI
+	$ gcloud iam service-accounts list
+	$ gcloud iam service-accounts describe bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+	$ gcloud iam service-accounts keys list --iam-account=bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+
+
+
+
+	Description: 
+		Remote sensing for agroecology
+
+	DisplayName
+		bmarron18-ag
+	
+	Service Acct ID
+		bmarron18-ag
+
+	Email
+		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+
+	Oauth2ClientId: 
+		116782904574881211259
+
+	UniqueId: 
+		116782904574881211259
+
+	(keyed to) ProjectId: 
+		agremotesensing
+
+	Key ID
+		c3ca45cf28b6a115a3852356e87e081af2550f27  	<== Google-Managed Key (original)
+		a0e16021eb39b8ed24a203907f592a6f6dcc5749  	<== User-Managed Key (downloaded)
+		------------
+
+	Created
+		2026-10-30T19:45:35Z
+		2026-10-30T19:55:54Z  
+
+	Expires
+		2028-10-29T19:45:35Z
+		9999-12-31T23:59:59Z
+
+	 User-Managed Key (downloaded)
+		agremotesensing-a0e16021eb39.json
+				  ------------
+
+
+--------------------------------- ------------------------------------------------------------------
+IDENTITY & ACCESS MANAGEMENT (IAM)
+on Service Accounts for GCP "agremotesensing":
+			NAME 					EMAIL
+	Compute Engine default service account 		marron.bruce.mx@gmail.com
+	bmarron18-ag  					bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+
+								1042313423310-compute@developer.gserviceaccount.com
+								1042313423310@cloudservices.gserviceaccount.com
+								service-1042313423310@compute-system.iam.gserviceaccount.com
+-------------------------------------------------------------------------------------------------------------
+
+
+from the Comsole
+
+
+using gcloud CLI
+	$ gcloud projects get-iam-policy agremotesensing \
+	--flatten="bindings[].members" \
+	--format="table(bindings.members)"
+		MEMBERS
+			serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+			serviceAccount:1042313423310@cloudservices.gserviceaccount.com
+			serviceAccount:service-1042313423310@compute-system.iam.gserviceaccount.com
+
+			serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+			user:marron.bruce.mx@gmail.com
+
+			serviceAccount:1042313423310-compute@developer.gserviceaccount.com
+			user:marron.bruce.mx@gmail.com
+
+
+
+	$ gcloud iam service-accounts list --project agremotesensing
+		DISPLAY NAME                            EMAIL                                                 DISABLED
+		Compute Engine default service account  1042313423310-compute@developer.gserviceaccount.com   False
+		bmarron18-ag                            bmarron18-ag@agremotesensing.iam.gserviceaccount.com  False
+
+
+
+	$ gcloud iam service-accounts keys list --iam-account bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+		KEY_ID                                    CREATED_AT            EXPIRES_AT            
+		c3ca45cf28b6a115a3852356e87e081af2550f27  2026-10-30T19:45:35Z  2028-10-29T19:45:35Z
+		a0e16021eb39b8ed24a203907f592a6f6dcc5749  2026-10-30T19:55:54Z  9999-12-31T23:59:59Z
+									
+
+
+	$ gcloud iam service-accounts keys list --iam-account 1042313423310-compute@developer.gserviceaccount.com
+		KEY_ID                                    CREATED_AT            EXPIRES_AT            
+		c3a4e98ed63d50dd5c7e0134c48b0e5f5f11cdb5  2026-11-03T14:10:12Z  2028-11-02T14:10:12Z
+
+
+
+	$ gcloud iam service-accounts keys list --iam-account \
+	1042313423310@cloudservices.gserviceaccount.com
+		NOT_FOUND: Unknown service account.
+
+	$ gcloud iam service-accounts keys list --iam-account \
+	service-1042313423310@compute-system.iam.gserviceaccount.com
+		 PERMISSION_DENIED: Permission 'iam.serviceAccountKeys.list' denied on resource '//iam.googleapis.com/projects/-/serviceAccounts/116236482233471278837' (or it may not exist).
+
+	$ gcloud iam service-accounts keys list --iam-account marron.bruce.mx@gmail.com
+		 NOT_FOUND: Unknown service account.
+
+
+
+	
+	$ gcloud projects get-iam-policy agremotesensing \
+    --flatten="bindings[].members" \
+    --filter="bindings.members:bmarron18-ag@agremotesensing.iam.gserviceaccount.com" \
+    --format="table(bindings.role)"
+		ROLE
+			roles/admin
+			roles/earthengine.admin
+			roles/serviceusage.serviceUsageConsumer
+			roles/storage.admin
+
+
+	$ gcloud projects get-iam-policy agremotesensing \
+	--flatten="bindings[].members" \
+	--filter="bindings.members:marron.bruce.mx@gmail.com" \
+	--format="table(bindings.role)"
+		ROLE
+			roles/owner (legacy)
+			roles/earthengine.admin
+			roles/serviceusage.serviceUsageConsumer
+			roles/storage.admin
+
+
+	$ gcloud projects get-iam-policy agremotesensing \
+	--flatten="bindings[].members" \
+	--filter="bindings.members:1042313423310-compute@developer.gserviceaccount.com" \
+	--format="table(bindings.role)"
+		ROLE
+			roles/editor
+
+
+	$ gcloud projects get-iam-policy agremotesensing \
+	--flatten="bindings[].members" \
+	--filter="bindings.members:1042313423310@cloudservices.gserviceaccount.com" \
+	--format="table(bindings.role)"
+		ROLE
+			roles/compute.instanceGroupManagerServiceAgent
+
+
+
+	$ gcloud projects get-iam-policy agremotesensing \
+	--flatten="bindings[].members" \
+	--filter="bindings.members:service-1042313423310@compute-system.iam.gserviceaccount.com" \
+	--format="table(bindings.role)"
+		ROLE
+			roles/compute.serviceAgent
+
+
+			# ADD ROLE
+	$ gcloud projects add-iam-policy-binding agremotesensing \
+    --member="serviceAccount:bmarron18-ag@agremotesensing.iam.gserviceaccount.com" \
+    --role="roles/storage.admin"
+
+
+
+	$ gcloud iam roles describe roles/earthengine.admin
+	
+	
+	
+START HERE
+
+
+
+BUCKETS
+---------
+https://console.cloud.google.com/storage/overview;tab=overview?project=agremotesensing
+
+	* Google Cloud provides 5 GiB of standard Cloud Storage per month on the free tier (subject to region and 
+	  operation limits)
+	* All buckets have a 7 day soft delete duration by default, unless this default has been customized by your 
+	  organization administrator
+
+
+    Bucket Name
+        ag-remote-bucket01 
+
+
+     Principals and Roles
+     	Editors of project: agremotesensing 		
+    		Storage Legacy Bucket Owner
+    		Storage Legacy Object Owner
+    		Storage Object Admin
+
+		
+		Owners of project: agremotesensing 		
+    		Storage Legacy Bucket Owner
+    		Storage Legacy Object Owner
+    		Storage Object Admin
+
+		
+		Viewers of project: agremotesensing 		
+    		Storage Legacy Bucket Reader
+    		Storage Legacy Object Reader 
+
+
+
+GENERAL BILLING 
+--------------------------------
+https://console.cloud.google.com/billing
+https://console.cloud.google.com/billing/01D4ED-4CA1A4-41985D/payment?project=agremotesensing
+
+	* Global Billing Name and ID
+		My Billing Account
+		01D4ED-4CA1A4-41985D
+
+	* agremotesensing in GEE
+		==> Postpay - Google Cloud Services
+			Google Cloud 01D4ED-4CA1A4-41985D
+
+	* Gemini in AI Studio
+		==> Prepay - AI Studio
+			Cloud Prepay 01D4ED-4CA1A4-41985D
+
+
+PAYMENT SETTINGS 
+(agremotesensing in GEE)
+--------------------------------
+	* Automatic charge on the 1st of each month. If your balance reaches your  payment threshold before 
+	* Charged immediately if reach MX$2,000.00
+
+	Payments account ID
+		5419-4456-1299-7896
+
+	Payments profile ID
+		0942-7649-0810
+
+	Payments Account Nickname
+		Google Cloud 01D4ED-4CA1A4-41985D
+
+
+
+
+
+

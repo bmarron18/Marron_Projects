@@ -34,40 +34,8 @@ Google Earth Engine (GEE) operates on a managed, serverless-style cloud architec
 
 	• On-Demand Execution: You pay for or access compute resources as queries and analyses run, without managing idle servers (though commercial/noncommercial access rules and quotas apply). 
 
-	• Integration with Serverless Tools: You can wrap GEE workflows inside serverless Google Cloud services like Cloud Run or Cloud Functions to trigger spatial analyses programmatically. [2] (https://cloud.google.com/blog/products/data-analytics/analyzing-satellite-images-in-google-earth-engine-with-bigquery-sql)
+	• Integration with Serverless Tools: You can wrap GEE workflows inside serverless Google Cloud services like Cloud Run or Cloud Functions to trigger spatial analyses programmatically. 
 
-
-
-##############
-GEE Account
-#############
-
-
-
-Google Acct for ADC credentials (used by gcloud cli)
------------------------------------------------
-    marron.bruce.mx@gmail.com
-
-
-Google Cloud Project for (or linked to) GEE API
---------------------------------------------
-https://console.cloud.google.com/welcome?project=agremotesensing
-https://console.developers.google.com/iam-admin/iam?project=agremotesensing
-
-	Name
-		ag-remote-o1
-
-	Project ID
-		agremotesensing
-
-	Project No.
-		1042313423310
-
-	Created
-        30 Oct 2026
-
-    Organization tied to project
-		No organization
 
 
 GEE Project Noncommercial Eligibility
@@ -86,104 +54,5 @@ Organization type
 
 	* expires Apr 30, 2028
 	* 1,000 EECU-hour limit
-
-
-
-BUCKETS
----------
-https://console.cloud.google.com/storage/overview;tab=overview?project=agremotesensing
-
-	* Google Cloud provides 5 GiB of standard Cloud Storage per month on the free tier (subject to region and 
-	  operation limits)
-	* All buckets have a 7 day soft delete duration by default, unless this default has been customized by your 
-	  organization administrator
-
-
-    Bucket Name
-        ag-remote-bucket01 
-
-
-     Principals and Roles
-     	Editors of project: agremotesensing 		
-    		Storage Legacy Bucket Owner
-    		Storage Legacy Object Owner
-    		Storage Object Admin
-
-		
-		Owners of project: agremotesensing 		
-    		Storage Legacy Bucket Owner
-    		Storage Legacy Object Owner
-    		Storage Object Admin
-
-		
-		Viewers of project: agremotesensing 		
-    		Storage Legacy Bucket Reader
-    		Storage Legacy Object Reader 
-
-
-
-GENERAL BILLING 
---------------------------------
-https://console.cloud.google.com/billing
-https://console.cloud.google.com/billing/01D4ED-4CA1A4-41985D/payment?project=agremotesensing
-
-	* Global Billing Name and ID
-		My Billing Account
-		01D4ED-4CA1A4-41985D
-
-	* agremotesensing in GEE
-		==> Postpay - Google Cloud Services
-			Google Cloud 01D4ED-4CA1A4-41985D
-
-	* Gemini in AI Studio
-		==> Prepay - AI Studio
-			Cloud Prepay 01D4ED-4CA1A4-41985D
-
-
-PAYMENT SETTINGS 
-(agremotesensing in GEE)
---------------------------------
-	* Automatic charge on the 1st of each month. If your balance reaches your  payment threshold before 
-	* Charged immediately if reach MX$2,000.00
-
-	Payments account ID
-		5419-4456-1299-7896
-
-	Payments profile ID
-		0942-7649-0810
-
-	Payments Account Nickname
-		Google Cloud 01D4ED-4CA1A4-41985D
-
-
-
-
-SERVICE ACCOUNT 
-(for .json file credentials)
--------------------------------
-	* Used by your backend server to fetch data from Earth Engine seamlessly. Your server requests data from Earth 
-	  Engine on behalf of the app using its Service Account credentials.
-
-	* When you run a Python script using a .json credential file to call "earthengine-api", you are entirely bypassing 
-	  the google-cloud-cli (gcloud) for that runtime. Your code communicates directly with the Earth Engine servers via an embedded Python library (google-auth), without looking at or needing your terminal's gcloud installation.
-
-	* OAuth 2.0 Client IDs (gcloud) and Service Accounts (.json credential file) are two distinct authentication 
-	  mechanisms 
-
-
-	Name
-		bmarron18-ag
-	
-	Service Acct ID
-		bmarron18-ag
-
-	Service Acct Description
-		Remote sensing for agroecology
-
-	Email
-		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
-
-	.json file Key
-		agremotesensing-a0e16021eb39.json
 
 
