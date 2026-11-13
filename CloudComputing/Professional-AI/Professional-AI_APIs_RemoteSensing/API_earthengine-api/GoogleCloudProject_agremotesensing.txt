@@ -81,15 +81,64 @@ Creation and Configuration of "agremotesensing" (a GCP)
 to be used for accessing the earthengine-api
 ###########################################################
 
--------------------------
-INSTALL google-cloud-sdk
-and INITIALIZE
 --------------------------
-	$ gcloud init
+INSTALL google-cloud-sdk
+--------------------------
+https://docs.cloud.google.com/sdk/docs/install-sdk
 
+	* Select OS
+	* for Linux, download ==> google-cloud-cli-linux-x86_64.tar.gz
+
+
+
+-------------------------
+AUTHENTICATE gcloud cli
+--------------------------
 	$ gcloud components update
 
+	$ gcloud auth login
 
+-------------------------
+CREATE project
+--------------------------
+
+		# PROJECT_ID
+			• Must be between 6 and 30 characters long.
+			• Can only contain lowercase ASCII letters (a–z), digits (0–9), and hyphens (-).
+			• Must start with a lowercase letter and cannot end with a hyphen
+		# PROJECT_NAME
+			• Must be between 4 and 30 characters long.
+			• Can include lowercase and uppercase letters (a–z, A–Z), numbers (0–9), spaces, hyphens (-), single quotes ('), double quotes ("), and exclamation points (!).
+
+	$ gcloud projects create PROJECT_ID \
+	--name"PROJECT_NAME" \
+	--set-as-default
+
+
+
+
+-------------------------
+INITIATE gcloud cli
+--------------------------
+
+
+	$ gcloud init
+		* This is an interactive prompt that handles your primary human credentialing. It will perform three actions:
+    			1. Opens a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
+
+    			2. Pick a Cloud Project: Back in your terminal window, it will list all available projects. Enter the number corresponding to your Earth Engine Google Cloud project.
+
+    			3. Configure default zone (Optional): It may ask you to pick a default compute zone (e.g., us-central1-a). You can safely skip this or select a default close to you.
+		* During the gcloud init walkthrough, when it asks you to pick a project, it will give you an option 
+		  right there in the prompt to Create a new project
+
+	$ gcloud projects list
+		PROJECT_ID         NAME               PROJECT_NUMBER 
+		agremotesensing    ag-remote-01       1042313423310
+		my-project-uteca1  My Project-UTECA1  735387290281
+
+		# Set the active project
+	$ gcloud config set project ag-remote-01
 
 
 ------------------------------
@@ -103,10 +152,21 @@ USER ACCOUNT AND CREDENTIALS
 
 gcloud CLI
 	$ gcloud config get-value core/account
+		marron.bruce.mx@gmail.com
+
 	$ gcloud auth list
-	$ gcloud auth login
+		Credentialed Accounts
+			ACTIVE  ACCOUNT
+			* marron.bruce.mx@gmail.com
+
+		# Set the active account
+	$ gcloud config set account `ACCOUNT`
 
 
+	$ gcloud projects list
+		PROJECT_ID         NAME               PROJECT_NUMBER  ENVIRONMENT
+		agremotesensing    ag-remote-01       1042313423310
+		my-project-uteca1  My Project-UTECA1  735387290281
 
 
 
@@ -117,12 +177,8 @@ The Google Cloud Platform Console
 	https://console.cloud.google.com/
 	
 
-using gcloud CLI
+gcloud CLI
 
-		#CREATE PROJECT
-	$ gcloud projects create agremotesensing \
-	--name"ag-remote-01" \
-	--set-as-default
 
 
 	$ gcloud info
@@ -233,14 +289,48 @@ using gcloud CLI
 	  automatically rotates for you)
 
 
-from the Console
-
-
-
-using gcloud CLI
+gcloud CLI
 	$ gcloud iam service-accounts list
+		DISPLAY NAME                            EMAIL                                                 DISABLED
+		Compute Engine default service account  1042313423310-compute@developer.gserviceaccount.com   False
+		bmarron18-ag                            bmarron18-ag@agremotesensing.iam.gserviceaccount.com  False
+
 	$ gcloud iam service-accounts describe 1042313423310-compute@developer.gserviceaccount.com
-	$ gcloud iam service-accounts keys list --iam-account=1042313423310-compute@developer.gserviceaccount.com
+		displayName: Compute Engine default service account
+		email: 1042313423310-compute@developer.gserviceaccount.com
+		etag: MDEwMjE5MjA=
+		name: projects/agremotesensing/serviceAccounts/1042313423310-compute@developer.gserviceaccount.com
+		oauth2ClientId: '110754189245665621297'
+		projectId: agremotesensing
+		uniqueId: '110754189245665621297'
+
+	$ gcloud iam service-accounts describe bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+		description: Remote sensing for agroecology
+		displayName: bmarron18-ag
+		email: bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+		etag: MDEwMjE5MjA=
+		name: projects/agremotesensing/serviceAccounts/bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+		oauth2ClientId: '116782904574881211259'
+		projectId: agremotesensing
+		uniqueId: '116782904574881211259'
+
+
+
+	$ gcloud iam service-accounts keys list \
+	--iam-account 1042313423310-compute@developer.gserviceaccount.com
+		KEY_ID                                    CREATED_AT            EXPIRES_AT 
+		c3a4e98ed63d50dd5c7e0134c48b0e5f5f11cdb5  2026-11-03T14:10:12Z  2028-11-02T14:10:12Z
+
+
+	$ gcloud iam service-accounts keys list \
+	--iam-account bmarron18-ag@agremotesensing.iam.gserviceaccount.com
+		KEY_ID                                    CREATED_AT            EXPIRES_AT  
+		c3ca45cf28b6a115a3852356e87e081af2550f27  2026-10-30T19:45:35Z  2028-10-29T19:45:35Z
+		a0e16021eb39b8ed24a203907f592a6f6dcc5749  2026-10-30T19:55:54Z  9999-12-31T23:59:59Z
+
+
+
+
 	$ gcloud auth application-default
 			login 			Acquire new user credentials to use for Application Default Credentials.
 			print-access-token   Print an access token for your current Application Default Credentials.
@@ -249,37 +339,6 @@ using gcloud CLI
 	
 
 
-Outputs
-	Name
-		projects/agremotesensing/serviceAccounts/1042313423310-compute@developer.gserviceaccount.com 
-
-	Service Acct ID
-		Compute Engine default service account
-
-	Email
-		1042313423310-compute@developer.gserviceaccount.com
-
-	Oauth2ClientId
-		110754189245665621297
-
-	UniqueId: 
-		110754189245665621297
-
-	KEY_ID
-		c3ca45cf28b6a115a3852356e87e081af2550f27	<== Google-Managed Key (original)
-		c3a4e98ed63d50dd5c7e0134c48b0e5f5f11cdb5	<== Google-Managed Key (new) from
-														$ gcloud auth application-default login
-
-	Created
-		2026-10-30T19:45:35Z  
-		2026-11-03T14:10:12Z
-
-	Expiration
-		2028-10-29T19:45:35Z
-		2028-11-02T14:10:12Z
-
-	(keyed to) ProjectId: 
-		agremotesensing
 
 	
 

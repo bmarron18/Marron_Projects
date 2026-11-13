@@ -66,7 +66,7 @@ gcloud init
 >>>
 
 This is an interactive prompt that handles your primary human credentialing. It will perform three actions:
-    1. Open a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
+    1. Opens a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
 
     2. Pick a Cloud Project: Back in your terminal window, it will list all available projects. Enter the number corresponding to your Earth Engine Google Cloud project.
 
