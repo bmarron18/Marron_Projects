@@ -10,7 +10,9 @@ Google Cloud (Services)
 vs
 Google Cloud Platform (GCP)
 #########################
-Brand-name for all Google's cloud-based offerings vs access point for some of Google's cloud-based services
+Brand-name for all Google's cloud-based offerings 
+vs 
+Access point for some of Google's cloud-based services
 
 Google Cloud (Service)
 ----------------------
@@ -130,16 +132,16 @@ https://github.com/googleapis/google-cloud-python
 
 Example SDKs (available for Python)
 -------------------------
-google-cloud-sdk
+* google-cloud-sdk
     gcloud (primary cloud management CLI)
     gsutil (CLI tool for Cloud Storage)
     bq (CLI tool for BigQuery)
 
 
-google-genai (Gemini API)
+* google-genai (Gemini API)
 
 
-earthengine-api (Google Earth Engine)
+* earthengine-api (Google Earth Engine)
   earthengine (CLI tool for GEE)
 
 
@@ -173,8 +175,7 @@ The programmatic link between your code, the JSON file, and the CLI exists throu
 * The Service Account is a robot entity tied to a Cloud project via an email account. The Service Account generates a Service Account Key (.json file). The Service Account Key contains the credentials for authentication needed to access GEE.
         * uses a Service Account Key (a hard-coded .json file) that contains robot identity email and the project ID
         * Service Accounts allow scripts to authenticate automatically without manual intervention
-        * Google Cloud IAM roles and permissions are bound directly to the Service Account. This limits GEE access and 
-          improves overall security (compared to using a personal account with broad access)
+        * Google Cloud IAM roles and permissions are bound directly to the Service Account. This limits GEE access and improves overall security (compared to using a personal account with broad access)
         * Service Accounts integrate natively with Google Cloud infrastructure
 
 * google-cloud-sdk uses OAuth tokens for authentication. The OAuth tokens are generated from the email and other credentials in the human Google Workspace account.

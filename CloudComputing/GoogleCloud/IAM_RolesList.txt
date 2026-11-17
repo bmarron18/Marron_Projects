@@ -1,5 +1,18 @@
+Title:          IAM Roles
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        23 Oct 2026
+Revised:        05 Nov 2026
+
+
+#############
+List of Possible
+IAN Roles (Permissions)
+####################
 
 $ gcloud iam list-grantable-roles //cloudresourcemanager.googleapis.com/projects/agremotesensing
+
+
 
 OPTIONAL ROLES
 ---

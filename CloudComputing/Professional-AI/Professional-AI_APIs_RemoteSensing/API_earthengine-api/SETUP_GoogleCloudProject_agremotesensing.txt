@@ -81,6 +81,14 @@ Creation and Configuration of "agremotesensing" (a GCP)
 to be used for accessing the earthengine-api
 ###########################################################
 
+-------------
+OPTION
+------------
+Use the Google Cloud Platform Console
+	https://console.cloud.google.com/
+
+
+
 --------------------------
 INSTALL google-cloud-sdk
 --------------------------
@@ -97,89 +105,6 @@ AUTHENTICATE gcloud cli
 	$ gcloud components update
 
 	$ gcloud auth login
-
--------------------------
-CREATE project
---------------------------
-
-		# PROJECT_ID
-			• Must be between 6 and 30 characters long.
-			• Can only contain lowercase ASCII letters (a–z), digits (0–9), and hyphens (-).
-			• Must start with a lowercase letter and cannot end with a hyphen
-		# PROJECT_NAME
-			• Must be between 4 and 30 characters long.
-			• Can include lowercase and uppercase letters (a–z, A–Z), numbers (0–9), spaces, hyphens (-), single quotes ('), double quotes ("), and exclamation points (!).
-
-	$ gcloud projects create PROJECT_ID \
-	--name"PROJECT_NAME" \
-	--set-as-default
-
-
-
-
--------------------------
-INITIATE gcloud cli
---------------------------
-
-
-	$ gcloud init
-		* This is an interactive prompt that handles your primary human credentialing. It will perform three actions:
-    			1. Opens a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
-
-    			2. Pick a Cloud Project: Back in your terminal window, it will list all available projects. Enter the number corresponding to your Earth Engine Google Cloud project.
-
-    			3. Configure default zone (Optional): It may ask you to pick a default compute zone (e.g., us-central1-a). You can safely skip this or select a default close to you.
-		* During the gcloud init walkthrough, when it asks you to pick a project, it will give you an option 
-		  right there in the prompt to Create a new project
-
-	$ gcloud projects list
-		PROJECT_ID         NAME               PROJECT_NUMBER 
-		agremotesensing    ag-remote-01       1042313423310
-		my-project-uteca1  My Project-UTECA1  735387290281
-
-		# Set the active project
-	$ gcloud config set project ag-remote-01
-
-
-------------------------------
-USER ACCOUNT AND CREDENTIALS
--------------------------------
-	* the acct used by gcloud cli to allow basic changes to a Google Cloud Project
-	* A Google Workspace Acct, (ie a email@gmail.com acct)
-	* File: ~/.config/gcloud/credentials.db
-	* uses OAuth 2.0 Client IDs
-	
-
-gcloud CLI
-	$ gcloud config get-value core/account
-		marron.bruce.mx@gmail.com
-
-	$ gcloud auth list
-		Credentialed Accounts
-			ACTIVE  ACCOUNT
-			* marron.bruce.mx@gmail.com
-
-		# Set the active account
-	$ gcloud config set account `ACCOUNT`
-
-
-	$ gcloud projects list
-		PROJECT_ID         NAME               PROJECT_NUMBER  ENVIRONMENT
-		agremotesensing    ag-remote-01       1042313423310
-		my-project-uteca1  My Project-UTECA1  735387290281
-
-
-
-------------------------------------------
-CREATE GOOGLE CLOUD PROJECT (GCP)
---------------------------------------------
-The Google Cloud Platform Console
-	https://console.cloud.google.com/
-	
-
-gcloud CLI
-
-
 
 	$ gcloud info
 		Google Cloud SDK [593.0.0]
@@ -228,6 +153,29 @@ gcloud CLI
 
 
 
+
+-------------------------
+INITIATE gcloud cli
+--------------------------
+
+	$ gcloud init
+		* This is an interactive prompt that handles your primary human credentialing. It will perform three actions:
+    			1. Opens a browser window: It will prompt you to log into your primary Google Account (the email associated with your Google Cloud and Earth Engine projects).
+
+    			2. Pick OR Create a Cloud Project: Back in your terminal window, it will list all available projects. Enter the number corresponding to your Earth Engine Google Cloud project.
+
+    			3. Configure default zone (Optional): It may ask you to pick a default compute zone (e.g., us-central1-a). You can safely skip this or select a default close to you.
+		
+
+------------------------------
+USER ACCOUNT
+-------------------------------
+	* the acct used by gcloud cli to allow basic changes to a Google Cloud Project
+	* A Google Workspace Acct, (ie a email@gmail.com acct)
+	* File: ~/.config/gcloud/credentials.db
+	* uses OAuth 2.0 Client IDs
+	
+
 	$ gcloud config list
 		[core]
 		account = marron.bruce.mx@gmail.com
@@ -236,17 +184,48 @@ gcloud CLI
 		Your active configuration is: [default]
 
 	$ gcloud config configurations list
-		NAME     IS_ACTIVE  ACCOUNT                    PROJECT          COMPUTE_DEFAULT_ZONE  COMPUTE_DEFAULT_REGION
+		NAME     IS_ACTIVE  ACCOUNT                    PROJECT          COMPUTE_DEFAULT_ZONE 
 		default  True       marron.bruce.mx@gmail.com  agremotesensing
 
+	$ gcloud config get-value core/account
+		marron.bruce.mx@gmail.com
 
+
+		# Set the active account to another acct
+	$ gcloud config set account "anotheraccount"
+
+
+	$ gcloud auth list
+		Credentialed Accounts
+			ACTIVE  ACCOUNT
+			* marron.bruce.mx@gmail.com
+
+	$ gcloud auth application-default
+		-- login 		   Acquire new user credentials to use for Application Default Credentials.
+		-- print-access-token   Print an access token for your current Application Default Credentials.
+		-- revoke               Revoke previously generated Application Default Credentials.
+
+
+-------------------------
+CREATE GOOGLE CLOUD PROJECT (GCP)
+--------------------------
+
+		# PROJECT_ID
+			• Must be between 6 and 30 characters long.
+			• Can only contain lowercase ASCII letters (a–z), digits (0–9), and hyphens (-).
+			• Must start with a lowercase letter and cannot end with a hyphen
+		# PROJECT_NAME
+			• Must be between 4 and 30 characters long.
+			• Can include lowercase and uppercase letters (a–z, A–Z), numbers (0–9), spaces, hyphens (-), single quotes ('), double quotes ("), and exclamation points (!).
+
+	$ gcloud projects create PROJECT_ID \
+	--name"PROJECT_NAME" \
+	--set-as-default
 
 	$ gcloud projects list
-		PROJECT_ID         NAME               PROJECT_NUMBER  ENVIRONMENT
+		PROJECT_ID         NAME               PROJECT_NUMBER 
 		agremotesensing    ag-remote-01       1042313423310
 		my-project-uteca1  My Project-UTECA1  735387290281
-
-
 
 	$ gcloud projects describe agremotesensing
 		createTime: '2026-10-30T18:59:37.210Z'
@@ -264,45 +243,102 @@ gcloud CLI
 		projectNumber: '1042313423310'
 
 
-
-
-	$ gcloud logging logs list
-		NAME
-		projects/agremotesensing/logs/cloudaudit.googleapis.com%2Factivity
-
-		# LOGS
-	$ cd /home/bruce-vdb/.config/gcloud/logs
+		# Set the active project
+	$ gcloud config set project ag-remote-01
 
 
 
+START HERE
 
 ------------------------------------------------------------
-(default) SERVICE ACCOUNT CREDENTIALS
+(look-up strategy) 	APPLICATION DEFAULT CREDENTIALS 
+
+vs
+
+(hard-coded)		USER ACCOUNT CREDENTIALS
+
+vs 
+
+(hard-coded) 		SERVICE ACCOUNT CREDENTIALS
+
+vs
+
+(hidden)		SERVICE ACCOUNT CREDENTIALS
 ------------------------------------------------------------
-	* Application Default Credentials (ADC), the default credentials used by 
-	  a Google Cloud Project to access APIs via google-cloud-sdk
-	* Compute Engine default service account (default name)
-	* the default .json file can generate a token to be used to run API scripts IFF the 
-	  GOOGLE_APPLICATION_CREDENTIALS environment variable is NOT set
-	* Google-Managed Key (.json file): NOT AVAILABLE
+	* Application Default Credentials (ADC) do not create any service accounts.
+	* ADC is simply a credential-discovery strategy used by Google Cloud client libraries to find existing
+	  identities based on where your code is running. Rather than creating new cloud resources, ADC simply looks for credentials you or Google Cloud have already set up.
+	
+
+	* USER ACCOUNT CREDENTIALS are the default credentials used by a Google Cloud Project to access APIs via 
+	   google-cloud-sdk IFF GOOGLE_APPLICATION_CREDENTIALS environment variable is NOT set
+	* USER ACCOUNT CREDENTIALS are generated when run 
+		"$ gcloud auth application-default login"
+	* USER ACCOUNT CREDENTIALS are stored (hard-coded) as "application_default_credentials.json" on local computer
+	* USER ACCOUNT CREDENTIALS do not have a Service Account; they are tied to a personal Workspace Google 
+	  user account
+
+
+	
+
+	* SERVICE ACCOUNT CREDENTIALS used by a Google Cloud Project to access APIs by BYPASSING google-cloud-sdk
+	  USER ACCOUNT CREDENTIALS
+	* Credentials are 
+		a) User-Managed Key (.json file): a downloaded .json file (NO TOKENS) located at ~/some-folder/; 
+		name of file: agremotesensing-a0e16021eb39.json
+		b) the environment variable, GOOGLE_APPLICATION_CREDENTIALS, in local computer that points to the downloaded .json file
+	* Credentials tied to a Service Account
+		a) Name of the default ADC Service Account:	"bmarron18-ag" 
+		b) Service Account email: 				bmarron18-ag@agremotesensing.iam.gserviceaccount.com 
+		c) Oauth2ClientId: 					'116782904574881211259'
+		d) uniqueId: 						'116782904574881211259'
+		e) KEY ID:						a0e16021eb39b8ed24a203907f592a6f6dcc5749
+	* User-Managed Keys: typically show an expiration year of 9999 unless your organization enforces a custom 
+	  key-expiration policy.
+
+
+* Application Default Credentials (ADC), 
+	* un gcloud auth application-default login
+	* Credentials are 
+		a) Google-Managed Key (application_default_credentials.json) generated 
+		b) token(s) tied to the Google Managed kEY for running API scripts IFF the 
+	  	GOOGLE_APPLICATION_CREDENTIALS environment variable is NOT set
+	* Credentials tied to a Service Account
+		a) Name of the default ADC Service Account:	"Compute Engine default service account" 
+		b) Service Account email: 				1042313423310-compute@developer.gserviceaccount.com 
+		c) Oauth2ClientId: 					'110754189245665621297'
+		d) uniqueId: 						'110754189245665621297'
+		e) KEY ID:						c3a4e98ed63d50dd5c7e0134c48b0e5f5f11cdb5
 	* Google-Managed Key has 2-year expiration window, the standard lifecycle for Google-managed keys (Google 
 	  automatically rotates for you)
 
 
-gcloud CLI
-	$ gcloud iam service-accounts list
-		DISPLAY NAME                            EMAIL                                                 DISABLED
-		Compute Engine default service account  1042313423310-compute@developer.gserviceaccount.com   False
-		bmarron18-ag                            bmarron18-ag@agremotesensing.iam.gserviceaccount.com  False
+
+
+
+
+
+
+
+	$ gcloud iam service-accounts list 	<== tied to the GCP "agremotesensing"
+		DISPLAY NAME                            EMAIL                                                 DISABLE
+	*	Compute Engine default service account  1042313423310-compute@developer.gserviceaccount.com   False
+	**	bmarron18-ag                            bmarron18-ag@agremotesensing.iam.gserviceaccount.com  False
+
+	*  Google-Managed Key (original)
+	** User-Managed Key (downloaded)
+
+
 
 	$ gcloud iam service-accounts describe 1042313423310-compute@developer.gserviceaccount.com
 		displayName: Compute Engine default service account
 		email: 1042313423310-compute@developer.gserviceaccount.com
 		etag: MDEwMjE5MjA=
 		name: projects/agremotesensing/serviceAccounts/1042313423310-compute@developer.gserviceaccount.com
-		oauth2ClientId: '110754189245665621297'
+		Oauth2ClientId: '110754189245665621297'
 		projectId: agremotesensing
 		uniqueId: '110754189245665621297'
+
 
 	$ gcloud iam service-accounts describe bmarron18-ag@agremotesensing.iam.gserviceaccount.com
 		description: Remote sensing for agroecology
@@ -310,7 +346,7 @@ gcloud CLI
 		email: bmarron18-ag@agremotesensing.iam.gserviceaccount.com
 		etag: MDEwMjE5MjA=
 		name: projects/agremotesensing/serviceAccounts/bmarron18-ag@agremotesensing.iam.gserviceaccount.com
-		oauth2ClientId: '116782904574881211259'
+		Oauth2ClientId: '116782904574881211259'
 		projectId: agremotesensing
 		uniqueId: '116782904574881211259'
 
@@ -325,19 +361,11 @@ gcloud CLI
 	$ gcloud iam service-accounts keys list \
 	--iam-account bmarron18-ag@agremotesensing.iam.gserviceaccount.com
 		KEY_ID                                    CREATED_AT            EXPIRES_AT  
-		c3ca45cf28b6a115a3852356e87e081af2550f27  2026-10-30T19:45:35Z  2028-10-29T19:45:35Z
-		a0e16021eb39b8ed24a203907f592a6f6dcc5749  2026-10-30T19:55:54Z  9999-12-31T23:59:59Z
+	*	c3ca45cf28b6a115a3852356e87e081af2550f27  2026-10-30T19:45:35Z  2028-10-29T19:45:35Z 
+	**	a0e16021eb39b8ed24a203907f592a6f6dcc5749  2026-10-30T19:55:54Z  9999-12-31T23:59:59Z
 
-
-
-
-	$ gcloud auth application-default
-			login 			Acquire new user credentials to use for Application Default Credentials.
-			print-access-token   Print an access token for your current Application Default Credentials.
-			revoke               Revoke previously generated Application Default Credentials.
-
-	
-
+	*  Google-Managed Key (original)
+	** User-Managed Key (downloaded)
 
 
 	
@@ -346,66 +374,12 @@ gcloud CLI
 ---------------------------------------------
 (hard-coded) SERVICE ACCOUNT CREDENTIALS
 ----------------------------------------------
-	* hard-coded credentials used by a Google Cloud Project to access APIs bypassing google-cloud-sdk
-	* a downloaded .json file used to run API scripts by setting the GOOGLE_APPLICATION_CREDENTIALS 
-	  environment variable in local computer
-	* running Python script using a .json service account credential file to call "earthengine-api", entirely 
-	  bypasses google-cloud-sdk credentials for that runtime. Your code communicates directly with the Earth Engine servers via an embedded Python library (google-auth), without looking at or needing your credentials in
-	  the google-cloud-sdk
-	* User-Managed Key (.json file): ~/some-folder/agremotesensing-a0e16021eb39.json
-	* User-Managed Keys: typically show an expiration year of 9999 unless your organization enforces a custom 
-	  key-expiration policy.
+	
 
 
-from the Console
-
-
-
-using gcloud CLI
 	$ gcloud iam service-accounts list
 	$ gcloud iam service-accounts describe bmarron18-ag@agremotesensing.iam.gserviceaccount.com
 	$ gcloud iam service-accounts keys list --iam-account=bmarron18-ag@agremotesensing.iam.gserviceaccount.com
-
-
-
-
-	Description: 
-		Remote sensing for agroecology
-
-	DisplayName
-		bmarron18-ag
-	
-	Service Acct ID
-		bmarron18-ag
-
-	Email
-		bmarron18-ag@agremotesensing.iam.gserviceaccount.com
-
-	Oauth2ClientId: 
-		116782904574881211259
-
-	UniqueId: 
-		116782904574881211259
-
-	(keyed to) ProjectId: 
-		agremotesensing
-
-	Key ID
-		c3ca45cf28b6a115a3852356e87e081af2550f27  	<== Google-Managed Key (original)
-		a0e16021eb39b8ed24a203907f592a6f6dcc5749  	<== User-Managed Key (downloaded)
-		------------
-
-	Created
-		2026-10-30T19:45:35Z
-		2026-10-30T19:55:54Z  
-
-	Expires
-		2028-10-29T19:45:35Z
-		9999-12-31T23:59:59Z
-
-	 User-Managed Key (downloaded)
-		agremotesensing-a0e16021eb39.json
-				  ------------
 
 
 --------------------------------- ------------------------------------------------------------------
@@ -533,7 +507,8 @@ using gcloud CLI
 	
 	
 	
-START HERE
+
+
 
 
 
@@ -607,4 +582,14 @@ PAYMENT SETTINGS
 
 
 
+-------
+LOGS
+--------
 
+
+	$ gcloud logging logs list
+		NAME
+		projects/agremotesensing/logs/cloudaudit.googleapis.com%2Factivity
+
+		# LOGS
+	$ cd /home/bruce-vdb/.config/gcloud/logs
