@@ -1,0 +1,15 @@
+
+"Category" 	
+Credentials
+
+"Command" 					
+ee.ServiceAccountCredentials()
+
+"Tier"
+1
+
+"Explanation"
+Pulls GCP Service Account credentials from a .json file
+
+"Example"
+credentials = ee.ServiceAccountCredentials(email, gac_path,)

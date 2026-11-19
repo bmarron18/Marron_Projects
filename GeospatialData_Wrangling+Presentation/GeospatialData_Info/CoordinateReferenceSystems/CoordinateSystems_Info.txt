@@ -1,0 +1,68 @@
+Title:          GPS Coordinate Reference Systems
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+
+###################################
+Coordinate Reference Systems (CRS)
+    Geographic CRS
+    Projected CRS (PCS)
+##################################
+
+Think of CRS as the broad umbrella term for any system that defines how coordinates relate to real-world locations on Earth. Under that umbrella, there are two main categories:
+    • Geographic CRS (GCS): Uses a 3D curved surface and angular units (latitude and longitude in degrees). Example: EPSG:4326.
+    • Projected CRS (PCS): Takes a GCS and flattens it onto a 2D plane using linear units (meters or feet). Example: EPSG:3857 (Web Mercator).
+
+Because every Projected CRS relies on a Geographic CRS underneath it to know where it sits on the 3D Earth, EPSG:4326 is often the starting foundation for many other coordinate systems.
+
+
+
+EPSG (European Petroleum Survey Group)
+-----------------------------------------
+a registry of Coordinate Reference Systems
+
+
+
+EPSG:4326
+----------
+* the code for **WGS 84**, the standard geographic CRS based on latitude and longitude in degrees. It's what GPS uses and what most web maps use for raw coordinates.
+
+* Coordinates are in **decimal degrees**, with longitude (x) first in Earth Engine, e.g. `[-122.082, 37.42]`
+
+* It is *not* projected, so a "pixel" is a slice of degrees, not a fixed distance on the ground.
+
+
+**What this means in your export using ee CLI:**
+
+<<< python
+ee.batch.Export.image.toDrive(
+    image=image,
+    crs="EPSG:4326",
+    scale=30,          # meters, but see below
+    ...
+)
+>>>
+
+When you use `crs="EPSG:4326"`, the `scale` is converted to degrees internally (about 30 m ≈ 0.00027°). Pixels are not square on the ground: they get narrower east-west as you move away from the equator. If you need equal-area or equal-distance measurements, use a projected CRS instead.
+
+
+
+**Alternatives for Mexico**
+  
+EPSG:326xx` / `EPSG:327xx`: 
+    UTM zones (north/south), in meters. Good for local analysis.
+
+    EPSG:32614` (UTM zone 14N): 
+        Between 102°W and 96°W, northern hemisphere between equator and 84°N, onshore and offshore. Canada - Manitoba; Nunavut; Saskatchewan. Mexico. United States (USA). Projected
+
+
+`EPSG:6372`: 
+    Mexico - onshore and offshore. Projected
+    Mexico's national CRS (ITRF2008 / LCC)
+
+**Tip:** if you leave `crs` out, Earth Engine uses the image's native projection, which is often the best choice unless you need a specific one. You can check it with `image.projection().getInfo()`.
+
+

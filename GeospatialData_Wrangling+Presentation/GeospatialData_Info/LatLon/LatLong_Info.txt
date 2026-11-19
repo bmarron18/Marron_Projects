@@ -1,0 +1,167 @@
+Title:          Latitude and Longitude
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+######################
+Latitude and Longitude
+#######################
+
+	# USE THIS!!
+   	# Find Lat/Lon of any place!!
+	# SpatialReference.org
+https://spatialreference.org/
+
+
+	# UMA from General Map
+LatLng(19.190319, -100.088689)
+
+
+	# UMA from EPSG:32614 Marker coordinates
+	# Center grassy area in front of bldgs
+	# UTM position as easting and northing (in metres within UTM zone 14N)
+Easting: 	385526.4
+Northing: 	2122245.4
+
+LatLng(19.190335, -100.088829)
+
+
+
+======	Earth Surface Location Data (Coordinates) =================================
+The same location can be written in several standard ways. All of them are equivalent, and they differ only in how the degree is subdivided.
+
+Common formats
+------------------
+
+| Format 							| Example (Mexico City area) 			| Notes |
+|------------						|--------------							|-------------	|
+| Decimal degrees (DD) 				| 19.19050, -100.08840					| Standard in GIS, GPS software, web maps and 
+																			  APIs. The sign gives the hemisphere. Earth Engine uses lon, lat sequence
+
+| Degrees, decimal minutes (DDM) 	| `19° 11.430′ N, 100° 05.304′ W` 		| Common in aviation and marine navigation, and 
+																			  in many GPS units. |
+
+| Degrees, minutes, seconds (DMS) 	| `19° 11′ 25.8″ N, 100° 05′ 18.2″ W` 	| Traditional in maps, surveying and legal 
+																			  descriptions. This is the format in your file. 
+
+| ISO 6709 string 					| `+19.1905-100.0884/` 					| Compact, for data exchange. It has no spaces, 
+																			  and the sign and fixed width make it machine-readable. |
+
+Conventions that apply to all of them
+-------------------------------------
+**Order:** 
+	latitude first, then longitude (lat, lon) is the usual convention in written text and in ISO 6709. Many software libraries use longitude first (x, y, as in GeoJSON and most GIS tools), so check each tool's order.
+
+**Hemisphere:** 
+	you can use letters (N/S, E/W) with positive numbers, or signs. Signs mean north and east are positive, and south and west are negative. Mexico City is `-100` (or 100° W). Don't use both a minus sign and a letter together, since "-100° W" is contradictory.
+
+**Ranges:** 
+	latitude runs from -90 to +90, and longitude from -180 to +180 (or 0 to 360, in some datasets).
+
+**Subdivisions:** 
+	1° = 60′ (minutes) and 1′ = 60″ (seconds). Minutes and seconds run from 0 to under 60. Decimals go on the last unit written, which is what your script reads as the precision of the cell.
+
+**Symbols:** 
+	the symbols are °, ′ and ″. Plain text often uses `d m s`, an apostrophe and a double quote, or just spaces, as in your file. Spaces work for reading but need a documented convention for software to parse them reliably.
+
+**Padding:** 
+	two digits for minutes and seconds (`05`, not `5`) and often three for longitude degrees (`005`, `100`) keep fixed-width formats aligned.
+
+**Related but different systems**
+	- Projected grids: 
+		UTM and MGRS express position as easting and northing in metres within a zone, and are not degrees.
+	- Short codes: 
+		Plus Codes (Open Location Code) and what3words encode a location as a short string.
+
+**Datum:** 
+	a coordinate is only meaningful with its datum, the reference model of the Earth. WGS84 (what GPS uses, and what your script assumes) is the usual default. Older maps may use others such as NAD27 or ITRF, which can shift a position by tens to hundreds of metres.
+
+START HERE
+For your work, DD is easiest to compute with, and DMS is easier for people to read. Your script already converts DMS to decimal degrees internally. I can add an option that also writes the converted DD values next to each row if you want.
+me:
+yes please, have the output write the converted DD values next to each row
+
+
+
+==========	Uncertainty in Cell Size (m2) with Data Accuracy ===================================
+For coordinates at increasing accuracy (for example 19°, 19.4°, 19.43°, 19.4326°), each added decimal place of latitude corresponds to a roughly 10x smaller distance on the ground:
+
+| Decimal places (degrees) 	| Approx. distance 	| Typical use 
+|---						|---				|---
+| 0 						| ~111 km 			| Country or large region |
+| 1 						| ~11.1 km 			| City or large district |
+| 2 						| ~1.11 km 			| Town or neighborhood |
+| 3 						| ~111 m 			| Large field or building complex |
+| 4 						| ~11.1 m 			| Parcel or building |
+| 5 						| ~1.11 m 			| Individual tree, entrance |
+| 6 						| ~0.111 m (11 cm) 	| Surveying-grade detail |
+| 7 						| ~1.1 cm 			| Precision surveying |
+
+These figures use the standard value of about 111.32 km per degree. They hold for latitude everywhere. For longitude they apply only at the equator, and they shrink by the cosine of the latitude. At Mexico City (about 19.4°N), one degree of longitude is about 105 km, so the figures above are roughly 6% smaller east-west.
+
+If your file instead holds degrees-minutes-seconds (DMS), the scale is about 111 km per degree, 1.85 km per minute and 31 m per second of latitude. A decimal on the seconds then gives about 3 m, and a second decimal gives about 0.3 m.
+
+
+
+Each coordinate in your file implies an uncertainty cell, a small rectangle whose size is set by the last digit you give. I computed the cells on the WGS84 ellipsoid at about 19.19°N, which is the latitude of your most precise point (19°11'25.8").
+
+| Lat 		| Lon 							| Cell size (N-S × E-W) 			| Dimension (m²) |
+|---		|---							|---								|---
+| 19 		| -100 							| 1° × 1° ≈ 110.7 km × 105.0 km 	| ≈ 1.16 × 10¹⁰ (about 11,600 km²) |
+| 19 11 	| -100 05 						| 1' × 1' ≈ 1,845 m × 1,753 m 		| ≈ 3.23 × 10⁶ (about 3.2 km²) |
+| 19 11 25 	| -100 05 18 					| 1" × 1" ≈ 30.7 m × 29.2 m 		| ≈ 898 |
+| 19 11 25.8 | -100 05 18.2 				| 0.1" × 0.1" ≈ 3.07 m × 2.92 m 	| ≈ 9.0 |
+
+Each step down shrinks the area by a fixed factor: 60 × 60 = 3,600 from degrees to minutes, the same again from minutes to seconds, and 10 × 10 = 100 from seconds to tenths of a second.
+
+**Latitude is nearly constant, longitude is not.** 
+	One degree of latitude is about 110.7 km at this latitude. One degree of longitude is about 105.2 km here, because it shrinks with the cosine of the latitude (it would be 111.3 km at the equator). The longitude value itself (-100) doesn't affect the size.
+
+**The first row is approximate.** 
+	A 1° cell spans 19°–20°N, and its east-west width changes across that range, so I used the cell's mid-latitude (19.5°). The other rows use 19.19°.
+
+**Treat the cell as an uncertainty box.** 
+	A coordinate like "19 11 25" really means "somewhere in that 1" × 1" cell". The true position is within it, not at a particular point.
+
+
+
+Lat				Lon				Dimension (m2)
+---				---				----------
+19				-100			11620226389.08
+19 11			-100 05			3233839.73
+19 11 25		-100 05 18		898.30
+19 11 25.8  	-100 05 18.2	8.98
+
+Notes: WGS84 ellipsoid (EPSG:4326); each value is the area of the cell that the last
+given digit leaves undetermined (1 deg, 1', 1", 0.1" in both lat and lon),
+taken north and west of the stated point. Computed with the exact
+ellipsoidal (authalic) formula and cross-checked by numerical integration
+(agreement better than 1e-9 relative).
+
+
+
+===========	Projected vs Not Projected ==============
+The difference is whether your coordinates sit on a 3D sphere or a 2D flat map.
+In GIS, "not projected" refers to a Geographic Coordinate System (GCS), while "projected" refers to a Projected Coordinate System (PCS).
+
+Core Differences
+-------------------
+
+Feature			Geographic (Unprojected / GCS)						Projected (PCS)
+--------		-------------------------------						-----------------------
+Surface			3D curved model of the Earth (ellipsoid/sphere)		2D flat plane (screen or paper)
+Units			Angular: Degrees (latitude & longitude)				Linear: Meters or feet (\(X\) and \(Y\))
+Distortion		None (accurately models Earth's shape)				Always distorts shape, area, distance, or direction
+Best For		Global data storage, GPS tracking, web APIs			Measuring distances, calculating areas, local mapping
+Common Example	EPSG:4326 (WGS 84)									EPSG:3857 (Web Mercator) or EPSG:32614 (UTM Zone 14N, 
+																	used for Mexico City)
+
+
+How They Work Together
+-----------------------
+1. Start with Geographic (GCS): 
+	You first define where a point is on the 3D Earth using latitude and longitude (e.g., 19.4326° N, 99.1332° W). Because degrees of longitude shrink as you move away from the equator, you cannot easily calculate square meters or distances using raw degrees.
+
+2. Apply a Projection (PCS): 
+	To measure area or distance accurately, GIS software uses a mathematical formula to "flatten" that 3D curve onto a 2D grid, converting degrees into linear units like meters.

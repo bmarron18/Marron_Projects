@@ -1,5 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Mountain View NDVI 2022 - GeoTIFF metadata, visualization and analysis.
+Created on Sat Oct 31 14:55:18 2026
+Modified: 18 Nov 2026
+
+@author: bruce-vdb, claude
+
+
+---------------------------------------------------------------------------
+A_Template_Extract-NDVI-Data_Single-tif-File_data+graphics+stats_V1.1.py
+----------------------------------------------------------------------------
+GeoTIFF metadata, visualization and analysis.
 
 Outputs (saved to OUT_DIR):
   - <tif name>_tags.txt              TIFF tags / GeoTIFF metadata with file name as header
@@ -22,9 +33,7 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 from matplotlib.patches import Patch
 
 TIF_PATH = Path(
-    "/home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/"
-    "Professional-AI_APIs_RemoteSensing/API_earthengine-api/HowTos/Maps/"
-    "MountainView_NDVI_2022.tif"
+    "/home/bruce-vdb/Desktop/UMA_NDVI_2022_02.tif"
 )
 OUT_DIR = Path("/home/bruce-vdb/Desktop")
 STEM = TIF_PATH.stem
@@ -114,7 +123,7 @@ cmap_cont = plt.get_cmap("RdYlGn").copy()
 cmap_cont.set_bad("lightgrey")           # masked pixels shown grey
 
 im = ax[0].imshow(ndvi, cmap=cmap_cont, vmin=-0.3, vmax=0.55, extent=extent)
-ax[0].set_title("NDVI - Mountain View 2022")
+ax[0].set_title("NDVI - UMA 2022")
 ax[0].set_xlabel("Longitude / X")
 ax[0].set_ylabel("Latitude / Y")
 fig1.colorbar(im, ax=ax[0], label="NDVI", shrink=0.8)
@@ -136,7 +145,7 @@ norm = BoundaryNorm(EDGES, cmap_cls.N)
 
 fig2, ax2 = plt.subplots(figsize=(9, 7))
 ax2.imshow(ndvi, cmap=cmap_cls, norm=norm, extent=extent)
-ax2.set_title("NDVI classes - Mountain View 2022")
+ax2.set_title("NDVI classes - UMA 2022")
 ax2.set_xlabel("Longitude / X")
 ax2.set_ylabel("Latitude / Y")
 ax2.legend(

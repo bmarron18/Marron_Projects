@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Oct 31 14:55:18 2026
+Modified: 18 Nov 2026
 
 @author: bruce-vdb
 
@@ -41,9 +42,10 @@ spyder-kernels            3.1.5
       The env variable is keyed to a .json file used for authetication with Service Accounts
   
 <<< bash
-    echo 'export GOOGLE_APPLICATION_CREDENTIALS="/home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/Credentials/agremotesensing-a0e16021eb39.json"' >> ~/.bashrc &&
-    source ~/.bashrc &&
-    subl  ~/.bashrc
+    echo 'export GOOGLE_APPLICATION_CREDENTIALS="/home/bruce-vdb/Desktop/Marron_Projects/path-to/agremotesensing-a0e16021eb39.json"' >> ~/.bashrc &&
+    subl  ~/.bashrc  &&
+    source ~/.bashrc 
+    
 >>>
 
 NB
@@ -96,7 +98,7 @@ ee.Initialize(credentials, project = project_id)
 print(ee.Number(1).add(1).getInfo())  # should print 2
 
 img = ee.Image("USGS/SRTMGL1_003")
-print(img.bandNames().getInfo())  # should print ['elevation']
+print(img.bandNames().getInfo())  # <== should print ['elevation']
 
 
 

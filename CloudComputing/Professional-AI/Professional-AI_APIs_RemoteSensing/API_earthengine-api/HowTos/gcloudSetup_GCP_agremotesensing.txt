@@ -515,7 +515,7 @@ $ gcloud services list --enabled --project=agremotesensing
 	bigquerymigration.googleapis.com     BigQuery Migration API
 	bigqueryreservation.googleapis.com   BigQuery Reservation API
 	bigquerystorage.googleapis.com       BigQuery Storage API
-*	cloudapis.googleapis.com             Google Cloud APIs
+	cloudapis.googleapis.com             Google Cloud APIs
 	cloudtrace.googleapis.com            Cloud Trace API
 *	compute.googleapis.com               Compute Engine API
 	dataform.googleapis.com              Dataform API

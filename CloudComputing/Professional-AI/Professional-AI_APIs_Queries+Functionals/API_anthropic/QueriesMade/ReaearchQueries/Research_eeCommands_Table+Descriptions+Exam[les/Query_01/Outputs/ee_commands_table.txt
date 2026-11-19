@@ -1,0 +1,252 @@
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Category     | Command                            | Tier | Added | Explanation                                  | Example                                              |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Auth         | ee.Authenticate()                  | 1    | yes   | Runs the OAuth flow to obtain and store user | ee.Authenticate(auth_mode='notebook')                |
+|              |                                    |      |       | credentials for Earth Engine access.         |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Auth         | ee.Initialize()                    | 1    | yes   | Initializes the Earth Engine library with    | ee.Initialize(credentials, project='my-gcp-project') |
+|              |                                    |      |       | credentials and a Cloud project before any   |                                                      |
+|              |                                    |      |       | other call.                                  |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Auth         | ee.ServiceAccountCredentials()     | 1    |       | Builds Google Cloud service account          | credentials = ee.ServiceAccountCredentials(email,    |
+|              |                                    |      |       | credentials from a private key JSON file for | key_file=gac_path)                                   |
+|              |                                    |      |       | non-interactive Earth Engine authentication. |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image()                         | 1    | yes   | Creates an image object from an asset ID, a  | img = ee.Image('USGS/SRTMGL1_003')                   |
+|              |                                    |      |       | constant, or a list of bands.                |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.clip()                    | 1    | yes   | Clips an image to a geometry or feature.     | clipped = img.clip(aoi)                              |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.normalizedDifference()    | 1    | yes   | Computes the normalized difference between   | ndvi = img.normalizedDifference(['B8',               |
+|              |                                    |      |       | two bands, such as NDVI.                     | 'B4']).rename('NDVI')                                |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.select()                  | 1    | yes   | Selects bands from an image by name or       | rgb = img.select(['B4', 'B3', 'B2'])                 |
+|              |                                    |      |       | index, optionally renaming them.             |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.updateMask()              | 1    | yes   | Masks image pixels where the supplied mask   | masked = img.updateMask(img.select('SCL').neq(9))    |
+|              |                                    |      |       | image is zero.                               |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection()               | 1    | yes   | Loads an image collection from an asset ID   | col =                                                |
+|              |                                    |      |       | or a list of images.                         | ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')    |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.filter()        | 1    | yes   | Applies an arbitrary ee.Filter to a          | col =                                                |
+|              |                                    |      |       | collection.                                  | col.filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE',   |
+|              |                                    |      |       |                                              | 20))                                                 |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.filterBounds()  | 1    | yes   | Filters a collection to elements             | col = col.filterBounds(ee.Geometry.Point([-122.29,   |
+|              |                                    |      |       | intersecting a given geometry.               | 37.90]))                                             |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.filterDate()    | 1    | yes   | Filters a collection to images acquired      | col = col.filterDate('2023-01-01', '2023-12-31')     |
+|              |                                    |      |       | within a start and end date.                 |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.map()           | 1    | yes   | Applies a function to every element of a     | ndvi_col = col.map(lambda i:                         |
+|              |                                    |      |       | collection and returns a new collection.     | i.normalizedDifference(['B8', 'B4']).rename('NDVI')) |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.median()        | 1    | yes   | Reduces a collection to a single image using | composite = col.median()                             |
+|              |                                    |      |       | the per-pixel median.                        |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.image.toDrive()    | 1    | yes   | Creates a batch task that exports an image   | task = ee.batch.Export.image.toDrive(image=img,      |
+|              |                                    |      |       | to Google Drive.                             | description='ndvi', folder='ee', region=aoi,         |
+|              |                                    |      |       |                                              | scale=10, maxPixels=1e13)                            |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.table.toDrive()    | 1    | yes   | Creates a batch task that exports a feature  | task =                                               |
+|              |                                    |      |       | collection to Google Drive.                  | ee.batch.Export.table.toDrive(collection=zonal,      |
+|              |                                    |      |       |                                              | description='zonal_stats', fileFormat='CSV')         |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Feature      | ee.Feature()                       | 1    | yes   | Creates a feature from a geometry and a      | f = ee.Feature(pt, {'name': 'site1'})                |
+|              |                                    |      |       | dictionary of properties.                    |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Feature      | ee.FeatureCollection()             | 1    | yes   | Loads a table asset or builds a collection   | fc = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')  |
+|              |                                    |      |       | from a list of features.                     |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Feature      | ee.FeatureCollection.filter()      | 1    | yes   | Filters a feature collection with an         | kenya = fc.filter(ee.Filter.eq('country_na',         |
+|              |                                    |      |       | ee.Filter.                                   | 'Kenya'))                                            |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Geometry     | ee.Geometry.Point()                | 1    | yes   | Creates a point geometry from longitude and  | pt = ee.Geometry.Point([-122.08, 37.42])             |
+|              |                                    |      |       | latitude coordinates.                        |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Geometry     | ee.Geometry.Polygon()              | 1    | yes   | Creates a polygon geometry from a list of    | aoi = ee.Geometry.Polygon([[[-122.5, 37.5], [-122.0, |
+|              |                                    |      |       | coordinate rings.                            | 37.5], [-122.0, 38.0], [-122.5, 38.0]]])             |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Reducer      | ee.Image.reduceRegion()            | 1    | yes   | Applies a reducer to all pixels within a     | stats = ndvi.reduceRegion(reducer=ee.Reducer.mean(), |
+|              |                                    |      |       | region and returns a dictionary.             | geometry=aoi, scale=10, maxPixels=1e9)               |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Reducer      | ee.Reducer.mean()                  | 1    | yes   | Creates a reducer that computes the mean of  | r = ee.Reducer.mean()                                |
+|              |                                    |      |       | its inputs.                                  |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.batch.Task.start()              | 1    | yes   | Submits a created batch task to the Earth    | task.start()                                         |
+|              |                                    |      |       | Engine task queue.                           |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.batch.Task.status()             | 1    | yes   | Returns the current state and metadata of a  | print(task.status()['state'])                        |
+|              |                                    |      |       | batch task.                                  |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Types        | ee.ComputedObject.getInfo()        | 1    | yes   | Fetches the value of a server-side object to | print(img.bandNames().getInfo())                     |
+|              |                                    |      |       | the client synchronously.                    |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Filter.eq()                     | 2    | yes   | Creates a filter that keeps elements whose   | fc = fc.filter(ee.Filter.eq('country_na', 'Kenya'))  |
+|              |                                    |      |       | property equals a given value.               |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Filter.lt()                     | 2    | yes   | Creates a filter that keeps elements whose   | col = col.filter(ee.Filter.lt('CLOUD_COVER', 10))    |
+|              |                                    |      |       | property is less than a given value.         |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.addBands()                | 2    | yes   | Adds bands from another image to the current | img = img.addBands(ndvi)                             |
+|              |                                    |      |       | image.                                       |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.expression()              | 2    | yes   | Evaluates a band-math expression string      | evi = img.expression('2.5*((N-R)/(N+6*R-7.5*B+1))',  |
+|              |                                    |      |       | against named image bands.                   | {'N': img.select('B8'), 'R': img.select('B4'), 'B':  |
+|              |                                    |      |       |                                              | img.select('B2')})                                   |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.rename()                  | 2    | yes   | Renames the bands of an image.               | img = img.rename(['blue', 'green', 'red'])           |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.first()         | 2    | yes   | Returns the first image in a collection.     | img = col.sort('CLOUDY_PIXEL_PERCENTAGE').first()    |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.mosaic()        | 2    | yes   | Composites a collection into one image with  | mosaic = col.mosaic()                                |
+|              |                                    |      |       | later images drawn on top.                   |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.ImageCollection.size()          | 2    | yes   | Returns the number of elements in a          | print(col.size().getInfo())                          |
+|              |                                    |      |       | collection as a server-side number.          |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.image.toAsset()    | 2    | yes   | Creates a batch task that exports an image   | task = ee.batch.Export.image.toAsset(image=img,      |
+|              |                                    |      |       | to an Earth Engine asset.                    | assetId='projects/my-proj/assets/ndvi', region=aoi,  |
+|              |                                    |      |       |                                              | scale=10)                                            |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.image.toCloudStora | 2    | yes   | Creates a batch task that exports an image   | task =                                               |
+|              | ge()                               |      |       | to a Cloud Storage bucket.                   | ee.batch.Export.image.toCloudStorage(image=img,      |
+|              |                                    |      |       |                                              | bucket='my-bucket', fileNamePrefix='ndvi/ndvi',      |
+|              |                                    |      |       |                                              | region=aoi, scale=10)                                |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.table.toAsset()    | 2    | yes   | Creates a batch task that exports a feature  | task = ee.batch.Export.table.toAsset(collection=fc,  |
+|              |                                    |      |       | collection to a table asset.                 | assetId='projects/my-proj/assets/fields')            |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.table.toCloudStora | 2    | yes   | Creates a batch task that exports a feature  | task =                                               |
+|              | ge()                               |      |       | collection to Cloud Storage.                 | ee.batch.Export.table.toCloudStorage(collection=fc,  |
+|              |                                    |      |       |                                              | bucket='my-bucket', fileFormat='GeoJSON')            |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.Image.getDownloadURL()          | 2    | yes   | Returns a URL to download a small image      | url = img.getDownloadURL({'scale': 30, 'region':     |
+|              |                                    |      |       | region as GeoTIFF or NPY.                    | aoi, 'format': 'GEO_TIFF'})                          |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Geometry     | ee.Geometry.buffer()               | 2    | yes   | Returns the geometry expanded by a given     | zone = pt.buffer(5000)                               |
+|              |                                    |      |       | distance in meters.                          |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Geometry     | ee.Geometry.Rectangle()            | 2    | yes   | Creates a rectangular geometry from min and  | bbox = ee.Geometry.Rectangle([-122.5, 37.5, -122.0,  |
+|              |                                    |      |       | max coordinates.                             | 38.0])                                               |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| ML           | ee.Classifier.smileRandomForest()  | 2    | yes   | Creates a random forest classifier with a    | clf = ee.Classifier.smileRandomForest(100)           |
+|              |                                    |      |       | given number of trees.                       |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| ML           | ee.Classifier.train()              | 2    | yes   | Trains a classifier on sampled features      | clf = clf.train(features=training,                   |
+|              |                                    |      |       | using a class property and input bands.      | classProperty='class', inputProperties=bands)        |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| ML           | ee.Image.classify()                | 2    | yes   | Classifies an image with a trained           | classified = img.select(bands).classify(clf)         |
+|              |                                    |      |       | classifier.                                  |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| ML           | ee.Image.sample()                  | 2    | yes   | Samples pixel values into a feature          | samples = img.sample(region=aoi, scale=30,           |
+|              |                                    |      |       | collection for training or analysis.         | numPixels=5000)                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| ML           | ee.Image.sampleRegions()           | 2    | yes   | Samples image pixels under labeled features  | training = img.sampleRegions(collection=labels,      |
+|              |                                    |      |       | to build a training set.                     | properties=['class'], scale=10)                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Reducer      | ee.Image.reduceRegions()           | 2    | yes   | Applies a reducer to each feature in a       | zonal = ndvi.reduceRegions(collection=fields,        |
+|              |                                    |      |       | collection and returns per-feature results.  | reducer=ee.Reducer.mean(), scale=10)                 |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Reducer      | ee.Reducer.sum()                   | 2    | yes   | Creates a reducer that computes the sum of   | total = img.reduceRegion(ee.Reducer.sum(), aoi, 30)  |
+|              |                                    |      |       | its inputs.                                  |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.createAsset()              | 2    | yes   | Creates an empty folder or image collection  | ee.data.createAsset({'type': 'FOLDER'},              |
+|              |                                    |      |       | asset.                                       | 'projects/my-proj/assets/outputs')                   |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.getAsset()                 | 2    | yes   | Returns metadata for a single asset.         | meta =                                               |
+|              |                                    |      |       |                                              | ee.data.getAsset('projects/my-proj/assets/ndvi')     |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.listAssets()               | 2    | yes   | Lists assets within a folder, collection, or | ee.data.listAssets({'parent':                        |
+|              |                                    |      |       | project.                                     | 'projects/my-proj/assets'})                          |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.batch.Task.list()               | 2    | yes   | Lists recent batch tasks for the current     | tasks = ee.batch.Task.list()                         |
+|              |                                    |      |       | user.                                        |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.data.listOperations()           | 2    | yes   | Lists long-running operations such as        | ops = ee.data.listOperations()                       |
+|              |                                    |      |       | exports and ingestions.                      |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Types        | ee.Date()                          | 2    | yes   | Creates a server-side date object.           | start = ee.Date('2023-01-01').advance(1, 'month')    |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Types        | ee.Dictionary()                    | 2    | yes   | Creates or wraps a server-side dictionary.   | d = ee.Dictionary(stats).get('NDVI')                 |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Types        | ee.List()                          | 2    | yes   | Creates a server-side list.                  | years = ee.List.sequence(2015, 2023)                 |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Types        | ee.Number()                        | 2    | yes   | Wraps a value as a server-side number        | n = ee.Number(5).multiply(2)                         |
+|              |                                    |      |       | object.                                      |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Visualizatio | ee.Image.getMapId()                | 2    | yes   | Returns map tile IDs and a tile fetcher for  | map_id = img.getMapId({'bands': ['B4', 'B3', 'B2'],  |
+| n            |                                    |      |       | displaying an image.                         | 'min': 0, 'max': 3000})                              |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Visualizatio | ee.Image.getThumbURL()             | 2    | yes   | Returns a URL to a PNG or JPG thumbnail of   | url = img.getThumbURL({'min': 0, 'max': 3000,        |
+| n            |                                    |      |       | an image.                                    | 'dimensions': 512, 'region': aoi})                   |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Visualizatio | ee.Image.visualize()               | 2    | yes   | Renders an image into an 8-bit RGB           | vis = img.visualize(bands=['B4', 'B3', 'B2'], min=0, |
+| n            |                                    |      |       | visualization image.                         | max=3000)                                            |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Auth         | ee.Reset()                         | 3    | yes   | Resets the library state and clears cached   | ee.Reset()                                           |
+|              |                                    |      |       | credentials and initialization.              |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Algorithms.If()                 | 3    | yes   | Performs a server-side conditional that      | out = ee.Algorithms.If(col.size().gt(0),             |
+|              |                                    |      |       | returns one of two values.                   | col.median(), ee.Image(0))                           |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.focalMean()               | 3    | yes   | Applies a moving-window mean filter with a   | smooth = img.focalMean(radius=3,                     |
+|              |                                    |      |       | specified kernel radius.                     | kernelType='square', units='pixels')                 |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Image.reproject()               | 3    | yes   | Forces an image into a specific projection   | img = img.reproject(crs='EPSG:4326', scale=30)       |
+|              |                                    |      |       | and scale.                                   |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Join.saveFirst()                | 3    | yes   | Creates a join that stores the first         | joined = ee.Join.saveFirst('match').apply(col1,      |
+|              |                                    |      |       | matching element as a property.              | col2, ee.Filter.equals(leftField='system:index',     |
+|              |                                    |      |       |                                              | rightField='system:index'))                          |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Compute      | ee.Terrain.slope()                 | 3    | yes   | Calculates slope in degrees from an          | slope =                                              |
+|              |                                    |      |       | elevation image.                             | ee.Terrain.slope(ee.Image('USGS/SRTMGL1_003'))       |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Config       | ee.data.setDeadline()              | 3    | yes   | Sets the timeout in milliseconds for Earth   | ee.data.setDeadline(60000)                           |
+|              |                                    |      |       | Engine API requests.                         |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Export       | ee.batch.Export.video.toDrive()    | 3    | yes   | Creates a batch task that exports an image   | task =                                               |
+|              |                                    |      |       | collection as a video to Google Drive.       | ee.batch.Export.video.toDrive(collection=vis_col,    |
+|              |                                    |      |       |                                              | description='timelapse', dimensions=720,             |
+|              |                                    |      |       |                                              | framesPerSecond=5, region=aoi)                       |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| IAM          | ee.data.getAssetAcl()              | 3    | yes   | Returns the access control list of an asset. | acl =                                                |
+|              |                                    |      |       |                                              | ee.data.getAssetAcl('projects/my-proj/assets/ndvi')  |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| IAM          | ee.data.setAssetAcl()              | 3    | yes   | Sets reader and writer permissions on an     | ee.data.setAssetAcl('projects/my-proj/assets/ndvi',  |
+|              |                                    |      |       | asset.                                       | {'readers': ['user:a@example.com'], 'writers': [],   |
+|              |                                    |      |       |                                              | 'all_users_can_read': False})                        |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Reducer      | ee.Reducer.percentile()            | 3    | yes   | Creates a reducer that computes specified    | p = col.reduce(ee.Reducer.percentile([10, 90]))      |
+|              |                                    |      |       | percentiles of its inputs.                   |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.copyAsset()                | 3    | yes   | Copies an asset to a new asset ID.           | ee.data.copyAsset('projects/my-proj/assets/ndvi',    |
+|              |                                    |      |       |                                              | 'projects/my-proj/assets/ndvi_backup')               |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.deleteAsset()              | 3    | yes   | Permanently deletes an asset.                | ee.data.deleteAsset('projects/my-proj/assets/tmp')   |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.renameAsset()              | 3    | yes   | Moves or renames an asset.                   | ee.data.renameAsset('projects/my-proj/assets/old',   |
+|              |                                    |      |       |                                              | 'projects/my-proj/assets/new')                       |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.startIngestion()           | 3    | yes   | Starts ingesting a GeoTIFF from Cloud        | ee.data.startIngestion(ee.data.newTaskId()[0],       |
+|              |                                    |      |       | Storage into an image asset.                 | {'name': 'projects/my-proj/assets/dem', 'tilesets':  |
+|              |                                    |      |       |                                              | [{'sources': [{'uris':                               |
+|              |                                    |      |       |                                              | ['gs://my-bucket/dem.tif']}]}]})                     |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Storage      | ee.data.startTableIngestion()      | 3    | yes   | Starts ingesting a CSV or shapefile from     | ee.data.startTableIngestion(ee.data.newTaskId()[0],  |
+|              |                                    |      |       | Cloud Storage into a table asset.            | {'name': 'projects/my-proj/assets/pts', 'sources':   |
+|              |                                    |      |       |                                              | [{'uris': ['gs://my-bucket/pts.csv']}]})             |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.batch.Task.cancel()             | 3    | yes   | Cancels a running or queued batch task.      | task.cancel()                                        |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.data.cancelOperation()          | 3    | yes   | Cancels a long-running operation by its full | ee.data.cancelOperation('projects/my-proj/operations |
+|              |                                    |      |       | operation name.                              | /ABCDEF1234567890')                                  |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Tasks        | ee.data.getTaskStatus()            | 3    | yes   | Returns the status of one or more tasks by   | ee.data.getTaskStatus('ABCDEF1234567890')            |
+|              |                                    |      |       | ID.                                          |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
+| Types        | ee.String()                        | 3    | yes   | Wraps a value as a server-side string        | s = ee.String('NDVI_').cat('2023')                   |
+|              |                                    |      |       | object.                                      |                                                      |
++--------------+------------------------------------+------+-------+----------------------------------------------+------------------------------------------------------+
