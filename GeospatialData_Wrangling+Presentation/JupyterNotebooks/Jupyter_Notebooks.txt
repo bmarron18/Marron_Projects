@@ -23,7 +23,7 @@ open .ipynb
  >>>
 
 
- use `jupytext` to create .ipynb and Use venv (ai-apis) to open .ipynb
+ use `jupytext` to create .ipynb from a .py file and use venv (ai-apis) to open .ipynb
 ----------------------------------------------------
 
  <<< bash
@@ -46,9 +46,10 @@ Create a new notebook from within the activated venv
 	# open the Jup Launcher (shows running kernel or Console)
 	# clic on "Notebook" to create
 	# CTRL-C in terminal to close
+
 <<<bash
 cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
-jupyter lab ~/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/
+jupyter lab ~/Desktop/
 >>>
 
 	#check kernel
@@ -56,33 +57,28 @@ jupyter lab ~/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTo
 import sys
 print(sys.executable)   # should be inside your venv
 >>>
-
+    /home/bruce-vdb/spyder-6/envs/ai-apis/bin/python3
 
 
 Static snapshot vs Shared kernel
 ----------------
-Not as a live, interactive object. A `Map` lives in the memory of the Spyder kernel process, and it can't be saved or pickled in a way that restores the working widget elsewhere. There are only two ways to avoid re-running the code.
+A `Map` lives in the memory of the Spyder kernel process, and it can't be saved or pickled in a way that restores the working widget elsewhere. There are only two ways to avoid re-running the code.
 
-**1. Static snapshot (no re-running, not interactive)**
+1. Static snapshot (no re-running, not interactive, a map.html)
 In Spyder:
 ```python
 Map.to_html("map.html")
 ```
 
+DOES NOT WORK!!
 Move your your_map.html file into the exact same folder where your active .ipynb notebook file is saved.
-Add subfolder, Maps
+Add subfolder, Maps. Then in a Jup notebook cell:
 
-Then in a Jup notebook cell:
 <<< python
 from IPython.display import IFrame
-
-# Replace with the path or filename of your HTML map
-IFrame(src="/map.html", width="100%", height=500)
-
-
-from IPython.display import IFrame
-IFrame("/home/bruce-vdb/Desktop/Marron_Projects/AI/AI_APIs_Chats/API_earthengine-api/HowTos/map.html", width="100%", height=600)
+IFrame(src='Maps/UMA_map.html', width=700, height=500)
 >>>
+
 You see the layers and can pan and zoom, but the inspector, drawing tools, and anything linked back to Python won't work.
 
 

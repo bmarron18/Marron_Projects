@@ -1,5 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-Mountain View NDVI 2022 - GeoTIFF metadata, visualization and analysis.
+Created on Sat Oct 31 14:55:18 2026
+Modified: 18 Nov 2026
+
+@author: bruce-vdb, claude
+
+
+---------------------------------------------------------------------------
+A_Template_Extract-NDVI-Data_Single-tif-File_data+graphics+stats_V1.1.py
+----------------------------------------------------------------------------
+GeoTIFF metadata, visualization and analysis.
 
 Outputs (saved to OUT_DIR):
   - <tif name>_tags.txt              TIFF tags / GeoTIFF metadata with file name as header
@@ -10,7 +21,8 @@ Outputs (saved to OUT_DIR):
 Cells are marked with "# %%" so they run individually in Spyder.
 """
 
-# %% 0) Imports and settings
+# %% 
+
 from pathlib import Path
 
 import numpy as np
@@ -21,10 +33,11 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 from matplotlib.patches import Patch
 
+#=========================
+# FILE TO PROCESS AND PARAMETERS (edit)
+#==============================)
 TIF_PATH = Path(
-    "/home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/"
-    "Professional-AI_APIs_RemoteSensing/API_earthengine-api/HowTos/Maps/"
-    "MountainView_NDVI_2022.tif"
+    "/home/bruce-vdb/Desktop/UMA_NDVI_2022_03.tif"
 )
 OUT_DIR = Path("/home/bruce-vdb/Desktop")
 STEM = TIF_PATH.stem
@@ -45,11 +58,15 @@ LABELS = [
 COLORS = ["#2b83ba", "#bdbdbd", "#fee08b", "#a6d96a", "#1a9641"]
 
 
-# %% 1) Write TIFF tags / metadata to a .txt file (file name as header)
+# %% 
+
+#=================================================
+#  WRITE .tIf TAGS/METADATA TO A .txt FILE
+#======================================================
 txt_path = OUT_DIR / f"{STEM}_tags.txt"
 
 with tifffile.TiffFile(TIF_PATH) as tif, open(txt_path, "w", encoding="utf-8") as f:
-    title = f"TIFF FILE: {TIF_PATH.name}"
+    title = f"TIFF FILE: {TIF_PATH.name}"  #  (file name as header)
     f.write("=" * len(title) + "\n")
     f.write(title + "\n")
     f.write(f"Path: {TIF_PATH}\n")
@@ -84,7 +101,11 @@ with tifffile.TiffFile(TIF_PATH) as tif, open(txt_path, "w", encoding="utf-8") a
 print(f"Saved tags to {txt_path}")
 
 
-# %% 2) Load NDVI, mask nodata, get georeferencing
+# %% 
+#=================================
+# LOAD NDVI, MASK NODATA
+# GET GEOREFERENCING
+#===================================
 with tifffile.TiffFile(TIF_PATH) as tif:
     ndvi = tif.asarray().astype("float64")
     meta = tif.geotiff_metadata
@@ -107,14 +128,17 @@ nrows, ncols = ndvi.shape
 extent = [x0, x0 + ncols * sx, y0 - nrows * sy, y0]   # left, right, bottom, top
 
 
-# %% 3) Continuous map + histogram
+# %% 
+#============================
+# GENERATE CONTINUOUS MAP + HISTOGRAM
+#==========================================
 fig1, ax = plt.subplots(1, 2, figsize=(14, 6))
 
 cmap_cont = plt.get_cmap("RdYlGn").copy()
 cmap_cont.set_bad("lightgrey")           # masked pixels shown grey
 
 im = ax[0].imshow(ndvi, cmap=cmap_cont, vmin=-0.3, vmax=0.55, extent=extent)
-ax[0].set_title("NDVI - Mountain View 2022")
+ax[0].set_title("NDVI - UMA 2022")
 ax[0].set_xlabel("Longitude / X")
 ax[0].set_ylabel("Latitude / Y")
 fig1.colorbar(im, ax=ax[0], label="NDVI", shrink=0.8)
@@ -129,14 +153,17 @@ fig1.savefig(OUT_DIR / f"{STEM}_map.png", dpi=200, bbox_inches="tight")  # save 
 plt.show()
 
 
-# %% 4) Classified map with tuned thresholds
+# %% 
+#======================================
+# GENERATE CLASSIFIED MAP W/ TUNED THRESHOLDS
+#==============================================
 cmap_cls = ListedColormap(COLORS)
 cmap_cls.set_bad("white")
 norm = BoundaryNorm(EDGES, cmap_cls.N)
 
 fig2, ax2 = plt.subplots(figsize=(9, 7))
 ax2.imshow(ndvi, cmap=cmap_cls, norm=norm, extent=extent)
-ax2.set_title("NDVI classes - Mountain View 2022")
+ax2.set_title("NDVI classes - UMA 2022")
 ax2.set_xlabel("Longitude / X")
 ax2.set_ylabel("Latitude / Y")
 ax2.legend(
@@ -149,7 +176,10 @@ fig2.savefig(OUT_DIR / f"{STEM}_classes.png", dpi=200, bbox_inches="tight")
 plt.show()
 
 
-# %% 5) Summary statistics and class percentages
+# %% 
+#==================================
+# SUMMARY STATS + CLASS PERCENTAGES
+#==================================
 vals = ndvi.compressed()
 print(f"valid pixels: {vals.size:,} of {ndvi.size:,}")
 print(
@@ -162,7 +192,10 @@ for i, lab in enumerate(LABELS):
     print(f"{lab}: {(cls == i).mean() * 100:.1f}%")
 
 
-# %% 6) Export to a table (x, y, ndvi)
+# %% 
+#============================================
+# EXPORT NDVI DATA TO .csv (x, y, ndvi)
+#==========================================
 cols, rows = np.meshgrid(np.arange(ncols), np.arange(nrows))
 df = pd.DataFrame({
     "x": (x0 + (cols + 0.5) * sx).ravel(),      # pixel centres, flattened to 1D

@@ -2,26 +2,35 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Oct 31 14:55:18 2026
-Modified: 18 Nov 2026
+Modified: 19 Nov 2026
 
 @author: bruce-vdb, claude
 
 
 ---------------------------------------------------------------------------
-A_Template_Extract-NDVI-Data_Single-tif-File_data+graphics+stats_V1.1.py
+A_Template_Extract-NDVI-Data_Single-tif-File_data+graphics+stats_V1.2.py
 ----------------------------------------------------------------------------
 GeoTIFF metadata, visualization and analysis.
+
+Changes in V1.2:
+  - Class breaks and labels retuned to this scene (NDVI about 0.15 to 0.85)
+  - Continuous map colour scale (vmin/vmax) can adapt to each file using the
+    2nd and 98th percentiles (AUTO_SCALE = True)
+  - interpolation="nearest" on both maps so pixels are drawn as crisp blocks
+  - Axis labels changed to Easting / Northing (m): the file is projected
+    (EPSG:32614, WGS 84 / UTM zone 14N), so the units are metres, not degrees
 
 Outputs (saved to OUT_DIR):
   - <tif name>_tags.txt              TIFF tags / GeoTIFF metadata with file name as header
   - <tif name>_map.png               continuous NDVI map + histogram
-  - <tif name>_classes.png           classified NDVI map (thresholds tuned to this scene)
+  - <tif name>_classes.png           classified NDVI map
   - <tif name>.csv                   x, y, ndvi table (valid pixels only)
 
 Cells are marked with "# %%" so they run individually in Spyder.
 """
 
-# %% 0) Imports and settings
+# %% 
+
 from pathlib import Path
 
 import numpy as np
@@ -32,8 +41,11 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 from matplotlib.patches import Patch
 
+#=========================
+# FILE TO PROCESS AND PARAMETERS (edit)
+#==============================)
 TIF_PATH = Path(
-    "/home/bruce-vdb/Desktop/UMA_NDVI_2022_02.tif"
+    "/home/bruce-vdb/Desktop/UMA_NDVI_2022_03.tif"
 )
 OUT_DIR = Path("/home/bruce-vdb/Desktop")
 STEM = TIF_PATH.stem
@@ -42,23 +54,32 @@ MAX_LEN = 500   # truncate very long tag values in the .txt (e.g. strip offsets)
 BAND = 0        # only used if the file has more than one band
 SCALE = 1.0     # set to 10000 if values look like -10000..10000 (scaled integers)
 
-# Class breaks tuned to this scene (range about -0.28 to 0.52, median about 0.12)
-EDGES = [-1.0, 0.0, 0.1, 0.2, 0.3, 1.0]
+# Continuous map colour scale
+AUTO_SCALE = True          # True: vmin/vmax from percentiles of this file's data
+PCT_LOW, PCT_HIGH = 2, 98  # percentiles used when AUTO_SCALE is True
+VMIN_FIXED, VMAX_FIXED = 0.1, 0.85   # used when AUTO_SCALE is False
+
+# Class breaks tuned to this scene (range about 0.15 to 0.85, median about 0.55)
+EDGES = [-1.0, 0.2, 0.4, 0.6, 0.8, 1.0]
 LABELS = [
-    "< 0  (water / shadow)",
-    "0 - 0.1  (bare / impervious)",
-    "0.1 - 0.2  (very sparse veg)",
-    "0.2 - 0.3  (sparse veg)",
-    ">= 0.3  (moderate veg)",
+    "< 0.2  (bare / very sparse)",
+    "0.2 - 0.4  (sparse veg)",
+    "0.4 - 0.6  (moderate veg)",
+    "0.6 - 0.8  (dense veg)",
+    ">= 0.8  (very dense veg)",
 ]
-COLORS = ["#2b83ba", "#bdbdbd", "#fee08b", "#a6d96a", "#1a9641"]
+COLORS = ["#d73027", "#fee08b", "#a6d96a", "#1a9641", "#00441b"]
 
 
-# %% 1) Write TIFF tags / metadata to a .txt file (file name as header)
+# %% 
+
+#=================================================
+#  WRITE .tIf TAGS/METADATA TO A .txt FILE
+#======================================================
 txt_path = OUT_DIR / f"{STEM}_tags.txt"
 
 with tifffile.TiffFile(TIF_PATH) as tif, open(txt_path, "w", encoding="utf-8") as f:
-    title = f"TIFF FILE: {TIF_PATH.name}"
+    title = f"TIFF FILE: {TIF_PATH.name}"  #  (file name as header)
     f.write("=" * len(title) + "\n")
     f.write(title + "\n")
     f.write(f"Path: {TIF_PATH}\n")
@@ -93,7 +114,11 @@ with tifffile.TiffFile(TIF_PATH) as tif, open(txt_path, "w", encoding="utf-8") a
 print(f"Saved tags to {txt_path}")
 
 
-# %% 2) Load NDVI, mask nodata, get georeferencing
+# %% 
+#=================================
+# LOAD NDVI, MASK NODATA
+# GET GEOREFERENCING
+#===================================
 with tifffile.TiffFile(TIF_PATH) as tif:
     ndvi = tif.asarray().astype("float64")
     meta = tif.geotiff_metadata
@@ -115,17 +140,30 @@ x0, y0 = meta["ModelTiepoint"][3:5]
 nrows, ncols = ndvi.shape
 extent = [x0, x0 + ncols * sx, y0 - nrows * sy, y0]   # left, right, bottom, top
 
+# Colour scale limits for the continuous map
+if AUTO_SCALE:
+    vmin, vmax = np.percentile(ndvi.compressed(), [PCT_LOW, PCT_HIGH])
+else:
+    vmin, vmax = VMIN_FIXED, VMAX_FIXED
+print(f"continuous colour scale: vmin {vmin:.3f}, vmax {vmax:.3f}")
 
-# %% 3) Continuous map + histogram
+
+# %% 
+#============================
+# GENERATE CONTINUOUS MAP + HISTOGRAM
+#==========================================
 fig1, ax = plt.subplots(1, 2, figsize=(14, 6))
 
 cmap_cont = plt.get_cmap("RdYlGn").copy()
 cmap_cont.set_bad("lightgrey")           # masked pixels shown grey
 
-im = ax[0].imshow(ndvi, cmap=cmap_cont, vmin=-0.3, vmax=0.55, extent=extent)
+im = ax[0].imshow(
+    ndvi, cmap=cmap_cont, vmin=vmin, vmax=vmax,
+    extent=extent, interpolation="nearest",
+)
 ax[0].set_title("NDVI - UMA 2022")
-ax[0].set_xlabel("Longitude / X")
-ax[0].set_ylabel("Latitude / Y")
+ax[0].set_xlabel("Easting (m)")
+ax[0].set_ylabel("Northing (m)")
 fig1.colorbar(im, ax=ax[0], label="NDVI", shrink=0.8)
 
 ax[1].hist(ndvi.compressed(), bins=60, color="seagreen", edgecolor="k")
@@ -138,16 +176,19 @@ fig1.savefig(OUT_DIR / f"{STEM}_map.png", dpi=200, bbox_inches="tight")  # save 
 plt.show()
 
 
-# %% 4) Classified map with tuned thresholds
+# %% 
+#======================================
+# GENERATE CLASSIFIED MAP W/ TUNED THRESHOLDS
+#==============================================
 cmap_cls = ListedColormap(COLORS)
 cmap_cls.set_bad("white")
 norm = BoundaryNorm(EDGES, cmap_cls.N)
 
 fig2, ax2 = plt.subplots(figsize=(9, 7))
-ax2.imshow(ndvi, cmap=cmap_cls, norm=norm, extent=extent)
+ax2.imshow(ndvi, cmap=cmap_cls, norm=norm, extent=extent, interpolation="nearest")
 ax2.set_title("NDVI classes - UMA 2022")
-ax2.set_xlabel("Longitude / X")
-ax2.set_ylabel("Latitude / Y")
+ax2.set_xlabel("Easting (m)")
+ax2.set_ylabel("Northing (m)")
 ax2.legend(
     handles=[Patch(facecolor=c, edgecolor="k", label=l) for c, l in zip(COLORS, LABELS)],
     loc="center left", bbox_to_anchor=(1.01, 0.5), title="NDVI class",
@@ -158,7 +199,10 @@ fig2.savefig(OUT_DIR / f"{STEM}_classes.png", dpi=200, bbox_inches="tight")
 plt.show()
 
 
-# %% 5) Summary statistics and class percentages
+# %% 
+#==================================
+# SUMMARY STATS + CLASS PERCENTAGES
+#==================================
 vals = ndvi.compressed()
 print(f"valid pixels: {vals.size:,} of {ndvi.size:,}")
 print(
@@ -171,7 +215,10 @@ for i, lab in enumerate(LABELS):
     print(f"{lab}: {(cls == i).mean() * 100:.1f}%")
 
 
-# %% 6) Export to a table (x, y, ndvi)
+# %% 
+#============================================
+# EXPORT NDVI DATA TO .csv (x, y, ndvi)
+#==========================================
 cols, rows = np.meshgrid(np.arange(ncols), np.arange(nrows))
 df = pd.DataFrame({
     "x": (x0 + (cols + 0.5) * sx).ravel(),      # pixel centres, flattened to 1D
