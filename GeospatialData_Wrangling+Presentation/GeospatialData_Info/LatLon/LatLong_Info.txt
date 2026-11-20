@@ -1,38 +1,18 @@
-Title:          Latitude and Longitude
+Title:          Latitude and Longitude Data
 Project:        Remote Sensing for Ag
 Author:         bmarron
 Created:        19 Nov 2026
 Revised:        
 
-######################
-Latitude and Longitude
-#######################
-
-	# USE THIS!!
-   	# Find Lat/Lon of any place!!
-	# SpatialReference.org
-https://spatialreference.org/
 
 
-	# UMA from General Map
-LatLng(19.190319, -100.088689)
-
-
-	# UMA from EPSG:32614 Marker coordinates
-	# Center grassy area in front of bldgs
-	# UTM position as easting and northing (in metres within UTM zone 14N)
-Easting: 	385526.4
-Northing: 	2122245.4
-
-LatLng(19.190335, -100.088829)
-
-
-
-======	Earth Surface Location Data (Coordinates) =================================
+##########################################
+Earth Surface Location Data 
+(Lat Lng Coordinates)
+##########################################
 The same location can be written in several standard ways. All of them are equivalent, and they differ only in how the degree is subdivided.
 
-Common formats
-------------------
+
 
 | Format 							| Example (Mexico City area) 			| Notes |
 |------------						|--------------							|-------------	|
@@ -47,9 +27,9 @@ Common formats
 
 | ISO 6709 string 					| `+19.1905-100.0884/` 					| Compact, for data exchange. It has no spaces, 
 																			  and the sign and fixed width make it machine-readable. |
-
-Conventions that apply to all of them
--------------------------------------
+############
+Conventions 
+############
 **Order:** 
 	latitude first, then longitude (lat, lon) is the usual convention in written text and in ISO 6709. Many software libraries use longitude first (x, y, as in GeoJSON and most GIS tools), so check each tool's order.
 
@@ -77,14 +57,11 @@ Conventions that apply to all of them
 **Datum:** 
 	a coordinate is only meaningful with its datum, the reference model of the Earth. WGS84 (what GPS uses, and what your script assumes) is the usual default. Older maps may use others such as NAD27 or ITRF, which can shift a position by tens to hundreds of metres.
 
-START HERE
-For your work, DD is easiest to compute with, and DMS is easier for people to read. Your script already converts DMS to decimal degrees internally. I can add an option that also writes the converted DD values next to each row if you want.
-me:
-yes please, have the output write the converted DD values next to each row
 
 
-
-==========	Uncertainty in Cell Size (m2) with Data Accuracy ===================================
+################################
+Cell Size (m2) vs Measuremnt Accuracy
+###################################
 For coordinates at increasing accuracy (for example 19°, 19.4°, 19.43°, 19.4326°), each added decimal place of latitude corresponds to a roughly 10x smaller distance on the ground:
 
 | Decimal places (degrees) 	| Approx. distance 	| Typical use 
@@ -106,7 +83,7 @@ If your file instead holds degrees-minutes-seconds (DMS), the scale is about 111
 
 Each coordinate in your file implies an uncertainty cell, a small rectangle whose size is set by the last digit you give. I computed the cells on the WGS84 ellipsoid at about 19.19°N, which is the latitude of your most precise point (19°11'25.8").
 
-| Lat 		| Lon 							| Cell size (N-S × E-W) 			| Dimension (m²) |
+| Lat 		| Lon 							| Cell size (N-S × E-W) 			| Cell Dimension (m²) |
 |---		|---							|---								|---
 | 19 		| -100 							| 1° × 1° ≈ 110.7 km × 105.0 km 	| ≈ 1.16 × 10¹⁰ (about 11,600 km²) |
 | 19 11 	| -100 05 						| 1' × 1' ≈ 1,845 m × 1,753 m 		| ≈ 3.23 × 10⁶ (about 3.2 km²) |
@@ -121,12 +98,15 @@ Each step down shrinks the area by a fixed factor: 60 × 60 = 3,600 from degrees
 **The first row is approximate.** 
 	A 1° cell spans 19°–20°N, and its east-west width changes across that range, so I used the cell's mid-latitude (19.5°). The other rows use 19.19°.
 
-**Treat the cell as an uncertainty box.** 
-	A coordinate like "19 11 25" really means "somewhere in that 1" × 1" cell". The true position is within it, not at a particular point.
+####################
+Uncertainty
+####################
+NB 	==> Treat lat/lng cell as an uncertainty box!!
+
+An actual coordinate "point" (eg, 19.1125, -100.0518) really means the true position is "somewhere in a 1" × 1" cell".  and NOT exactly at the particular coordinates.
 
 
-
-Lat				Lon				Dimension (m2)
+Lat				Lon				Cell Dimension (m2)
 ---				---				----------
 19				-100			11620226389.08
 19 11			-100 05			3233839.73
@@ -141,27 +121,4 @@ ellipsoidal (authalic) formula and cross-checked by numerical integration
 
 
 
-===========	Projected vs Not Projected ==============
-The difference is whether your coordinates sit on a 3D sphere or a 2D flat map.
-In GIS, "not projected" refers to a Geographic Coordinate System (GCS), while "projected" refers to a Projected Coordinate System (PCS).
 
-Core Differences
--------------------
-
-Feature			Geographic (Unprojected / GCS)						Projected (PCS)
---------		-------------------------------						-----------------------
-Surface			3D curved model of the Earth (ellipsoid/sphere)		2D flat plane (screen or paper)
-Units			Angular: Degrees (latitude & longitude)				Linear: Meters or feet (\(X\) and \(Y\))
-Distortion		None (accurately models Earth's shape)				Always distorts shape, area, distance, or direction
-Best For		Global data storage, GPS tracking, web APIs			Measuring distances, calculating areas, local mapping
-Common Example	EPSG:4326 (WGS 84)									EPSG:3857 (Web Mercator) or EPSG:32614 (UTM Zone 14N, 
-																	used for Mexico City)
-
-
-How They Work Together
------------------------
-1. Start with Geographic (GCS): 
-	You first define where a point is on the 3D Earth using latitude and longitude (e.g., 19.4326° N, 99.1332° W). Because degrees of longitude shrink as you move away from the equator, you cannot easily calculate square meters or distances using raw degrees.
-
-2. Apply a Projection (PCS): 
-	To measure area or distance accurately, GIS software uses a mathematical formula to "flatten" that 3D curve onto a 2D grid, converting degrees into linear units like meters.

@@ -1,4 +1,4 @@
-Title:          GPS Coordinate Reference Systems
+Title:          Coordinate Reference Systems
 Project:        Remote Sensing for Ag
 Author:         bmarron
 Created:        19 Nov 2026
@@ -6,63 +6,109 @@ Revised:
 
 
 
+####################
+Definitions
+##################
+EPSG (European Petroleum Survey Group)
+    a registry of Coordinate Reference Systems
+
+
+UTM (Universal Transverse Mercator)
+    The Universal Transverse Mercator coordinate system is a flat, metric grid system that divides the Earth into 60 north-south zones to locate points using Easting and Northing values in meters.
+
+    • 60 Longitudinal Zones: 
+        Each zone spans 6 degrees of longitude (numbered 1 to 60 eastward from 180°W), covering latitudes from 80°S to 84°N (excluding polar regions)
+
+    • Metric Grid Coordinates: 
+        Positions are given by zone, hemisphere, Easting (distance east/west in meters using a 500,000 m false origin at the central meridian), and Northing (distance in meters from the equator, with a 10,000,000 m false origin in the Southern Hemisphere).
+
+    • Low Local Distortion: 
+        Applying a separate Transverse Mercator projection per zone keeps scale distortion small (scale factor 0.9996 at the central meridian), making flat distance and area calculations straightforward within a zone. 
+
+WGS 84 (World Geodetic System 1984)
+    the global standard datum used by GPS
+
+
+
 ###################################
 Coordinate Reference Systems (CRS)
-    Geographic CRS
+    Geographic CRS (GCS)
     Projected CRS (PCS)
 ##################################
+CRS is the broad umbrella term for any system that defines how coordinates relate to real-world locations on Earth. Under that umbrella, there are two main categories:
+    • Geographic CRS (GCS): Uses a 3D curved surface and angular units (latitude and longitude in degrees). 
+      Example: EPSG:4326.
 
-Think of CRS as the broad umbrella term for any system that defines how coordinates relate to real-world locations on Earth. Under that umbrella, there are two main categories:
-    • Geographic CRS (GCS): Uses a 3D curved surface and angular units (latitude and longitude in degrees). Example: EPSG:4326.
-    • Projected CRS (PCS): Takes a GCS and flattens it onto a 2D plane using linear units (meters or feet). Example: EPSG:3857 (Web Mercator).
+    • Projected CRS (PCS): Takes a GCS and flattens it onto a 2D plane using linear units (meters or feet). 
+      Example: EPSG:3857 (Web Mercator).
 
-Because every Projected CRS relies on a Geographic CRS underneath it to know where it sits on the 3D Earth, EPSG:4326 is often the starting foundation for many other coordinate systems.
-
-
-
-EPSG (European Petroleum Survey Group)
------------------------------------------
-a registry of Coordinate Reference Systems
+Every Projected CRS relies on a Geographic CRS underneath it to know where it sits on the 3D Earth.
+EPSG:4326 (WGS 84) is often the starting foundation for many other coordinate systems.
 
 
+##########################
+Projected vs Not Projected
+###########################
+The difference is whether your coordinates sit on a 3D sphere or a 2D flat map.
+In GIS, "not projected" refers to a Geographic Coordinate System (GCS), while "projected" refers to a Projected Coordinate System (PCS).
 
+
+Feature         Geographic CRS (GCS, Unprojected)                   Projected CRS (PCS, Projected)
+--------        -------------------------------                     -----------------------
+Surface         3D curved model of the Earth (ellipsoid/sphere)     2D flat plane (screen or paper)
+Units           Angular: Degrees (latitude & longitude)             Linear: Meters or feet (\(X\) and \(Y\))
+Distortion      None (accurately models Earth's shape)              Always distorts shape, area, distance, or direction
+Best For        Global data storage, GPS tracking, web APIs         Measuring distances, calculating areas, local mapping
+Common Example  EPSG:4326 (WGS 84)                                  EPSG:32614 (UTM Zone 14N, used for Mexico City)
+
+
+How They Work Together
+-----------------------
+1. Start with Geographic (GCS): 
+    You first define where a point is on the 3D Earth using latitude and longitude (e.g., 19.4326° N, 99.1332° W). Because degrees of longitude shrink as you move away from the equator, you cannot easily calculate square meters or distances using raw degrees.
+
+2. Apply a Projection (PCS): 
+    To measure area or distance accurately, GIS software uses a mathematical formula to "flatten" that 3D curve onto a 2D grid, converting degrees into linear units like meters.
+
+
+The Standard Geographic CRS (GCS)
 EPSG:4326
-----------
-* the code for **WGS 84**, the standard geographic CRS based on latitude and longitude in degrees. It's what GPS uses and what most web maps use for raw coordinates.
+-----------------------
+* the code for **WGS 84**, the standard geographic CRS based on latitude and longitude in degrees. It's what
+  GPS uses and what most web maps use for raw coordinates.
 
 * Coordinates are in **decimal degrees**, with longitude (x) first in Earth Engine, e.g. `[-122.082, 37.42]`
 
-* It is *not* projected, so a "pixel" is a slice of degrees, not a fixed distance on the ground.
-
-
-**What this means in your export using ee CLI:**
-
-<<< python
-ee.batch.Export.image.toDrive(
-    image=image,
-    crs="EPSG:4326",
-    scale=30,          # meters, but see below
-    ...
-)
->>>
-
-When you use `crs="EPSG:4326"`, the `scale` is converted to degrees internally (about 30 m ≈ 0.00027°). Pixels are not square on the ground: they get narrower east-west as you move away from the equator. If you need equal-area or equal-distance measurements, use a projected CRS instead.
+* It is NOT projected, so a "pixel" is a slice of degrees, not a fixed distance on the ground.
 
 
 
-**Alternatives for Mexico**
-  
-EPSG:326xx` / `EPSG:327xx`: 
-    UTM zones (north/south), in meters. Good for local analysis.
+Projected CRS (PCS)
+EPSG:326xx / EPSG:327xx
+----------------------
+    * UTM zones (north/south), in meters. Good for local analysis.
 
-    EPSG:32614` (UTM zone 14N): 
+
+
+Projected CRS (PCS)
+for Mexico
+----------------------
+EPSG:32614 (UTM zone 14N): 
         Between 102°W and 96°W, northern hemisphere between equator and 84°N, onshore and offshore. Canada - Manitoba; Nunavut; Saskatchewan. Mexico. United States (USA). Projected
 
 
-`EPSG:6372`: 
+EPSG:6372: 
     Mexico - onshore and offshore. Projected
     Mexico's national CRS (ITRF2008 / LCC)
 
-**Tip:** if you leave `crs` out, Earth Engine uses the image's native projection, which is often the best choice unless you need a specific one. You can check it with `image.projection().getInfo()`.
 
+
+##########
+Example
+##########
+EPSG:32614 is a specific UTM coordinate reference system that uses EPSG:4326 (WGS 84) + UTM zone 14N
+    • The Datum (WGS 84): 
+        Uses the World Geodetic System 1984 to model the Earth's shape.
+    • The Projection (UTM zone 14N): 
+        Uses UTM Zone 14 (longitudes 102°W to 96°W) in the Northern Hemisphere (N) to measure distance (m)
 

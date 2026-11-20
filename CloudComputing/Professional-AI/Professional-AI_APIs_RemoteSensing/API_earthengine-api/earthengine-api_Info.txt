@@ -1,3 +1,9 @@
+Title:          Google Earth Engine Basic Info
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
 
 
 #####################

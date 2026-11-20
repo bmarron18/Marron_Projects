@@ -1,0 +1,6 @@
+Lat				Lon				Cell Area Dimension (m2)
+---				---				-----------------
+19.11258		-100.05182		1.16
+19.190319		-100.088689		0.01
+
+# engine: pyproj; ellipsoid: WGS84

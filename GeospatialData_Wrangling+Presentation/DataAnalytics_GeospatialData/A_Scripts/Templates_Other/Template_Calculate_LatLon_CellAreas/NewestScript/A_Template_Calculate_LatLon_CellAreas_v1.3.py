@@ -8,7 +8,7 @@ Modified: 19 Nov 2026
 @author: bruce-vdb, claude
 
 ---------------------------------
-Calculate_LatLon_cell_areas_v1.3.py
+A_Template_Calculate_LatLon_CellAreas_v1.3.py
 ---------------------------------
 Calculates the area of the lat/lon "uncertainty cell" implied by each coordinate's precision.
 
@@ -45,15 +45,18 @@ v1.3: made for running in Spyder from a venv.
     deactivate
 >>>
 
-<<< Spyder >>>
-    Run the script as is (F5). Optional command-line options in
-    Run > Configuration per file > "Command line options":
-        [input.txt] [output.txt] [--quiet]
-    A bare file name is looked for in INPUT_DIR.
+
+
+<<< Ipython
+runfile('/home/bruce-vdb/Desktop/A_Template_Calculate_LatLon_CellAreas_v1.3.py', 'LatLon.txt')
+
 >>>
 
-<<< python
-python3 Calculate_LatLon_cell_areas_v1.3.py [LatLon.txt] [output.txt] [--quiet]
+
+    # options
+Calculate_LatLon_cell_areas_v1.3.py [LatLon.txt] [output.txt] [--quiet]
+
+runfile('/home/bruce-vdb/Desktop/A_Template_Calculate_LatLon_CellAreas_v1.3.py', 'LatLon.txt', args='--quiet')
 >>>
 
 """
@@ -239,7 +242,7 @@ def run(argv):
     if not records:
         raise InputError("no coordinate rows found, nothing to calculate.")
 
-    out = ["Lat\t\t\t\tLon\t\t\t\tDimension (m2)", "---\t\t\t\t---\t\t\t\t----------"]
+    out = ["Lat\t\t\t\tLon\t\t\t\tCell Area Dimension (m2)", "---\t\t\t\t---\t\t\t\t-----------------"]
     for rec in records:
         try:
             lat, dlat = parse_dms(rec["lat_text"])

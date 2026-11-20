@@ -40,7 +40,7 @@ QUICK START
           a) Clic on the green Run file icon in Toolbar or press F5
 
       * To run file w/ CLI toggles
-          a) place copy of file on Desktop
+          a) place copy of .py script on Desktop
           b) run file using IPython interpreter
 runfile('/home/bruce-vdb/Desktop/A_Template_AnalysisQuery_anthropic_v3.6.py', args='--dry-run')
 

@@ -1,0 +1,24 @@
+Title:          ee CLI Usage Notes and Tips
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+Export Image
+--------------
+<<< python
+ee.batch.Export.image.toDrive(
+    image=image,
+    crs="EPSG:4326",
+    scale=30,          # meters, but see below
+    ...
+)
+>>>
+
+When you use `crs="EPSG:4326"`, the `scale` is converted to degrees internally (about 30 m ≈ 0.00027°). Pixels are not square on the ground: they get narrower east-west as you move away from the equator. If you need equal-area or equal-distance measurements, use a projected CRS instead.
+
+**Tip:** if you leave `crs` out, Earth Engine uses the image's native projection, which is often the best choice unless you need a specific one. You can check it with `image.projection().getInfo()`.
+
+
+
