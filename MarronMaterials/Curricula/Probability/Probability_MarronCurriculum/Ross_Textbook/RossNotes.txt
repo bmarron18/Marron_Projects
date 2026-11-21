@@ -1,0 +1,181 @@
+
+
+
+
+
+
+
+
+
+
+--- Intro Probability Models (Ross) --------------
+
+Chapter 1 Exercises
+--------------------
+
+4. Sent to CHatGPT and DeepSeek
+
+Student in Kolmogorov set theoretic probability. Given the events E, F, and G provide set theoretic expressions for the following:
+a) only F occurs
+b) both E and F occur but not G
+c) at least one event occurs
+d) at least two events occur
+e) all three events occur
+f) no event occurs
+g) at most one event occurs
+h) at most two events occur
+
+a) Only F occurs
+This means:
+    F occurs
+    E does not occur
+    G does not occur
+
+Set-theoretic expression:
+	F ∩ Ec ∩ Gc
+
+
+b) Both E and F occur, but not G
+This means:
+    E and F occur
+    G does not occur
+
+Set-theoretic expression:
+	E ∩ F ∩ Gc
+
+
+c) At least one event occurs
+This is the union of all three events.
+
+Set-theoretic expression:
+	E ∪ F ∪ G
+	
+
+d) At least two events occur
+This means:
+    Any two or all three of the events occur
+
+We take all intersections of pairs and the intersection of all three:
+	(E∩F) ∪ (E∩G) ∪ (F∩G)
+
+(Note: this includes the region where all three occur, which satisfies "at least two.")
+
+
+e) All three events occur
+	All of E, F, and G occur together.
+
+Set-theoretic expression:
+	E ∩ F ∩ G
+	
+	
+f) None of the events occurs
+	This means none of E, F, or G occur.
+
+Set-theoretic expression:
+	Ec ∩ Fc ∩ Gc
+
+
+g) At most one event occurs
+This includes the cases:
+
+    No event occurs
+    Exactly one of E, F, or G occurs
+
+We break it down into disjoint regions:
+    None occurs: Ec ∩ Fc ∩ Gc
+
+    Only E occurs: E ∩ Fc ∩ Gc
+
+    Only F occurs: F ∩ Ec ∩ Gc
+
+    Only G occurs: G ∩ Ec ∩ Fc
+
+Set-theoretic expression:
+	(Ec∩Fc∩Gc) ∪ (E∩Fc∩Gc) ∪ (Ec∩F∩Gc) ∪ (Ec∩Fc∩G)
+	
+	
+h) At most two events occur
+This includes:
+    No events occur
+    Exactly one event occurs
+    Exactly two events occur
+    (Only excludes the case where all three occur)
+
+So we take the complement of the intersection of all three:
+Set-theoretic expression:
+	(E∩F∩G)c
+
+
+
+Certainly! Below are the set-theoretic expressions for each scenario using the events \( E \), \( F \), and \( G \):
+
+### a) Only \( F \) occurs
+This means \( F \) occurs, but neither \( E \) nor \( G \) occurs.
+\[
+F \cap E^c \cap G^c
+\]
+
+### b) Both \( E \) and \( F \) occur but not \( G \)
+This is the intersection of \( E \) and \( F \) minus \( G \).
+\[
+E \cap F \cap G^c
+\]
+
+### c) At least one event occurs
+This is the union of all three events.
+\[
+E \cup F \cup G
+\]
+
+### d) At least two events occur
+This means any two or all three events occur. There are three possible pairs and one triple:
+\[
+(E \cap F) \cup (E \cap G) \cup (F \cap G)
+\]
+
+### e) All three events occur
+This is the intersection of all three events.
+\[
+E \cap F \cap G
+\]
+
+### f) No event occurs
+This is the complement of the union of all events (i.e., none of \( E \), \( F \), or \( G \) occurs).
+\[
+(E \cup F \cup G)^c \quad \text{or} \quad E^c \cap F^c \cap G^c
+\]
+
+### g) At most one event occurs
+This means either no event occurs, or exactly one of \( E \), \( F \), or \( G \) occurs. It can be expressed as:
+\[
+(E^c \cap F^c \cap G^c) \cup (E \cap F^c \cap G^c) \cup (F \cap E^c \cap G^c) \cup (G \cap E^c \cap F^c)
+\]
+Alternatively, it's the complement of "at least two events occur":
+\[
+(E \cap F)^c \cap (E \cap G)^c \cap (F \cap G)^c
+\]
+
+### h) At most two events occur
+This means the scenario where all three events do **not** occur simultaneously. It's the complement of "all three events occur":
+\[
+(E \cap F \cap G)^c
+\]
+Alternatively, it can be expressed as the union of all possible cases where zero, one, or two events occur.
+
+### Summary (in LaTex):
+\[
+\boxed{
+\begin{aligned}
+&\text{a) } F \cap E^c \cap G^c \\
+&\text{b) } E \cap F \cap G^c \\
+&\text{c) } E \cup F \cup G \\
+&\text{d) } (E \cap F) \cup (E \cap G) \cup (F \cap G) \\
+&\text{e) } E \cap F \cap G \\
+&\text{f) } (E \cup F \cup G)^c \text{ or } E^c \cap F^c \cap G^c \\
+&\text{g) } (E \cap F)^c \cap (E \cap G)^c \cap (F \cap G)^c \\
+&\text{h) } (E \cap F \cap G)^c \\
+\end{aligned}
+}
+\]
+
+
