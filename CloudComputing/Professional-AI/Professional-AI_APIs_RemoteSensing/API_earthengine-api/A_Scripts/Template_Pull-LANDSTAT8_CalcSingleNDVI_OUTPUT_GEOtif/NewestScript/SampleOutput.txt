@@ -1,0 +1,45 @@
+Title:          Sample Output
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+
+
+
+
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/Professional-AI_APIs_RemoteSensing/API_earthengine-api/A_Scripts/Template_Pull-LANDSTAT-Data_Create-Single-tif-File/NewestScript/A_Template_Pull-LANDSAT-Data_Create-Single-tif-File_v1_2.py --wdir
+
+Number of images in filtered collection: 29
+Acquisition dates: ['2022-01-12', '2022-01-28', '2022-02-13', '2022-03-01', '2022-03-17', '2022-04-02', '2022-04-18', '2022-05-04', '2022-05-20', '2022-06-05', '2022-08-24', '2022-10-11', '2022-11-12', '2022-11-28', '2022-12-14', '2022-01-04', '2022-01-20', '2022-02-05', '2022-02-21', '2022-03-09', '2022-03-25', '2022-04-10', '2022-04-26', '2022-05-12', '2022-06-13', '2022-09-01', '2022-11-04', '2022-12-06', '2022-12-22']
+
+Map saved: /home/bruce-vdb/Desktop/UMA_map.html
+RGB PNG saved: /home/bruce-vdb/Desktop/UMA_2022_04_RGB.png
+
+Export started: UMA_2022_04_NDVI_median  		(task id BPKFPY6SE5WNXT4RXVADICDL)
+Export started: UMA_2022_04_NDVI_min  			(task id 77WTJZWM2IJA6FLRBME7A6PD)
+Export started: UMA_2022_04_NDVI_max  			(task id YGYPJ7DS7FCCFJ5LPCJBZ47D)
+Export started: UMA_2022_04_NDVI_mean  			(task id CW4AQK7GSOFLO2CO6MDOHMNK)
+Export started: UMA_2022_04_RGB_reflectance  	(task id AE4J5RM27WA7VQUQO3E4WZLT)
+Export started: UMA_2022_04_RGB_8bit  			(task id 5VWU7QCX3DBBQVWWIH42C3DW)
+
+  [   1s] waiting on 6 export(s)...
+  [  17s] UMA_2022_04_NDVI_median: COMPLETED
+  [  17s] UMA_2022_04_NDVI_min: COMPLETED
+  [  18s] waiting on 4 export(s)...
+  [  33s] UMA_2022_04_NDVI_mean: COMPLETED
+  [  34s] UMA_2022_04_RGB_reflectance: COMPLETED
+  [  34s] waiting on 2 export(s)...
+  [  49s] UMA_2022_04_NDVI_max: COMPLETED
+  [  50s] UMA_2022_04_RGB_8bit: COMPLETED
+
+Downloaded UMA_2022_04_NDVI_median.tif -> /home/bruce-vdb/Desktop/UMA_2022_04_NDVI_median.tif
+Downloaded UMA_2022_04_NDVI_min.tif -> /home/bruce-vdb/Desktop/UMA_2022_04_NDVI_min.tif
+Downloaded UMA_2022_04_NDVI_max.tif -> /home/bruce-vdb/Desktop/UMA_2022_04_NDVI_max.tif
+Downloaded UMA_2022_04_NDVI_mean.tif -> /home/bruce-vdb/Desktop/UMA_2022_04_NDVI_mean.tif
+Downloaded UMA_2022_04_RGB_reflectance.tif -> /home/bruce-vdb/Desktop/UMA_2022_04_RGB_reflectance.tif
+Downloaded UMA_2022_04_RGB_8bit.tif -> /home/bruce-vdb/Desktop/UMA_2022_04_RGB_8bit.tif
+Done.
+
+

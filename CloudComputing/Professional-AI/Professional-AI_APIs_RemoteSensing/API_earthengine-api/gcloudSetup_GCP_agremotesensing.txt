@@ -747,6 +747,15 @@ $ gcloud storage cp gs://ag-remote-bucket01/file.* /path/to/local/destination/
 
 	# download entire bucket
 $ gcloud storage cp -r gs://ag-remote-bucket01/ /path/to/local/destination/
+
+	# delete file(s) in a folder
+$ gcloud storage rm gs://ag-remote-bucket01/UMA*.tif
+
+	# delete a folder (recursive, all files)
+$ gcloud storage rm -r gs://ag-remote-bucket01/exports/old
+
+	# remove bucket
+$ gcloud storage buckets delete gs://ag-remote-bucket01
 >>>
 
 

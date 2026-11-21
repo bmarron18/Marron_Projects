@@ -34,29 +34,25 @@ Google:
 Local Moran’s I is a powerful spatial autocorrelation metric that serves as an effective indicator of spectral heterogeneity in remote sensing and geospatial analysis. While global spatial metrics provide a single summary value for an entire landscape, Local Indicators of Spatial Association (LISA)—such as Local Moran’s I—evaluate spatial variability at the pixel or neighborhood level.
 
 🛰️ Why Local Moran's I is Useful for Spectral Heterogeneity
-
 Spectral heterogeneity refers to the variation in spectral reflectance (or digital numbers) across a geographic space. Local Moran's I measures this by comparing the spectral value of a specific pixel against the values of its neighboring pixels.
 
 1. Identification of Spatial Outliers vs. Spatial Clusters
-
 Unlike simple variance or standard deviation windows, Local Moran's I categorizes spatial structures into four distinct quadrants, making it highly descriptive for landscape complexity:
 	• High-High (Hotspots): Clusters of high spectral values (e.g., dense, uniform forest canopy).
 	• Low-Low (Coldspots): Clusters of low spectral values (e.g., deep water bodies or uniform burn scars).
 	• High-Low / Low-High (Spatial Outliers): A pixel with a high value surrounded by low values, or vice versa (e.g., an isolated building in a forest, or a small clearing). These outliers are direct, explicit indicators of localized spectral heterogeneity.
 
 2. Advanced Eco-Hydrological and Biodiversity Modeling
-
 According to the Spectral Variation Hypothesis (SVH), high spectral heterogeneity correlates strongly with high species richness and structural habitat diversity.
 	• Edge Detection: Local Moran's I excels at delineating ecotones (transition zones between different ecosystems) where spectral heterogeneity spikes.
 	• Disturbance Mapping: It helps detect fine-scale ecosystem disturbances, such as selective logging, insect infestations, or localized wildfire damage, which disrupt uniform spectral patterns.
 
 3. Sensitivity to Scale and Context
-
 Standard texture measures (like variance or standard deviation within a moving window) only capture the magnitude of dispersion. Local Moran’s I accounts for the spatial configuration of that dispersion via a spatial weights matrix (\(W_{ij}\)). This allows researchers to adjust the neighborhood definitions to match the actual spatial scale of the environmental phenomena being studied.
 
 
 Metric	Typology Strengths	Weaknesses
-	* Local Moran's I	Spatial Autocorrelation (LISA)	Differentiates between uniform clusters and true spatial anomalies/outliers.	Computationally intensive for massive, high-resolution satellite imagery.
+	* Local Moran's I	Spatial Autocorrelation (LISA)	Differentiates between uniform clusters and true spatial anomalies/outliers. Computationally intensive for massive, high-resolution satellite imagery.
 
 	* Standard Deviation (Moving Window)	Classical Dispersion Texture	Simple to compute; universally understood.	Loses directional/spatial structure context; sensitive to extreme single-pixel anomalies.
 
@@ -66,7 +62,6 @@ Metric	Typology Strengths	Weaknesses
 
 
 🛠️ Practical Implementation Notes
-
 When deploying Local Moran's I to map spectral heterogeneity, your choice of inputs will drastically alter the output:
 	• Input Data: Instead of raw individual bands, Local Moran's I is most effective when run on Vegetation Indices (like NDVI or EVI), or the first principal component (PC1) of a Principal Component Analysis (PCA) to synthesize multi-band heterogeneity into a single layer.
 
@@ -77,7 +72,6 @@ Calculating Local Moran's I on gridded imagery requires bridges between the rast
 This functional pipeline converts an Xarray DataArray into flat arrays, generates an optimized grid-graph spatial weight using libpysal, executes the Local Indicators of Spatial Association (LISA) routine via esda, and maps the results right back into an Xarray dataset structure for spatial slicing and visualization.
 
 💻 End-to-End Implementation
-
 <<< python
 import numpy as np
 import xarray as xr
@@ -149,7 +143,6 @@ def calculate_raster_local_moran(da, band_dim=None, connections="queen", permuta
 
 
 🔍 Isolating Heterogeneity Outliers Natively in Xarray
-
 Once you have generated the output lisa_ds dataset, you can leverage standard Xarray indexing to extract your spectral spatial outliers. These pixels exhibit localized spectral heterogeneity, identifying features where anomalous conditions exist compared to their surroundings. 
 
 <<< python

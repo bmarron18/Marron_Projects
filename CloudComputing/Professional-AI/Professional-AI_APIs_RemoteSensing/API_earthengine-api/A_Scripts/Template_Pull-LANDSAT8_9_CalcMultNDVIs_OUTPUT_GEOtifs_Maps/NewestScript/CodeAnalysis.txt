@@ -1,0 +1,193 @@
+Title:          Code Analysis
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+------------------------------------------
+A_Template_Pull-LANDSAT8_9_CalcMultNDVIs_OUTPUT_GEOtifs_Maps_v1_3.py
+---------------------------------------------------------------------
+
+Both scripts are ready and pass a Python syntax check. I couldn't run them against Earth Engine from here, so please test them on your machine.
+
+**1) Single output folder (Landsat v1_3)**
+- The map `.html`, the RGB `.png` and every downloaded `.tif` now go into one folder: `/home/bruce-vdb/Desktop/LANDSTAT_<LON,LAT>_<first-date,last-date>`.
+- Example: `LANDSTAT_-100.088829,19.190335_2022-01-05,2022-12-28`.
+- The dates are the earliest and latest acquisitions in the filtered collection, so the folder is created right after filtering, in a new "OUTPUT FOLDER" cell. If you run cell by cell in Spyder, run that cell before the map, PNG and download cells.
+- I kept your spelling "LANDSTAT" as requested. It is a single setting, `FOLDER_PREFIX`, if you want "LANDSAT" instead.
+
+**2) Sentinel-2 twin**
+It has the same structure, config names, outputs and folder logic, with a `SENTINEL2_...` folder prefix. What changed:
+
+|                       | Landsat                                   | Sentinel-2 |
+|---|---|---|
+| Collection            |`LANDSAT/LC08` + `LC09` C02 T1_L2          | `COPERNICUS/S2_SR_HARMONIZED` |
+| Scene cloud filter    | `CLOUD_COVER`                             | `CLOUDY_PIXEL_PERCENTAGE` |
+| Pixel mask            | `QA_PIXEL` bits                           | `SCL` (drops no data, saturated, 
+                                                                       shadow, cloud, cirrus, snow) |
+| Scale                 | ×0.0000275 − 0.2                          | ×0.0001 |
+| RGB / NDVI bands      | B4,B3,B2 / B5,B4                          | B4,B3,B2 / B8,B4 |
+| `EXPORT_SCALE`        | 30 m                                      | 10 m |
+
+I dropped the `INCLUDE_LANDSAT9` switch from the Sentinel-2 script. I also gave it its own `EXPORT_PREFIX` (`UMA_S2_2022_04`) so bucket files don't collide with the Landsat ones.
+
+Note that the follow-up extraction script ("Extract-NDVI-Data…") will need to be pointed at the new folder; I haven't seen it, so I left that to you.
+
+
+
+
+
+----------------------------------------------
+A_Template_Pull-LANDSAT-Data_Create-Single-tif-File_v1_2.py
+------------------------------------------------------
+
+Yes to both. I've written a modified version (v1_2) of the script, but I haven't run it. There's no Earth Engine access from my side, so please test it on your machine.
+
+**1) Visible-spectrum composite**
+
+The script already builds a true-colour layer (B4/B3/B2) for the map, but it never exports it. v1_2 exports it two ways:
+- a 3-band float GeoTIFF of reflectance (0-1), for analysis
+- an 8-bit stretched GeoTIFF, plus a local PNG, for viewing
+
+It won't look like Google Maps. Landsat is 30 m per pixel, so your 1 km buffer is only about 67×67 pixels. Google's imagery is sub-metre commercial data. For a sharper picture, use a bigger buffer, or switch the visual layer to Sentinel-2 (10 m) by swapping the collection and bands (B4/B3/B2 are named the same). I can add that as an option if you like.
+
+**2) Median, min, max and mean**
+
+Also yes, with one methodological point:
+- **NDVI:** I compute NDVI for each image first, then take median, min, max and mean over time. This is the correct approach. NDVI of a median composite is not the median of NDVI, and min/max of NDVI show the seasonal range (dry-season low, wet-season peak).
+- **RGB:** I kept the visible composite as median only. Per-band min/max across dates builds a pixel from different days in each band, so it isn't a real image and shows residual cloud and shadow. Mean is also pulled by leftover cloud.
+
+Each statistic is exported as its own GeoTIFF, and all exports run in parallel and are polled together. Which statistics to produce is set by the `STATS` list.
+
+Smaller notes from the review:
+- The docstring says Landsat 8, but `INCLUDE_LANDSAT9 = True` merges in Landsat 9.
+- Pixels masked in every image come out as nodata.
+- I did not add a QA_RADSAT (saturation) mask.
+
+The modified script, `A_Template_Pull-LANDSAT-Data_Create-Single-tif-File_v1_2.py`, is delivered. If your Spyder environment can't reach the new exports or the PNG step, the map and the existing NDVI export are unaffected. Each step is in its own cell, so you can skip any of them.
+
+Before you run it for real, I'd try a single year with `STATS = ["median"]` to confirm the setup works, then enable all four. Increasing `BUFFER_M` (say to 3000-5000) will give a more useful visual image.
+
+
+
+
+##########################################
+# Analysis of the Earth Engine snippet
+###########################################
+
+The snippet builds a one-year, low-cloud median composite of Landsat 8 over a small area around Valle de Bravo, Mexico. The structure is sound, but a few details affect the scientific validity of the result. The first four items below are real problems, and the rest are refinements.
+
+## What each part does
+
+**1. The ROI**
+```python
+roi = ee.Geometry.Point([-100.088829, 19.190335])
+```
+- Earth Engine expects `[longitude, latitude]`, and you used that order correctly. The coordinates fall in the Valle de Bravo area of Estado de México.
+- This is a server-side object: it describes the point but nothing is computed yet. Earth Engine is lazy, so almost nothing runs until you call something like `getInfo()`, `Export`, or a display method.
+
+**2. The collection**
+```python
+ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+```
+This is Landsat 8 Collection 2, Tier 1, Level 2 (surface reflectance plus surface temperature). T1 means the highest-quality geometric calibration.
+
+**3. The filters**
+- `filterBounds(roi)` keeps scenes whose footprint intersects the point.
+- `filterDate('2022-01-01', '2022-12-31')` filters by acquisition date.
+- `ee.Filter.lt('CLOUD_COVER', 10)` keeps scenes with under 10% cloud cover.
+
+**4. The count**
+`.size().getInfo()` is the first call that forces a round trip to Google's servers, so it is the first point where the script actually waits.
+
+**5. The composite and clip**
+- `.median()` computes a per-pixel, per-band median across all images, ignoring masked pixels.
+- `roi.buffer(1000)` makes a circle of 1,000 m radius (about 3.14 km²), roughly 3,500 Landsat pixels at 30 m.
+- `.clip()` masks everything outside that circle.
+
+## Issues and gaps
+
+2. **Scale factors are not applied.** This is the most important issue. Collection 2 Level 2 data is stored as scaled integers.
+   - Optical bands (`SR_B1`–`SR_B7`): reflectance = DN × 0.0000275 − 0.2
+   - Thermal (`ST_B10`): Kelvin = DN × 0.00341802 + 149.0
+
+   Without this, any index you compute later (NDVI, NDWI, etc.) will be wrong, because the offset doesn't cancel in band ratios.
+
+3. **Cloud filtering is scene-level only.** `CLOUD_COVER < 10` throws away whole scenes but does nothing about clouds, shadows, or cirrus inside the scenes you keep. A 9% cloudy scene still contributes those pixels to the median. The median is robust to some outliers, but with few images it can still leak cloud or shadow. The standard fix is to mask using the `QA_PIXEL` band before compositing.
+
+
+5. **Seasonal bias.** Valle de Bravo has a pronounced rainy season (roughly June–October). A strict 10% cloud filter will likely remove many wet-season scenes, so the composite will be dominated by the dry season. That matters if you're studying vegetation or water. Check `count` and the dates of the images you keep, since Landsat 8 gives at most about 23 acquisitions per path per year.
+
+6. **Landsat 9 is ignored.** Landsat 9 (`LANDSAT/LC09/C02/T1_L2`) has been operating since late 2021 and would roughly double your revisit frequency, which helps in cloudy regions. The two sensors are similar enough to merge for most purposes.
+
+7. **`clip()` is optional for analysis.** It adds processing cost and isn't needed for computations such as `reduceRegion`, where you pass the geometry directly. It is useful for visualization and for exports, where `region=` also does the job.
+
+
+## Improved version
+
+```python
+import ee
+
+ee.Initialize(project="your-project-id")
+
+roi = ee.Geometry.Point([-100.088829, 19.190335])  # lon, lat
+
+def mask_and_scale(img):
+    qa = img.select("QA_PIXEL")
+    clear = (qa.bitwiseAnd(1 << 1).eq(0)    # dilated cloud
+             .And(qa.bitwiseAnd(1 << 3).eq(0))  # cloud
+             .And(qa.bitwiseAnd(1 << 4).eq(0))) # cloud shadow
+    optical = img.select("SR_B.").multiply(0.0000275).add(-0.2)
+    thermal = img.select("ST_B10").multiply(0.00341802).add(149.0)
+    return (img.addBands(optical, None, True)
+               .addBands(thermal, None, True)
+               .updateMask(clear))
+
+collection = (ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+    .filterBounds(roi)
+    .filterDate("2022-01-01", "2023-01-01")       # end date exclusive
+    .filter(ee.Filter.lt("CLOUD_COVER", 30))      # looser, since pixels are masked
+    .map(mask_and_scale))
+
+print("Images:", collection.size().getInfo())
+
+composite = collection.median()
+aoi = roi.buffer(1000)
+clipped = composite.clip(aoi)
+
+vis = {"bands": ["SR_B4", "SR_B3", "SR_B2"], "min": 0.0, "max": 0.3}
+```
+
+Once pixel-level masking is in place, the scene-level threshold can be relaxed (30% here) to keep more images and reduce the dry-season bias.
+
+If you tell me what the composite is for (vegetation, water, land cover change), I can suggest the right indices and whether a seasonal or multi-year composite would serve you better.
+
+
+
+
+##############
+Build Script
+###############
+I'll fold the tutorial snippets into one script and fix the issues from my review along the way.
+
+I merged your snippets into one script, `A_Template_Pull-LANDSAT-Data_Create-Single-tif-File_v1.1.py`, and it passes a syntax check. I couldn't run it against Earth Engine, because this environment has no network access or credentials, so the first real run is yours.
+
+It keeps your `# %%` cells, so you can still run it cell by cell in Spyder. Settings now sit in a config block at the top, with `MAKE_MAP`, `RUN_EXPORT` and `RUN_DOWNLOAD` switches.
+
+What I fixed from the v1.0 file:
+- **Credential check:** the `if not gac_path` test sat inside the `with open(gac_path)` block, so an unset variable crashed on `open(None)` before the check could run. It now checks first and exits with a clear message.
+- **Export timing:** v1.0 started the export and went straight to the bucket download, which would find nothing because the export runs asynchronously. The script now polls the task until it completes (or fails or times out) before downloading.
+- **NDVI correctness:** the scale factors are now applied, so NDVI is computed on real reflectance instead of raw integers. The RGB map range changed to 0–0.3 to match.
+- **Cloud masking:** it masks fill, cloud, cirrus, shadow and dilated-cloud pixels using `QA_PIXEL`.
+- **End date:** it is now `2023-01-01`, since `filterDate` excludes the end date and 2022-12-31 was being dropped.
+- **Smaller changes:**
+  - The script exits cleanly if no images match, and prints the acquisition dates.
+  - The Desktop path now comes from `Path.home()` instead of a hardcoded `/home/bruce-vdb`.
+  - The bucket project now comes from the credentials file.
+  - The export and download prefixes are one shared constant.
+  - The map step is wrapped so a geemap problem doesn't stop the export.
+
+Three choices you may want to change:
+- **Cloud threshold:** I raised `CLOUD_COVER_MAX` from 10 to 30, since pixel masking now handles clouds and the rainy season would otherwise lose most scenes. Set it back to 10 for the original behavior.
+- **Landsat 9:** `INCLUDE_LANDSAT9` is `False` to match your tutorial. Turning it on roughly doubles the revisit rate.
+- **Masked pixels in the GeoTIFF:** they export as 0, which is also a valid NDVI value (the area outside the circle was already like this in v1.0). If your extraction script needs a nodata value, add `.unmask(-9999)` to the exported image and treat -9999 as nodata there.

@@ -1,3 +1,45 @@
+Title:          Code Analysis
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+
+
+
+----------------------------------------------
+A_Template_Pull-LANDSTAT8_CalcSingleNDVI_OUTPUT_GEOtif_v1.1.py
+------------------------------------------------------
+
+Yes to both. I've written a modified version (v1_2) of the script, but I haven't run it. There's no Earth Engine access from my side, so please test it on your machine.
+
+**1) Visible-spectrum composite**
+
+The script already builds a true-colour layer (B4/B3/B2) for the map, but it never exports it. v1_2 exports it two ways:
+- a 3-band float GeoTIFF of reflectance (0-1), for analysis
+- an 8-bit stretched GeoTIFF, plus a local PNG, for viewing
+
+It won't look like Google Maps. Landsat is 30 m per pixel, so your 1 km buffer is only about 67×67 pixels. Google's imagery is sub-metre commercial data. For a sharper picture, use a bigger buffer, or switch the visual layer to Sentinel-2 (10 m) by swapping the collection and bands (B4/B3/B2 are named the same). I can add that as an option if you like.
+
+**2) Median, min, max and mean**
+
+Also yes, with one methodological point:
+- **NDVI:** I compute NDVI for each image first, then take median, min, max and mean over time. This is the correct approach. NDVI of a median composite is not the median of NDVI, and min/max of NDVI show the seasonal range (dry-season low, wet-season peak).
+- **RGB:** I kept the visible composite as median only. Per-band min/max across dates builds a pixel from different days in each band, so it isn't a real image and shows residual cloud and shadow. Mean is also pulled by leftover cloud.
+
+Each statistic is exported as its own GeoTIFF, and all exports run in parallel and are polled together. Which statistics to produce is set by the `STATS` list.
+
+Smaller notes from the review:
+- The docstring says Landsat 8, but `INCLUDE_LANDSAT9 = True` merges in Landsat 9.
+- Pixels masked in every image come out as nodata.
+- I did not add a QA_RADSAT (saturation) mask.
+
+The modified script, `A_Template_Pull-LANDSAT-Data_Create-Single-tif-File_v1_2.py`, is delivered. If your Spyder environment can't reach the new exports or the PNG step, the map and the existing NDVI export are unaffected. Each step is in its own cell, so you can skip any of them.
+
+Before you run it for real, I'd try a single year with `STATS = ["median"]` to confirm the setup works, then enable all four. Increasing `BUFFER_M` (say to 3000-5000) will give a more useful visual image.
+
+
 
 
 ##########################################
@@ -36,8 +78,6 @@ This is Landsat 8 Collection 2, Tier 1, Level 2 (surface reflectance plus surfac
 
 ## Issues and gaps
 
-1. **Missing setup.** There is no `import ee` or `ee.Initialize()`. Earth Engine now requires a Cloud project, e.g. `ee.Initialize(project='your-project-id')`, after `ee.Authenticate()` the first time.
-
 2. **Scale factors are not applied.** This is the most important issue. Collection 2 Level 2 data is stored as scaled integers.
    - Optical bands (`SR_B1`–`SR_B7`): reflectance = DN × 0.0000275 − 0.2
    - Thermal (`ST_B10`): Kelvin = DN × 0.00341802 + 149.0
@@ -46,7 +86,6 @@ This is Landsat 8 Collection 2, Tier 1, Level 2 (surface reflectance plus surfac
 
 3. **Cloud filtering is scene-level only.** `CLOUD_COVER < 10` throws away whole scenes but does nothing about clouds, shadows, or cirrus inside the scenes you keep. A 9% cloudy scene still contributes those pixels to the median. The median is robust to some outliers, but with few images it can still leak cloud or shadow. The standard fix is to mask using the `QA_PIXEL` band before compositing.
 
-4. **The end date is exclusive.** `filterDate` includes the start but excludes the end, so `'2022-12-31'` drops any image from December 31. For the full year, use `'2023-01-01'`.
 
 5. **Seasonal bias.** Valle de Bravo has a pronounced rainy season (roughly June–October). A strict 10% cloud filter will likely remove many wet-season scenes, so the composite will be dominated by the dry season. That matters if you're studying vegetation or water. Check `count` and the dates of the images you keep, since Landsat 8 gives at most about 23 acquisitions per path per year.
 
@@ -54,9 +93,6 @@ This is Landsat 8 Collection 2, Tier 1, Level 2 (surface reflectance plus surfac
 
 7. **`clip()` is optional for analysis.** It adds processing cost and isn't needed for computations such as `reduceRegion`, where you pass the geometry directly. It is useful for visualization and for exports, where `region=` also does the job.
 
-8. **Nothing is displayed or exported.** The script ends with `clipped_image` as an unused server-side object. Also note that `median()` drops the original image metadata and sets no fixed projection, so specify `scale=30` whenever you reduce or export.
-
-9. **Minor points.** The 4-space indentation on the comment lines is harmless (Python ignores indentation on comments), but it's untidy. `# %%` is a VS Code/Spyder cell marker. If you only want the image count, `getInfo()` is fine, but avoid it in loops.
 
 ## Improved version
 
