@@ -1,0 +1,138 @@
+
+Title:					AlphaEarth EO Data
+Project:				Remote-Sensing for Ag
+Author:					bmarron
+Created:				23 Oct 2026
+Revised:				
+
+
+
+##########
+Google query
+October 14, 2026
+##############
+AlphaEarth Satellite Embedding Dataset
+alpha earth foundations python
+
+Puedes utilizar AlphaEarth Foundations de Google DeepMind en Python principalmente a través de la API de Google Earth Engine (GEE), Google Cloud Storage (GCS), o implementaciones comunitarias.
+
+Google Earth Engine (GEE) is a cloud-based platform for planetary-scale geospatial analysis that combines a massive catalog of satellite imagery and environmental data with Google's cloud computing infrastructure
+
+Key Features
+
+• Massive Data Catalog: Accesses over 90 petabytes of analysis-ready satellite imagery and curated datasets (including Landsat, Sentinel, MODIS, and weather/climate data) spanning 50+ years.
+• Cloud Computing: Processes massive datasets on Google's servers, eliminating the need to download or store heavy files on a local computer.
+• APIs & Tools: Offers JavaScript and Python APIs, an interactive web-based Code Editor, and integration with Google Cloud tools like Vertex AI.
+• Access Model: Free for academic, research, and non-profit use, with commercial access options available through Google Cloud Earth Engine.
+
+
+Primary Applications
+
+• Environmental Monitoring: Tracking deforestation, water resource changes, glacial retreat, and urban expansion.
+• Climate & Agriculture: Monitoring crop yields, soil moisture, and climate resilience.
+• Science & Public Health: Predicting disease vectors, managing natural resources, and supporting conservation projects.
+
+(Note: Unlike consumer-facing Google Earth, which is designed to explore a 3D virtual globe, Google Earth Engine is a technical environment built for data science and remote sensing analysis.)
+
+
+Principales formas de usar AlphaEarth Foundations con Python
+
+1. Google Earth Engine (GEE) y Google Colab
+	• Puedes acceder a la colección de embeddings satelitales (64 dimensiones a 10 metros de resolución) directamente usando la librería oficial ee en Python.
+	• Existen ejemplos interactivos listos para ejecutar, como el notebook de AlphaEarth en Google Colab (con herramientas como leafmap) o tutoriales de clasificación urbana y análisis de edificios con geopandas, scikit-learn y DuckDB.
+2. Acceso directo a datos en Google Cloud Storage (GCS)
+	• Los archivos COG (Cloud Optimized GeoTIFF) del dataset de embeddings anuales se encuentran disponibles en el bucket de GCS: gs://alphaearth_foundations. Puedes procesarlos en Python mediante librerías geoespaciales como rasterio, rioxarray o xarray.
+3. Implementaciones y Código de la Comunidad
+	• Si buscas arquitecturas o réplicas en PyTorch, existen repositorios como el GitHub AlphaEarth Foundations que ofrecen implementaciones de código abierto basadas en modelos de video-embedding y bloques STP (Space-Time Precision).
+Si lo deseas, dime qué tipo de análisis quieres hacer (por ejemplo: clasificación de uso de suelo, estimación de carbono, detección de cambios o clustering con K-means) y te puedo orientar con el flujo de código en Python.
+
+	• Geographic Data Service
+	Using AlphaEarth Foundations Embeddings for Building Analysis - Dataset - Geographic Data Service
+	Overview: A Python tutorial utilizing Google's AlphaEarth Foundations 64-dimensional satellite embeddings (2017–2024, 10m resoluti...
+
+	• Google for Developers
+	AlphaEarth Foundations GCS data - Google for Developers
+	Dismiss Got it. On this page; License; Directory structure; File structure; De-quantization. Creating downsampled pyramids. Manife...
+
+	•  GitHub
+	GitHub - Brayden-Zhang/alphaearth-foundations · GitHub
+	Overview: Unofficial PyTorch implementation of Google DeepMind's AlphaEarth geospatial foundation model for Earth embeddings 
+
+---------------
+Google
+October 14, 2026
+-------------------
+Analyzing soil fecundity (soil health and chemical properties like Soil Organic Carbon (SOC), pH, Nitrogen, and Cation Exchange Capacity) using AlphaEarth Foundations is an excellent approach. Because AlphaEarth's 64-dimensional satellite embedding space compresses optical, radar, and terrain context, specific latent dimensions heavily correlate with soil characteristics (such as bare-soil darkness, moisture, and vegetation persistence).
+To build a Digital Soil Mapping (DSM) model using Python and Google Earth Engine (GEE), you can follow this structured workflow:
+
+1. Extract AlphaEarth Embeddings via GEE
+First, you need to match your point-based ground truth soil samples (latitude, longitude, and fecundity measurements) with the AlphaEarth embedding collection GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL.
+
+<<<python
+import ee
+import pandas as pd
+
+# Initialize Earth Engine
+ee.Initialize()
+
+# 1. Load your local soil samples CSV (must contain 'lat', 'lon', and your target e.g., 'SOC')
+# df = pd.read_csv("my_soil_fecundity_samples.csv")
+
+# For illustration, let's say we have point samples converted to an ee.FeatureCollection
+sample_points = ee.FeatureCollection([
+    ee.Feature(ee.Geometry.Point([-2.34, 51.52]), {'SOC': 2.4}), # Example data
+    # ... add more points
+])
+
+# 2. Load the AlphaEarth Satellite Embedding Dataset for a specific year
+ae_embeddings = ee.ImageCollection("GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL") \
+                    .filterDate('2024-01-01', '2024-12-31') \
+                    .first()
+
+# 3. Extract the 64-band embedding values at your sampling locations
+sampled_data = ae_embeddings.sampleRegions(
+    collection=sample_points,
+    scale=10, # AlphaEarth native resolution is 10 meters
+    geometries=True
+)
+
+# Move the data into a local Python environment
+features = sampled_data.getInfo()['features']
+data_list = [f['properties'] for f in features]
+dataset = pd.DataFrame(data_list)
+>>>
+
+2. Train a Predictive Model in Python
+
+Once you have your tabular data containing the 64 features (A0 to A63) paired with your soil metrics, you can train a Machine Learning model like Random Forest or an Artificial Neural Network (ANN), both of which are the industry standards for this dataset.
+
+<<<python
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score, mean_squared_error
+import numpy as np
+
+# Separate features (the 64 alphaearth bands) and target (e.g., Soil Organic Carbon)
+X = dataset[[f'A{i}' for i in range(64)]]
+y = dataset['SOC']
+
+# Split the data into training and validation sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize and train the regressor
+# (Alternatively, you can build a dense ANN using PyTorch/TensorFlow)
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
+# Evaluate performance
+predictions = model.predict(X_test)
+print(f"R² Score: {r2_score(y_test, predictions):.2f}")
+print(f"RMSE: {np.sqrt(mean_squared_error(y_test, predictions)):.2f}")
+>>>
+
+3. Generate the Fecundity Map
+
+After checking your validation metrics, you can pass your trained model's weights or structural rules back to an Earth Engine classifier or apply it pixel-by-pixel locally over a regional raster to create your finalized high-resolution soil fertility map.
+
+
+

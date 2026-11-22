@@ -1,0 +1,49 @@
+
+Title:					Notes_Leads_NewInfo
+Project:				Remote-Sensing for Ag
+Author:					bmarron
+Created:				23 Oct 2026
+Revised:				
+
+
+------
+Goggle
+---------
+
+Total belowground biomass cannot be measured directly by NDVI, because satellite and drone sensors cannot see beneath the soil surface. Instead, scientists use NDVI (Normalized Difference Vegetation Index) as an indirect proxy to estimate belowground biomass by relying on established relationships between aboveground plant vigor and belowground root mass.
+
+How NDVI Connects to Belowground Biomass
+	1. NDVI measures aboveground greenness: NDVI uses red and near-infrared light reflected by leaves to measure canopy density and photosynthetic health.
+	2. Aboveground biomass correlates with NDVI: Higher NDVI values generally indicate denser, healthier aboveground vegetation (leaves and stems).
+	3. Root-to-shoot ratios bridge the gap: Ecologists use region- or species-specific root-to-shoot ratios (or allometric equations) to convert NDVI-derived aboveground biomass into an estimate of belowground plant biomass.
+
+Key Limitations and Caveats
+	• It mainly estimates plant roots, not total soil life: Because NDVI reflects plant photosynthesis, its correlation is strongest with belowground phytomass (roots) rather than microbes, fungi, or soil fauna.
+	• Environmental stress shifts root allocation: Plants in dry, nutrient-poor, or heavily grazed areas often invest heavily in deep roots while maintaining sparse leaves—meaning low NDVI does not always mean low belowground biomass.
+	• Canopy saturation: In dense forests or thick grasslands, NDVI "saturates" (maxes out near 0.8–0.9) even as trees continue adding massive woody roots underground.
+	• Soil type and climate matter: Accurate models usually combine NDVI with rainfall, soil moisture, temperature, and land-cover data rather than relying on NDVI alone.
+
+Typical Workflow for Remote Estimation
+
+
+Step					Data / Method Used													Output
+1. Remote Sensing		Satellite imagery (e.g., Sentinel-2, Landsat)						NDVI map
+2. Aboveground Model	Regression equation calibrated with field clippings					Aboveground phytomass
+3. Belowground Scaling	Biome-specific root-to-shoot ratio or ML model						Estimated belowground root 
+																							biomass
+
+
+-------------------------------
+Google Earth Engine Python API: 
+A Beginner's Tutorial
+---------------------------------
+https://rsandgis.me/articles/google-earth-engine-python-api-tutorial.html
+
+
+
+------
+NVDI
+-------
+    • Precision Agriculture: Farmers use NDVI maps from the EOS Data Analytics Blog to track crop development, spot early signs of drought or disease, and time irrigation or fertilizer.
+    • Environmental & Climate Research: Track seasonal vegetation changes, deforestation, and recovery after natural disasters.
+    • Global Monitoring: Agencies like NASA use platforms like the NASA Earthdata NDVI Portal

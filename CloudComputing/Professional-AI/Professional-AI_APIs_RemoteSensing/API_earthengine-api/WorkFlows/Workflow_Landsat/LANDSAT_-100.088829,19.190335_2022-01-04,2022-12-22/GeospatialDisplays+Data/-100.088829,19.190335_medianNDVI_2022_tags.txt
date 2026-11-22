@@ -1,0 +1,43 @@
+====================================================
+TIFF FILE: -100.088829,19.190335_medianNDVI_2022.tif
+Path: /home/bruce-vdb/Desktop/LANDSAT_-100.088829,19.190335_2022-01-04,2022-12-22/-100.088829,19.190335_medianNDVI_2022.tif
+Pages: 1
+====================================================
+
+--- Page 0 ---
+shape: (201, 200), dtype: float32, compression: LZW
+min: 0.07435058057308197, max: 0.8804669380187988, mean: 0.6700
+ImageWidth: 200
+ImageLength: 201
+BitsPerSample: 32
+Compression: 5
+PhotometricInterpretation: 1
+SamplesPerPixel: 1
+PlanarConfiguration: 1
+Predictor: 1
+TileWidth: 256
+TileLength: 256
+TileOffsets: (660,)
+TileByteCounts: (139728,)
+SampleFormat: 3
+ModelPixelScaleTag: (30.0, 30.0, 0.0)
+ModelTiepointTag: (0.0, 0.0, 0.0, 382530.0, 2125260.0, 0.0)
+GeoKeyDirectoryTag: (1, 1, 0, 7, 1024, 0, 1, 1, 1025, 0, 1, 1, 1026, 34737, 22, 0, 2049, 34737, 7, 22, 2054, 0, 1, 9102, 3072, 0, 1, 32614, 3076, 0, 1, 9001)
+GeoAsciiParamsTag: WGS 84 / UTM zone 14N|WGS 84|
+GDAL_METADATA: <GDALMetadata>
+  <Item name="DESCRIPTION" sample="0" role="description">NDVI</Item>
+</GDALMetadata>
+
+--- GeoTIFF metadata ---
+KeyDirectoryVersion: 1
+KeyRevision: 1
+KeyRevisionMinor: 0
+GTModelTypeGeoKey: 1
+GTRasterTypeGeoKey: 1
+GTCitationGeoKey: WGS 84 / UTM zone 14N
+GeogCitationGeoKey: WGS 84
+GeogAngularUnitsGeoKey: 9102
+ProjectedCSTypeGeoKey: 32614
+ProjLinearUnitsGeoKey: 9001
+ModelPixelScale: [30.0, 30.0, 0.0]
+ModelTiepoint: [0.0, 0.0, 0.0, 382530.0, 2125260.0, 0.0]
