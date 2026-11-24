@@ -43,28 +43,34 @@ QUICK START
 
 <<< bash
     cd ~/spyder-6/envs && source ./ai-apis/bin/activate && 
+   
+    pip install --upgrade pip anthropic &&
     pip list &&
-    python3 -m pip install --upgrade pip &&
-    pip install --upgrade anthropic &&
     deactivate
 >>>
 
   2. Set your API key as ENV VARIABLE (once):  ANTHROPIC_API_KEY
+
+<<< bash
+      echo 'export ANTHROPIC_API_KEY="API_Key"' >> ~/.bashrc
+      subl ~/.bashrc
+      source ~/.bashrc
+>>>
+
   3. Edit sections below, as needed
     # CONFIGURATION
     # PROMPT
 
-  4. Run file (runs in Spyder within virtual environment, ai-apis)
-      * To run file w/o CLI toggles
-          a) Click on the green Run file icon in Toolbar or press F5
+  4. Run file  w/o CLI toggles in Spyder
+      * Click on the green Run file icon in Toolbar or press F5
     
-      * To run file w/ CLI toggles
+   5. To run file w/ CLI toggles
           a) place copy of file on Desktop
           b) run file using IPython interpreter
 runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.1.py', args='--dry-run')
 runfile('/home/bruce-vdb/Desktop/A_Template_ResearchQuery_anthropic_v3.1.py', args='--mode stream')
 
-    5. Run `--dry-run` first.
+    6. Run `--dry-run` first.
 
 ------------------
 EXECUTION MODES
@@ -317,21 +323,37 @@ IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".tif", 
 
     # User-level message
 usr_msg = (
-    "Satellite data has been used to evaluate various aspects of agricultural production for some time. "
-    "Satellite data has also been used to infer soil fecundity and bacterial-fungal ratios as well as "
-    "other metrics of soil health and composition such as soil organic carbon (SOC), pH, nitrogen, and "
-    "Cation Exchange Capacity. Examine peer-reviewed journals, textbooks, seminar and conference "
-    "publications, and all relevant source materials for the use and processing of satellite data in "
-    "agriculture. With this information at hand, do the following: 1) Provide a high-level summary of "
-    "how satellite data are currently being used in agriculture in .pdf format. 2) Provide a detailed "
-    "account of how satellite data is obtained, processed, and evaluated for agricultural use in pdf "
-    "format. 3) Provide an infographic explaining how satellite data is obtained, processed, and "
-    "evaluated for agricultural use. The infographic should be developed in a Python script that can be "
-    "run independently to generate the infographic as a .jpeg file. 4) Provide a list of foundational "
-    "and canonical references (open-source peer-reviewed papers and textbooks) that explain the process "
-    "and theory for obtaining, processing, and evaluating satellite data for agricultural use 8) Provide "
-    "a list of sources for publicly-available satellite data that can be used for agricultural "
-    "evaluations (eg, Copernicus and Google Earth Engine). Thank you!"
+    "The Sentinel-2 constellation of satellites was designed to provide data for precision agriculture. "
+    "Peer-reviewed research has indicated that such remote sensing data can help produce more "
+    "sustainable management of farming practices and improvements in yield for farmers. And yet the "
+    "detailed algorithms for taking Sentinel-2 data for a specific location and processing the GeoTIFF "
+    "files to obtain useful agricultural information is lacking. Please do the following: 1. Review open "
+    "access peer-reviewed journals, relevant textbooks, and other legitimate sources (eg, the UN's FAO) "
+    "for detailed procedures and metrics for using remote sensing data from satellites or drones. "
+    "Clearly, the mean NDVI and the CV of local Moran's I will be important metrics. The output from "
+    "this item should be a .pdf file summarizing the findings and listing only the most notable or "
+    "important references. 2. Provide detailed step-by-step explanations and procedures for the "
+    "processing of Sentinels-2 data through Google Earth Engine and Python into practical information "
+    "for the management of small-scale crop operations. You do not need to write the execution code, "
+    "just indicate what metrics are used; the type of data extraction, processing, and analyses that "
+    "needs to be performed at each step; and an explanation of how the final results are to be "
+    "interpreted. More specifically, the step-by-step procedures should address the following questions, "
+    "* How are abiotic and biotic stress detection measured and evaluated in crops using satellite "
+    "and/or drone data? What are the metrics and how are they interpreted? * How are abiotic and biotic "
+    "stress detection measured and evaluated at the agroecosystem level with satellite and/or drone "
+    "data? What are the metrics and how are they interpreted? * How is agroecosystem resilience measured "
+    "and evaluated with satellite and/or drone data? What are the metrics and how are they interpreted? "
+    "* How is crop productivity measured and evaluated with satellite and/or drone data? What are the "
+    "metrics and how are they interpreted? * How can satellite and/or drone data be used for the "
+    "management of crop variability? What are the metrics and how are they interpreted? * How can "
+    "satellite and/or drone data be used for maintaining, improving, and forecasting crop yields? What "
+    "are the metrics and how are they interpreted? * How can satellite and/or drone data be used for "
+    "measuring and evaluating ecosystems services in agroecosystems? What are the metrics and how are "
+    "they interpreted? * How can satellite and/or drone data be used for measuring and evaluating "
+    "non-crop plant diversity in agroecosystems? What are the metrics and how are they interpreted? The "
+    "outputs from this item should be in .txt file format and organized per question. That is, there "
+    "should eight (8) .txt files that contain detailed step-by-step explanations and procedures (one "
+    ".txt file per question) for each of the questions posed in Item 2 above."
 )
 
 

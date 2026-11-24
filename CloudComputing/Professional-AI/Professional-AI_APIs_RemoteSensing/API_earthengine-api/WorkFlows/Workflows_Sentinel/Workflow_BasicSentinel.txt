@@ -1,0 +1,33 @@
+Title:          Workflow Sentinel
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        23 Nov 2026
+
+
+
+
+###############################
+Pull images from Sentinel2
+	* Multiple dates
+	* Multiple metrics, single stat/metric
+
+Create
+	* Multiple .tif w/ data 
+	* .html map
+
+Extract  
+	* data from multiple .tif
+
+Create / metric
+	* .png graphic w/ histogram
+	* .png graphic with classes
+	* .csv data file
+	* .txt file with metadata 
+######################################
+
+RUN
+	
+
+
+(See sample output folder)

@@ -1,0 +1,457 @@
+Title:          WorkFlow 01: Abiotic and biotic stress detection and evaluation in crops
+Project:        Remote Sensing for Ag
+Author:         bmarron, claude-fable-5-1
+Created:        22 Nov 2026
+Revised:        
+
+
+
+
+===================================================================================================================
+WORKFLOW 01 - Abiotic and biotic stress detection and evaluation in crops (field level) with Sentinel-2 / drone data
+===================================================================================================================
+Prepared: November 2026. Scope: Sentinel-2 (10-20 m, 5-day revisit) processed in
+Google Earth Engine (GEE) with Python post-processing; UAV/drone imagery is
+treated as an optional high-resolution complement. No executable code is
+given; each step states the data, the metric(s), the processing, and how the
+result is interpreted for small-scale (0.5-20 ha) crop operations.
+
+
+=====================================================
+GLossary
+=======================================================
+
+AOI
+  Area of Interest
+
+CCC
+  canopy chlorophyll content
+
+fAPAR, fCover
+  satellite-derived biophysical variables used to measure the density, health, and photosynthetic activity of vegetation. Both are dimensionless values ranging from 0 to 1 (or 0% to 100%) and are commonly calculated from Sentinel-2 data using radiative transfer models (such as the SNAP Biophysical Processor).
+
+  Fraction of Absorbed Photosynthetically Active Radiation
+    How actively plants are photosynthesizing and converting light into energy. It is a direct indicator of primary productivity, crop growth rates, and vegetation stress.
+
+  Fraction of Vegetation Cover
+     How much of the soil is shielded by plants versus exposed to the sky. Unlike fAPAR, fCover depends purely on canopy geometry and density rather than sun angle or light absorption
+  
+
+GEE
+  Google Earth Engine
+
+LAI
+  Leaf Area Index
+
+LISA
+  Local Indicator of Spatial Association
+
+SCL
+  Scene Classification Layer, a 20-meter resolution band included in Sentinel-2 Level-2A satellite products
+
+SWIR
+  Short-Wave Infrared
+  1610 nm and 2190 nm are the center wavelengths of Sentinel-2’s two SWIR spectral bands (Band 11 and Band 12).
+
+UAV
+  Unmanned Aerial Vehicle
+
+WF
+  Workflow
+
+
+
+
+================================================================================
+PART A. COMMON SENTINEL-2 -> GOOGLE EARTH ENGINE (GEE) -> PYTHON PIPELINE
+(identical for every WF; WF-specific steps follow in Part B)
+================================================================================
+
+A1. Define the area of interest (AOI)
+  - Digitise each field / management unit as a polygon (GeoJSON or shapefile,
+    EPSG:4326). Keep a unique field_id attribute. For small-scale operations
+    (0.5-20 ha) also record crop, sowing date, expected harvest date, and any
+    sub-field treatments (these become the "ground truth" table later).
+  - Buffer each polygon INWARD by 10-20 m before extracting statistics, so that
+    mixed boundary pixels (hedges, tracks, neighbouring fields) are excluded.
+  - Upload to GEE as an Asset (a cloud-stored FeatureCollection item) or load with geemap/ee from
+    a local GeoJSON.
+
+NOTE INSERT
+--------------------------------------------------------------------------------------------
+Step 1: Digitize Fields & Record Metadata
+You have two free, straightforward ways to create your GeoJSON or Shapefile in EPSG:4326 (WGS 84):
+• Option A: geojson.io (Fastest for 1–20 fields)
+  1. Go to geojson.io (https://geojson.io/)
+  2. Zoom to your farm using satellite imagery, select the Polygon tool, and draw each field boundary.
+  3. Click the polygon or use the table tab on the right to add properties (field_id, crop, sowing_date, harvest_date, treatment).
+  4. Click Save → GeoJSON (or Shapefile).
+• Option B: QGIS (Best for precision & larger farms)
+  1. Load a high-resolution basemap (e.g., Google Satellite or ESRI World Imagery via QuickMapServices).
+  2. Create a new GeoPackage or Shapefile layer set to EPSG:4326, polygon geometry, and add your attribute columns.
+  3. Toggle editing, trace each field carefully, and export as .geojson or .shp.
+
+Step 2: Load into GEE (Python)
+You can either load your local file directly into your Python script or upload it permanently to your GEE account.
+Method 1: Load a local GeoJSON directly via geemap (Best for quick iteration)
+
+<<< python
+import ee
+import geemap
+
+ee.Initialize()
+
+  # Convert local GeoJSON directly into an Earth Engine FeatureCollection
+fields_fc = geemap.geojson_to_ee("path/to/your_fields.geojson")
+>>>
+
+Method 2: Upload as a GEE Asset (Best for large files or recurring scripts)
+1. Open the GEE Code Editor → click the Assets tab (top left) → NEW → Shape files (upload .shp, .shx, .dbf, .prj) or GeoJSON.
+2. Once ingested, load it in Python using its Asset ID:
+<<< python
+fields_fc = ee.FeatureCollection("users/your_username/your_fields_asset")
+>>>
+
+Step 3: Buffer Polygons Inward by 10–20 m
+In Earth Engine, passing a negative distance to .buffer() shrinks the polygon inward.
+Important detail for small fields (0.5–20 ha): If a narrow field is buffered inward by 20 m, it could shrink to nothing (empty geometry). Always filter out empty geometries after buffering so your zonal statistics don't throw errors.
+<<< python
+def buffer_inward(feature):
+    # Negative value buffers inward (in meters).
+    # Use -10 for small/narrow fields (0.5–2 ha) or -20 for larger blocks.
+  buffered_geom = feature.geometry().buffer(-15)
+  return feature.setGeometry(buffered_geom).set("area_m2", buffered_geom.area(1))
+
+  # Apply inward buffer and drop any polygon that shrank to zero area
+clean_fields = fields_fc.map(buffer_inward).filter(ee.Filter.gt("area_m2", 0))
+
+  # Optional: Inspect on an interactive map to verify the buffer looks right
+Map = geemap.Map()
+Map.centerObject(fields_fc, 15)
+Map.addLayer(fields_fc, {"color": "red"}, "Original Boundaries")
+Map.addLayer(clean_fields, {"color": "blue"}, "Buffered Inward (-15m)")
+Map
+>>>
+
+Why this works well for Sentinel-2
+Sentinel-2 bands have a 10 m or 20 m pixel resolution. A -15 m inward buffer guarantees that at least 1 to 1.5 pixels around the perimeter are dropped, completely eliminating "mixed pixels" where soil tracks, hedgerows, or irrigation ditches skew your fAPAR/fCover averages.
+----------------------------------------------------------------------------------------------
+
+A2a. Load the Sentinel-2 Level-2A surface-reflectance collection
+  - Collection: ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+    (bottom-of-atmosphere reflectance, scale factor 0.0001, harmonised so that
+    the Jan-2022 processing-baseline offset is removed).
+  - Filter: .filterBounds(AOI) and .filterDate(start, end). For a full season
+    use ~1 month before sowing to ~1 month after harvest; for multi-year
+    analyses (resilience, yield forecasting) load all years since 2017.
+  - Useful bands (native resolution): B2 blue 10 m, B3 green 10 m, B4 red 10 m,
+    B5 red-edge-1 705 nm 20 m, B6 red-edge-2 740 nm 20 m, B7 red-edge-3 783 nm
+    20 m, B8 NIR 842 nm 10 m, B8A narrow NIR 865 nm 20 m, B11 SWIR-1 1610 nm
+    20 m, B12 SWIR-2 2190 nm 20 m, SCL scene classification 20 m.
+
+A2b. Cloud, shadow and edge masking
+  - Preferred: join the Cloud Score+ collection
+    ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED') with
+    .linkCollection(csPlus, ['cs','cs_cdf']) and keep pixels where
+    cs_cdf >= 0.60 (0.50-0.65 is the usual working range; lower = more
+    observations but more residual haze; higher = cleaner but fewer dates).
+
+  - Alternative/legacy: SCL band - drop classes 3 (shadow), 8, 9, 10 (cloud,
+    cirrus), 11 (snow), 1 (saturated), 0 (no data). Optionally s2cloudless
+    ('COPERNICUS/S2_CLOUD_PROBABILITY', probability < 40).
+  - Mask pixels where B8A, B11 or B12 are masked (tile-edge artefacts).
+  - Record per image the fraction of unmasked AOI pixels; discard images with
+    < 70-80 % valid pixels inside the field.
+
+NOTE INSERT
+----------------------------------------------------------------------------------------------------------------------------
+the Cloud Score+ collection ==> Google Earth Engine (GEE) uses to filter out clouds and cloud shadows from Sentinel-2 satellite imagery.
+Instead of relying on traditional, rule-based cloud masks (which often miss thin haze or misidentify bright surfaces like snow and rooftops as clouds), uses Google's AI-driven Cloud Score+ dataset to grade the quality of every pixel.
+
+Breakdown of the Components
+1. ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED')
+This loads the Cloud Score+ dataset. It is an auxiliary image collection generated by a machine learning model that assigns a usability score (from 0.0 to 1.0) to every pixel in Sentinel-2 imagery, where 0 is completely obscured (thick cloud/shadow) and 1 is completely clear.
+2. .linkCollection(csPlus, ['cs', 'cs_cdf'])
+Cloud Score+ images are stored separately from the actual Sentinel-2 optical bands (like Red, Green, Blue, and NIR). The .linkCollection() method matches each Sentinel-2 image with its corresponding Cloud Score+ mask by timestamp/ID and attaches two new bands to it:
+  • cs (Cloud Score): The raw model prediction of how clear the pixel is at that exact moment.
+  • cs_cdf (Cumulative Distribution Function): A smoothed, normalized score that accounts for the historical distribution of scores at that specific location. It tends to be less noisy and handles terrain shadows or persistently hazy areas better than the raw cs band.
+3. cs_cdf >= 0.60 (Thresholding)
+This creates a binary mask to keep only the "good" pixels and mask out the rest:
+  • Why 0.50–0.65? This is the standard "sweet spot" recommended by Google.
+  • Lower values (e.g., 0.40): Keep more pixels (useful in chronically cloudy tropical regions), but may let thin cirrus clouds or faint cloud shadows slip through.
+  • Higher values (e.g., 0.70+): Ensure ultra-clean, cloud-free pixels, but aggressively mask out valid land—sometimes mistakenly removing bright sand, snow, or urban buildings.
+
+Typical Example
+<<<python
+import ee
+
+# Initialize the Earth Engine API
+ee.Initialize()
+
+# Define your area of interest (example point)
+geometry = ee.Geometry.Point([-99.1332, 19.4326])
+
+# Load Sentinel-2 Surface Reflectance and Cloud Score+ collections
+s2 = ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+cs_plus = ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED')
+
+
+# Define the cloud masking function
+def mask_clouds(img):
+  # Keep pixels where cs_cdf is >= 0.60
+  clear_mask = img.select('cs_cdf').gte(0.60)
+  return img.updateMask(clear_mask)
+
+
+# Link collections, filter, and apply the mask
+clean_s2 = (
+    s2.filterBounds(geometry)
+    .filterDate('2025-01-01', '2025-12-31')
+    .linkCollection(cs_plus, ['cs', 'cs_cdf'])
+    .map(mask_clouds)
+)
+
+# Create a cloud-free median composite
+composite = clean_s2.median()
+>>>
+------------------------------------------------------------------------------------------------------------
+
+A2c. Compute spectral indices (map a function over the collection)
+  - Scale reflectance: img.multiply(0.0001).
+
+  - Core indices (band maths with ee.Image.normalizedDifference or .expression):
+      NDVI  = (B8 - B4) / (B8 + B4)                      greenness / biomass
+      kNDVI = tanh(NDVI^2)                               saturation-resistant
+      EVI2  = 2.5 (B8 - B4) / (B8 + 2.4 B4 + 1)          less saturation than NDVI
+      SAVI  = 1.5 (B8 - B4) / (B8 + B4 + 0.5)            sparse canopies / early season
+      NDRE  = (B8A - B5) / (B8A + B5)                    chlorophyll / N status
+      CIre  = (B8A / B5) - 1                             canopy chlorophyll content
+      MTCI  = (B6 - B5) / (B5 - B4)                      chlorophyll, late season
+      NDMI  = (B8A - B11) / (B8A + B11)                  canopy water content
+      MSI   = B11 / B8A                                  moisture stress (inverse)
+      NDWI  = (B3 - B8) / (B3 + B8)                      surface water / waterlogging
+      PSRI  = (B4 - B2) / B6                             senescence / carotenoid:chl
+      REDSI = (605.86 (B7 - B4) - 783.07 (B5 - B4)) / (2 B4)  yellow-rust disease index
+      NIRv  = NDVI * B8                                  proxy for photosynthetic capacity
+      BSI   = ((B11 + B4) - (B8 + B2)) / ((B11 + B4) + (B8 + B2))  bare soil
+
+  - Biophysical variables (LAI, fAPAR, fCover, canopy chlorophyll content CCC)
+    can be retrieved with the Sentinel-2 biophysical neural network (SNAP
+    "Biophysical Processor" coefficients ported to GEE) when physically
+    interpretable units are needed (e.g., for crop-model assimilation).
+  - Resample 20 m bands to 10 m (bilinear) ONLY for visual products; for
+    statistics compute red-edge/SWIR indices at native 20 m.
+
+A2d. Temporal compositing / time-series construction
+  - Field-level time series: for each image, reduceRegion(mean, median, stdDev,
+    percentiles 10/50/90, count) over the inward-buffered polygon -> export a
+    .csv (date, field_id, index statistics, valid-pixel count).
+  - Pixel-level stacks: build composites per 10-day or 16-day window
+    (median or maximum-NDVI), or per phenological stage. Fill gaps by linear
+    interpolation in time, then smooth with Savitzky-Golay or Whittaker
+    (Python: scipy.signal.savgol_filter; or GEE harmonic regression).
+  - Baseline/reference layer: multi-year (>= 3 seasons) per-pixel median
+    and standard deviation of each index for the same calendar window.
+
+A2e. Export GeoTIFFs
+  - ee.batch.Export.image.toDrive (or toCloudStorage/toAsset) at 10 m, CRS =
+    the local UTM zone (EPSG:326xx / 327xx), region = AOI bounding box,
+    maxPixels large, one band per date or one multi-band stack per index.
+  - Keep a sidecar JSON with dates, cloud threshold, scale and CRS.
+
+A3. Python post-processing (local)
+  - Read with rasterio (or rioxarray/xarray for date stacks); clip to the
+    polygon with rasterio.mask; convert nodata to NaN.
+
+  - Descriptive statistics per field and date: mean, median, SD,
+    CV = SD / mean (x100 %), P10, P90, skewness, % pixels below a threshold.
+
+  - Spatial autocorrelation (PySAL: libpysal + esda):
+      * Build a spatial-weights object for the raster grid: queen contiguity
+        (8 neighbours) with libpysal.weights.lat2W(nrows, ncols, rook=False),
+        then drop NaN cells (or use a k-nearest-neighbour weight on pixel
+        centroids if the field is irregular). Row-standardise (w.transform='r').
+
+      * Global Moran's I: esda.Moran(values, w)        -> I, p_sim
+
+      * Local Moran's I: esda.Moran_Local(values, w, permutations=999)
+        -> Is (local statistic per pixel), p_sim, q (quadrant: 1 HH, 2 LH,
+        3 LL, 4 HL). Pixels with p_sim < 0.05 are significant.
+
+      * LISA cluster map: raster of HH / LL / HL / LH / not-significant.
+
+      * Summary metrics: % of field area in each LISA class; mean of Ii;
+        SD of Ii; CV of local Moran's I = SD(Ii) / mean(Ii).
+
+      * NOTE on CV(Ii): because Ii can be negative (outliers) and its mean can
+        approach zero, always report the mean, the SD and the % of significant
+        pixels alongside the CV; when mean(Ii) < 0.05 the CV becomes unstable
+        and the SD of Ii (or CV of |Ii|) should be used instead.
+
+
+  - Spectral heterogeneity / diversity (for WF 02, 07, 08): Rao's Q over a
+    moving window (e.g., 3x3 to 9x9 pixels) on NDVI or on several bands.
+
+  - Temporal metrics (WF 03, 06): anomalies z = (x - baseline_mean) /
+    baseline_sd; lag-1 autocorrelation (AR(1)) of de-seasonalised residuals;
+    seasonal integrals (sum / trapezoid of NDVI between SOS and EOS).
+
+  - Clustering for management zones (WF 05): sklearn KMeans / fuzzy
+    c-means on standardised multi-date index stacks.
+
+  - Write outputs as GeoTIFF (rasterio) and .csv; make maps with matplotlib.
+
+
+
+A4. Interpretation conventions used in Part B
+  - "Field mean NDVI" = mean of valid pixels in the inward-buffered polygon.
+
+  - "CV of NDVI" = within-field heterogeneity of crop vigour (%). Typical
+    well-managed uniform fields: < 10-15 % at full canopy; > 20-25 % signals
+    patchiness worth scouting.
+
+  - "Global Moran's I" of NDVI: ~0 random, > 0 clustered (patches), values
+    > 0.3-0.4 commonly reported for yield / NDVI maps with strip-like or
+    soil-driven patterns.
+
+  - "Local Moran's I (LISA)": HH = high-vigour cluster, LL = low-vigour cluster
+    (stress patch), HL / LH = spatial outliers (single-pixel anomalies, often
+    noise, weeds, equipment skips or incipient disease foci).
+
+  - "CV of local Moran's I": low CV = spatial structure is homogeneous (the
+    whole field is either uniformly clustered or uniformly random); high CV =
+    mixed structure, i.e., a few strong clusters/outliers embedded in a
+    random background - typical of localised stress, pest foci, drainage
+    problems or patchy emergence. Track its change through the season: a
+    rising CV(Ii) before any fall in mean NDVI is an early-warning signal
+    that stress is developing locally.
+
+  - Always interpret satellite metrics relative to 
+      (i) the crop's phenological stage, 
+      (ii) the same field in previous seasons, and 
+      (iii) neighbouring fields of the same crop in the same window.
+
+================================================================================
+PART B. WF01 - ABIOTIC AND BIOTIC STRESS DETECTION IN CROPS (FIELD LEVEL)
+================================================================================
+
+Principle. Stress changes leaf pigments (chlorophyll, carotenoids), canopy
+water content, canopy structure/LAI and - for drones with thermal cameras -
+canopy temperature. Satellite indices cannot name the cause directly; the
+procedure therefore 
+  (1) detects a deviation from the expected canopy state,
+  (2) characterises WHICH spectral domain deviates (pigment, water, structure),
+  (3) uses spatial pattern (LISA) and temporal behaviour to separate abiotic
+      (usually field-wide or soil/topography-shaped) from biotic (usually focal,
+      expanding patches) causes, and 
+  (4) triggers targeted scouting.
+
+B1.1  Data extraction (GEE)
+  - Run A1-A6 for the current season and for >= 2 reference seasons.
+  - Export per date: NDVI, kNDVI, NDRE, CIre, NDMI, MSI, PSRI, REDSI, NDWI at
+    10 m (red-edge/SWIR indices natively 20 m).
+  - Export field-level .csv time series (mean, SD, P10, P90, count) for the same
+    indices.
+  - Optional complementary layers: Sentinel-1 GRD VV/VH backscatter (lodging,
+    waterlogging, structure), Landsat-8/9 LST (COLLECTION 2 L2 ST_B10, 100 m,
+    coarse canopy temperature proxy), ERA5-Land or CHIRPS rainfall and
+    temperature for stress attribution.
+  - Drone (if available): multispectral (R, G, RE, NIR) at 2-10 cm plus
+    thermal; compute the same indices and, for thermal, CWSI (see below).
+
+B1.2  Metrics and how they are computed
+  (a) Field mean NDVI (and kNDVI/EVI2 for dense canopies)
+      -> general vigour / biomass; compare to phenology-matched baseline.
+  (b) NDVI anomaly: z = (NDVI_t - median_baseline_t) / SD_baseline_t
+      where baseline is same-crop same-calendar-window previous seasons.
+  (c) Chlorophyll/N domain: NDRE, CIre, MTCI. Ratio NDRE/NDVI falls when
+      chlorophyll drops faster than canopy cover (N deficiency, chlorosis,
+      early disease).
+  (d) Water domain: NDMI (B8A,B11) and MSI. NDMI decreasing while NDVI is
+      still stable = incipient water stress (SWIR responds before greenness).
+  (e) Senescence/disease domain: PSRI rising prematurely; REDSI (wheat
+      yellow rust index built on B4, B5, B7) rising; in general red-edge bands
+      (705-783 nm) and SWIR separate healthy from infested canopies better
+      than red/NIR alone.
+  (f) Waterlogging/flooding: NDWI > 0 or sudden NDVI drop + Sentinel-1 VV drop.
+  (g) Drone thermal: CWSI = (Tc - Twet) / (Tdry - Twet), where Tc is canopy
+      temperature, Twet a well-watered reference (or lowest 1-5 % of canopy
+      pixels), Tdry = Tair + 5 degC (or a non-transpiring reference);
+      0 = unstressed, 1 = fully stressed; > 0.3-0.4 usually triggers irrigation.
+  (h) Spatial structure per date: CV of NDVI; Global Moran's I of NDVI; LISA
+      cluster map; % area LL; CV of local Moran's I.
+  (i) Temporal structure: slope of field-mean NDVI over the last 3 dates;
+      first date at which the LL cluster area exceeds 5 % of the field.
+
+B1.3  Processing / analysis sequence (Python)
+  Step 1  Build the phenology-matched baseline (A5) per pixel and per field.
+
+  Step 2  For each new cloud-free date compute anomalies (b) for NDVI, NDRE,
+          NDMI; flag pixels with z < -1.5 (moderate) and z < -2 (severe).
+
+  Step 3  Compute LISA on the anomaly raster (not the raw index), so that
+          clusters represent anomalous behaviour rather than permanent soil
+          patterns. Keep LL pixels with p < 0.05.
+
+  Step 4  Summarise per field and date: mean NDVI, CV NDVI, % LL area, mean
+          and CV of Ii, dominant anomalous spectral domain (pigment / water /
+          structure) determined by which index has the most negative z.
+
+  Step 5  Decision rules (adjust thresholds locally after one season of
+          calibration against scouting records):
+          - Field-wide stress (abiotic likely): mean-NDVI z < -1.5 AND % LL
+            area < 10 % AND CV(Ii) low/unchanged -> check weather, irrigation,
+            nutrition; compare with neighbouring same-crop fields (if they
+            drop too -> weather/regional driver).
+
+          - Patchy stress (biotic or local abiotic): mean NDVI z near 0 but
+            % LL area rising on consecutive dates and CV(Ii) rising -> scout
+            LL polygons; export LL polygons as GeoJSON/KML for the phone.
+
+          - Pigment-first signature (NDRE/CIre z strongly negative, NDMI z
+            near 0) -> nitrogen deficiency, chlorosis, foliar disease.
+
+          - Water-first signature (NDMI/MSI z negative, NDRE z near 0) ->
+            drought or root problems; confirm with CWSI if a drone is
+            available; check Sentinel-1 for waterlogging (low VV).
+
+          - Senescence-first signature (PSRI up, REDSI up, NDVI only slightly
+            down) at an abnormal stage -> fungal disease or heat stress.
+
+          - Structure-first (NDVI/LAI down sharply, Sentinel-1 VH/VV changed,
+            pigment indices lag) -> lodging, hail, mechanical/animal damage.
+
+          - Expanding LL patch from a point source (area increases >= 50 %
+            between two dates, centroid stable) -> biotic (pest/disease
+            focus) until proven otherwise.
+
+
+  Step 6  Validate with ground scouting: for each flagged LL polygon record
+          cause, severity (0-100 %) and date; after one season compute
+          confusion matrix / precision-recall of the thresholds and retune.
+
+B1.4  Interpretation guide
+  - A healthy, unstressed small field at full canopy typically shows 
+      NDVI 0.7-0.9, 
+      CV NDVI < 15 %, 
+      NDRE 0.3-0.6, 
+      NDMI > 0.2, 
+      PSRI near 0, 
+      Global Moran's I moderate (soil-driven), and 
+      a stable LISA map between dates.
+
+  - Stress onset is best detected by CHANGE in 
+      (i) index anomalies, 
+      (ii) the % LL area, and 
+      (iii) CV of local Moran's I, rather than by absolute values.
+
+  - Biotic vs abiotic: 
+      (i)  biotic stress tends to produce significant LL clusters and HL/LH outliers that enlarge over time from foci; 
+      (ii) abiotic stress tends to produce field-wide shifts or patterns aligned with soil/topography (compare with a DEM 
+           or a soil-brightness BSI image from a bare-soil date).
+
+  - Sentinel-2 cannot see individual plants; detection lags visual symptoms by days to weeks for small foci (< 2-3 pixels). 
+    Drones close this gap.
+
+  - Always report the number of valid pixels; statistics from < 30 pixels
+    (~0.3 ha) are unreliable.

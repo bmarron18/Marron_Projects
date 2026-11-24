@@ -1,0 +1,1 @@
+python3 -c "import reportlab, sys; print('reportlab', reportlab.Version)"; python3 -c "import fpdf; print('fpdf ok')" 2>&1 | tail -1; mkdir -p /tmp/deliv && echo ok

@@ -1,0 +1,25 @@
+I'll start by locating and verifying key sources, then build the PDF and the eight text files.
+
+All nine deliverables have been generated and exported.
+
+## Deliverables
+
+**Item 1 — `Item1_Literature_Review_Sentinel2_Agriculture_Metrics.pdf`** (6 pages)
+Summarises the review findings: why Sentinel-2 is the reference sensor for small farms, the recommended GEE→Python processing chain, a table of core metrics (formulas, bands, interpretation), a dedicated section on mean NDVI / CV of NDVI / Global and Local Moran's I / CV of local Moran's I, and short syntheses on yield, water productivity (FAO WaPOR), resilience (TAC/recovery metrics), ecosystem services, and spectral diversity (Rao's Q). It closes with the gaps identified and a reference list of 21 located sources plus 4 standard textbooks (clearly marked as not retrieved online).
+
+**Item 2 — eight `.txt` files** (one per question, ~220–245 lines each)
+Each file has a common **Part A** (AOI definition, `COPERNICUS/S2_SR_HARMONIZED`, Cloud Score+ masking, index formulas, compositing, GeoTIFF export, Python post-processing with rasterio/PySAL including how to compute LISA and CV(Ii), and interpretation conventions) followed by a question-specific **Part B** (data extraction, metrics, numbered processing sequence, decision rules, interpretation guide):
+`Q1_crop_level_stress_detection`, `Q2_agroecosystem_level_stress_detection`, `Q3_agroecosystem_resilience`, `Q4_crop_productivity`, `Q5_management_of_crop_variability`, `Q6_yield_maintenance_improvement_forecasting`, `Q7_ecosystem_services`, `Q8_noncrop_plant_diversity`.
+
+## Key points supported by the sources located
+
+- Sentinel-2's red-edge bands (~705, 740, 783 nm) are highly sensitive to vegetation chlorophyll and nitrogen content and less prone to saturation in dense canopies compared to traditional red/NIR-based indices like NDVI; the 2026 systematic review groups yield approaches into empirical models using vegetation indices coupled with machine and deep learning; integration of process-based crop growth models (e.g., WOFOST, SAFY) through data assimilation of Sentinel-2 derived biophysical variables such as Leaf Area Index; and data fusion of Sentinel-2 with Sentinel-1.
+- For cloud masking in GEE, the threshold for masking was set to 0.60, as values between 0.50 and 0.65 generally work well with Cloud Score+, which can be used to identify relatively clear pixels and effectively remove clouds and cloud shadows from L1C or L2A imagery.
+- On the spatial statistics: a significant negative value for Local Moran's I indicates that the location is a spatial outlier, a significant positive value indicates that the location belongs to a spatial cluster, and a non-significant value indicates no significant local spatial autocorrelation; a known caveat is that this scale sensitivity of the local Moran's I is known as a common challenge in applications. Agricultural use includes bivariate LISA where spatial association patterns were classified into High–High, High–Low, Low–High and Low–Low between NDVI and soil bulk density.
+- Resilience: lag-1 temporal autocorrelation (TAC) of satellite vegetation indices captures forest recovery speed and is widely used as a resilience metric, but this relationship is contingent on the selected vegetation index, the temporal frequency of satellite observations and the rolling window size.
+- Diversity: the Spectral Variation Hypothesis assumes that the higher the spectral variation of an image, the higher the environmental heterogeneity and the species diversity, yet others have criticised it for being unstable and not reliable in every context — hence the mandatory local validation step in Q8.
+- FAO WaPOR supplies Evapotranspiration, Land Cover Classification, Net Primary Productivity, Precipitation, Phenology, Quality layers, Reference evapotranspiration, Relative soil moisture, Total Biomass Production, Water Productivity, used in Q4 and Q7.
+
+## One caveat to flag
+
+The **CV of local Moran's I** is not a formally named or validated statistic in any source I located; the files define it operationally (SD(Ii)/mean(Ii) over a field's pixels), explain its agronomic meaning (homogeneous vs. mixed spatial structure; a rising CV(Ii) as an early-warning signal), and recommend reporting it with mean/SD of Ii, % significant pixels and Global Moran's I — with SD(Ii) or CV(|Ii|) substituted when mean(Ii) is near zero. Thresholds given throughout (e.g., CV NDVI > 20–25 %, VCI < 40, CWSI > 0.3–0.4) are literature-typical starting values and should be recalibrated against one season of scouting records.

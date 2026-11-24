@@ -1,0 +1,125 @@
+Title:          Script Build Notes
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+######
+TO DO:
+#######
+- **Nodata masking:** the script gets the nodata value with `getattr(tif.pages[0], "nodata", None)`. I wasn't certain how `tifffile` behaves when a file defines no nodata value. Compare the min/max in the tags .txt with the stats printed in Cell 6 to confirm masking behaves as you expect.
+
+
+
+
+#############
+Script Build
+###############
+
+-------------
+me:
+Good call. Please add veraibles to change the **Hard-coded titles** to easily edited info for a new site or new year.
+
+
+-------------------
+me:
+Two tasks
+Task 1:
+Look at Lines 62-64
+TIF_PATH = Path(
+    "/home/bruce-vdb/Desktop/LANDSAT_-100.088829,19.190335_2022-01-04,2022-12-22/-100.088829,19.190335_medianNDVI_2022.tif"
+)
+Modularize the TIF_PATH. Use a separate variable to input the Desktop folder holding the .tif file and a separate variable for the actual file name. Have Python combine these two into the final TIF_PATH so the user need only enter the data for each variable. Rewrite the script with these changes
+
+Task 2:
+Provide a detailed, cell-by-cell description and explanation of the script's Python code. Output this information to a .docx file
+
+
+claude:
+Good morning! I'll write the modularized script as a new version and build the cell-by-cell .docx explanation.
+
+Both files are ready. I only syntax-checked the script, so I haven't run it against your .tif.
+
+**Task 1: `…_V1.5.py`**
+You now edit two variables, and Python joins them:
+```python
+TIF_DIR  = "/home/bruce-vdb/Desktop/LANDSAT_-100.088829,19.190335_2022-01-04,2022-12-22"
+TIF_NAME = "-100.088829,19.190335_medianNDVI_2022.tif"
+TIF_PATH = Path(TIF_DIR).expanduser() / TIF_NAME
+```
+The output folder, file names and plots all derive from `TIF_PATH`, so nothing else needs editing. I added two things you didn't ask for:
+- **`~` in the folder:** `~` in `TIF_DIR` now expands to your home folder.
+- **Path check:** the script stops with a clear message showing the combined path if it doesn't point to a file.
+
+The docstring and change log are updated for V1.5.
+
+**Task 2: `GeoTIFF_ppstat_Script_V1.5_Cell-by-Cell_Explanation.docx`** (10 pages)
+- **Overview:** outputs, a cell-dependency table and the V1.5 change.
+- **Cells 0 to 7:** each cell is explained step by step, with line ranges, short code excerpts and parameter tables.
+- **Closing notes:** what to edit when you switch sites or files.
+
+Two things I flagged in the document because they could matter later:
+- **Hard-coded titles:** the plot titles "NDVI - UMA 2022" are typed into the code, so they need editing for a new site or year.
+- **Nodata masking:** the script gets the nodata value with `getattr(tif.pages[0], "nodata", None)`. I wasn't certain how `tifffile` behaves when a file defines no nodata value. Compare the min/max in the tags .txt with the stats printed in Cell 6 to confirm masking behaves as you expect.
+
+
+------------------------------
+I've saved V1.3 as `A_Template_Extract-NDVI-Data_Single-tif-File_data+graphics+stats_V1.3.py`. I haven't run it, so check how the circles look on your maps.
+
+- **Circles:** thin black dashed lines at 100 m and 500 m radius, drawn on both the continuous and classified maps. Radii are in metres, which matches your UTM coordinates, so the circles are true circles on the ground.
+- **Centre:** by default it's the middle of the raster extent. Your footprint is circular, so that should land on its centre. If your site centre is elsewhere, set `CENTER_X` and `CENTER_Y` (UTM easting and northing) in the parameters block.
+- **Labels:** each circle gets a small "100 m" or "500 m" label on a semi-transparent white background, so it stays readable over the dark greens. Set `RING_LABELS = False` to remove them.
+- **Style:** `RING_RADII`, `RING_COLOR` and `RING_LW` are all in the parameters block. Black dashes can be hard to see on the darkest green classes, so if that happens, try `RING_COLOR = "white"`.
+
+I read "lat 100m" as a radius from the centre. If you meant something else, such as a diameter, tell me and I'll adjust it.
+
+
+--------------------------
+I've saved the updated script as V1.2 and attached it as `A_Template_Extract-NDVI-Data_Single-tif-File_data+graphics+stats_V1.2.py`. I haven't run it, so check the new maps against your data.
+
+What changed:
+- **Colour scale:** `AUTO_SCALE = True` sets `vmin`/`vmax` from the 2nd and 98th percentiles of the valid pixels, and the values are printed when the file loads. Set it to `False` to use `VMIN_FIXED` and `VMAX_FIXED` (0.1 and 0.85) instead. `PCT_LOW` and `PCT_HIGH` let you change the percentiles.
+- **Class breaks:** the edges are now 0.2, 0.4, 0.6 and 0.8, with matching labels. The first class (below 0.2) is red, so any bare or sparse patches stand out against the green classes.
+- **Pixel rendering:** `interpolation="nearest"` is on both `imshow` calls, so pixels draw as crisp blocks. If they still look soft, the blur is in the data itself, so check whether the file was resampled before export.
+- **Axis labels:** these now read "Easting (m)" and "Northing (m)".
+
+Your CRS code, 32614, is WGS 84 / UTM zone 14N. Its central meridian is 99°W, which runs almost through Mexico City, so grid north and true north are essentially the same here. The north-up orientation is therefore reliable.
+
+The class edges are still fixed values, because the labels describe vegetation categories that should mean the same thing across scenes. For a different file, adjust `EDGES` and `LABELS` after checking the histogram.
+
+
+
+-------------------------------------------
+**1) North orientation: yes, most likely.**
+The script sets `extent` with `y0` (the top-left tiepoint) as the top edge, and `imshow` draws row 0 at the top. The Y tick values also increase upward (2.12125e6 at the bottom, 2.12325e6 at the top). Together that means a north-up raster. Two caveats:
+- The coordinates (about 385,000 E, 2,122,000 N) look like projected metres (UTM or similar), not degrees. The axis labels "Longitude / X" and "Latitude / Y" are therefore wrong; "Easting (m)" and "Northing (m)" would be accurate. Check `ProjectedCSTypeGeoKey` in your `_tags.txt` for the CRS.
+- On a UTM grid, "up" is grid north, which differs slightly from true north (a degree or two at most, depending on how far you are from the central meridian).
+
+**2) Fuzzy pixels**
+The pixels are actually about 30 m, so you have only about 68 across. The blur comes from rendering, not the data. I can't see your file, so these are likely causes rather than certainties:
+- Matplotlib's default `interpolation` is `"antialiased"`, which smooths pixel edges in some cases. Add `interpolation="nearest"` to the `imshow` calls to get crisp blocks.
+- The continuous colormap makes neighbouring pixels blend visually, while the classified map has hard colour jumps. This makes the continuous map look softer even when the pixels are identical.
+- If the raster was resampled when it was exported (bilinear or cubic), the smoothness is baked into the data. The nearest-neighbour setting will tell you: if blocks are still soft-edged, it's the data.
+
+**3) Why the two maps disagree**
+Your colour scales and class breaks don't match the data:
+- The histogram shows NDVI running from about 0.15 to 0.85, with a median around 0.55. The script comments say "range about -0.28 to 0.52, median about 0.12". `EDGES`, `vmin` and `vmax` were tuned to a different scene or file.
+- In the classified map, `EDGES` puts everything ≥ 0.3 into one class. That's nearly the whole scene, so it's solid dark green. The `< 0` and `0-0.1` classes are empty, which is why the blue and grey legend entries appear nowhere on the map.
+- In the continuous map, `vmax=0.55` saturates everything above 0.55 to the same dark green. The whole right half looks uniform even though its values span roughly 0.55 to 0.85. The light patches are the same pixels (about 0.15-0.3) in both maps.
+
+Suggested fix for this scene:
+```python
+EDGES = [-1.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+LABELS = [
+    "< 0.2  (bare / very sparse)",
+    "0.2 - 0.4  (sparse veg)",
+    "0.4 - 0.6  (moderate veg)",
+    "0.6 - 0.8  (dense veg)",
+    ">= 0.8  (very dense veg)",
+]
+# in the continuous map:
+im = ax[0].imshow(ndvi, cmap=cmap_cont, vmin=0.1, vmax=0.85,
+                  extent=extent, interpolation="nearest")
+```
+Alternatively, set `vmin`/`vmax` from `np.percentile(ndvi.compressed(), [2, 98])` so the scale adapts to each file. Add `interpolation="nearest"` to the classified `imshow` too. Once the edges match the data, the class percentages printed in the stats cell will also be informative.

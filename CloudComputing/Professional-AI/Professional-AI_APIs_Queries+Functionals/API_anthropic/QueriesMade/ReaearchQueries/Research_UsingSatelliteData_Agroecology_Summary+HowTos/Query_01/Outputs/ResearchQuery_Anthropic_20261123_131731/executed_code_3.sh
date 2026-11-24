@@ -1,0 +1,2 @@
+cd /tmp/deliv && python3 make_pdf.py && python3 -c "
+from pypdf import PdfReader; r=PdfReader('out/Item1_Literature_Review_Sentinel2_Agriculture_Metrics.pdf'); print('pages',len(r.pages))" && ls -la out | awk '{print $5, $9}' && mkdir -p "$OUTPUT_DIR" && cp out/* "$OUTPUT_DIR"/ && echo exported

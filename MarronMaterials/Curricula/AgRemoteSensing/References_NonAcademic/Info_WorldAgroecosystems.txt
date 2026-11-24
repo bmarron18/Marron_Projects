@@ -1,0 +1,86 @@
+Title:          World Agroecosystems
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+Google
+---------
+Oceania is the largest region in the world devoted to organic agriculture, with roughly 53.2 million hectares, led by Australia at about 53 million hectares. 
+There is no single global statistic for "agroecology" because agroecology is a holistic practice and movement rather than a standardized land-certification category like organic farming. However, organic farmland is the closest measurable proxy for sustainable farming area. 
+
+Key Regional & National Breakdown
+	• Largest region: Oceania (~53.2 million hectares), accounting for more than half of the global organic area.
+	• Largest country by area: Australia 
+	• Other major regions: Europe (~18.5 million hectares) and Latin America (~9.5 million hectares) follow Oceania in total organic land 
+	  area.
+	• Other leading countries: India (~4.7 million hectares) ranks behind Australia in total organic area and leads globally in the number of organic producers. 
+
+Important Context on "Sustainable Agriculture" vs. "Agroecology"
+	• Measurement limits: Global datasets (such as FiBL and IFOAM) track certified organic land and land in conversion rather than all sustainable or agroecological farms
+	• Policy-driven initiatives: Countries such as China have launched large-scale national sustainable agriculture and agroecological programs—including hundreds of demonstration counties and model villages—though these are not measured on the same standardized acreage basis as organic certification.
+	• Share vs. total area: Large pastoral areas give countries like Australia massive total acreage, whereas smaller countries (such as Liechtenstein) lead in the percentage of agricultural land under organic management. 
+
+
+Amish farmland in the Eastern U.S. is relatively small on a global scale—likely totaling under 1.5 to 2 million acres (~0.6 to 0.8 million hectares) nationwide—and only a fraction of it is certified organic or strictly agroecological. While Amish communities are famous for low-input, horse-drawn, diversified farming, their total land footprint is a tiny fraction of major global organic regions (like Australia's ~131 million acres).
+
+1. Scale of Amish Land Holdings
+There is no single official USDA census figure for total Amish acreage because the U.S. Census of Agriculture does not track religion. However, researchers estimate holdings using county tax records and church directories: 
+	• Population concentration: Roughly 414,500 Amish live across 33 U.S. states, with over 60% concentrated in Pennsylvania  (~96,500), Ohio  (~87,800), and Indiana  (~68,000). 
+	• County-level benchmarks: In Lancaster County, Pennsylvania—the largest and oldest settlement—Amish families own roughly 100,000 to 110,000 acres (~40,000–44,500 hectares), representing nearly 30% of the county's farmland. 
+	• Shift away from farming: Due to rising land prices in the East (often $15,000–$25,000+ per acre in core areas), many Amish households now subdivide land into small 5-acre homesteads and work in woodworking, construction, or small businesses rather than full-time farming. 
+
+2. How Sustainable Is Amish Agriculture?
+Amish farming practices vary widely by church district and ordination (Ordnung): 
+	• Agroecological strengths: Many Amish farms rely on draft horses (reducing soil compaction and fossil fuel use), diverse crop rotations, cover crops, and integrated livestock manure. Research from Sustainable Agriculture Research and Education (SARE) shows that traditional Old Order farms often achieve high nitrogen efficiency through legume hay rotations and diversified enterprises. 
+	• Conventional input use: Not all Amish farms are organic. Many use synthetic fertilizers, commercial livestock feed, and chemical herbicides or pesticides—sometimes at intensive per-acre rates due to small farm sizes. 
+	• Certified organic leaders: Despite this split, Amish and Old Order Mennonite farmers make up a substantial share of organic grain and dairy producers in Pennsylvania, Ohio, and Indiana, largely through partnerships with cooperatives like Organic Valley.
+
+
+Europe manages roughly 19.6 million hectares of certified organic farmland (with 17.7 million hectares inside the EU), while China  operates a state-backed network of 600+ designated eco-agriculture demonstration counties alongside 3.59 million hectares of certified organic farmland. The two regions represent fundamentally different models of large-scale sustainable agriculture: Europe relies on standardized third-party certification and EU-wide subsidy targets, while China combines certified organic farming with massive, state-directed agroecological zoning.
+
+1. European Organic Regions
+Europe is the world's second-largest organic region by total area (~19.6 million hectares, or ~10.9% of EU farmland) and is driven by the EU's Farm to Fork Strategy, which targets 25% organic farmland by 2030. 
+• Largest Total Acreage: Four countries account for over half of all EU organic land:
+	• Spain: ~3.0 million hectares (leading Europe in total area, driven by organic olive groves, vineyards, and dryland cereals).
+	• France: ~2.8 million hectares (leading in organic arable crops, dairy, and wine).
+	• Italy: ~2.5 million hectares (concentrated heavily in southern regions like Sicily, Puglia, and Calabria).
+	• Germany: ~1.9 million hectares (also Europe's largest organic retail market at €17.0 billion). 
+• Highest Regional Density (Share of Farmland):
+	• Liechtenstein: ~44.6% of agricultural land is organic.
+	• Austria: ~27.3% of farmland is organic—the highest share in the EU, with Alpine provinces like Salzburg exceeding 50% organic farmland.
+	• Estonia & Sweden: Both maintain roughly 20–23% organic farmland shares. 
+• Sub-National Bio-Districts: Across Italy , France , and Austria , dozens of "Bio-Districts" (Biodistretti) operate as territorial agroecology zones where farmers, municipalities, and tourism operators manage entire watersheds or valleys under organic principles.
+
+
+2. China's Eco-Agriculture Counties & Certified Zones
+China tracks sustainable farming across multiple tiers—ranging from strict organic certification to broader "Green Food" and state-designated agroecological zones. 
+	• 600+ Eco-Agriculture Demonstration Counties: Under China's National Sustainable Agriculture Development Plan, the central government designated 600 agroecology demonstration counties and over 1,000 model villages. Rather than requiring strict organic certification across every farm, these counties implement regional circular-farming systems:
+	• Integrated landscape management: Combining reforestation, terraced watershed conservation, biogas digesters, and crop-livestock nutrient cycling.
+	• Input reduction: Over 66.6 million hectares nationwide are enrolled in "green pest prevention and control" programs designed to cut synthetic pesticide and fertilizer runoff. 
+	• Certified Organic Farmland (~3.59 million hectares): According to FiBL / IFOAM data, China ranks 4th globally in certified organic farmland (plus an additional ~3.3 million hectares of certified organic wild-collection areas).
+	• Northeastern Grain Belt: Nearly half of China's certified organic farmland is concentrated in the northeast—led by Heilongjiang ( (~581,000 ha), Liaoning  (~404,500 ha), and Inner Mongolia  (~360,000 ha)—focusing on organic soybeans, cereals, and dairy.
+	• County-Wide Organic Conversions: Specific counties, such as Wanzai County , have legally banned synthetic agrochemicals across entire townships, converting thousands of smallholder households to certified organic rice, ginger, and cash-crop production.
+
+Side-by-Side Comparison
+
+
+Feature		European Organic Regions									China Eco-Agriculture Counties
+Primary 
+Framework	EU Organic Regulation (legally binding certification)		Tiered state planning (Eco-Counties, Green Food, Organic)
+Total 
+Certified 
+Organic 
+Area 		~19.6 million hectares (17.7M ha in EU)						~3.59 million hectares (+3.3M ha wild collection)
+Broader 
+Eco-Program 
+Scale		~10.9% of total EU farmland	600+ demonstration counties;	 >66M ha green pest control
+Dominant 
+Farm 
+Structure	Mid-to-large family farms & pastoral grazing				Smallholder household plots (often 0.15–0.7 ha) in cooperatives
+Primary 
+Policy 
+Driver		Direct per-hectare CAP subsidies & consumer demand			State ecological zoning, soil restoration, & food security
+
+

@@ -1,0 +1,244 @@
+QUESTION 8 - Measuring and evaluating non-crop plant diversity in agroecosystems with Sentinel-2 / drone data
+=============================================================================================================
+Prepared: November 2026. Scope: Sentinel-2 (10-20 m, 5-day revisit) processed in
+Google Earth Engine (GEE) with Python post-processing; UAV/drone imagery is
+treated as an optional high-resolution complement. No executable code is
+given; each step states the data, the metric(s), the processing, and how the
+result is interpreted for small-scale (0.5-20 ha) crop operations.
+
+================================================================================
+PART A. COMMON SENTINEL-2 -> GOOGLE EARTH ENGINE (GEE) -> PYTHON PIPELINE
+(identical for every question; question-specific steps follow in Part B)
+================================================================================
+
+A1. Define the area of interest (AOI)
+  - Digitise each field / management unit as a polygon (GeoJSON or shapefile,
+    EPSG:4326). Keep a unique field_id attribute. For small-scale operations
+    (0.5-20 ha) also record crop, sowing date, expected harvest date, and any
+    sub-field treatments (these become the "ground truth" table later).
+  - Buffer each polygon INWARD by 10-20 m before extracting statistics, so that
+    mixed boundary pixels (hedges, tracks, neighbouring fields) are excluded.
+  - Upload to GEE as an Asset (FeatureCollection) or load with geemap/ee from
+    a local GeoJSON.
+
+A2. Load the Sentinel-2 Level-2A surface-reflectance collection
+  - Collection: ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+    (bottom-of-atmosphere reflectance, scale factor 0.0001, harmonised so that
+    the Jan-2022 processing-baseline offset is removed).
+  - Filter: .filterBounds(AOI) and .filterDate(start, end). For a full season
+    use ~1 month before sowing to ~1 month after harvest; for multi-year
+    analyses (resilience, yield forecasting) load all years since 2017.
+  - Useful bands (native resolution): B2 blue 10 m, B3 green 10 m, B4 red 10 m,
+    B5 red-edge-1 705 nm 20 m, B6 red-edge-2 740 nm 20 m, B7 red-edge-3 783 nm
+    20 m, B8 NIR 842 nm 10 m, B8A narrow NIR 865 nm 20 m, B11 SWIR-1 1610 nm
+    20 m, B12 SWIR-2 2190 nm 20 m, SCL scene classification 20 m.
+
+A3. Cloud, shadow and edge masking
+  - Preferred: join the Cloud Score+ collection
+    ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED') with
+    .linkCollection(csPlus, ['cs','cs_cdf']) and keep pixels where
+    cs_cdf >= 0.60 (0.50-0.65 is the usual working range; lower = more
+    observations but more residual haze; higher = cleaner but fewer dates).
+  - Alternative/legacy: SCL band - drop classes 3 (shadow), 8, 9, 10 (cloud,
+    cirrus), 11 (snow), 1 (saturated), 0 (no data). Optionally s2cloudless
+    ('COPERNICUS/S2_CLOUD_PROBABILITY', probability < 40).
+  - Mask pixels where B8A, B11 or B12 are masked (tile-edge artefacts).
+  - Record per image the fraction of unmasked AOI pixels; discard images with
+    < 70-80 % valid pixels inside the field.
+
+A4. Compute spectral indices (map a function over the collection)
+  - Scale reflectance: img.multiply(0.0001).
+  - Core indices (band maths with ee.Image.normalizedDifference or .expression):
+      NDVI  = (B8 - B4) / (B8 + B4)                      greenness / biomass
+      kNDVI = tanh(NDVI^2)                               saturation-resistant
+      EVI2  = 2.5 (B8 - B4) / (B8 + 2.4 B4 + 1)          less saturation than NDVI
+      SAVI  = 1.5 (B8 - B4) / (B8 + B4 + 0.5)            sparse canopies / early season
+      NDRE  = (B8A - B5) / (B8A + B5)                    chlorophyll / N status
+      CIre  = (B8A / B5) - 1                             canopy chlorophyll content
+      MTCI  = (B6 - B5) / (B5 - B4)                      chlorophyll, late season
+      NDMI  = (B8A - B11) / (B8A + B11)                  canopy water content
+      MSI   = B11 / B8A                                  moisture stress (inverse)
+      NDWI  = (B3 - B8) / (B3 + B8)                      surface water / waterlogging
+      PSRI  = (B4 - B2) / B6                             senescence / carotenoid:chl
+      REDSI = (605.86 (B7 - B4) - 783.07 (B5 - B4)) / (2 B4)  yellow-rust disease index
+      NIRv  = NDVI * B8                                  proxy for photosynthetic capacity
+      BSI   = ((B11 + B4) - (B8 + B2)) / ((B11 + B4) + (B8 + B2))  bare soil
+  - Biophysical variables (LAI, fAPAR, fCover, canopy chlorophyll content CCC)
+    can be retrieved with the Sentinel-2 biophysical neural network (SNAP
+    "Biophysical Processor" coefficients ported to GEE) when physically
+    interpretable units are needed (e.g., for crop-model assimilation).
+  - Resample 20 m bands to 10 m (bilinear) ONLY for visual products; for
+    statistics compute red-edge/SWIR indices at native 20 m.
+
+A5. Temporal compositing / time-series construction
+  - Field-level time series: for each image, reduceRegion(mean, median, stdDev,
+    percentiles 10/50/90, count) over the inward-buffered polygon -> export a
+    CSV (date, field_id, index statistics, valid-pixel count).
+  - Pixel-level stacks: build composites per 10-day or 16-day window
+    (median or maximum-NDVI), or per phenological stage. Fill gaps by linear
+    interpolation in time, then smooth with Savitzky-Golay or Whittaker
+    (Python: scipy.signal.savgol_filter; or GEE harmonic regression).
+  - Baseline/reference layer: multi-year (>= 3 seasons) per-pixel median
+    and standard deviation of each index for the same calendar window.
+
+A6. Export GeoTIFFs
+  - ee.batch.Export.image.toDrive (or toCloudStorage/toAsset) at 10 m, CRS =
+    the local UTM zone (EPSG:326xx / 327xx), region = AOI bounding box,
+    maxPixels large, one band per date or one multi-band stack per index.
+  - Keep a sidecar JSON with dates, cloud threshold, scale and CRS.
+
+A7. Python post-processing (local)
+  - Read with rasterio (or rioxarray/xarray for date stacks); clip to the
+    polygon with rasterio.mask; convert nodata to NaN.
+  - Descriptive statistics per field and date: mean, median, SD,
+    CV = SD / mean (x100 %), P10, P90, skewness, % pixels below a threshold.
+  - Spatial autocorrelation (PySAL: libpysal + esda):
+      * Build a spatial-weights object for the raster grid: queen contiguity
+        (8 neighbours) with libpysal.weights.lat2W(nrows, ncols, rook=False),
+        then drop NaN cells (or use a k-nearest-neighbour weight on pixel
+        centroids if the field is irregular). Row-standardise (w.transform='r').
+      * Global Moran's I  : esda.Moran(values, w)        -> I, p_sim
+      * Local Moran's I   : esda.Moran_Local(values, w, permutations=999)
+        -> Is (local statistic per pixel), p_sim, q (quadrant: 1 HH, 2 LH,
+        3 LL, 4 HL). Pixels with p_sim < 0.05 are significant.
+      * LISA cluster map  : raster of HH / LL / HL / LH / not-significant.
+      * Summary metrics   : % of field area in each LISA class; mean of Ii;
+        SD of Ii; CV of local Moran's I = SD(Ii) / mean(Ii).
+      * NOTE on CV(Ii): because Ii can be negative (outliers) and its mean can
+        approach zero, always report the mean, the SD and the % of significant
+        pixels alongside the CV; when mean(Ii) < 0.05 the CV becomes unstable
+        and the SD of Ii (or CV of |Ii|) should be used instead.
+  - Spectral heterogeneity / diversity (for Questions 2, 7, 8): Rao's Q over a
+    moving window (e.g., 3x3 to 9x9 pixels) on NDVI or on several bands.
+  - Temporal metrics (Questions 3, 6): anomalies z = (x - baseline_mean) /
+    baseline_sd; lag-1 autocorrelation (AR(1)) of de-seasonalised residuals;
+    seasonal integrals (sum / trapezoid of NDVI between SOS and EOS).
+  - Clustering for management zones (Question 5): sklearn KMeans / fuzzy
+    c-means on standardised multi-date index stacks.
+  - Write outputs as GeoTIFF (rasterio) and CSV; make maps with matplotlib.
+
+A8. Interpretation conventions used in Part B
+  - "Field mean NDVI" = mean of valid pixels in the inward-buffered polygon.
+  - "CV of NDVI" = within-field heterogeneity of crop vigour (%). Typical
+    well-managed uniform fields: < 10-15 % at full canopy; > 20-25 % signals
+    patchiness worth scouting.
+  - "Global Moran's I" of NDVI: ~0 random, > 0 clustered (patches), values
+    > 0.3-0.4 commonly reported for yield / NDVI maps with strip-like or
+    soil-driven patterns.
+  - "Local Moran's I (LISA)": HH = high-vigour cluster, LL = low-vigour cluster
+    (stress patch), HL / LH = spatial outliers (single-pixel anomalies, often
+    noise, weeds, equipment skips or incipient disease foci).
+  - "CV of local Moran's I": low CV = spatial structure is homogeneous (the
+    whole field is either uniformly clustered or uniformly random); high CV =
+    mixed structure, i.e., a few strong clusters/outliers embedded in a
+    random background - typical of localised stress, pest foci, drainage
+    problems or patchy emergence. Track its change through the season: a
+    rising CV(Ii) before any fall in mean NDVI is an early-warning signal
+    that stress is developing locally.
+  - Always interpret satellite metrics relative to (i) the crop's phenological
+    stage, (ii) the same field in previous seasons, and (iii) neighbouring
+    fields of the same crop in the same window.
+
+================================================================================
+PART B. QUESTION 8 - NON-CROP PLANT DIVERSITY IN AGROECOSYSTEMS
+================================================================================
+
+Principle. Non-crop plant diversity (field margins, hedgerows, grasslands,
+fallows, weeds within fields) is assessed through (1) mapping the extent and
+configuration of non-crop habitats and (2) the Spectral Variation Hypothesis
+(SVH): spectral heterogeneity within a habitat patch correlates with
+environmental heterogeneity and species diversity. The main metric is Rao's
+quadratic entropy (Rao's Q) computed on Sentinel-2 NDVI or multi-band
+reflectance; it combines pixel abundance and pairwise spectral distance.
+Validation with field plots is essential because the SVH is not universally
+reliable and depends on habitat type, season and spatial scale.
+
+B8.1  Data extraction (GEE)
+  - Non-crop habitat mask: from the land-cover/habitat map (Question 7);
+    exclude cropped pixels (NDVI phenology typical of crops) and buffer
+    crop boundaries by 10 m to avoid mixed pixels.
+  - Multi-temporal Sentinel-2 composites across the season (e.g., monthly
+    from spring to autumn) of NDVI, NIRv, and the 10 bands B2-B8A, B11, B12.
+    Multi-date stacks capture phenological asynchrony among species and
+    generally improve the spectral-diversity / species-diversity relation.
+  - Drone (strongly recommended for margins and small patches): RGB or
+    multispectral at 1-5 cm for fine-scale spectral diversity, flowering
+    cover (visible-band indices, e.g., excess green/red), and woody vs.
+    herbaceous structure (SfM canopy height).
+  - Field data: species lists / Shannon H' / richness in 10 x 10 m or
+    20 x 20 m plots aligned with Sentinel-2 pixels (at least 20-30 plots
+    per habitat type).
+
+B8.2  Metrics
+  (a) Habitat extent and configuration: area and % of non-crop habitat per
+      farm/landscape; hedgerow length density (km/km2); mean margin width
+      (drone); patch size distribution; edge density; connectivity.
+  (b) Spectral diversity (alpha):
+      - Rao's Q in a moving window (3x3 = 30 m, 5x5 = 50 m) on NDVI or on
+        the PCA-reduced multi-band stack: Q = sum over pixel pairs i,j of
+        d_ij x p_i x p_j, where d_ij is the spectral distance and p_i the
+        relative abundance of spectral value i. Higher Q = higher spectral
+        heterogeneity.
+      - Coefficient of variation of NDVI / SD of NDVI in the window (simpler
+        SVH metric).
+      - Spectral species richness: k-means clustering of the multi-band
+        stack into "spectral species"; richness and Shannon entropy of
+        spectral species per window/patch.
+      - Multi-temporal Rao's Q: Q computed on the stacked monthly NDVI
+        (temporal spectral dissimilarity) - captures species with different
+        phenology.
+  (c) Spectral beta diversity: dissimilarity (Bray-Curtis on spectral-species
+      composition, or Rao's Q between patches) among habitat patches ->
+      landscape-level turnover.
+  (d) Within-crop weed indicator: early-season (pre-canopy) NDVI
+      heterogeneity and HL outliers in the LISA map of the crop field;
+      drone-based weed cover fraction.
+  (e) Spatial statistics: Global and Local Moran's I of the Rao's Q map
+      (HH = diversity hotspots), CV of local Moran's I.
+  (f) Validation statistics: Spearman rho / R2 between Rao's Q (or other
+      SD metrics) and field Shannon H' or richness, per habitat type and per
+      month; choose the month and window size that maximise the relation.
+
+B8.3  Processing / analysis sequence (Python)
+  Step 1  Build the non-crop habitat mask; stratify by habitat type
+          (grassland, hedgerow/woody, fallow, wetland margin).
+  Step 2  For each monthly composite compute Rao's Q (e.g., with the
+          rasterdiv-style algorithm re-implemented in numpy: discretise NDVI
+          into 8-bit classes, compute pairwise distances and relative
+          abundances in each window) and the SD/CV of NDVI; compute spectral
+          species via k-means (k ~ 10-30) on the PCA components and their
+          richness/Shannon per window.
+  Step 3  Compute the multi-temporal Rao's Q on the stacked monthly NDVI.
+  Step 4  Extract metrics at field plots; fit the SVH relation (f) per habitat
+          type and month; retain the best configuration; document R2 and
+          sign. If no significant relation (rho < 0.3), do NOT map diversity
+          from spectra for that habitat - report extent/configuration only.
+  Step 5  Map predicted diversity (or Rao's Q as a relative index) across
+          non-crop habitats; compute LISA and CV(Ii); identify hotspots and
+          low-diversity patches.
+  Step 6  Trend analysis: repeat for several years; a declining Rao's Q in
+          grassland/margins may indicate homogenisation (e.g., eutrophication
+          or dominance by a few grasses) - verify in the field.
+  Step 7  Report per farm: non-crop habitat area and configuration, mean and
+          hotspots of spectral diversity, validated relationship (or its
+          absence), and recommendations (e.g., widen margins, diversify
+          seed mixes, reduce mowing frequency in low-Q patches).
+
+B8.4  Interpretation guide
+  - Rao's Q is a RELATIVE heterogeneity index: compare within one habitat
+    type, sensor, season and window size; absolute values are not
+    transferable between studies.
+  - Dense, closed canopies (e.g., mature hedgerows at full leaf) give low
+    Rao's Q regardless of species richness (saturation); use spring or
+    autumn dates when phenological differences among species are expressed.
+  - High Rao's Q may also arise from bare-soil gaps, shadows or mixed
+    pixels; inspect HL/LH outliers and mask soil/water before interpreting.
+  - At 10-20 m the SVH mostly reflects environmental heterogeneity (soil
+    moisture, management, structure) rather than species identity; drone
+    imagery at cm resolution approaches the direct species-trait relation.
+  - Habitat extent and configuration metrics (a) are the most robust
+    non-crop diversity indicators from satellites; spectral diversity adds
+    information on condition/heterogeneity once validated locally.
+  - A rising CV of local Moran's I of the Rao's Q map indicates increasingly
+    patchy diversity (a few hotspots in a homogenised matrix) - a trigger for
+    conservation measures on the homogeneous parts.

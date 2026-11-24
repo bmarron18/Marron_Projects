@@ -1,17 +1,24 @@
-Review a) Partial_QueryResponse.txt (sample of a truncated run), b) Analysis.txt (analysis of what \
-went wrong), c) Script.txt (earlier attempt), d) A_Template_AnalysisQuery_anthropic_v3.4.py (format \
-template). Write a new script named `A_Template_DataTableQuery_anthropic_v2.0.py` for \
-`claude-opus-5-5` that turns given, partial, or sourced data (user to specify: files / URL / web \
-search) into an organized table.\
-
-Requirements: (1) stream the API call; (2) the model emits one JSON object per line for each chunk, \
-and Python parses, de-duplicates, sorts and merges them, tolerating a cut-off final line; (3) keep \
-d)'s structure and fold in c)'s parse/sort/write logic, fixing c)'s bugs; (4) write three files: \
-`.md` table, `.csv` table, and `.txt` commentary covering data sufficiency, completeness, accuracy, \
-table construction, legend and flags. Data source, columns, key column, sort order and overwrite/ \
-append are all per-run settings, editable in SECTION 1 and overridable by CLI flags. When left blank,\
-columns are inferred from the first chunk, de-duplication uses the whole row, and order is the arrival \
-order.
-
-Constraints: stdlib plus `anthropic` only; save partial output if interrupted; [overwrite/append]; keep \
-the v3.4 header and docstring style.
+The Sentinel-2 constellation of satellites was designed to provide data for precision agriculture. Peer-reviewed research has indicated \
+that such remote sensing data can help produce more sustainable management of farming practices and improvements in yield for farmers. \
+And yet the detailed algorithms for taking Sentinel-2 data for a specific location and processing the GeoTIFF files to obtain useful \
+agricultural information is lacking. Please do the following:\
+1. Review open access peer-reviewed journals, relevant textbooks, and other legitimate sources (eg, the UN's FAO) for detailed \
+procedures and metrics for using remote sensing data from satellites or drones. Clearly, the mean NDVI and the CV of local Moran's I \
+will be important metrics. The output from this item should be a .pdf file summarizing the findings and listing only the most notable \
+or important references.\
+\
+2. Provide detailed step-by-step explanations and procedures for the processing of Sentinels-2 data through Google Earth Engine and \
+Python into practical information for the management of small-scale crop operations. You do not need to write the execution code, just \
+indicate what metrics are used; the type of data extraction, processing, and analyses that needs to be performed at each step; and an \
+explanation of how the final results are to be interpreted. More specifically, the step-by-step procedures should address the following \
+questions, \
+     * How are abiotic and biotic stress detection measured and evaluated in crops using satellite and/or drone data? What are the metrics and how are they interpreted? \
+     * How are abiotic and biotic stress detection measured and evaluated at the agroecosystem level with satellite and/or drone data? What are the metrics and how are they interpreted? \
+     * How is agroecosystem resilience measured and evaluated with satellite and/or drone data? What are the metrics and how are they interpreted? \
+     * How is crop productivity measured and evaluated with satellite and/or drone data? What are the metrics and how are they interpreted? \
+     * How can satellite and/or drone data be used for the management of crop variability? What are the metrics and how are they interpreted? \
+     * How can satellite and/or drone data be used for maintaining, improving, and forecasting crop yields? What are the metrics and how are they interpreted? \
+     * How can satellite and/or drone data be used for measuring and evaluating ecosystems services in agroecosystems? What are the metrics and how are they interpreted? \
+     * How can satellite and/or drone data be used for measuring and evaluating non-crop plant diversity in agroecosystems? What are the metrics and how are they interpreted? \
+The outputs from this item should be in .txt file format and organized per question. That is, there should eight (8) .txt files that \
+contain detailed step-by-step explanations and procedures (one .txt file per question) for each of the questions posed in Item 2 above. 

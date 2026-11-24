@@ -1,0 +1,77 @@
+Title:         	Info: Various Organic Farming Orgs
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+#########################
+Organic Research Centre
+#########################
+
+https://www.organicresearchcentre.com/news-events/news/world-organic-ag-2025/
+
+Liechtenstein had the world’s highest share of organic farmland
+	In 2023, organic farmland in Europe constituted 3.9 percent of the total agricultural land, while it accounted for 10.9 percent in the European Union. Among European countries and globally, Liechtenstein had the highest organic area share at 44.6 percent. They were followed by Austria, the EU country with the highest organic share at 27.3 percent. Sixteen European countries reported that at least 10 percent of their farmland was organic.
+
+
+
+#########
+FiBL
+#########
+https://www.fibl.org/
+
+Forschungsinstitut für biologischen Landbau (FiBL)
+Research Institute of Organic Agriculture 
+	The Research Institute of Organic Agriculture FiBL is one of the world’s leading institutes in the field of organic agriculture. Its locations are situated in Switzerland, Germany, Austria, France and a representation in Brussels (Belgium). FiBL’s strengths lie in its interdisciplinary research, innovations developed jointly with farmers and the food industry, solution-oriented development projects and rapid knowledge transfer from research into practice.
+
+
+##########################################
+Deutsch-Chinesisches Agrarzentrum (DCZ)
+########################################
+https://www.dcz-china.org/
+
+The Sino-German Agricultural Centre (DCZ) is a joint initiative of the German Federal Ministry of Agriculture, Food and Regional Identity (BMLEH) and the Ministry of Agriculture and Rural Affairs (MARA) of the People’s Republic of China.
+
+In March 2015, the DCZ was established as a central contact and information platform in charge of coordinating the bilateral cooperation between Germany and China in the agriculture and food sector. In April 2022, the project entered its third phase.
+
+
+
+On 11 September 2026, the Office of the Central Cyberspace Affairs Commission, the Ministry of Agriculture and Rural Affairs (MARA), and the Ministry of Industry and Information Technology (MIIT) issued the Digital Village High-Quality Development Action Plan (2026–2030). It sets China’s framework for using digital technologies to accelerate agricultural and rural modernization during the 15th Five-Year Plan period.
+
+By 2030, China aims to improve rural digital infrastructure, digitalize agricultural and rural industries, expand information-based rural public services, strengthen smart rural governance, and establish more sustainable mechanisms for digital village development. The plan moves beyond basic rural internet connectivity toward artificial intelligence (AI), big data, robotics, smart agricultural machinery, intelligent breeding, satellite technologies, digital platforms, and large language and foundation models. It contains eight quantitative indicators and 24 policy measures in five areas: 1) digital infrastructure and data foundations; 2) digitalization of rural industries; 3) digital rural public services; 4) intelligent rural governance; 5) and institutional, talent, and ecosystem development.
+
+
+
+Other digital technologies
+
+The technological scope is broader than AI. The plan promotes 5G, gigabit fiber, high-throughput satellites, low-Earth-orbit satellite internet, satellite and aerial remote sensing, BeiDou navigation, blockchain, drones, and other low-altitude-economy applications. BeiDou is linked to precision agricultural operations and disaster monitoring, blockchain to product traceability and rural collective asset management, and low-altitude technologies to agricultural production and rural logistics. Cold-chain infrastructure, irrigation systems, rural electricity grids, charging infrastructure, county logistics centers, and township delivery networks are also to undergo digital upgrades.
+
+Report: China’s digital village development
+	Agricultural data and food security: National agricultural databases, digital
+	farmland monitoring, seed-information platforms and intelligent grain-storage
+	systems strengthened agricultural management and support for food security.
+
+	Annual drone operating area ==> More than 30.7 million hectares
+
+	2019: Launch of the national digital village strategy
+	The government issued the Digital Rural Development Strategy Outline in May, followed by the
+	Digital Agriculture and Rural Development Plan (2019–2025) in December. Together, these
+	documents established the policy framework and priorities for digital development in agriculture
+	and rural areas
+
+	2025: Completion of the 14th Five-Year Plan period
+	A targeted initiative to strengthen agriculture, benefit rural areas and increase farmers’ incomes
+	through digitalization was launched in eight provincial-level regions. The first National Smart
+	Agriculture Innovation Competition showcased technologies including precision-spraying robots,
+	greenhouse transport robots and field-inspection drones
+
+
+	Satellite remote sensing and geographic information systems (GIS)
+	Integrated space-air-ground monitoring of crop growth,
+	farmland protection, natural resources, and environmental
+	conditions
+
+	Food security and precision monitoring: Satellite remote sensing, integrated monitoring
+	networks, agricultural data platforms, and smart grain storage contribute to farmland protection,
+	crop monitoring, weather-risk management, and loss reduction.

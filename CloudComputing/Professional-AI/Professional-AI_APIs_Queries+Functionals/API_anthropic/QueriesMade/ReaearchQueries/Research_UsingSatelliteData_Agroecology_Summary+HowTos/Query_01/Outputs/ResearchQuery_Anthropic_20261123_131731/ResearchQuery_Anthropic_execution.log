@@ -1,0 +1,43 @@
+=== Code block 1 (exit 0) ===
+$ python3 -c "import reportlab, sys; print('reportlab', reportlab.Version)"; python3 -c "import fpdf; print('fpdf ok')" 2>&1 | tail -1; mkdir -p /tmp/deliv && echo ok
+--- stdout ---
+reportlab 4.2.2
+ModuleNotFoundError: No module named 'fpdf'
+ok
+
+
+=== Code block 2 (exit 0) ===
+$ cd /tmp/deliv && python3 make_txt.py && wc -l out/*.txt | tail -9
+--- stdout ---
+written 8 files to /tmp/deliv/out
+   240 out/Q1_crop_level_stress_detection.txt
+   235 out/Q2_agroecosystem_level_stress_detection.txt
+   235 out/Q3_agroecosystem_resilience.txt
+   222 out/Q4_crop_productivity.txt
+   226 out/Q5_management_of_crop_variability.txt
+   231 out/Q6_yield_maintenance_improvement_forecasting.txt
+   234 out/Q7_ecosystem_services.txt
+   244 out/Q8_noncrop_plant_diversity.txt
+  1867 total
+
+
+=== Code block 3 (exit 0) ===
+$ cd /tmp/deliv && python3 make_pdf.py && python3 -c "
+from pypdf import PdfReader; r=PdfReader('out/Item1_Literature_Review_Sentinel2_Agriculture_Metrics.pdf'); print('pages',len(r.pages))" && ls -la out | awk '{print $5, $9}' && mkdir -p "$OUTPUT_DIR" && cp out/* "$OUTPUT_DIR"/ && echo exported
+--- stdout ---
+PDF written: /tmp/deliv/out/Item1_Literature_Review_Sentinel2_Agriculture_Metrics.pdf
+pages 6
+ 
+4096 .
+4096 ..
+18057 Item1_Literature_Review_Sentinel2_Agriculture_Metrics.pdf
+15805 Q1_crop_level_stress_detection.txt
+15201 Q2_agroecosystem_level_stress_detection.txt
+15116 Q3_agroecosystem_resilience.txt
+14303 Q4_crop_productivity.txt
+14362 Q5_management_of_crop_variability.txt
+14753 Q6_yield_maintenance_improvement_forecasting.txt
+15061 Q7_ecosystem_services.txt
+15742 Q8_noncrop_plant_diversity.txt
+exported
+

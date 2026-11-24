@@ -1,0 +1,1 @@
+cd /tmp/deliv && python3 make_txt.py && wc -l out/*.txt | tail -9

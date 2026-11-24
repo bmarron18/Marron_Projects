@@ -1,0 +1,259 @@
+WORKFLOW 02 - Abiotic and biotic stress detection and evaluation at the agroecosystem level with Sentinel-2 / drone data
+=======================================================================================================================
+Prepared: November 2026. Scope: Sentinel-2 (10-20 m, 5-day revisit) processed in
+Google Earth Engine (GEE) with Python post-processing; UAV/drone imagery is
+treated as an optional high-resolution complement. No executable code is
+given; each step states the data, the metric(s), the processing, and how the
+result is interpreted for small-scale (0.5-20 ha) crop operations.
+
+=====================================================
+GLossary
+=======================================================
+
+AOI
+  Area of Interest
+
+GEE
+  Google Earth Engine
+
+
+
+LISA
+  Local Indicators of Spatial Association
+
+SCL
+  Scene Classification Layer, a 20-meter resolution band included in Sentinel-2 Level-2A satellite products
+
+UAV
+  Unmanned Aerial Vehicle
+
+WF
+  Workflow
+
+================================================================================
+PART A. COMMON SENTINEL-2 -> GOOGLE EARTH ENGINE (GEE) -> PYTHON PIPELINE
+(identical for every WF; WF-specific steps follow in Part B)
+================================================================================
+
+A1. Define the area of interest (AOI)
+  - Digitise each field / management unit as a polygon (GeoJSON or shapefile,
+    EPSG:4326). Keep a unique field_id attribute. For small-scale operations
+    (0.5-20 ha) also record crop, sowing date, expected harvest date, and any
+    sub-field treatments (these become the "ground truth" table later).
+  - Buffer each polygon INWARD by 10-20 m before extracting statistics, so that
+    mixed boundary pixels (hedges, tracks, neighbouring fields) are excluded.
+  - Upload to GEE as an Asset (FeatureCollection) or load with geemap/ee from
+    a local GeoJSON.
+
+A2. Load the Sentinel-2 Level-2A surface-reflectance collection
+  - Collection: ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+    (bottom-of-atmosphere reflectance, scale factor 0.0001, harmonised so that
+    the Jan-2022 processing-baseline offset is removed).
+  - Filter: .filterBounds(AOI) and .filterDate(start, end). For a full season
+    use ~1 month before sowing to ~1 month after harvest; for multi-year
+    analyses (resilience, yield forecasting) load all years since 2017.
+  - Useful bands (native resolution): B2 blue 10 m, B3 green 10 m, B4 red 10 m,
+    B5 red-edge-1 705 nm 20 m, B6 red-edge-2 740 nm 20 m, B7 red-edge-3 783 nm
+    20 m, B8 NIR 842 nm 10 m, B8A narrow NIR 865 nm 20 m, B11 SWIR-1 1610 nm
+    20 m, B12 SWIR-2 2190 nm 20 m, SCL scene classification 20 m.
+
+A3. Cloud, shadow and edge masking
+  - Preferred: join the Cloud Score+ collection
+    ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED') with
+    .linkCollection(csPlus, ['cs','cs_cdf']) and keep pixels where
+    cs_cdf >= 0.60 (0.50-0.65 is the usual working range; lower = more
+    observations but more residual haze; higher = cleaner but fewer dates).
+  - Alternative/legacy: SCL band - drop classes 3 (shadow), 8, 9, 10 (cloud,
+    cirrus), 11 (snow), 1 (saturated), 0 (no data). Optionally s2cloudless
+    ('COPERNICUS/S2_CLOUD_PROBABILITY', probability < 40).
+  - Mask pixels where B8A, B11 or B12 are masked (tile-edge artefacts).
+  - Record per image the fraction of unmasked AOI pixels; discard images with
+    < 70-80 % valid pixels inside the field.
+
+A4. Compute spectral indices (map a function over the collection)
+  - Scale reflectance: img.multiply(0.0001).
+  - Core indices (band maths with ee.Image.normalizedDifference or .expression):
+      NDVI  = (B8 - B4) / (B8 + B4)                      greenness / biomass
+      kNDVI = tanh(NDVI^2)                               saturation-resistant
+      EVI2  = 2.5 (B8 - B4) / (B8 + 2.4 B4 + 1)          less saturation than NDVI
+      SAVI  = 1.5 (B8 - B4) / (B8 + B4 + 0.5)            sparse canopies / early season
+      NDRE  = (B8A - B5) / (B8A + B5)                    chlorophyll / N status
+      CIre  = (B8A / B5) - 1                             canopy chlorophyll content
+      MTCI  = (B6 - B5) / (B5 - B4)                      chlorophyll, late season
+      NDMI  = (B8A - B11) / (B8A + B11)                  canopy water content
+      MSI   = B11 / B8A                                  moisture stress (inverse)
+      NDWI  = (B3 - B8) / (B3 + B8)                      surface water / waterlogging
+      PSRI  = (B4 - B2) / B6                             senescence / carotenoid:chl
+      REDSI = (605.86 (B7 - B4) - 783.07 (B5 - B4)) / (2 B4)  yellow-rust disease index
+      NIRv  = NDVI * B8                                  proxy for photosynthetic capacity
+      BSI   = ((B11 + B4) - (B8 + B2)) / ((B11 + B4) + (B8 + B2))  bare soil
+  - Biophysical variables (LAI, fAPAR, fCover, canopy chlorophyll content CCC)
+    can be retrieved with the Sentinel-2 biophysical neural network (SNAP
+    "Biophysical Processor" coefficients ported to GEE) when physically
+    interpretable units are needed (e.g., for crop-model assimilation).
+  - Resample 20 m bands to 10 m (bilinear) ONLY for visual products; for
+    statistics compute red-edge/SWIR indices at native 20 m.
+
+A5. Temporal compositing / time-series construction
+  - Field-level time series: for each image, reduceRegion(mean, median, stdDev,
+    percentiles 10/50/90, count) over the inward-buffered polygon -> export a
+    .csv (date, field_id, index statistics, valid-pixel count).
+  - Pixel-level stacks: build composites per 10-day or 16-day window
+    (median or maximum-NDVI), or per phenological stage. Fill gaps by linear
+    interpolation in time, then smooth with Savitzky-Golay or Whittaker
+    (Python: scipy.signal.savgol_filter; or GEE harmonic regression).
+  - Baseline/reference layer: multi-year (>= 3 seasons) per-pixel median
+    and standard deviation of each index for the same calendar window.
+
+A6. Export GeoTIFFs
+  - ee.batch.Export.image.toDrive (or toCloudStorage/toAsset) at 10 m, CRS =
+    the local UTM zone (EPSG:326xx / 327xx), region = AOI bounding box,
+    maxPixels large, one band per date or one multi-band stack per index.
+  - Keep a sidecar JSON with dates, cloud threshold, scale and CRS.
+
+A7. Python post-processing (local)
+  - Read with rasterio (or rioxarray/xarray for date stacks); clip to the
+    polygon with rasterio.mask; convert nodata to NaN.
+  - Descriptive statistics per field and date: mean, median, SD,
+    CV = SD / mean (x100 %), P10, P90, skewness, % pixels below a threshold.
+  - Spatial autocorrelation (PySAL: libpysal + esda):
+      * Build a spatial-weights object for the raster grid: queen contiguity
+        (8 neighbours) with libpysal.weights.lat2W(nrows, ncols, rook=False),
+        then drop NaN cells (or use a k-nearest-neighbour weight on pixel
+        centroids if the field is irregular). Row-standardise (w.transform='r').
+      * Global Moran's I  : esda.Moran(values, w)        -> I, p_sim
+      * Local Moran's I   : esda.Moran_Local(values, w, permutations=999)
+        -> Is (local statistic per pixel), p_sim, q (quadrant: 1 HH, 2 LH,
+        3 LL, 4 HL). Pixels with p_sim < 0.05 are significant.
+      * LISA cluster map  : raster of HH / LL / HL / LH / not-significant.
+      * Summary metrics   : % of field area in each LISA class; mean of Ii;
+        SD of Ii; CV of local Moran's I = SD(Ii) / mean(Ii).
+      * NOTE on CV(Ii): because Ii can be negative (outliers) and its mean can
+        approach zero, always report the mean, the SD and the % of significant
+        pixels alongside the CV; when mean(Ii) < 0.05 the CV becomes unstable
+        and the SD of Ii (or CV of |Ii|) should be used instead.
+  - Spectral heterogeneity / diversity (for WORKFLOWS 02, 07, 08): Rao's Q over a
+    moving window (e.g., 3x3 to 9x9 pixels) on NDVI or on several bands.
+  - Temporal metrics (WORKFLOWS 03, 06): anomalies z = (x - baseline_mean) /
+    baseline_sd; lag-1 autocorrelation (AR(1)) of de-seasonalised residuals;
+    seasonal integrals (sum / trapezoid of NDVI between SOS and EOS).
+  - Clustering for management zones (WORKFLOW 05): sklearn KMeans / fuzzy
+    c-means on standardised multi-date index stacks.
+  - Write outputs as GeoTIFF (rasterio) and .csv files; make maps with matplotlib.
+
+A8. Interpretation conventions used in Part B
+  - "Field mean NDVI" = mean of valid pixels in the inward-buffered polygon.
+  - "CV of NDVI" = within-field heterogeneity of crop vigour (%). Typical
+    well-managed uniform fields: < 10-15 % at full canopy; > 20-25 % signals
+    patchiness worth scouting.
+  - "Global Moran's I" of NDVI: ~0 random, > 0 clustered (patches), values
+    > 0.3-0.4 commonly reported for yield / NDVI maps with strip-like or
+    soil-driven patterns.
+  - "Local Moran's I (LISA)": HH = high-vigour cluster, LL = low-vigour cluster
+    (stress patch), HL / LH = spatial outliers (single-pixel anomalies, often
+    noise, weeds, equipment skips or incipient disease foci).
+  - "CV of local Moran's I": low CV = spatial structure is homogeneous (the
+    whole field is either uniformly clustered or uniformly random); high CV =
+    mixed structure, i.e., a few strong clusters/outliers embedded in a
+    random background - typical of localised stress, pest foci, drainage
+    problems or patchy emergence. Track its change through the season: a
+    rising CV(Ii) before any fall in mean NDVI is an early-warning signal
+    that stress is developing locally.
+  - Always interpret satellite metrics relative to (i) the crop's phenological
+    stage, (ii) the same field in previous seasons, and (iii) neighbouring
+    fields of the same crop in the same window.
+
+================================================================================
+PART B. WF02 - ABIOTIC AND BIOTIC STRESS AT THE AGROECOSYSTEM LEVEL
+================================================================================
+
+Principle. At the agroecosystem (farm-to-landscape, 1-100 km2) scale the
+unit of analysis is no longer the pixel but the field (parcel) or a regular
+grid cell. Stress is evaluated as (i) the fraction and spatial arrangement of
+stressed fields, (ii) departures of the landscape-level vegetation signal
+from its climatology, and (iii) the co-location of stress with landscape
+features (water bodies, slopes, semi-natural habitats, cropping systems).
+The LISA tools shift from pixel neighbourhoods to parcel neighbourhoods.
+
+B2.1  Data extraction (GEE)
+  - Parcel layer: farm field boundaries (cadastre / LPIS where available,
+    otherwise delineate from a mid-season NDVI image using edge detection or
+    SAM-type segmentation, or use a 100-250 m grid).
+  - Crop type per parcel: from farm records, a national crop map, or a
+    supervised classification of the Sentinel-2 time series (Random Forest on
+    monthly NDVI/NDRE/NDMI composites).
+  - Per parcel and per 10-16-day composite: mean, SD and P10 of NDVI, NDRE,
+    NDMI, PSRI (reduceRegions). Export as a long-format CSV.
+  - Baseline: same statistics for >= 3 previous seasons.
+  - Contextual layers: SRTM/Copernicus DEM (slope, topographic wetness
+    index), ESA WorldCover or Dynamic World (land cover), CHIRPS / ERA5-Land
+    (rain, temperature), Sentinel-1 (waterlogging), MODIS/VIIRS active fire.
+
+B2.2  Metrics
+  (a) Landscape mean and median NDVI, area-weighted across cropland, per
+      composite; its anomaly z versus the multi-year climatology.
+  (b) Stressed-parcel fraction: % of parcels (or area) whose own NDVI anomaly
+      is < -1.5 SD (or whose NDMI anomaly < -1.5 SD for water stress).
+  (c) Vegetation Condition Index VCI = 100 (NDVI - NDVI_min) /
+      (NDVI_max - NDVI_min) per pixel using the multi-year record;
+      VCI < 40 = drought-stressed vegetation (agricultural drought
+      monitoring convention). Temperature Condition Index (from LST) and the
+      combined Vegetation Health Index VHI = 0.5 VCI + 0.5 TCI if LST is used.
+  (d) Spatial structure among parcels: Global Moran's I of parcel-level NDVI
+      anomaly (weights = queen contiguity between parcels or distance band
+      ~500 m); Local Moran's I per parcel -> LISA map of HH / LL / HL / LH
+      parcels; CV of local Moran's I across parcels.
+  (e) Within-parcel heterogeneity distribution: the median and the
+      inter-parcel spread (CV) of within-field CV(NDVI).
+  (f) Spectral heterogeneity: Rao's Q of NDVI in moving windows (e.g.,
+      90 x 90 m) over the whole landscape; sudden increases in Rao's Q within
+      cropland between dates indicate patchy stress.
+  (g) Biotic-outbreak indicator: count and total area of LL clusters that
+      (i) are significant, (ii) span several adjacent parcels of the SAME
+      crop, and (iii) grow between consecutive dates. Co-occurrence across
+      fields of one host crop but not others points to a host-specific pest
+      or disease.
+  (h) Abiotic-driver indicators: correlation (Spearman) of parcel NDVI
+      anomaly with slope, TWI, elevation, distance to water, soil map units,
+      rainfall deficit (SPI/SPEI) - a strong correlation indicates an abiotic
+      control.
+
+B2.3  Processing / analysis sequence (Python)
+  Step 1  Assemble the parcel x date table; attach crop type, area and
+          contextual covariates.
+  Step 2  Compute per-parcel anomalies against the crop-specific,
+          phenology-matched climatology; compute (a), (b), (c).
+  Step 3  Build parcel adjacency weights (libpysal.weights.Queen.from_dataframe
+          or DistanceBand); compute Global and Local Moran's I of the NDVI
+          anomaly per date; produce the parcel-LISA map; compute CV(Ii).
+  Step 4  Track the LL parcel clusters through time (overlay consecutive
+          dates; a cluster is "persistent" if it overlaps on >= 2 dates and
+          "expanding" if its area grows).
+  Step 5  Attribution: (i) if the stressed-parcel fraction rises across ALL
+          crops simultaneously and correlates with rainfall deficit or heat
+          days -> abiotic, climatic; (ii) if it concentrates on low-lying /
+          high-TWI parcels after heavy rain -> waterlogging; (iii) if it
+          concentrates on one crop with expanding LL clusters -> biotic;
+          (iv) if it follows field boundaries exactly -> management
+          (sowing date, variety, input level), not a stress per se.
+  Step 6  Report an agroecosystem stress dashboard per composite date:
+          landscape NDVI anomaly, VCI distribution, % stressed parcels by
+          crop, LISA map, CV(Ii), list of expanding LL clusters with centroid
+          coordinates and host crop.
+
+B2.4  Interpretation guide
+  - Landscape mean NDVI anomaly < -1 SD with a low Global Moran's I of
+    anomalies (stress spread evenly) = regional abiotic driver (drought, heat
+    wave, late frost). Confirm with weather data.
+  - Low landscape anomaly but high Global Moran's I of anomalies with a few
+    significant LL parcel clusters = local drivers (pest/disease focus,
+    irrigation failure, local flooding).
+  - High CV of local Moran's I among parcels = a heterogeneous landscape
+    response: some neighbourhoods strongly coherent, others random. Rising
+    CV(Ii) through the season while mean NDVI is stable is an early sign of
+    emerging localised stress somewhere in the landscape.
+  - VCI < 40 over > 30 % of cropland for two consecutive composites is a
+    commonly used agricultural-drought alert.
+  - Landscapes with more semi-natural habitat and crop diversity often show
+    smaller biotic LL clusters (natural pest regulation); this links to
+    Questions 7 and 8.

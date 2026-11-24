@@ -1,0 +1,42 @@
+Title:          WorkFlow: Define Area of Interest and/or Pinpoint a Latitude and Longitude
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+############################
+Find Area of Interest (AOI)
+###############################
+1. Go to geojson.io (https://geojson.io/)
+  2. Zoom to your farm using satellite imagery, select the Polygon tool, and draw each field boundary.
+  3. Click the polygon or use the table tab on the right to add properties (field_id, crop, sowing_date, harvest_date, treatment).
+  4. Click Save → GeoJSON (NOT Shapefile).
+
+# Convert local GeoJSON directly into an Earth Engine FeatureCollection with geemap
+fields_fc = geemap.geojson_to_ee("path/to/your_fields.geojson")
+
+
+############################
+Pinpoint Lat/Lng of any place!!
+############################
+
+1. Go to SpatialReference.org
+https://spatialreference.org/
+
+
+2. Use the intractive map to pinpoint the location (map uses Geographic CRS (GCS) ==> EPSG:4326)
+	# UMA per EPSG:4326
+	# Center grassy area in front of bldgs
+LatLng(19.190319, -100.088689)
+
+
+3. Select a Projected CRS (PCS) and pinpoint the location
+	# UMA per EPSG:32614 (UTM zone 14N)
+	# Center grassy area in front of bldgs
+	# UTM position as easting and northing w/in UTM zone 14N
+Easting: 	385526.4 	<== (m)
+Northing: 	2122245.4 	<== (m)
+
+	# Converted to decimal degrees (DD)
+LatLng(19.190335, -100.088829)

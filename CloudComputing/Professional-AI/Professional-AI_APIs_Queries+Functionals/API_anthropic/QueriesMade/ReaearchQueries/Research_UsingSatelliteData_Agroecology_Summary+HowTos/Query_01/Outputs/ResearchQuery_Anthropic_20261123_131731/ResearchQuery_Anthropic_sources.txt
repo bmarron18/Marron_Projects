@@ -1,0 +1,142 @@
+1. Remote Sensing for Precision Agriculture: Sentinel-2 Improved Features and Applications
+   https://www.mdpi.com/2073-4395/10/5/641
+2. (PDF) Evaluation and cross-comparison of vegetation indices for crop monitoring from sentinel-2 and worldview-2 images
+   https://www.researchgate.net/publication/320481545_Evaluation_and_cross-comparison_of_vegetation_indices_for_crop_monitoring_from_sentinel-2_and_worldview-2_images
+3. Sentinel-2 for crop yield estimation: A systematic review - ScienceDirect
+   https://www.sciencedirect.com/science/article/pii/S2772375526006301
+4. Sentinel-2 for Crop Yield Estimation: A Systematic Review
+   https://arxiv.org/pdf/2603.23779
+5. A remote sensing approach for in-season nitrogen and yield prediction
+   https://link.springer.com/article/10.1007/s44279-026-00819-6
+6. Recent applications of machine learning, remote sensing, and iot approaches in yield prediction: a critical review
+   https://arxiv.org/pdf/2306.04566
+7. Sentinel-2 for Crop Yield Estimation: A Systematic Review
+   https://arxiv.org/html/2603.23779v1
+8. Evaluation of Surface Reflectance and Vegetation Indices Measured by Sentinel-2 Satellite Using Drone Considering Crop Type and Surface Heterogeneity
+   https://www.kjrs.org/journal/view.html?doi=10.7780/kjrs.2024.40.5.1.19
+9. Improving agricultural management zoning involving Sentinel-2 timeseries, crop’s phenology stages and proximal soil sensing data
+   https://link.springer.com/article/10.1007/s44279-025-00283-8
+10. Sentinel-2 for Crop Yield Estimation: A Systematic Review
+   https://mohammadrezanarimaniucdavis.github.io/pages/research/Sentinel2_Yield_Review/
+11. Spatial Patterns of Agricultural Parcel Geometry and Their Environmental Associations: A Precision Agriculture Perspective
+   https://www.mdpi.com/2073-4395/16/21/2129
+12. Geostatistical Integration of Soil Attributes and NDVI for Localized Management of Black Pepper in Eastern Amazon
+   https://doi.org/10.3390/agriengineering8040154
+13. Predicting spatial patterns of within-field crop yield variability
+   https://www.researchgate.net/publication/324141752_Predicting_spatial_patterns_of_within-field_crop_yield_variability
+14. UAV-Based Characterization of Pre- and Post-Harvest Water-Stress-Related Spectral Dynamics in a Commercial Vineyard Using NDRE and GNDVI
+   https://link.springer.com/article/10.1007/s10341-026-02030-9
+15. Multivariate lattice deformation: A spatially explicit framework for assessing crop rotation impacts on soil nutrient dynamics
+   https://arxiv.org/pdf/2603.12881
+16. Using Moran's I and Geostatistics to Identify Spatial Patterns of Soil Nutrients in Two Different Long-Term Phosphorus-Application Plots
+   https://www.researchgate.net/publication/259683363_Using_Moran's_I_and_Geostatistics_to_Identify_Spatial_Patterns_of_Soil_Nutrients_in_Two_Different_Long-Term_Phosphorus-Application_Plots
+17. Auxiliary-task learning for geographic data with autoregressive embeddings
+   https://arxiv.org/pdf/2006.10461
+18. ClusterRadar: an Interactive Web-Tool for the Multi-Method Exploration of Spatial Clusters Over Time
+   https://arxiv.org/pdf/2404.05897
+19. Moran%27s I
+   https://en.wikipedia.org/wiki/Moran%27s_I
+20. WaPOR project
+   https://www.fao.org/in-action/remote-sensing-for-water-productivity/project/en
+21. Database
+   https://www.fao.org/in-action/remote-sensing-for-water-productivity/wapor-database/en
+22. WaPOR data
+   https://www.fao.org/in-action/remote-sensing-for-water-productivity/wapor-data/en
+23. WaPOR
+   https://openknowledge.fao.org/handle/20.500.14283/cd5978en
+24. WaPOR
+   https://www.fao.org/aquastat/en/activities/projects/wapor/
+25. WaPOR
+   https://agritechobservatory.review.fao.org/en/wapor
+26. FAO WaPOR Database
+   https://eleaf.com/fao-wapor-database/
+27. WaPOR, remote sensing for water productivity
+   https://www.fao.org/in-action/remote-sensing-for-water-productivity/home/en
+28. WaPOR, remote sensing for water productivity
+   https://www.fao.org/in-action/remote-sensing-for-water-productivity/
+29. A 15-year spatio-temporal analysis of plant β-diversity using Landsat time series derived Rao’s Q index - ScienceDirect
+   https://www.sciencedirect.com/science/article/pii/S1470160X2031044X
+30. Full article: Application of remote sensing-based spectral variability hypothesis to improve tree diversity estimation of seasonal tropical forest considering phenological variations
+   https://www.tandfonline.com/doi/full/10.1080/10106049.2023.2178525
+31. Remote sensing of spectral diversity: A new methodological approach to account for spatio-temporal dissimilarities between plant communities - ScienceDirect
+   https://www.sciencedirect.com/science/article/pii/S1470160X21007718
+32. (PDF) Application of remote sensing-based spectral variability hypothesis to improve tree diversity estimation of seasonal tropical forest considering phenological variations
+   https://www.researchgate.net/publication/368373666_Application_of_remote_sensing-based_spectral_variability_hypothesis_to_improve_tree_diversity_estimation_of_seasonal_tropical_forest_considering_phenological_variations
+33. The relationship between spectral and plant diversity: disentangling the influence of metrics and habitat types
+   https://www.biorxiv.org/content/10.1101/2022.09.05.506583.full.pdf
+34. Estimating tree species diversity from space in an alpine conifer forest: The Rao's Q diversity index meets the spectral variation hypothesis - ScienceDirect
+   https://www.sciencedirect.com/science/article/abs/pii/S1574954119300561
+35. Challenging the link between functional and spectral diversity with radiative transfer modeling and data - ScienceDirect
+   https://www.sciencedirect.com/science/article/abs/pii/S003442572200284X
+36. The relationship between spectral and plant diversity: Disentangling the influence of metrics and habitat types at the landscape scale - ScienceDirect
+   https://www.sciencedirect.com/science/article/abs/pii/S0034425723001426
+37. The relationship between spectral and plant diversity: disentangling the influence of metrics and habitat types
+   https://www.biorxiv.org/content/10.1101/2022.09.05.506583v2
+38. Physiological fidelity of a satellite-derived forest resilience indicator in the Amazon
+   https://www.nature.com/articles/s41559-026-03116-z
+39. Ecological Indicators 171 (2025) 113076 Available online 18 February 2025
+   https://www.fs.usda.gov/rm/pubs_journals/2025/rmrs_2025_johnson_m001.pdf
+40. Remote sensing diagnosis of ecosystem resilience dynamics in agricultural heritage landscapes
+   https://www.nature.com/articles/s40494-025-02222-8
+41. Detecting and Predicting Vegetation Transitions Based on Resilience Dynamics and Land-Cover Changes
+   https://www.mdpi.com/2072-4292/18/6/889
+42. Quantifying large‐scale ecosystem stability with remote sensing data - White - 2020 - Remote Sensing in Ecology and Conservation - Wiley Online Library
+   https://zslpublications.onlinelibrary.wiley.com/doi/10.1002/rse2.148
+43. Physiological fidelity of a satellite-derived forest resilience indicator in the Amazon - PMC
+   https://pmc.ncbi.nlm.nih.gov/articles/PMC13541618/
+44. Physiological fidelity of a satellite-derived forest resilience indicator in the Amazon - PubMed
+   https://pubmed.ncbi.nlm.nih.gov/42481893/
+45. Satellite data reveal resilience loss across global ecoregions
+   https://bioengineer.org/satellite-data-reveal-resilience-loss-across-global-ecoregions/
+46. Next Article in Journal
+   https://www.mdpi.com/2072-4292/17/11/1809
+47. Full article: Synergistic use of Sentinel-1 and Sentinel-2 data for Fall Armyworm infestation detection and mapping in maize croplands
+   https://www.tandfonline.com/doi/full/10.1080/01431161.2025.2546155
+48. (PDF) Synergistic use of Sentinel-1 and Sentinel-2 data for Fall Armyworm infestation detection and mapping in maize croplands
+   https://www.researchgate.net/publication/395954312_Synergistic_use_of_Sentinel-1_and_Sentinel-2_data_for_Fall_Armyworm_infestation_detection_and_mapping_in_maize_croplands
+49. A Fast Fourier Convolutional Deep Neural Network For Accurate and Explainable Discrimination Of Wheat Yellow Rust And Nitrogen Deficiency From Sentinel-2 Time-Series Data
+   https://arxiv.org/pdf/2306.17207
+50. New Spectral Index for Detecting Wheat Yellow Rust Using Sentinel-2 Multispectral Imagery
+   https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5877331/
+51. Sentinel-2-Based Forest Health Survey of ICP Forests Level I and II Plots in Hungary
+   https://www.mdpi.com/2313-433X/11/11/413
+52. (PDF) A Disease Index for Efficiently Detecting Wheat Fusarium Head Blight Using Sentinel-2 Multispectral Imagery
+   https://www.researchgate.net/publication/339889521_A_Disease_Index_for_Efficiently_Detecting_Wheat_Fusarium_Head_Blight_Using_Sentinel-2_Multispectral_Imagery
+53. (PDF) New Spectral Index for Detecting Wheat Yellow Rust Using Sentinel-2 Multispectral Imagery
+   https://www.researchgate.net/publication/323783232_New_Spectral_Index_for_Detecting_Wheat_Yellow_Rust_Using_Sentinel-2_Multispectral_Imagery
+54. Remote sensing for mapping ecosystem services to support evaluation of ecological restoration interventions in an arid landscape - ScienceDirect
+   https://www.sciencedirect.com/science/article/abs/pii/S1470160X20301199
+55. (PDF) Remote sensing for agricultural applications: A meta-review
+   https://www.researchgate.net/publication/337210569_Remote_sensing_for_agricultural_applications_A_meta-review
+56. Mapping Farmed Landscapes from Remote Sensing
+   https://arxiv.org/pdf/2506.13993
+57. (PDF) Review of remote Sensing indices for monitoring environmental grassland indicators in Europe
+   https://www.researchgate.net/publication/402024754_Review_of_remote_Sensing_indices_for_monitoring_environmental_grassland_indicators_in_Europe
+58. (PDF) Complex evaluation of ecosystem services in agricultural landscapes
+   https://www.researchgate.net/publication/387099772_Complex_evaluation_of_ecosystem_services_in_agricultural_landscapes
+59. Remote Sensing Application in Ecological Restoration Monitoring: A Systematic Review
+   https://www.mdpi.com/2072-4292/16/12/2204
+60. Monitoring Agricultural Land Use Intensity with Remote Sensing and Traits
+   https://www.mdpi.com/2077-0472/15/21/2233
+61. A Systematic Review on the Integration of Remote Sensing and GIS to Forest and Grassland Ecosystem Health Attributes, Indicators, and Measures
+   https://www.mdpi.com/2072-4292/13/16/3262
+62. Could spaceborne multispectral data be used as SMART proxies’ indicators for agroforestry ecosystem services?
+   https://www.sciencedirect.com/science/article/pii/S1470160X23013043
+63. Harmonized Landsat and Sentinel-2 Data with Google Earth Engine
+   https://www.mdpi.com/2072-4292/16/15/2695
+64. (PDF) Integration of Cloud Score+ with Sentinel-2 Harmonized for land use and land cover classification using machine learning algorithms
+   https://www.researchgate.net/publication/387214117_Integration_of_Cloud_Score_with_Sentinel-2_Harmonized_for_land_use_and_land_cover_classification_using_machine_learning_algorithms
+65. feat(gee): add a Cloud Score+ / s2cloudless join for Sentinel-2 masking · Issue #1216 · serapeum-org/earthlens · GitHub
+   https://github.com/serapeum-org/earthlens/issues/1216
+66. All Clear with Cloud Score+. By Valerie Pasquarella, Research…
+   https://medium.com/google-earth/all-clear-with-cloud-score-bd6ee2e2235e
+67. 2. Time-series analysis
+   https://hendrik-wulf.gitbook.io/geo-717-earth-engine/day-2-time-series-analysis
+68. Cloud Score+ S2_HARMONIZED V1
+   https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED?hl=es-419
+69. Cloud Score+ S2_HARMONIZED V1
+   https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED
+70. Cloud Score+ S2_HARMONIZED V1
+   https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED?hl=it
+71. Cloud Score+ S2_HARMONIZED V1
+   https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_CLOUD_SCORE_PLUS_V1_S2_HARMONIZED?hl=zh-tw

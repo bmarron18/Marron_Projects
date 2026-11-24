@@ -31,7 +31,7 @@ Your Anthropic Console (API) account and your Claude.ai chat account are separat
 
     Console Account (console.anthropic.com): 
         *Used by developers to generate API keys, manage prepaid billing credits, and build custom applications.
-        *Prepaid credits
+        *Prepaid credits (in USD)
 
 
 
