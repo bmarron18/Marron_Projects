@@ -1,0 +1,344 @@
+Title:          Region-Level Workflow 01c:
+                EXTRACT earth observational data to BUILD a Historic International Reference Baseline (HIRB) 
+                of metrics and thresholds that will be used as the Gold-Standard Reference (GSR) for 
+                EVALUATING RESILIENCE in agroecosystems at the regional level
+
+Project:        Remote Sensing for Ag
+Author:         bmarron, claude-fable-5-1
+Created:        Nov 2026
+Revised:        
+
+
+
+Measuring and evaluating ecosystem services in agroecosystems with Sentinel-2 / drone data
+=======================================================================================================
+Prepared: November 2026. Scope: Sentinel-2 (10-20 m, 5-day revisit) processed in
+Google Earth Engine (GEE) with Python post-processing; UAV/drone imagery is
+treated as an optional high-resolution complement. No executable code is
+given; each step states the data, the metric(s), the processing, and how the
+result is interpreted for small-scale (0.5-20 ha) crop operations.
+
+
+=====================================================
+GLossary
+=======================================================
+
+AETI  
+  Actual Evapotranspiration and Interception (mm⋅dekad⁻¹ or mm⋅yr⁻¹) 
+  Quantifies total consumptive water flux from soil evaporation, plant transpiration (T), and canopy interception (I).
+
+AOI
+  Area of Interest
+
+CHIRPS
+   Climate Hazards Group InfraRed Precipitation with Stations provides ~0.05° (~5.5 km) quasi-global precipitation data (50°S–50°N) from 1981 to near-present at daily, pentad (5-day), and monthly intervals.
+
+CCC
+  canopy chlorophyll content
+
+DEM
+  Digital Elevation Model
+
+fAPAR, fCover
+  Fraction of Absorbed Photosynthetically Active Radiation
+    How actively plants are photosynthesizing and converting light into energy. It is a direct indicator of primary productivity, crop growth rates, and vegetation stress.
+
+  Fraction of Vegetation Cover
+     How much of the soil is shielded by plants versus exposed to the sky. Unlike fAPAR, fCover depends purely on canopy geometry and density rather than sun angle or light absorption
+
+  Both are satellite-derived biophysical variables used to measure the density, health, and photosynthetic activity of vegetation. Both are dimensionless values ranging from 0 to 1 (or 0% to 100%) and are commonly calculated from Sentinel-2 data using radiative transfer models (such as the SNAP Biophysical Processor).
+
+
+GBWP  
+  Gross Biomass Water Productivity (kg⋅m⁻³)  
+  Measures above-ground or total dry biomass produced per cubic meter of water consumed (Biomass / AETI), linking carbon fixation directly to water use.
+
+GEE
+  Google Earth Engine
+
+LAI
+  Leaf Area Index
+
+LISA
+  Local Indicator of Spatial Association
+
+NPP 
+  Net Primary Production (g C⋅m⁻²⋅dekad⁻¹ or g C⋅m⁻²⋅yr⁻¹) 
+  Measures net carbon assimilated by vegetation after autotrophic respiration; directly proxies carbon sequestration and biomass accumulation.
+
+RUSLE
+  Revised Universal Soil Loss Equation. In soil erosion and hydrological modeling, a Digital Elevation Model (DEM) provides topographic inputs (slope and flow accumulation for the LS factor), while CHIRPS provides precipitation data to calculate rainfall erosivity (the R factor). Estimating the RUSLE rainfall erosivity factor (\(R\)) from CHIRPS requires empirical regression equations based on monthly or annual rainfall totals, since the dataset provides daily, pentad, and monthly accumulations rather than sub-hourly storm intensities.
+
+SCL
+  Scene Classification Layer, a 20-meter resolution band included in Sentinel-2 Level-2A satellite products
+
+SNH
+  Semi-natural habitat
+
+SWIR
+  Short-Wave Infrared
+  1610 nm and 2190 nm are the center wavelengths of Sentinel-2’s two SWIR spectral bands (Band 11 and Band 12).
+
+UAV
+  Unmanned Aerial Vehicle
+
+WaPOR
+  Water Productivity through Open access of Remotely sensed derived data (from the UN FAO). Provides ready-to-use 
+  remote sensing layers—NPP, AETI, and GBWP—to track vegetation carbon uptake, water consumption, and ecosystem 
+  water efficiency across basins or agricultural landscapes
+
+
+
+
+WF
+  Workflow
+
+
+
+
+================================================================================
+PART A. COMMON SENTINEL-2 -> GOOGLE EARTH ENGINE (GEE) -> PYTHON PIPELINE
+(identical for every question; question-specific steps follow in Part B)
+================================================================================
+
+A1. Define the area of interest (AOI)
+  - Digitise each field / management unit as a polygon (GeoJSON or shapefile,
+    EPSG:4326). Keep a unique field_id attribute. For small-scale operations
+    (0.5-20 ha) also record crop, sowing date, expected harvest date, and any
+    sub-field treatments (these become the "ground truth" table later).
+  - Buffer each polygon INWARD by 10-20 m before extracting statistics, so that
+    mixed boundary pixels (hedges, tracks, neighbouring fields) are excluded.
+  - Upload to GEE as an Asset (FeatureCollection) or load with geemap/ee from
+    a local GeoJSON.
+
+A2. Load the Sentinel-2 Level-2A surface-reflectance collection
+  - Collection: ee.ImageCollection('COPERNICUS/S2_SR_HARMONIZED')
+    (bottom-of-atmosphere reflectance, scale factor 0.0001, harmonised so that
+    the Jan-2022 processing-baseline offset is removed).
+  - Filter: .filterBounds(AOI) and .filterDate(start, end). For a full season
+    use ~1 month before sowing to ~1 month after harvest; for multi-year
+    analyses (resilience, yield forecasting) load all years since 2017.
+  - Useful bands (native resolution): B2 blue 10 m, B3 green 10 m, B4 red 10 m,
+    B5 red-edge-1 705 nm 20 m, B6 red-edge-2 740 nm 20 m, B7 red-edge-3 783 nm
+    20 m, B8 NIR 842 nm 10 m, B8A narrow NIR 865 nm 20 m, B11 SWIR-1 1610 nm
+    20 m, B12 SWIR-2 2190 nm 20 m, SCL scene classification 20 m.
+
+A3. Cloud, shadow and edge masking
+  - Preferred: join the Cloud Score+ collection
+    ee.ImageCollection('GOOGLE/CLOUD_SCORE_PLUS/V1/S2_HARMONIZED') with
+    .linkCollection(csPlus, ['cs','cs_cdf']) and keep pixels where
+    cs_cdf >= 0.60 (0.50-0.65 is the usual working range; lower = more
+    observations but more residual haze; higher = cleaner but fewer dates).
+  - Alternative/legacy: SCL band - drop classes 3 (shadow), 8, 9, 10 (cloud,
+    cirrus), 11 (snow), 1 (saturated), 0 (no data). Optionally s2cloudless
+    ('COPERNICUS/S2_CLOUD_PROBABILITY', probability < 40).
+  - Mask pixels where B8A, B11 or B12 are masked (tile-edge artefacts).
+  - Record per image the fraction of unmasked AOI pixels; discard images with
+    < 70-80 % valid pixels inside the field.
+
+A4. Compute spectral indices (map a function over the collection)
+  - Scale reflectance: img.multiply(0.0001).
+  - Core indices (band maths with ee.Image.normalizedDifference or .expression):
+      NDVI  = (B8 - B4) / (B8 + B4)                      greenness / biomass
+      kNDVI = tanh(NDVI^2)                               saturation-resistant
+      EVI2  = 2.5 (B8 - B4) / (B8 + 2.4 B4 + 1)          less saturation than NDVI
+      SAVI  = 1.5 (B8 - B4) / (B8 + B4 + 0.5)            sparse canopies / early season
+      NDRE  = (B8A - B5) / (B8A + B5)                    chlorophyll / N status
+      CIre  = (B8A / B5) - 1                             canopy chlorophyll content
+      MTCI  = (B6 - B5) / (B5 - B4)                      chlorophyll, late season
+      NDMI  = (B8A - B11) / (B8A + B11)                  canopy water content
+      MSI   = B11 / B8A                                  moisture stress (inverse)
+      NDWI  = (B3 - B8) / (B3 + B8)                      surface water / waterlogging
+      PSRI  = (B4 - B2) / B6                             senescence / carotenoid:chl
+      REDSI = (605.86 (B7 - B4) - 783.07 (B5 - B4)) / (2 B4)  yellow-rust disease index
+      NIRv  = NDVI * B8                                  proxy for photosynthetic capacity
+      BSI   = ((B11 + B4) - (B8 + B2)) / ((B11 + B4) + (B8 + B2))  bare soil
+  - Biophysical variables (LAI, fAPAR, fCover, canopy chlorophyll content CCC)
+    can be retrieved with the Sentinel-2 biophysical neural network (SNAP
+    "Biophysical Processor" coefficients ported to GEE) when physically
+    interpretable units are needed (e.g., for crop-model assimilation).
+  - Resample 20 m bands to 10 m (bilinear) ONLY for visual products; for
+    statistics compute red-edge/SWIR indices at native 20 m.
+
+A5. Temporal compositing / time-series construction
+  - Field-level time series: for each image, reduceRegion(mean, median, stdDev,
+    percentiles 10/50/90, count) over the inward-buffered polygon -> export a
+    CSV (date, field_id, index statistics, valid-pixel count).
+  - Pixel-level stacks: build composites per 10-day or 16-day window
+    (median or maximum-NDVI), or per phenological stage. Fill gaps by linear
+    interpolation in time, then smooth with Savitzky-Golay or Whittaker
+    (Python: scipy.signal.savgol_filter; or GEE harmonic regression).
+  - Baseline/reference layer: multi-year (>= 3 seasons) per-pixel median
+    and standard deviation of each index for the same calendar window.
+
+A6. Export GeoTIFFs
+  - ee.batch.Export.image.toDrive (or toCloudStorage/toAsset) at 10 m, CRS =
+    the local UTM zone (EPSG:326xx / 327xx), region = AOI bounding box,
+    maxPixels large, one band per date or one multi-band stack per index.
+  - Keep a sidecar JSON with dates, cloud threshold, scale and CRS.
+
+A7. Python post-processing (local)
+  - Read with rasterio (or rioxarray/xarray for date stacks); clip to the
+    polygon with rasterio.mask; convert nodata to NaN.
+  - Descriptive statistics per field and date: mean, median, SD,
+    CV = SD / mean (x100 %), P10, P90, skewness, % pixels below a threshold.
+  - Spatial autocorrelation (PySAL: libpysal + esda):
+      * Build a spatial-weights object for the raster grid: queen contiguity
+        (8 neighbours) with libpysal.weights.lat2W(nrows, ncols, rook=False),
+        then drop NaN cells (or use a k-nearest-neighbour weight on pixel
+        centroids if the field is irregular). Row-standardise (w.transform='r').
+      * Global Moran's I  : esda.Moran(values, w)        -> I, p_sim
+      * Local Moran's I   : esda.Moran_Local(values, w, permutations=999)
+        -> Is (local statistic per pixel), p_sim, q (quadrant: 1 HH, 2 LH,
+        3 LL, 4 HL). Pixels with p_sim < 0.05 are significant.
+      * LISA cluster map  : raster of HH / LL / HL / LH / not-significant.
+      * Summary metrics   : % of field area in each LISA class; mean of Ii;
+        SD of Ii; CV of local Moran's I = SD(Ii) / mean(Ii).
+      * NOTE on CV(Ii): because Ii can be negative (outliers) and its mean can
+        approach zero, always report the mean, the SD and the % of significant
+        pixels alongside the CV; when mean(Ii) < 0.05 the CV becomes unstable
+        and the SD of Ii (or CV of |Ii|) should be used instead.
+  - Spectral heterogeneity / diversity (for Questions 2, 7, 8): Rao's Q over a
+    moving window (e.g., 3x3 to 9x9 pixels) on NDVI or on several bands.
+  - Temporal metrics (Questions 3, 6): anomalies z = (x - baseline_mean) /
+    baseline_sd; lag-1 autocorrelation (AR(1)) of de-seasonalised residuals;
+    seasonal integrals (sum / trapezoid of NDVI between SOS and EOS).
+  - Clustering for management zones (Question 5): sklearn KMeans / fuzzy
+    c-means on standardised multi-date index stacks.
+  - Write outputs as GeoTIFF (rasterio) and CSV; make maps with matplotlib.
+
+A8. Interpretation conventions used in Part B
+  - "Field mean NDVI" = mean of valid pixels in the inward-buffered polygon.
+  - "CV of NDVI" = within-field heterogeneity of crop vigour (%). Typical
+    well-managed uniform fields: < 10-15 % at full canopy; > 20-25 % signals
+    patchiness worth scouting.
+  - "Global Moran's I" of NDVI: ~0 random, > 0 clustered (patches), values
+    > 0.3-0.4 commonly reported for yield / NDVI maps with strip-like or
+    soil-driven patterns.
+  - "Local Moran's I (LISA)": HH = high-vigour cluster, LL = low-vigour cluster
+    (stress patch), HL / LH = spatial outliers (single-pixel anomalies, often
+    noise, weeds, equipment skips or incipient disease foci).
+  - "CV of local Moran's I": low CV = spatial structure is homogeneous (the
+    whole field is either uniformly clustered or uniformly random); high CV =
+    mixed structure, i.e., a few strong clusters/outliers embedded in a
+    random background - typical of localised stress, pest foci, drainage
+    problems or patchy emergence. Track its change through the season: a
+    rising CV(Ii) before any fall in mean NDVI is an early-warning signal
+    that stress is developing locally.
+  - Always interpret satellite metrics relative to (i) the crop's phenological
+    stage, (ii) the same field in previous seasons, and (iii) neighbouring
+    fields of the same crop in the same window.
+
+================================================================================
+PART B. ECOSYSTEM SERVICES IN AGROECOSYSTEMS
+================================================================================
+
+Principle. Remote sensing provides proxies for ecosystem-service (ES) SUPPLY indicators; it cannot measure services directly. 
+Sentinel-2 indices and land-cover maps feed indicator models for: 
+  * ES provisioning (biomass/yield, forage) 
+  * ES regulating (carbon sequestration proxy, soil-erosion protection, water regulation, pollination/pest-control habitat)
+  * ES supporting (habitat extent, connectivity)
+
+Each indicator is mapped, aggregated per field and landscape, and tracked over time; trade-offs between services are assessed by correlation among indicator maps.
+
+B7.1  Data extraction (GEE)
+  - BUILD a Land cover/habitat map at 10 m: ESA WorldCover, Dynamic World, or a
+    supervised classification of Sentinel-2 seasonal composites that
+    separates crops, grassland, hedgerows/tree lines, woodland, wetlands,
+    water, bare soil. Field margins and hedgerows are often < 10 m; use
+    seasonal NDVI contrast (woody vegetation stays green after crop
+    harvest) and, where possible, drone or very-high-resolution imagery.
+
+  - BUILD Seasonal composites and integrals of NDVI/kNDVI/NIRv (Question 4) Highlight bare
+    soil frequency (fraction of dates with NDVI < 0.25 during the year), and
+    cover-crop presence (winter NDVI > 0.4 on cropland).
+
+  - OBTAIN Terrain Details: DEM, slope, flow accumulation; rainfall erosivity (CHIRPS).
+
+  - FAO WaPOR: NPP, AETI, GBWP for carbon/water indicators.
+
+  - OBTAIN Phenology of flowering resources: spring/summer NDVI and visible-band
+    indices of grasslands/hedges as proxy for floral resource timing.
+
+
+B7.2  Metrics (indicator per ES)
+  (a) Provisioning - crop/forage production: seasonal NDVI integral or WaPOR
+      NPP/TBP (kg DM/ha); relative productivity index (Question 4).
+
+  (b) Carbon regulation: annual integral of NIRv or kNDVI as a GPP proxy;
+      NPP from WaPOR; woody-vegetation cover fraction (above-ground carbon
+      proxy); soil-carbon proxy via bare-soil reflectance (lower
+      brightness, higher SWIR absorption = higher SOC) calibrated with soil
+      samples.
+
+  (c) Soil-erosion protection: fractional vegetation cover FVC =
+      (NDVI - NDVI_soil)/(NDVI_veg - NDVI_soil) over the year, especially in
+      the erosive season; cover-management factor C (RUSLE) estimated from
+      NDVI, combined with slope-length (LS) and rainfall erosivity (R) ->
+      relative soil-loss map; number of bare-soil days per year.
+
+  (d) Water regulation: wetland and riparian vegetation extent (NDWI,
+      NDMI), fraction of permanent vegetation along streams (buffer
+      analysis), AETI/precipitation ratio.
+
+  (e) Pollination and pest-control habitat: proportion of semi-natural
+      habitat (SNH) within 250, 500 and 1000 m of each field; edge density
+      of SNH; distance from field centroid to nearest SNH patch; flowering
+      resource index (NDVI/greenness of SNH during crop flowering window).
+
+  (f) Habitat and connectivity (supporting): landscape metrics from the
+      10 m map - patch number, mean patch size, edge density, Shannon
+      diversity of land cover, effective mesh size; computed with pylandstats.
+
+  (g) Spatial diagnostics of each indicator map: CV, Global Moran's I, LISA,
+      CV of local Moran's I; a bivariate LISA between two indicators (e.g.,
+      productivity vs. SNH proportion) identifies synergy (HH) and trade-off
+      (HL/LH) zones.
+
+  (h) Composite ES index: z-score each indicator, average with weights set
+      by stakeholders; report both the composite and the individual layers.
+
+B7.3  Processing / analysis sequence (Python)
+  Step 1  Produce and validate the land-cover/habitat map (accuracy >= 80 %
+          overall with a confusion matrix from reference points).
+
+  Step 2  Compute each indicator raster (a)-(f) for the reference year and,
+          if possible, for a baseline year (e.g., 2017-2018) to measure
+          change.
+
+  Step 3  Aggregate per field, per farm and per landscape grid (e.g., 500 m);
+          compute spatial statistics (g).
+
+  Step 4  Trade-off analysis: Spearman correlation matrix among indicators
+          across grid cells; bivariate LISA of pairs of interest.
+
+  Step 5  Scenario assessment (optional): recompute indicators after
+          hypothetically converting stable-low productivity zones
+          (Question 4) to SNH; quantify production lost vs. regulating
+          services gained.
+
+  Step 6  Report a per-farm ES dashboard: indicator values, their change
+          since baseline, their rank versus the surrounding landscape, maps
+          of synergy/trade-off zones.
+
+B7.4  Interpretation guide
+  - ES that depend directly on green cover (production, erosion control,
+    forage, carbon proxy) are the ones most reliably assessed from
+    Sentinel-2; services depending on soil or hydrology are inferred through
+    models and need calibration.
+
+  - SNH proportion within 500 m below ~10-20 % generally indicates poor
+    support for pollinators and natural enemies; increasing hedgerow/margin
+    cover shows up as rising woody fraction and edge density.
+
+  - Bare-soil days > 120 per year on slopes > 5 % flags high erosion risk;
+    cover crops reduce this and increase winter NDVI integral.
+
+  - HH clusters in a bivariate LISA of production vs. SNH indicate
+    multifunctional areas; HL (high production, low SNH) marks intensive
+    zones where habitat measures could be targeted; LH (low production,
+    high SNH) are candidates for extensification/agri-environment schemes.
+    
+  - Trends: compare 3-year moving averages, not single years, because
+    weather dominates inter-annual variation in all greenness-based
+    indicators.
