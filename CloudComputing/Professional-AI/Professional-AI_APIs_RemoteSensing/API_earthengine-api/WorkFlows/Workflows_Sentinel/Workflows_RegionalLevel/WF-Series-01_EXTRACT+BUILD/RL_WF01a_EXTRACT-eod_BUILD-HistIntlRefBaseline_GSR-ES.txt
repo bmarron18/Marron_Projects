@@ -8,15 +8,7 @@ Author:         bmarron, claude-fable-5-1
 Created:        Nov 2026
 Revised:        
 
-                  
-
-Measuring and evaluating ecosystem services in agroecosystems with Sentinel-2 / drone data
-=======================================================================================================
-Prepared: November 2026. Scope: Sentinel-2 (10-20 m, 5-day revisit) processed in
-Google Earth Engine (GEE) with Python post-processing; UAV/drone imagery is
-treated as an optional high-resolution complement. No executable code is
-given; each step states the data, the metric(s), the processing, and how the
-result is interpreted for small-scale (0.5-20 ha) crop operations.
+Scope: Sentinel-2 (10-20 m, 5-day revisit) processed in Google Earth Engine (GEE) with Python post-processing; Detailed workflows and pipeline; No executable code is given
 
 
 =====================================================
@@ -92,6 +84,46 @@ WaPOR
 
 WF
   Workflow
+
+=============================================================================
+WORKFLOW LOGIC + ASSUMPTIONS
+==============================================================================
+See .tex doc
+
+
+
+VIBE can be a harmonic oscillation (energy from frequency and amplitude) bc time series analysis
+
+VIBE  = mf^2A^2
+      = (m = log of the count of binned NDVI values with high reflectance) *
+      (f = cycle to peaks of veg growth max over time (momths)^2 *
+      (A = total life index = f(binned NDVI values^3))^2
+
+disturbance, NDVI, NPP, diversity
+
+
+<<< python
+import numpy as np
+
+# Example flattened NDVI raster values (-1.0 to 1.0)
+ndvi_values = np.array([-0.45, 0.05, 0.12, 0.24, 0.38, 0.44, 0.61, 0.78, 0.85])
+
+# Option A: Custom Land-Cover Bins
+custom_bins = [-1.0, 0.0, 0.15, 0.30, 0.50, 0.70, 1.0]
+counts, bin_edges = np.histogram(ndvi_values, bins=custom_bins)
+
+# Option B: 20 Equal-Width Bins (0.1 step)
+equal_counts, equal_edges = np.histogram(ndvi_values, bins=20, range=(-1.0, 1.0))
+
+for i in range(len(counts)):
+    print(f"[{bin_edges[i]:.2f}, {bin_edges[i+1]:.2f}]: {counts[i]} pixels")
+>>>
+
+
+
+
+
+
 
 
 

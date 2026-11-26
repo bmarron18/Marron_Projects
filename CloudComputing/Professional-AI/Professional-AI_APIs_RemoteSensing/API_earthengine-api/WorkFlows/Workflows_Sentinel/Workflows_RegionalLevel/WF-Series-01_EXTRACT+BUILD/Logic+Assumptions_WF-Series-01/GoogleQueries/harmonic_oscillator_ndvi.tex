@@ -1,0 +1,66 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+
+\title{Simple Harmonic Oscillator and Harmonic Regression for NDVI}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+The general formula for the displacement $x(t)$ of a \textbf{simple harmonic oscillator} over time is:
+\begin{equation}
+x(t) = A \cos(\omega t + \phi)
+\end{equation}
+
+\noindent \textit{Note: This formulation is applied directly in remote sensing as \textbf{harmonic regression} to fit smooth seasonal sine and cosine curves to noisy NDVI time-series data.}
+
+\section*{1. Key Variables in the Formula}
+\begin{itemize}[leftmargin=1.5em]
+    \item $x(t)$: Position (or value, such as NDVI) at time $t$.
+    \item $A$: \textbf{Amplitude} --- the maximum displacement from the equilibrium (center) position.
+    \item $\omega$: \textbf{Angular frequency} --- the rate of oscillation, measured in radians per unit time ($\omega = 2\pi f = \frac{2\pi}{T}$, where $f$ is frequency and $T$ is the period).
+    \item $t$: \textbf{Time}.
+    \item $\phi$: \textbf{Phase constant (phase shift)} --- determines the starting point of the wave at $t = 0$.
+\end{itemize}
+
+\section*{2. Core Governing Equations (Physics)}
+In classical mechanics, a simple harmonic oscillator is driven by a restoring force proportional to displacement (\textbf{Hooke's Law}):
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Restoring Force:}
+    \begin{equation}
+    F = -kx
+    \end{equation}
+    \item \textbf{Differential Equation of Motion:}
+    \begin{equation}
+    \frac{d^2x}{dt^2} + \omega^2 x = 0
+    \end{equation}
+    \item \textbf{Angular Frequency (Mass-Spring System):}
+    \begin{equation}
+    \omega = \sqrt{\frac{k}{m}}
+    \end{equation}
+    where $k$ is the spring constant and $m$ is mass.
+\end{itemize}
+
+\section*{3. Harmonic Form Used for NDVI Time Series}
+When modeling annual vegetation curves (harmonic analysis / Fourier series), the formula is typically expressed as a linear combination of sine and cosine waves plus a baseline offset ($c_0$):
+\begin{equation}
+\mathrm{NDVI}(t) = c_0 + \sum_{n=1}^{N} \left[ a_n \cos\left(\frac{2\pi n t}{T}\right) + b_n \sin\left(\frac{2\pi n t}{T}\right) \right]
+\end{equation}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item $c_0$: Mean annual NDVI baseline.
+    \item $T$: Period (e.g., $365.25$ days for annual cycles).
+    \item $n = 1$: Captures single-peak annual seasons (e.g., deciduous forests, single-crop fields).
+    \item $n = 2$: Captures bimodal seasons (e.g., double-cropping or bimodal rainfall regimes).
+\end{itemize}
+
+\end{document}

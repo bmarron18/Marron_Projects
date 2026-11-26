@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=1in}
+
+\title{Interpreting Weighted Sums in a Histogram}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Summing $(\text{count in bin} \times \text{bin value})$ gives you the \textbf{approximated total sum of all individual data points} in your dataset.
+
+If you divide that total by the sum of all counts (the total number of pixels or observations), you get the \textbf{binned weighted mean (average)} of your dataset.
+
+\section*{1. What the Formulas Represent}
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Sum of Products:}
+    \begin{equation}
+        \sum_{i=1}^{k} \left(\text{Count}_i \times \text{Bin Value}_i\right) \approx \text{Total Sum of Raw Values}
+    \end{equation}
+    \textit{In NDVI terms:} If you have $1{,}000$ pixels and each pixel represents a $10\text{ m} \times 10\text{ m}$ ($100\text{ m}^2$) area, multiplying that sum by the pixel area gives you the \textbf{integrated NDVI} (a proxy for total landscape greenness or total biomass across the entire region).
+
+    \item \textbf{Divided by Total Pixels:}
+    \begin{equation}
+        \frac{\sum_{i=1}^{k} \left(\text{Count}_i \times \text{Bin Value}_i\right)}{\sum_{i=1}^{k} \text{Count}_i} \approx \text{Mean NDVI}
+    \end{equation}
+    \textit{In NDVI terms:} This gives you the \textbf{average NDVI} of your entire image or field from the histogram alone, without needing the original raw raster pixels.
+\end{itemize}
+
+\section*{2. Why ``Bin Value'' Choice Matters}
+
+Because a bin covers a continuous range (e.g., $[0.40, 0.50]$), multiplying by different parts of the bin changes your accuracy:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Bin Midpoint (Recommended):} Using the center of the bin ($0.45$) assumes values are evenly spread inside the bin. Errors tend to cancel out, giving the closest estimate to the true raw sum and mean.
+    \item \textbf{Lower Bin Edge ($0.40$):} Systematically \textbf{underestimates} the true sum and mean.
+    \item \textbf{Upper Bin Edge ($0.50$):} Systematically \textbf{overestimates} the true sum and mean.
+\end{itemize}
+
+\section*{3. Quick Numerical Example}
+
+Suppose a tiny $10$-pixel field has the following binned counts:
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{NDVI Bin} & \textbf{Bin Midpoint} & \textbf{Pixel Count} & \textbf{Count $\times$ Midpoint} \\
+\midrule
+$[0.1, 0.3]$ & $0.2$ & $2$ & $2 \times 0.2 = 0.4$ \\
+$[0.5, 0.7]$ & $0.6$ & $8$ & $8 \times 0.6 = 4.8$ \\
+\midrule
+\textbf{Total} & --- & $\mathbf{10}$ & $\mathbf{5.2}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Sum of $(\text{count} \times \text{midpoint})$:} $0.4 + 4.8 = \mathbf{5.2}$ (Approximated total NDVI sum).
+    \item \textbf{Divide by total count ($10$):} $5.2 / 10 = \mathbf{0.52}$ (Approximated average NDVI of the field).
+\end{enumerate}
+
+\end{document}

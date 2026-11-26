@@ -1,0 +1,65 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+
+\title{\textbf{General Shape of NDVI Over Time Across Landscapes}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Over a full year, the general shape of a Normalized Difference Vegetation Index (NDVI) time-series curve for vegetated landscapes is a \textbf{bell-shaped (sinusoidal) seasonal wave}---starting low during dormancy, rising steeply during spring leaf-out (``green-up''), plateauing at peak summer growth, and declining during autumn senescence.
+
+However, the exact curve shape changes distinctly depending on the \textbf{ecosystem and land management}.
+
+\section{Common Landscape Curve Shapes}
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{3.8cm} p{3.8cm} X}
+\toprule
+Landscape Type & General Curve Shape & Key Characteristics \\
+\midrule
+Deciduous Forest \& Temperate Grassland & Smooth, single bell curve & Low baseline in winter ($0.1\text{--}0.2$), rapid spring green-up, high summer plateau ($0.7\text{--}0.85$), gradual autumn drop. \\
+Single-Crop Agriculture & Sharp, narrow ``hat'' or trapezoid & Flat bare-soil baseline ($\sim 0.15$), very steep rise after planting, flat peak canopy, abrupt drop at harvest. \\
+Double-Crop / Irrigated Agriculture & Bimodal (two distinct peaks) & Two separate bell curves within one calendar year (e.g., a winter wheat peak and a summer corn/soybean peak). \\
+Evergreen / Tropical Forest & Flat high plateau & Consistently high ($0.75\text{--}0.90$) year-round with minimal seasonal dip, though tropical dry forests show a gentle wet/dry-season wave. \\
+Semi-Arid / Mediterranean Shrubland & Asymmetric or pulse-driven wave & Tracks rainfall rather than temperature; spikes quickly after wet-season rains (e.g., winter/spring or summer monsoons) and tapers slowly during dry months. \\
+Urban / Barren / Water & Flat low line & Remains low and relatively constant year-round ($< 0.0$ for water, $0.05\text{--}0.20$ for concrete/bare rock). \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of annual NDVI time-series curve shapes across major land-cover types.}
+\end{table}
+
+\section{Key Phenological Stages on the Curve}
+
+In remote sensing (land-surface phenology), analysts extract four key inflection points and metrics from this seasonal wave:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Start of Season (SOS):} The inflection point where NDVI begins rising rapidly above the winter or dry-season baseline.
+    \item \textbf{Peak of Season (POS):} The maximum NDVI value reached during peak biomass and canopy closure.
+    \item \textbf{End of Season (EOS):} The point where NDVI drops back toward the dormant baseline.
+    \item \textbf{Integrated NDVI (Area Under the Curve):} The total area between the seasonal curve and the baseline---directly analogous to summing $(\text{count} \times \text{bin value})$ over time---which serves as a proxy for \textbf{total annual primary productivity (biomass)}.
+\end{enumerate}
+
+\section{Real-World Noise in Raw Curves}
+
+Raw satellite NDVI time series rarely look like a smooth mathematical curve on the first plot due to atmospheric and sensor limitations:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Cloud \& Snow Drops:} Clouds, haze, and snow artificially depress near-infrared (NIR) reflectance, causing sharp, sudden \textbf{downward spikes} that must be smoothed (e.g., using Savitzky--Golay filters or maximum-value composites).
+    \item \textbf{Saturation Effect:} In very dense canopies (such as tropical forests or mature corn), NDVI flattens out near $0.85\text{--}0.90$ even as biomass continues to increase.
+\end{itemize}
+
+\end{document}

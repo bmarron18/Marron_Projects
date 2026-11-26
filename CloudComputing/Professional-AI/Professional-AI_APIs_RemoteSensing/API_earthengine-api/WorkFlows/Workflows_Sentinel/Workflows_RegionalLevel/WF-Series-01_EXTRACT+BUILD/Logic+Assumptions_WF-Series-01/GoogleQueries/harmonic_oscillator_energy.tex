@@ -1,0 +1,57 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Classical Energy of a Simple Harmonic Oscillator}
+\date{}
+
+\begin{document}
+\maketitle
+
+The classical formula for the total mechanical energy ($E$) of a simple harmonic oscillator is:
+\begin{equation}
+E = \frac{1}{2}kA^2 = \frac{1}{2}m\omega^2 A^2 = 2\pi^2 m f^2 A^2
+\end{equation}
+
+Because there is no friction or damping in an ideal simple harmonic oscillator, \textbf{total energy remains constant} over time, continuously trading back and forth between kinetic and potential energy.
+
+\section{Energy Components at Any Time $t$}
+
+\begin{itemize}
+    \item \textbf{Kinetic Energy ($K$):}
+    \begin{equation}
+    K(t) = \frac{1}{2}mv(t)^2 = \frac{1}{2}m\omega^2 A^2 \sin^2(\omega t + \phi)
+    \end{equation}
+    
+    \item \textbf{Potential Energy ($U$):}
+    \begin{equation}
+    U(t) = \frac{1}{2}kx(t)^2 = \frac{1}{2}kA^2 \cos^2(\omega t + \phi)
+    \end{equation}
+    
+    \item \textbf{Total Energy ($E = K + U$):} Since $\sin^2\theta + \cos^2\theta = 1$ and $k = m\omega^2$, the time-dependent terms cancel out completely:
+    \begin{equation}
+    E = \frac{1}{2}kA^2 \left[\sin^2(\omega t + \phi) + \cos^2(\omega t + \phi)\right] = \frac{1}{2}kA^2
+    \end{equation}
+\end{itemize}
+
+\section{Key Variables \& Relationships}
+
+\begin{itemize}
+    \item $k$: Spring constant (stiffness of the restoring force, in $\text{N/m}$).
+    \item $m$: Mass of the oscillating object (in $\text{kg}$).
+    \item $A$: Amplitude (maximum displacement from equilibrium, in $\text{m}$).
+    \item $\omega$: Angular frequency ($\omega = 2\pi f = \sqrt{k/m}$, in $\text{rad/s}$).
+    \item $f$: Ordinary frequency (cycles per second, in $\text{Hz}$).
+\end{itemize}
+
+\subsection*{Key Takeaways}
+\begin{itemize}
+    \item \textbf{Quadratic Scaling:} Energy scales with the \textbf{square of the amplitude ($A^2$)} and the \textbf{square of the frequency ($f^2$)}---doubling either one quadruples the total energy.
+    \item \textbf{Turning Points ($x = \pm A$):} Velocity is zero ($K = 0$), so all energy is stored as potential energy ($E = U_{\max}$).
+    \item \textbf{Equilibrium ($x = 0$):} Displacement is zero ($U = 0$), so all energy is kinetic ($E = K_{\max} = \frac{1}{2}mv_{\max}^2$).
+\end{itemize}
+
+\end{document}

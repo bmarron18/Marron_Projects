@@ -1,0 +1,604 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author: bmarron
+% Created: 26 Nov 2026
+% Modified:
+%
+% 12-point; 1in margins
+% One inch vertical space is 72.27pt
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}       % Document margins
+
+\usepackage{afterpage}
+%\usepackage{datetime2}               % specialty date formats
+\usepackage{lipsum}
+
+%BIBLIOGRAPHY (new way; biber+biblatex)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}              % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel}
+\usepackage[style=apa,			          % <== APA style for documents
+            sorting=nyt,
+            backref=true,           
+            doi=false,
+            isbn=false,
+            url=false,
+            backend=biber]{biblatex}
+\addbibresource{~/Desktop/GenRepo_01/BibLatex/MyCurrent_Library/My_Library_20201129.bib} 
+\DeclareLanguageMapping{english}{american-apa}
+
+
+\usepackage{lineno}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+
+\usepackage{outlines}
+\usepackage{tabularx}
+
+
+\usepackage{threeparttable}
+\usepackage{pgfgantt}                 % simple gantt charts
+\usepackage{bigfoot}
+\usepackage{multirow}
+\usepackage{microtype}                % Slightly tweak font spacing for aesthetics
+\usepackage{booktabs}                 % Horizontal rules in tables
+\usepackage{float}                    % specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{paralist}                 % bullet points with less space between them
+\usepackage[hang, 
+            small,
+            labelfont=bf,
+            up,
+            textfont=it,up]{caption}    % Custom captions under/above floats in tables or figures
+
+\usepackage[sc]{mathpazo}             % Use the Palatino font and the Pazo fonts for math
+\linespread{1.05}                     % global setting - Palatino needs more space
+\usepackage{setspace}
+%\doublespacing                       % global setting
+
+\usepackage{abstract}                                               % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}              % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}         % Set the abstract itself to small italic text
+
+\usepackage{titlesec}                                               % Allows customization of titles
+\renewcommand\thesection{\Roman{section}}                           % Roman numerals for the sections
+\renewcommand\thesubsection{\arabic{subsection}}                    % Arabic numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{}        % Change the look of the section titles
+\titleformat{\subsection}[block]{\large\underline}{\thesubsection}{1em}{}                    % Change the look of the subsection titles
+\titlespacing*{\subsubsection}{0pt}{0.75\baselineskip}{0.25\baselineskip}            % Change spacing after section
+
+
+\usepackage{fancyhdr}                                              % Headers and footers
+\pagestyle{fancy}                                                 % All pages have headers and footers
+%\pagestyle{plain}                                                  % globally set to "plain"
+%\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\fancyhead[L]{Applied Remote Sensing for Agroecology}                                                                                    
+\fancyhead[R]{\includegraphics[scale= 0.2]{graphics/UMA_Logo.png}}
+%\fancyhead[C]{}                                                   % Custom header text
+\fancyfoot[C]{\thepage}    
+%\fancyfoot[RO,LE]{\thepage}                                        % Custom footer text
+
+
+
+\usepackage{everypage}                             % Required for watermarks
+\usepackage{draftwatermark}                        % Watermarks or not
+\SetWatermarkLightness{0.95}
+\SetWatermarkScale{0.75}                            % Set to 1.0 for default
+%\SetWatermarkText{FINAL DRAFT}                      % comment out for default (DRAFT)   
+
+%\usepackage{multicol}                                      % Used for the two-column layout of the document
+%\usepackage{hyperref}                                      % Interferes with cite.sty 
+
+
+
+
+%-------------------------------------------------------------
+% NEW COMMANDS
+%---------------------------------------------------------------------
+%This command creates a box marked ``To Do'' around text.
+%To use: 
+% type \todo{  insert text here  }.
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{To Do}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt\begin{center} #1 \end{center}\end{minipage}}\vspace{5 mm}\par}
+
+% This command makes a sun symbol
+% To use:
+% Type \sun
+\newcommand{\sun}{\ensuremath{\odot}}                                   
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+
+% This command creates a custom indent
+% To use:
+%\begin{myindentpar}{2em}
+% blah blah blah
+%\end {myindentpar}
+\newenvironment{myindentpar}[1]%
+   {\begin{list}{}%
+       {\setlength{\leftmargin}{#1}}%
+           \item[]%
+   }
+     {\end{list}}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-5mm}\fontsize{14pt}{12pt}
+                    \selectfont \textbf{Logic and Assumptions for Workflow Series 01}\\  % Article title
+                   \vspace{2mm}
+                   Bruce D. Marron \\
+                   \vspace{2mm}
+                   \textit{(Building a Gold-Standard Reference for the VIBE, an agroecosystem level index)}
+      } 
+
+\author{
+%    \textit{(Course Outline P01)} \\                     % Name in “small caps”
+%     \normalsize FOR 803-001 \\
+%     \vspace{-9mm}
+%      \normalsize North Carolina State University      % Institution or Class ID
+     \vspace{-20mm}
+}
+\date{}
+
+
+
+%---------------------------------------------------------------------------------------
+% HELPFUL
+%----------------------------------------------------------------------------------------
+
+%\enquote*{text}                                 % single quotes
+%\shortcites{citation}
+%\cite{citation}                                % gives Authors et al.
+
+%\includegraphics[width=6.0in, height=5in, page=2]{graphics/Problems1.pdf}              % pdf
+%\includegraphics[width=0.35\textwidth, height=0.6\textheight]{graphics/fig1}           % pdf
+%\thispagestyle{plain}                          % headers/footers included page or not (default =TRUE except for 1st)
+
+
+
+%-------- TEMPLATE -----------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------
+%\large
+%\begin{flushleft}
+%\textit{}
+%\end{flushleft}
+%\normalsize
+%--------------------------------------------
+
+%\begin{outline}[enumerate]
+%\1 \textbf{}
+
+%\end{outline}
+
+
+
+
+%========================
+% DOCUMENT
+%=========================
+\begin{document}
+
+
+\begin{singlespacing}
+\maketitle                                      % insert title or not
+\end{singlespacing}
+\thispagestyle{fancy}                            % headers/footers included or not (default=FALSE for first pg)
+%\linenumbers                                    % line numbers for document or not
+
+%---------- DOC TEXT -----------------------
+
+
+%---------------------------------------
+\large
+\begin{flushleft}
+\textbf{\textit{Creating the VIBE Index}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+\begin{outline}[enumerate]
+\1 Intent \\
+Create a workflow that EXTRACTS Sentinel2 earth-observation data for "gold-standard" agroecosystem landscapes (ie, areas that, over time, have documented high crop yields, a sustained level of ecosystem services, a high level of resilience, and a high level of agricultural sustainability), and uses standard, easilycomputed and easily-explained metrics to BUILD a simple and useful index (VIBE) that can be used to compare the productivity, resilience, and ecosystem service delivery of other agroecosystem landscapes. NB. An index is a dimensionless, composite score that combines or normalizes multiple measurements to represent an abstract condition
+
+\1 Fundamental Premise and Assumptions\\
+\2 Premise: The VIBE Index can evaluate important ecosystem services on agroecosystem landscapes because the VIBE Index, which is derived from EO satellite data, is a proxy for the total aggragate effects of the total life force of a defined area of the Earth's surface.
+\2 Assumption: The total life force of a defined area of the Earth's surface is directly proportional to the quanity and quality of ecosystem services available in that area over time. 
+\2 Definition: The term "total life force" is a descriptor for the total abiotic and biotic transformational effects generated by all of the interactions of all of the living organisms in the defined area. The total transformational effects are the net result of myriad interactions between living organisms (as complex adaptive systems) and their biotic and abiotic environments  at different spatial and temporal scales.
+\2 Definition: Ecosystem services (ES) are here taken as measurable, concrete benefits that agroecosystems provide to people. ES are typically categorised into provisioning, regulating, supporting, and cultural services. 
+\2 Assumption: Detailed modeling of the total aggragate effects of the total life force of a defined area of the Earth's surface would be very, very complicated and ultimately, incomplete because of the numerous nonlinear dynamics involving a myriad of living agents over multiple spatial scales and time horizons. Such modeling is considered to be a "wicked problem".
+\2 Assumption: The VIBE Index is built to evaluate ES on agroecosystem landscapes using EO satellite data under the fundamental assumption that the Spectral Variability Hypothesis (SVH) is valid. The SVH states that there is a direct relationship between species diversity and spectral heterogeneity information derived from EO imagery.
+\2 Known: Squanto was correct.
+\1 Challenges
+\2 Defining a "gold-standard" agroecosystem landscape
+\2 Obtaining Sentinel2 raw and processed data
+\2 Defining the VIBE Index
+
+\end{outline}
+
+
+%---------------------------------------
+\large
+\begin{flushleft}
+\textbf{\textit{Logic and Assumptions}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+\begin{outline}[enumerate]
+\1 Defining a "gold-standard" agroecosystem landscape
+\2 Amish Farms, Germany, China
+
+\1 Obtaining Sentinel2 raw and processed data
+\2 Google Earth Engine
+
+\1 Defining the VIBE Index
+\2 The temporal output of the NDVI for an area defined as an agroecosystem landscape will a type of sinusoidal wave depending on the ecosystem and land management regime
+\3 Known: The integrated NDVI (area under the curve) is directly analogous to summing $(\text{pixel count} \times \text{bin value})$ over time---which serves as a proxy for total annual primary productivity (biomass)
+\3 Known: The
+
+
+\end{outline}
+
+
+
+
+
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%	NOTES
+%----------------------------------------------------------------------------------------
+\thispagestyle{plain} 
+
+%####################################
+\section{NOTES}
+%####################################
+
+%---------------------------------------
+\bigskip
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Spectral Variability Hypothesis (SVH)}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+
+The \textbf{Spectral Variability Hypothesis (SVH)}---also known as the \textbf{Spectral Variation Hypothesis}---proposes that \textbf{greater spatial variability in optical reflectance across a landscape corresponds to higher biological diversity} (such as plant species richness). Formulated by Michael Palmer and colleagues in 2000--2002, the hypothesis provides a non-invasive, cost-effective framework for estimating biodiversity from satellite, airborne, or drone imagery rather than relying solely on labor-intensive field surveys.
+
+\subsubsection*{Core Mechanisms Behind the SVH}
+The SVH links remotely sensed spectral heterogeneity (SH) to biodiversity through two scale-dependent mechanisms:
+
+\begin{itemize}
+    \item \textbf{Habitat Heterogeneity (Coarse-to-Medium Scale):} High spatial variation in reflectance indicates a patchwork of different microhabitats, soil types, moisture regimes, and vegetation structures. More ecological niches allow a wider variety of species to coexist.
+    \item \textbf{Species-Specific Optical Traits (Fine Scale):} At high spatial resolutions (e.g., UAV or airborne hyperspectral imagery where pixels match individual plant crowns), different species exhibit distinct leaf biochemistry (chlorophyll, water, lignin) and canopy geometry, directly generating spectral variation.
+\end{itemize}
+
+\subsubsection*{Common Metrics Used to Quantify Spectral Variability}
+
+To test the SVH on raster imagery or vegetation indices (such as NDVI), analysts typically calculate dispersion or dissimilarity within a moving window or ecological plot:
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.24\textwidth} >{\raggedright\arraybackslash}p{0.26\textwidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Metric Category} & \textbf{Common Examples} & \textbf{How It Works} \\
+\midrule
+\textbf{Dispersion / Statistical} & Standard Deviation (SD), Coefficient of Variation (CV) & Measures the spread of reflectance or NDVI values around the mean; CV is often preferred because it reduces sensitivity to brightness outliers. \\
+\textbf{Information-Theoretic} & Rao's Quadratic Entropy ($Q$), Spectral Shannon Index & Combines pixel abundance with pairwise spectral distances across multiple bands to quantify continuous diversity. \\
+\textbf{Geometric / Hyperspectral} & Convex Hull Volume, Spectral Angle Mapper (SAM) & Measures the volume or angular spread occupied by pixels in multi-dimensional spectral space. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection*{Key Limitations \& Sensitivity Factors}
+
+While widely applied across forests, grasslands, shrublands, and coral reefs, empirical studies show that the SVH does not hold universally without accounting for confounding factors:
+
+\begin{itemize}
+    \item \textbf{Spatial Grain (Pixel Size):} If pixels are too large (e.g., $250\,\text{m}$ MODIS), individual species blend together and variance disappears. If pixels are too small (sub-decimeter), non-vegetative noise---such as \textbf{canopy shadows, bare soil, dead wood, or rocks}---can inflate spectral variability and create false biodiversity signals.
+    \item \textbf{Phenology \& Timing:} Seasonal leaf-out, flowering, or drought stress can cause a single-species monoculture to exhibit high spectral variation if plants are in different physiological states.
+    \item \textbf{Canopy Saturation:} In multi-layered tropical forests, optical sensors primarily capture the upper canopy layer, potentially missing high understory species richness.
+\end{itemize}
+
+
+
+%---------------------------------------
+\bigskip
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Wampanoag Planting Phenology: The White Oak Leaf Rule}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+The well-known Eastern U.S.\ Indigenous agricultural tradition tracks \textbf{white oak leaves} as an ecosystem cue for corn planting. Specifically, the Wampanoag (through Tisquantum, or Squanto) taught the Plymouth Pilgrims in 1621 to plant corn \textbf{when the young leaves of the white oak tree were the size of a squirrel's ear} (or mouse's ear).\\
+
+When English colonists arrived at Plymouth (Patuxet) in winter 1620--1621, they brought European seeds (wheat and peas) that struggled in New England soil and had no experience cultivating native maize (corn). In the spring of 1621, Tisquantum (Squanto)---a Patuxet Wampanoag man who had survived abduction and epidemic disease that devastated his home village---showed the colonists how to read local phenology (seasonal biological cues) rather than relying on a European calendar. He instructed them to watch the white oak trees (\textit{Quercus alba}). Once the emerging spring leaves grew to the size of a squirrel's ear, it was time to plant corn seeds in small mounds alongside herring or alewife fish for fertilizer.
+
+
+\subsubsection*{Scientific Basis of the Phenological Cue}
+Connecting directly to phenology and remote sensing (such as tracking the Start of Season on an NDVI time-series curve), this Traditional Ecological Knowledge (TEK) aligns closely with biophysical thresholds:
+\begin{itemize}
+    \item \textbf{Soil Temperature Threshold:} White oaks are deep-rooted trees that respond to cumulative spring warmth (growing degree days) and photoperiod rather than brief warm spells. When their leaves reach approximately 1--1.5~inches (squirrel-ear size), soil temperatures at planting depth have reliably reached $55^\circ\text{F}$--$60^\circ\text{F}$ ($13^\circ\text{C}$--$15^\circ\text{C}$), the minimum warmth required for corn germination without seed rot.
+    \item \textbf{Frost Safety:} By the time white oaks leaf out to that stage, the risk of a killing late-spring frost in Eastern North America has almost always passed.
+    \item \textbf{Enduring Legacy:} Colonial farmers and Appalachian homesteaders adopted the Wampanoag adage verbatim, passing down \textit{``Plant corn when oak leaves are the size of a squirrel's (or mouse's) ear''} for over four centuries.
+\end{itemize}
+
+
+
+
+
+
+%---------------------------------------
+\bigskip
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Ecosystem Services}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+Ecosystem services are typically classified into four functional categories:
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\bfseries}l X X}
+\toprule
+Category & Core Function & Key Examples \\
+\midrule
+Provisioning & Tangible material or energy outputs extracted directly from ecosystems. & Food crops, timber, freshwater, medicinal plants, genetic resources, biofuels. \\
+Regulating & Benefits obtained from the regulation of ecosystem processes and environmental conditions. & Carbon sequestration, climate regulation, flood attenuation, water purification, pollination, erosion control. \\
+Supporting & Fundamental ecological processes required to sustain all other ecosystem services (long-term, indirect). & Soil formation, nutrient cycling (N, P, C), primary production (photosynthesis), habitat provision, biodiversity conservation. \\
+Cultural & Non-material, intangible benefits that enrich cognitive, spiritual, and social well-being. & Recreation and ecotourism, aesthetic inspiration, cultural heritage, spiritual significance, scientific education. \\
+\bottomrule
+\end{tabularx}
+\caption{Standard classification of ecosystem services based on the Millennium Ecosystem Assessment framework.}
+\end{table}
+
+\subsubsection*{From Ecological Function to Human Value}
+In environmental accounting and remote sensing (e.g., mapping via NDVI, biomass, or land-cover metrics), ecosystem services are often analyzed along a cascade:
+\begin{enumerate}
+    \item \textbf{Biophysical Structure \& Process:} Underlying ecological components (e.g., forest canopy density, soil organic matter).
+    \item \textbf{Ecological Function:} The capacity of the system to perform work (e.g., primary productivity, rainfall interception).
+    \item \textbf{Ecosystem Service:} The human-relevant flow derived from that function (e.g., reduced downstream flood risk or harvestable timber).
+    \item \textbf{Human Benefit \& Value:} Socioeconomic, health, or intrinsic value realized by society.
+\end{enumerate}
+
+
+
+
+
+
+%---------------------------------------
+\bigskip 
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Common Landscape NDVI Curve Shapes}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+Over a full year, the general shape of a Normalized Difference Vegetation Index (NDVI) time-series curve for vegetated landscapes is a \textbf{bell-shaped (sinusoidal) seasonal wave}---starting low during dormancy, rising steeply during spring leaf-out (``green-up''), plateauing at peak summer growth, and declining during autumn senescence. However, the exact curve shape changes distinctly depending on the \textbf{ecosystem and land management}.
+
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{3.8cm} p{3.8cm} X}
+\toprule
+Landscape Type & General Curve Shape & Key Characteristics \\
+\midrule
+Deciduous Forest \& Temperate Grassland & Smooth,single bell curve & Low baseline in winter ($0.1\text{--}0.2$), rapid spring green-up, high summer plateau ($0.7\text{--}0.85$), gradual autumn drop. \\
+Single-Crop Agriculture & Sharp, narrow ``hat'' or trapezoid & Flat bare-soil baseline ($\sim 0.15$), very steep rise after planting, flat peak canopy, abrupt drop at harvest. \\
+Double-Crop / Irrigated Agriculture & Bimodal (two distinct peaks) & Two separate bell curves within one calendar year (e.g., a winter wheat peak and a summer corn/soybean peak). \\
+Evergreen / Tropical Forest & Flat high plateau & Consistently high ($0.75\text{--}0.90$) year-round with minimal seasonal dip, though tropical dry forests show a gentle wet/dry-season wave. \\
+Semi-Arid / Mediterranean Shrubland & Asymmetric or pulse-driven wave & Tracks rainfall rather than temperature; spikes quickly after wet-season rains (e.g., winter/spring or summer monsoons) and tapers slowly during dry months. \\
+Urban / Barren / Water & Flat low line & Remains low and relatively constant year-round ($< 0.0$ for water, $0.05\text{--}0.20$ for concrete/bare rock). \\
+\bottomrule
+\end{tabularx}
+\caption{Comparison of annual NDVI time-series curve shapes across major land-cover types.}
+\end{table}
+
+\subsubsection*{Key Phenological Stages on the Curve}
+
+In remote sensing (land-surface phenology), analysts extract four key inflection points and metrics from this seasonal wave:
+
+\begin{itemize}
+    \item \textbf{Start of Season (SOS):} The inflection point where NDVI begins rising rapidly above the winter or dry-season baseline.
+    \item \textbf{Peak of Season (POS):} The maximum NDVI value reached during peak biomass and canopy closure.
+    \item \textbf{End of Season (EOS):} The point where NDVI drops back toward the dormant baseline.
+    \item \textbf{Integrated NDVI (Area Under the Curve):} The total area between the seasonal curve and the baseline---directly analogous to summing $(\text{count} \times \text{bin value})$ over time---which serves as a proxy for \textbf{total annual primary productivity (biomass)}.
+\end{itemize}
+
+\subsubsection*{Real-World Noise in Raw Curves}
+
+Raw satellite NDVI time series rarely look like a smooth mathematical curve on the first plot due to atmospheric and sensor limitations:
+
+\begin{itemize}
+    \item \textbf{Cloud \& Snow Drops:} Clouds, haze, and snow artificially depress near-infrared (NIR) reflectance, causing sharp, sudden \textbf{downward spikes} that must be smoothed (e.g., using Savitzky--Golay filters or maximum-value composites).
+    \item \textbf{Saturation Effect:} In very dense canopies (such as tropical forests or mature corn), NDVI flattens out near $0.85\text{--}0.90$ even as biomass continues to increase.
+\end{itemize}
+
+
+%---------------------------------------
+\bigskip 
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Interpreting Weighted Sums in a Histogram}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+Summing $(\text{count in bin} \times \text{bin value})$ gives you the \textbf{approximated total sum of all individual data points} in your dataset. If you divide that total by the sum of all counts (the total number of pixels or observations), you get the \textbf{binned weighted mean (average)} of your dataset.
+
+\subsubsection*{What the Formulas Represent}
+
+\begin{itemize}
+    \item \textbf{Sum of Products:}
+    \begin{equation}
+        \sum_{i=1}^{k} \left(\text{Count}_i \times \text{Bin Value}_i\right) \approx \text{Total Sum of Raw Values}
+    \end{equation}
+    \textit{In NDVI terms:} If you have $1{,}000$ pixels and each pixel represents a $10\text{ m} \times 10\text{ m}$ ($100\text{ m}^2$) area, multiplying that sum by the pixel area gives you the \textbf{integrated NDVI} (a proxy for total landscape greenness or total biomass across the entire region).
+
+    \item \textbf{Divided by Total Pixels:}
+    \begin{equation}
+        \frac{\sum_{i=1}^{k} \left(\text{Count}_i \times \text{Bin Value}_i\right)}{\sum_{i=1}^{k} \text{Count}_i} \approx \text{Mean NDVI}
+    \end{equation}
+    \textit{In NDVI terms:} This gives you the \textbf{average NDVI} of your entire image or field from the histogram alone, without needing the original raw raster pixels.
+\end{itemize}
+
+\subsubsection*{Why ``Bin Value'' Choice Matters}
+
+Because a bin covers a continuous range (e.g., $[0.40, 0.50]$), multiplying by different parts of the bin changes your accuracy:
+
+\begin{itemize}
+    \item \textbf{Bin Midpoint (Recommended):} Using the center of the bin ($0.45$) assumes values are evenly spread inside the bin. Errors tend to cancel out, giving the closest estimate to the true raw sum and mean.
+    \item \textbf{Lower Bin Edge ($0.40$):} Systematically \textbf{underestimates} the true sum and mean.
+    \item \textbf{Upper Bin Edge ($0.50$):} Systematically \textbf{overestimates} the true sum and mean.
+\end{itemize}
+
+\subsubsection*{Quick Numerical Example}
+
+Suppose a tiny $10$-pixel field has the following binned counts:
+
+\begin{center}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{NDVI Bin} & \textbf{Bin Midpoint} & \textbf{Pixel Count} & \textbf{Count $\times$ Midpoint} \\
+\midrule
+$[0.1, 0.3]$ & $0.2$ & $2$ & $2 \times 0.2 = 0.4$ \\
+$[0.5, 0.7]$ & $0.6$ & $8$ & $8 \times 0.6 = 4.8$ \\
+\midrule
+\textbf{Total} & --- & $\mathbf{10}$ & $\mathbf{5.2}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Sum of $(\text{count} \times \text{midpoint})$:} $0.4 + 4.8 = \mathbf{5.2}$ (Approximated total NDVI sum).
+    \item \textbf{Divide by total count ($10$):} $5.2 / 10 = \mathbf{0.52}$ (Approximated average NDVI of the field).
+\end{enumerate}
+
+
+
+
+
+%---------------------------------------
+\bigskip 
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Classical Energy of a Simple Harmonic Oscillator}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+The classical formula for the total mechanical energy ($E$) of a simple harmonic oscillator is:
+\begin{equation}
+E = \frac{1}{2}kA^2 = \frac{1}{2}m\omega^2 A^2 = 2\pi^2 m f^2 A^2
+\end{equation}
+
+Because there is no friction or damping in an ideal simple harmonic oscillator, \textbf{total energy remains constant} over time, continuously trading back and forth between kinetic and potential energy.
+
+
+
+\subsubsection*{Key Variables \& Relationships}
+
+\begin{itemize}
+    \item $k$: Spring constant (stiffness of the restoring force, in $\text{N/m}$).
+    \item $m$: Mass of the oscillating object (in $\text{kg}$).
+    \item $A$: Amplitude (maximum displacement from equilibrium, in $\text{m}$).
+    \item $\omega$: Angular frequency ($\omega = 2\pi f = \sqrt{k/m}$, in $\text{rad/s}$).
+    \item $f$: Ordinary frequency (cycles per second, in $\text{Hz}$).
+\end{itemize}
+
+\subsubsection*{Key Takeaways}
+\begin{itemize}
+    \item \textbf{Quadratic Scaling:} Energy scales with the \textbf{square of the amplitude ($A^2$)} and the \textbf{square of the frequency ($f^2$)}---doubling either one quadruples the total energy.
+    \item \textbf{Turning Points ($x = \pm A$):} Velocity is zero ($K = 0$), so all energy is stored as potential energy ($E = U_{\max}$).
+    \item \textbf{Equilibrium ($x = 0$):} Displacement is zero ($U = 0$), so all energy is kinetic ($E = K_{\max} = \frac{1}{2}mv_{\max}^2$).
+\end{itemize}
+
+
+
+
+
+%---------------------------------------
+\bigskip 
+\LARGE
+\begin{flushleft}
+\textbf{\textit{Simple Harmonic Oscillator Applied to NDVI Curves}}
+\end{flushleft}
+\normalsize
+%---------------------------------------
+
+The general formula for the displacement $x(t)$ of a \textbf{simple harmonic oscillator} over time is:
+\begin{equation}
+x(t) = A \cos(\omega t + \phi)
+\end{equation}
+
+\noindent \textit{Note: This formulation is applied directly in remote sensing as \textbf{harmonic regression} to fit smooth seasonal sine and cosine curves to noisy NDVI time-series data.}
+
+\subsubsection*{Key Variables in the Formula}
+\begin{itemize}
+    \item $x(t)$: Position (or value, such as NDVI) at time $t$.
+    \item $A$: \textbf{Amplitude} --- the maximum displacement from the equilibrium (center) position.
+    \item $\omega$: \textbf{Angular frequency} --- the rate of oscillation, measured in radians per unit time ($\omega = 2\pi f = \frac{2\pi}{T}$, where $f$ is frequency and $T$ is the period).
+    \item $t$: \textbf{Time}.
+    \item $\phi$: \textbf{Phase constant (phase shift)} --- determines the starting point of the wave at $t = 0$.
+\end{itemize}
+
+\subsubsection*{Harmonic Form Used for NDVI Time Series}
+When modeling annual vegetation curves (harmonic analysis / Fourier series), the formula is typically expressed as a linear combination of sine and cosine waves plus a baseline offset ($c_0$):
+\begin{equation}
+\mathrm{NDVI}(t) = c_0 + \sum_{n=1}^{N} \left[ a_n \cos\left(\frac{2\pi n t}{T}\right) + b_n \sin\left(\frac{2\pi n t}{T}\right) \right]
+\end{equation}
+
+\begin{itemize}
+    \item $c_0$: Mean annual NDVI baseline.
+    \item $T$: Period (e.g., $365.25$ days for annual cycles).
+    \item $n = 1$: Captures single-peak annual seasons (e.g., deciduous forests, single-crop fields).
+    \item $n = 2$: Captures bimodal seasons (e.g., double-cropping or bimodal rainfall regimes).
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	REFERENCE LIST
+%----------------------------------------------------------------------------------------
+\clearpage
+\thispagestyle{plain} 
+%\renewcommand{\thepage}{}
+\printbibliography
+
+
+\end{document}

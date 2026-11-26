@@ -1,0 +1,63 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{microtype}
+
+\title{\textbf{Spectral Variability Hypothesis (SVH)}}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vspace{-2em}
+
+The \textbf{Spectral Variability Hypothesis (SVH)}---also known as the \textbf{Spectral Variation Hypothesis}---proposes that \textbf{greater spatial variability in optical reflectance across a landscape corresponds to higher biological diversity} (such as plant species richness).
+
+Formulated by Michael Palmer and colleagues in 2000--2002, the hypothesis provides a non-invasive, cost-effective framework for estimating biodiversity from satellite, airborne, or drone imagery rather than relying solely on labor-intensive field surveys.
+
+\section{Core Mechanisms Behind the SVH}
+
+The SVH links remotely sensed spectral heterogeneity (SH) to biodiversity through two scale-dependent mechanisms:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Habitat Heterogeneity (Coarse-to-Medium Scale):} High spatial variation in reflectance indicates a patchwork of different microhabitats, soil types, moisture regimes, and vegetation structures. More ecological niches allow a wider variety of species to coexist.
+    \item \textbf{Species-Specific Optical Traits (Fine Scale):} At high spatial resolutions (e.g., UAV or airborne hyperspectral imagery where pixels match individual plant crowns), different species exhibit distinct leaf biochemistry (chlorophyll, water, lignin) and canopy geometry, directly generating spectral variation.
+\end{itemize}
+
+\section{Common Metrics Used to Quantify Spectral Variability}
+
+To test the SVH on raster imagery or vegetation indices (such as NDVI), analysts typically calculate dispersion or dissimilarity within a moving window or ecological plot:
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.24\textwidth} >{\raggedright\arraybackslash}p{0.26\textwidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Metric Category} & \textbf{Common Examples} & \textbf{How It Works} \\
+\midrule
+\textbf{Dispersion / Statistical} & Standard Deviation (SD), Coefficient of Variation (CV) & Measures the spread of reflectance or NDVI values around the mean; CV is often preferred because it reduces sensitivity to brightness outliers. \\
+\textbf{Information-Theoretic} & Rao's Quadratic Entropy ($Q$), Spectral Shannon Index & Combines pixel abundance with pairwise spectral distances across multiple bands to quantify continuous diversity. \\
+\textbf{Geometric / Hyperspectral} & Convex Hull Volume, Spectral Angle Mapper (SAM) & Measures the volume or angular spread occupied by pixels in multi-dimensional spectral space. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Key Limitations \& Sensitivity Factors}
+
+While widely applied across forests, grasslands, shrublands, and coral reefs, empirical studies show that the SVH does not hold universally without accounting for confounding factors:
+
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Spatial Grain (Pixel Size):} If pixels are too large (e.g., $250\,\text{m}$ MODIS), individual species blend together and variance disappears. If pixels are too small (sub-decimeter), non-vegetative noise---such as \textbf{canopy shadows, bare soil, dead wood, or rocks}---can inflate spectral variability and create false biodiversity signals.
+    \item \textbf{Phenology \& Timing:} Seasonal leaf-out, flowering, or drought stress can cause a single-species monoculture to exhibit high spectral variation if plants are in different physiological states.
+    \item \textbf{Canopy Saturation:} In multi-layered tropical forests, optical sensors primarily capture the upper canopy layer, potentially missing high understory species richness.
+\end{itemize}
+
+\end{document}
