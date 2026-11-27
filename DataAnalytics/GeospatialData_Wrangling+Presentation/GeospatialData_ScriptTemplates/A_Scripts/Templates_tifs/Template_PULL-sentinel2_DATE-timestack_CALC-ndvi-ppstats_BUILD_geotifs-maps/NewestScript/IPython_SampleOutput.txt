@@ -5,47 +5,46 @@ Created:        19 Nov 2026
 Revised:        
 
 
-------------------------------------------
-A_Template_Pull-SENTINEL2_CalcMultNDVIs_OUTPUT_GEOtifs_Maps_v1_3.py
+
 ---------------------------------------------------------------------
 
-%runfile /home/bruce-vdb/Desktop/Marron_Projects/CloudComputing/Professional-AI/Professional-AI_APIs_RemoteSensing/API_earthengine-api/A_Scripts/Template_Pull-SENTINEL_2_CalcMultNDVIs_OUTPUT_GEOtifs_Maps/NewestScript/A_Template_Pull-SENTINEL2_CalcMultNDVIs_OUTPUT_GEOtifs_Maps_v1_3.py --wdir
-<IPython.core.display.HTML object>
-
+%runfile /home/bruce-vdb/Desktop/Marron_Projects/DataAnalytics/GeospatialData_Wrangling+Presentation/GeospatialData_ScriptTemplates/A_Scripts/Templates_tifs/Template_PULL-sentinel2_DATE-timestack_CALC-ndvi-ppstats_BUILD_geotifs-maps/NewestScript/A_Template_PULL-sentinel2_DATE-timestack_CALC-ndvi_B4_B8-ppstats_BUILD_geotifs-maps_v1_4.py --wdir
 Number of images in filtered collection: 44
 Acquisition dates: ['2022-01-01', '2022-01-06', '2022-01-16', '2022-01-26', '2022-01-31', '2022-02-05', '2022-02-10', '2022-02-15', '2022-02-20', '2022-02-25', '2022-03-02', '2022-03-07', '2022-03-12', '2022-03-17', '2022-03-27', '2022-03-27', '2022-04-01', '2022-04-06', '2022-04-16', '2022-04-21', '2022-05-01', '2022-05-06', '2022-05-11', '2022-05-16', '2022-05-21', '2022-05-26', '2022-05-31', '2022-06-10', '2022-07-10', '2022-07-20', '2022-08-24', '2022-09-23', '2022-10-13', '2022-10-28', '2022-11-02', '2022-11-12', '2022-11-17', '2022-11-22', '2022-11-27', '2022-12-02', '2022-12-07', '2022-12-17', '2022-12-22', '2022-12-27']
-
 Output folder: /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27
 Map saved: /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_map.html
 RGB PNG saved: /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_RGB.png
-
-Export started: UMA_S2_2022_04_NDVI_median  (task id ALGHP4ETBWPNR2P3XFTX72MO)
-Export started: UMA_S2_2022_04_NDVI_min  (task id 64E5J3L7M2NXSV23T5XXBSYO)
-Export started: UMA_S2_2022_04_NDVI_max  (task id 5ZXDWCWOWLDJO3RNN24UIH66)
-Export started: UMA_S2_2022_04_NDVI_mean  (task id 25Q76JI5UTN4KABYISZ5JZGF)
-Export started: UMA_S2_2022_04_RGB_reflectance  (task id E444AEH5FZJYXKCM5WG527LE)
-Export started: UMA_S2_2022_04_RGB_8bit  (task id LVMDZ3QMTKRWGCA2D3TGEWKA)
-  [   1s] waiting on 6 export(s)...
-  [  18s] waiting on 6 export(s)...
-  [  34s] UMA_S2_2022_04_NDVI_min: COMPLETED
-  [  34s] UMA_S2_2022_04_NDVI_mean: COMPLETED
-  [  35s] waiting on 4 export(s)...
-  [  50s] UMA_S2_2022_04_NDVI_median: COMPLETED
-  [  51s] waiting on 3 export(s)...
-  [  67s] UMA_S2_2022_04_RGB_reflectance: COMPLETED
-  [  67s] waiting on 2 export(s)...
-  [  82s] UMA_S2_2022_04_NDVI_max: COMPLETED
-  [  82s] waiting on 1 export(s)...
-  [  98s] waiting on 1 export(s)...
-  [ 113s] waiting on 1 export(s)...
-  [ 128s] UMA_S2_2022_04_RGB_8bit: COMPLETED
-
+Export started: UMA_S2_2022_04_NDVI_median  (task id KBIQURJFQ6M4CW7TX3IWXDPW)
+Export started: UMA_S2_2022_04_NDVI_min  (task id VSV7HLGQBWLFO4GP6EOSGRQ3)
+Export started: UMA_S2_2022_04_NDVI_max  (task id LBEQV3Y6WWF5UWS4ZSTUZNZB)
+Export started: UMA_S2_2022_04_NDVI_mean  (task id FYVEPKXPXNNDQ5GD5OMVP5J4)
+Export started: UMA_S2_2022_04_RGB_reflectance  (task id M4TW7HIH4YU2R4TNL2CJJWDG)
+Export started: UMA_S2_2022_04_RGB_8bit  (task id ZPGJ3X2J6GOVW5HCMXZ4KBK7)
+Export started: UMA_S2_2022_04_B8B4_stats  (task id NP5PVG67OIQPDOW4WMQ2DR7P)
+  [   2s] waiting on 7 export(s)...
+  [  19s] waiting on 7 export(s)...
+  [  36s] waiting on 7 export(s)...
+  [  52s] UMA_S2_2022_04_NDVI_min: COMPLETED
+  [  53s] waiting on 6 export(s)...
+  [  68s] UMA_S2_2022_04_NDVI_median: COMPLETED
+  [  70s] waiting on 5 export(s)...
+  [  87s] waiting on 5 export(s)...
+  [ 102s] UMA_S2_2022_04_NDVI_max: COMPLETED
+  [ 103s] waiting on 4 export(s)...
+  [ 118s] UMA_S2_2022_04_NDVI_mean: COMPLETED
+  [ 119s] waiting on 3 export(s)...
+  [ 135s] UMA_S2_2022_04_RGB_reflectance: COMPLETED
+  [ 135s] waiting on 2 export(s)...
+  [ 151s] waiting on 2 export(s)...
+  [ 166s] UMA_S2_2022_04_RGB_8bit: COMPLETED
+  [ 166s] waiting on 1 export(s)...
+  [ 182s] UMA_S2_2022_04_B8B4_stats: COMPLETED
 Downloaded UMA_S2_2022_04_NDVI_median.tif -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_NDVI_median.tif
 Downloaded UMA_S2_2022_04_NDVI_min.tif -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_NDVI_min.tif
 Downloaded UMA_S2_2022_04_NDVI_max.tif -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_NDVI_max.tif
 Downloaded UMA_S2_2022_04_NDVI_mean.tif -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_NDVI_mean.tif
 Downloaded UMA_S2_2022_04_RGB_reflectance.tif -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_RGB_reflectance.tif
 Downloaded UMA_S2_2022_04_RGB_8bit.tif -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_RGB_8bit.tif
-
+Downloaded UMA_S2_2022_04_B8B4_stats.csv -> /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27/UMA_S2_2022_04_B8B4_stats.csv
 All outputs in: /home/bruce-vdb/Desktop/SENTINEL2_-100.088829,19.190335_2022-01-01,2022-12-27
 Done.

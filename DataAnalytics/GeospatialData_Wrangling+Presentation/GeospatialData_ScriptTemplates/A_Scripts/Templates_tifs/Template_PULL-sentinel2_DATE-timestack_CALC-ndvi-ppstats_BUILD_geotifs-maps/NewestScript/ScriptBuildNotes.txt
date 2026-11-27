@@ -6,7 +6,20 @@ Revised:
 
 
 
+--------------------------------------------------------------------
+I'll add the band-statistics CSV to your script and save it as a new version, v1_4.
 
+I've modified your script (v1_4) so it exports the per-pixel min, max and mean of B8 (NIR) and B4 (Red) to a separate CSV. It passes a syntax check, but I haven't run it against Earth Engine, so the first run is the real test.
+
+The CSV is named `<prefix>_B8B4_stats.csv` and lands in the same output folder as the GeoTIFFs. Its columns are `x, y, B8_min, B4_min, B8_max, B4_max, B8_mean, B4_mean`, with reflectance on a 0–1 scale. The `x` and `y` values are pixel-centre coordinates in your export CRS. The `STATS` list you set on lines 134-135 now controls which statistics go into the CSV.
+
+- **NDVI list:** I restored your commented-out line as a separate `NDVI_STATS` list, so the NDVI GeoTIFFs still include the median. If you want NDVI to follow `STATS` as well, point the dict comprehension at `STATS` instead.
+- **CSV switch:** `EXPORT_BAND_CSV` turns the CSV export on or off.
+- **Download and cleanup:** The download step now fetches `.csv` files as well as `.tif`, and I added a bucket-cleanup line for `.csv`.
+
+Min and max are reduced separately for each band, so the min NIR and min Red at a pixel can come from different dates. Only the `mean` pair gives a consistent average state at a pixel, and I noted this in the docstring. For your regional NDVI method, the mean pair is the most defensible input.
+
+The new CSV has no NDVI column, so the `NDVI > 0.25` filter needs the NDVI GeoTIFF values. You can join them on `x, y`, or I can add an NDVI column to the CSV.
 
 
 ---------------------------------------------------------------------

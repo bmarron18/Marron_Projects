@@ -1,0 +1,60 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Definition of NDVI and Interpretation of Binned NDVI Values}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent \textbf{NDVI (Normalized Difference Vegetation Index)} is a standardized remote-sensing metric used to quantify vegetation greenness, density, and health on a scale from \textbf{-1.0 to +1.0} using near-infrared and red light reflectance.
+
+\section*{Formula and How It Works}
+Healthy green plants strongly absorb visible \textbf{red light} (for photosynthesis) and strongly reflect \textbf{near-infrared (NIR) light} (due to internal leaf cell structure). NDVI measures the normalized difference between these two spectral bands:
+
+\[
+\text{NDVI} = \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}
+\]
+
+\begin{itemize}
+    \item \textbf{High NIR + Low Red} $\rightarrow$ High positive NDVI (dense, healthy green vegetation).
+    \item \textbf{Similar NIR and Red} $\rightarrow$ Near-zero NDVI (bare soil, rock, or urban surfaces).
+    \item \textbf{Low NIR + Higher Red} $\rightarrow$ Negative NDVI (water, snow, or clouds).
+\end{itemize}
+
+\section*{Interpretation of Binned NDVI Values}
+While exact thresholds vary slightly depending on the satellite sensor, atmospheric correction, and local biome, remote-sensing classifications generally interpret NDVI ranges as follows:
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.35}
+\begin{tabularx}{\textwidth}{@{} l l X @{}}
+\toprule
+\textbf{NDVI Range (Bin)} & \textbf{Surface / Vegetation Class} & \textbf{Interpretation} \\
+\midrule
+\textbf{-1.0 to 0.0} & \textbf{Water, Snow, Ice, or Clouds} & Deep water typically falls near -1.0, while shallow/turbid water, snow, and thick clouds range between -0.2 and 0.0. \\
+\textbf{0.0 to 0.1} & \textbf{Barren Rock, Sand, or Urban Surfaces} & Impervious surfaces (concrete, asphalt), exposed bedrock, dry sand, or completely dead/dormant ground cover. \\
+\textbf{0.1 to 0.2} & \textbf{Bare Soil or Very Sparse Cover} & Open soil with minimal emerging seedlings, dry desert scrub, or harvested agricultural fields. \\
+\textbf{0.2 to 0.4} & \textbf{Sparse to Moderate Vegetation} & Grasslands, shrublands, senescing (aging) crops, or vegetation experiencing moderate drought/nutrient stress. \\
+\textbf{0.4 to 0.6} & \textbf{Moderate to Healthy Vegetation} & Active agricultural crops, open woodlands, healthy pastures, and temperate mixed cover. \\
+\textbf{0.6 to 1.0} & \textbf{Dense, Vigorous Vegetation} & Closed-canopy forests (e.g., tropical rainforests, peak-season deciduous forests) and peak-growth irrigated crops. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{Practical Caveats When Using Binned NDVI}
+\begin{itemize}
+    \item \textbf{Saturation Effect:} In very dense canopies (like tropical forests or mature corn), NDVI tends to saturate above \textbf{0.8}, losing sensitivity to further increases in leaf area.
+    \item \textbf{Soil Background Noise:} In sparse canopies ($\text{NDVI} < 0.3$), dark wet soil can artificially inflate NDVI values compared to bright dry soil.
+    \item \textbf{Sensor Differences:} Values calculated from different satellites (e.g., Sentinel-2 vs.\ Landsat 8/9 vs.\ MODIS) can differ slightly due to variations in spectral bandwidths.
+\end{itemize}
+
+\end{document}

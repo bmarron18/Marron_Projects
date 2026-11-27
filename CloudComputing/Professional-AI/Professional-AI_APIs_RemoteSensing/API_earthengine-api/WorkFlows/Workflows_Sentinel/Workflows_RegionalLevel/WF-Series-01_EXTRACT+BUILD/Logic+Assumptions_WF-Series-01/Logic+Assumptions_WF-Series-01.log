@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  26 NOV 2026 14:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.4)  27 NOV 2026 10:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1462,22 +1462,70 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/14.4'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Trying to load font information for TS1+pplx on input line 
-292.
+294.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ts1pplx.fd
 File: ts1pplx.fd 2004/09/06 font definitions for TS1/pplx.
 )
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 335--336
-
+Underfull \hbox (badness 3701) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) near -1.0, while shal-
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+[]|\T1/pplx/m/n/12 (+20) Impervious sur-faces
+ []
+
+
+Underfull \hbox (badness 1997) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) (con-crete, as-phalt), ex-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) posed bedrock, dry
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) sand, or com-pletely
+ []
+
+
+Underfull \hbox (badness 7116) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) dead/dormant ground
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+[]|\T1/pplx/m/n/12 (+20) Grasslands, shrub-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) crops, or veg-e-ta-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) ex-pe-ri-enc-ing mod-er-ate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--316
+[]|\T1/pplx/m/n/12 (+20) Closed-canopy forests
+ []
+
+
+Underfull \hbox (badness 5563) in paragraph at lines 316--316
+\T1/pplx/m/n/12 (+20) peak-season de-cid-u-ous
+ []
+
+[3]
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 344.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 329.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 36.06796pt, for example:
@@ -1486,18 +1534,38 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 376--376
-[]|\T1/pplx/m/n/12 (+20) Tangible ma-te-rial or en-ergy
+Underfull \hbox (badness 10000) in paragraph at lines 344--344
+[]|\T1/pplx/b/n/12 (+20) NDVI
  []
 
 
-Underfull \hbox (badness 5533) in paragraph at lines 376--376
-[]|\T1/pplx/m/n/12 (+20) Food crops, tim-ber, fresh-wa-
+Underfull \hbox (badness 1789) in paragraph at lines 344--344
+\T1/pplx/m/n/12 (+20) posed bedrock, dry sand, or com-pletely
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 344--344
+[]|\T1/pplx/m/n/12 (+20) Bare Soil or Very
+ []
+
+
+Underfull \hbox (badness 3417) in paragraph at lines 344--344
+[]|\T1/pplx/m/n/12 (+20) Sparse to Mod-er-ate
+ []
+
+
+Underfull \hbox (badness 1701) in paragraph at lines 344--344
+[]|\T1/pplx/m/n/12 (+20) Grasslands, shrub-lands, senesc-ing (ag-ing)
+ []
+
+
+Underfull \hbox (badness 1502) in paragraph at lines 344--344
+\T1/pplx/m/n/12 (+20) peak-season de-cid-u-ous forests) and peak-
  []
 
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 384.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 370.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1507,52 +1575,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 420--420
-[]|\T1/pplx/m/n/12 (+20) General Curve
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--420
-[]|\T1/pplx/b/n/12 (+20) Deciduous For-est
- []
-
-
-Underfull \hbox (badness 5504) in paragraph at lines 420--420
-[]|\T1/pplx/m/n/12 (+20) Smooth,single bell
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--420
-[]|\T1/pplx/b/n/12 (+20) Single-Crop Agri-
- []
-
-
-Underfull \hbox (badness 2735) in paragraph at lines 420--420
-[]|\T1/pplx/m/n/12 (+20) Bimodal (two dis-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--420
-[]|\T1/pplx/b/n/12 (+20) Semi-Arid /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--420
-\T1/pplx/b/n/12 (+20) Mediter-ranean
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 420--420
-[]|\T1/pplx/m/n/12 (+20) Asymmetric or
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 441.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 401.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 36.06796pt, for example:
@@ -1563,7 +1590,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [6]
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 456.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 431.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 
@@ -1574,13 +1601,33 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
 
 [7]
+Underfull \hbox (badness 4072) in paragraph at lines 451--451
+[]|\T1/pplx/m/n/12 (+20) Infinite; self-similarity
+ []
 
-Package paralist Warning: Incorrect label; no or multiple counters.
-(paralist)                The label is: leftmargin=1.5em on input line 499.
+
+Underfull \hbox (badness 6910) in paragraph at lines 451--451
+[]|\T1/pplx/m/n/12 (+20) Often ex-act and de-
+ []
+
+
+Underfull \hbox (badness 1521) in paragraph at lines 451--451
+\T1/pplx/m/n/12 (+20) ter-min-is-tic (e.g., Koch
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 451--451
+\T1/pplx/m/n/12 (+20) snowflake, Menger
+ []
+
+
+Underfull \hbox (badness 1960) in paragraph at lines 451--451
+[]|\T1/pplx/m/n/12 (+20) Discrete lower cut-offs (cell di-am-e-
+ []
 
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 513.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 458.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1592,7 +1639,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [8]
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 566.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 489.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 
@@ -1603,9 +1650,100 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
 
 [9]
+Underfull \hbox (badness 10000) in paragraph at lines 530--531
+
+ []
+
 File: graphics/UMA_Logo.png Graphic file (type png)
 <use graphics/UMA_Logo.png>
-Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 598.
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 531.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 571--571
+[]|\T1/pplx/m/n/12 (+20) Tangible ma-te-rial or en-ergy
+ []
+
+
+Underfull \hbox (badness 5533) in paragraph at lines 571--571
+[]|\T1/pplx/m/n/12 (+20) Food crops, tim-ber, fresh-wa-
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 579.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 615--615
+[]|\T1/pplx/m/n/12 (+20) General Curve
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 615--615
+[]|\T1/pplx/b/n/12 (+20) Deciduous For-est
+ []
+
+
+Underfull \hbox (badness 5504) in paragraph at lines 615--615
+[]|\T1/pplx/m/n/12 (+20) Smooth,single bell
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 615--615
+[]|\T1/pplx/b/n/12 (+20) Single-Crop Agri-
+ []
+
+
+Underfull \hbox (badness 2735) in paragraph at lines 615--615
+[]|\T1/pplx/m/n/12 (+20) Bimodal (two dis-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 615--615
+[]|\T1/pplx/b/n/12 (+20) Semi-Arid /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 615--615
+\T1/pplx/b/n/12 (+20) Mediter-ranean
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 615--615
+[]|\T1/pplx/m/n/12 (+20) Asymmetric or
+ []
+
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 617.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[12]
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 628.
 (pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
 
 
@@ -1615,7 +1753,62 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
 
-[10] [11
+[13]
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 673.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[14]
+
+Package paralist Warning: Incorrect label; no or multiple counters.
+(paralist)                The label is: leftmargin=1.5em on input line 694.
+
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 734.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[15]
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 778.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[16]
+File: graphics/UMA_Logo.png Graphic file (type png)
+<use graphics/UMA_Logo.png>
+Package pdftex.def Info: graphics/UMA_Logo.png  used on input line 793.
+(pdftex.def)             Requested size: 99.16873pt x 31.71793pt.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 36.06796pt, for example:
+(fancyhdr)                \setlength{\headheight}{36.06796pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-24.06796pt}.
+
+[17] [18
 
 ] (./Logic+Assumptions_WF-Series-01.aux)
  ***********
@@ -1637,13 +1830,13 @@ l'.
 
  ) 
 Here is how much of TeX's memory you used:
- 34268 strings out of 467099
- 680189 string characters out of 5408266
- 1734898 words of memory out of 5000000
- 62521 multiletter control sequences out of 15000+600000
- 711421 words of font info for 444 fonts, out of 8000000 for 9000
+ 34312 strings out of 467099
+ 680607 string characters out of 5408266
+ 1736919 words of memory out of 5000000
+ 62525 multiletter control sequences out of 15000+600000
+ 713109 words of font info for 475 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 107i,16n,108p,1207b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 107i,17n,108p,1207b,5160s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
@@ -1655,10 +1848,10 @@ texlive/2026/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/
 xmf-dist/fonts/type1/urw/palatino/uplbi8a.pfb></usr/local/texlive/2026/texmf-di
 st/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2026/texmf-dist/font
 s/type1/urw/palatino/uplri8a.pfb>
-Output written on Logic+Assumptions_WF-Series-01.pdf (11 pages, 191760 bytes).
+Output written on Logic+Assumptions_WF-Series-01.pdf (18 pages, 212429 bytes).
 PDF statistics:
- 102 PDF objects out of 1000 (max. 8388607)
- 64 compressed objects within 1 object stream
+ 124 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  117778 words of extra memory for PDF output out of 128383 (max. 10000000)
 

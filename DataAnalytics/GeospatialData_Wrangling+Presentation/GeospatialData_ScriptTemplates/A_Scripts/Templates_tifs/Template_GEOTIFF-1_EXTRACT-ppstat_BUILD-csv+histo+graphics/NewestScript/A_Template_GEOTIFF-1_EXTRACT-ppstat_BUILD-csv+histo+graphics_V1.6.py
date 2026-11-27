@@ -16,7 +16,7 @@ Extract the per pixel statistic (ppstat) data from one (1) GeoTIFF and
 with a histogram of the entire data set; and
 3) buils a graphic that bins the statPP data into classes
 
-NB. The actual statPP is defined when a satellite image collection is created.
+NB. The actual statPP is defined when a composte from an satellite image collection is created.
 
 Changes in V1.6:
   - The plot titles are no longer typed into the plotting code. Edit SITE_NAME

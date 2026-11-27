@@ -3,12 +3,12 @@
 
 """
 Created : 18 Nov 2026
-Revised:  20 Nov 2026
+Revised:  27 Nov 2026 (v1_4: B8/B4 band stats exported to a separate CSV)
 Authors : bruce-vdb, claude
 
 
 --------------------------------------------------------
-A_Template_PULL-sentinel2_DATE-timestack_CALC-ndvi-ppstats_BUILD_geotifs-maps_v1_3.py
+A_Template_PULL-sentinel2_DATE-timestack_CALC-ndvi+B4+B8-ppstats_BUILD_geotifs-maps_v1_4.py
 --------------------------------------------------------
 A twin of the same script for Landsat: Same structure, outputs, config names and cells; only the data source changed.
 
@@ -16,12 +16,24 @@ A twin of the same script for Landsat: Same structure, outputs, config names and
        - <prefix>_RGB_reflectance.tif : 3-band float, reflectance 0-1 (analysis)
        - <prefix>_RGB_8bit.tif        : 8-bit stretched image (viewing)
        - <prefix>_RGB.png             : local PNG via getThumbURL (no bucket)
-  2. NDVI statistics (ppstats) calculated over time: median, min, max, mean (STATS list), each
+       
+  2a. NDVI statistics (ppstats) calculated over time: median, min, max, mean (NDVI_STATS list), each
      exported as its own GeoTIFF: <prefix>_NDVI_<stat>.tif
      NB. NDVI is computed PER IMAGE first, then reduced across time (this is
      not the same as NDVI of a median composite where a median composite is built first)
-  3. ALL local outputs (map .html, RGB .png and the downloaded .tif files)
-     go into ONE folder on the Desktop:
+     
+  2b. ppstats calculated on raw NIR (B8) and Red (B4) band data over time: min, max, mean (STATS list),
+     exported together as ONE separate CSV: <prefix>_B8B4_stats.csv
+       - one row per pixel (cloud-free in at least one image), columns:
+           x, y, B8_min, B4_min, B8_max, B4_max, B8_mean, B4_mean
+       - x, y = pixel-centre coordinates in EXPORT_CRS (metres)
+       - B8_*, B4_* = surface reflectance 0-1 (already scaled by 0.0001)
+     NB. Each band is reduced independently across time, so B8_min and B4_min
+     (and the max pair) can come from different dates at the same pixel.
+     The mean pair is the only one that describes a consistent average state.
+
+  3. ALL local outputs (map .html, RGB .png, the downloaded .tif files and
+     the band-stats .csv) go into ONE folder on the Desktop:
 
         /home/bruce-vdb/Desktop/SENTINEL2_<LON,LAT>_<first-date,last-date>
 
@@ -78,6 +90,7 @@ Notes
       credentials/project in memory; each .getInfo() or export is an
       independent HTTPS request. Nothing needs to be closed at the end.
     * The map (.html) is optional; set MAKE_MAP = False to skip it.
+    * The band-stats CSV is optional; set EXPORT_BAND_CSV = False to skip it.
 
 4. Generate Geospatial Analytics
        Run "A_Template_Extract-NDVI-Data_Mult-GEOtif-Files_data+graphics+stats_V1.2.py"
@@ -93,6 +106,7 @@ Notes
     
         # delete file(s) from bucket
     gcloud storage rm gs://ag-remote-bucket01/*.tif
+    gcloud storage rm gs://ag-remote-bucket01/*.csv
     
         # check
     gcloud storage ls -l --recursive gs://ag-remote-bucket01/
@@ -125,9 +139,11 @@ CLOUD_COVER_MAX = 30                     # applied to CLOUDY_PIXEL_PERCENTAGE
 EXPORT_CRS = "EPSG:32614"
 EXPORT_SCALE = 10                        # metres (Sentinel-2 native for B2/B3/B4/B8)
 BUCKET_NAME = "ag-remote-bucket01"
-EXPORT_PREFIX = "UMA_S2_2022_04"         # files become <prefix>_<product>.tif
+EXPORT_PREFIX = "UMA_S2_2022_04"         # files become <prefix>_<product>.tif / .csv
 
-STATS = ["median", "min", "max", "mean"]  # NDVI statistics to export
+NDVI_STATS = ["median", "min", "max", "mean"]  # NDVI statistics to export (GeoTIFFs)
+STATS = ["min", "max", "mean"]             # for each of Sentinel-2 bands B8 and B4 (CSV)
+EXPORT_BAND_CSV = True                   # B8/B4 stats -> <prefix>_B8B4_stats.csv
 EXPORT_RGB = True
 RGB_VIS = {"min": 0.0, "max": 0.3, "gamma": 1.4}   # stretch for 8-bit/PNG
 RGB_PNG_PIXELS = 1024                    # longest side of local PNG
@@ -243,14 +259,44 @@ REDUCERS = {
     "max": lambda c: c.max(),
     "mean": lambda c: c.mean(),
 }
-unknown = [s for s in STATS if s not in REDUCERS]
-if unknown:
-    sys.exit(f"Unknown STATS entries: {unknown}. Choose from {list(REDUCERS)}.")
+for _name, _list in (("NDVI_STATS", NDVI_STATS), ("STATS", STATS)):
+    unknown = [s for s in _list if s not in REDUCERS]
+    if unknown:
+        sys.exit(f"Unknown {_name} entries: {unknown}. Choose from {list(REDUCERS)}.")
 
 ndvi_images = {
     s: REDUCERS[s](ndvi_collection).rename(f"NDVI_{s}").clip(area_of_interest)
-    for s in STATS
+    for s in NDVI_STATS
 }
+
+# %%
+# =============================================================================
+# RAW NIR (B8) AND RED (B4) STATISTICS OVER TIME  -> one table, one row per pixel
+# Columns: x, y, B8_<stat>, B4_<stat> for each stat in STATS (reflectance 0-1)
+# =============================================================================
+BAND_CSV_PRODUCT = "B8B4_stats"
+BAND_CSV_COLUMNS = ["x", "y"] + [f"{b}_{s}" for s in STATS for b in ("B8", "B4")]
+
+if EXPORT_BAND_CSV:
+    band_collection = filtered_collection.select(["B8", "B4"])
+    band_stat_images = [
+        REDUCERS[s](band_collection).rename([f"B8_{s}", f"B4_{s}"])
+        for s in STATS
+    ]
+
+    # pixel-centre coordinates (metres) on the same 10 m grid as the GeoTIFF exports
+    export_proj = ee.Projection(EXPORT_CRS).atScale(EXPORT_SCALE)
+    xy = ee.Image.pixelCoordinates(export_proj)
+
+    band_stats_image = ee.Image.cat([xy] + band_stat_images).clip(area_of_interest)
+
+    # one feature per unmasked pixel (masked pixels are dropped)
+    band_stats_fc = band_stats_image.sample(
+        region=area_of_interest,
+        projection=export_proj,
+        geometries=False,
+        dropNulls=True,
+    )
 
 # %%
 # =============================================================================
@@ -311,6 +357,21 @@ def start_export(image, product, region):
     return prefix, task
 
 
+def start_table_export(fc, product, selectors):
+    prefix = f"{EXPORT_PREFIX}_{product}"
+    task = ee.batch.Export.table.toCloudStorage(
+        collection=fc,
+        description=prefix[:100],
+        bucket=BUCKET_NAME,
+        fileNamePrefix=prefix,
+        fileFormat="CSV",
+        selectors=selectors,          # keeps only x, y and the band-stat columns
+    )
+    task.start()
+    print(f"Export started: {prefix}  (task id {task.id})")
+    return prefix, task
+
+
 export_prefixes = []
 if RUN_EXPORT:
     tasks = {}
@@ -321,6 +382,9 @@ if RUN_EXPORT:
         p, t = start_export(rgb_median.toFloat(), "RGB_reflectance", aoi_box)
         tasks[p] = t
         p, t = start_export(rgb_8bit.toByte(), "RGB_8bit", aoi_box)
+        tasks[p] = t
+    if EXPORT_BAND_CSV:
+        p, t = start_table_export(band_stats_fc, BAND_CSV_PRODUCT, BAND_CSV_COLUMNS)
         tasks[p] = t
 
     export_prefixes = list(tasks)
@@ -345,7 +409,7 @@ if RUN_EXPORT:
 
 # %%
 # =============================================================================
-# DOWNLOAD FROM BUCKET  -> OUTPUT_DIR
+# DOWNLOAD FROM BUCKET  -> OUTPUT_DIR   (.tif images and the .csv band stats)
 # =============================================================================
 if RUN_DOWNLOAD:
     client = storage.Client(project=project_id)
@@ -356,14 +420,14 @@ if RUN_DOWNLOAD:
     downloaded = []
     for pfx in prefixes:
         for blob in client.list_blobs(bucket, prefix=pfx):
-            if blob.name.endswith(".tif"):
+            if blob.name.endswith((".tif", ".csv")):
                 dest = OUTPUT_DIR / Path(blob.name).name
                 blob.download_to_filename(str(dest))
                 downloaded.append(dest)
                 print("Downloaded", blob.name, "->", dest)
 
     if not downloaded:
-        print(f"No .tif found in gs://{BUCKET_NAME}/ for prefixes {prefixes}.")
+        print(f"No .tif/.csv found in gs://{BUCKET_NAME}/ for prefixes {prefixes}.")
 
 # %%
 print("All outputs in:", OUTPUT_DIR)

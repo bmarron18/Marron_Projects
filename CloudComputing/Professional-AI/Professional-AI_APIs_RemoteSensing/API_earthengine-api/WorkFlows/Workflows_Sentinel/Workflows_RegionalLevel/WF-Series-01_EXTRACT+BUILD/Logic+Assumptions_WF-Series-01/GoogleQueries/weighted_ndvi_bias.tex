@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=2.5cm}
+
+\title{Aggregation Bias in Weighted Average NDVI}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent\textbf{Yes, a weighted average of pixel-level NDVI values is a biased estimator of the true areal (region-wide) NDVI} because NDVI is a \textbf{non-linear ratio} of two spectral bands, meaning the average of ratios does not equal the ratio of averages.
+
+\section{Mathematical Reason: Non-Linearity (Jensen's Inequality)}
+
+A weighted average of pixel-level NDVI values computes:
+\begin{equation}
+\overline{\text{NDVI}}_{\text{weighted}} = \sum_{i} w_i \left(\frac{\text{NIR}_i - \text{Red}_i}{\text{NIR}_i + \text{Red}_i}\right)
+\end{equation}
+where $w_i$ represents the normalized weight assigned to pixel $i$ ($\sum_i w_i = 1$).
+
+However, the physically true NDVI of the entire region (what a sensor would measure over the whole area at once) is the ratio of the \textbf{area-weighted average reflectances}:
+\begin{equation}
+\text{NDVI}_{\text{true}} = \frac{\sum_{i} w_i \text{NIR}_i - \sum_{i} w_i \text{Red}_i}{\sum_{i} w_i \text{NIR}_i + \sum_{i} w_i \text{Red}_i}
+\end{equation}
+
+Because the function $f(\text{NIR}, \text{Red}) = \frac{\text{NIR} - \text{Red}}{\text{NIR} + \text{Red}}$ is non-linear in the denominator $(\text{NIR}_i + \text{Red}_i)$,
+\begin{equation}
+\overline{\text{NDVI}}_{\text{weighted}} \neq \text{NDVI}_{\text{true}}
+\end{equation}
+whenever pixels within the region have different total brightness $(\text{NIR}_i + \text{Red}_i)$.
+
+\section{Practical Sources of Bias in Remote Sensing}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Brightness / Albedo Dominance:} Bright pixels (such as dry bare soil, sand, or snow, which have high $\text{NIR} + \text{Red}$) contribute substantially more physical radiance to the regional signal than dark pixels (such as dense forest canopy or wet soil). Simply averaging pixel NDVIs treats a dim pixel and a bright pixel as equally influential in the denominator, introducing \textbf{aggregation (scale) bias}.
+    \item \textbf{Endmember Mixing:} In heterogeneous landscapes (e.g., mixed agricultural fields, urban trees alongside concrete, or sparse shrubland), averaging pixel-level NDVI can systematically overestimate or underestimate true canopy greenness compared to calculating NDVI from aggregated band reflectances.
+    \item \textbf{Sample Selection / Missing Data Bias:} If weights are based on cloud-free pixel counts or stratified sampling, non-random cloud cover (e.g., clouds forming preferentially over moist, vegetated areas) biases the weighted mean downward.
+    \item \textbf{Statistical Unbiasedness vs.\ Physical Bias:} Statistically, if the target parameter is strictly defined as the arithmetic mean of pixel-level NDVI values across a fixed grid, a probability-weighted Horvitz--Thompson estimator is statistically unbiased for that grid average---however, that grid average itself remains physically biased relative to the true regional surface reflectance ratio.
+\end{itemize}
+
+\section{How to Avoid Aggregation Bias}
+
+Instead of computing a weighted average of \textbf{NDVI values}, compute the area-weighted average of the \textbf{NIR} and \textbf{Red} bands separately first, and then calculate NDVI once from those aggregated band values:
+
+\begin{enumerate}[leftmargin=*]
+    \item Compute the weighted mean NIR reflectance:
+    \begin{equation}
+    \overline{\text{NIR}} = \sum_{i} w_i \text{NIR}_i
+    \end{equation}
+    \item Compute the weighted mean Red reflectance:
+    \begin{equation}
+    \overline{\text{Red}} = \sum_{i} w_i \text{Red}_i
+    \end{equation}
+    \item Compute the regional NDVI from the aggregated bands:
+    \begin{equation}
+    \text{NDVI}_{\text{region}} = \frac{\overline{\text{NIR}} - \overline{\text{Red}}}{\overline{\text{NIR}} + \overline{\text{Red}}}
+    \end{equation}
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,25 @@
+Title:          Script Build Notes
+Project:        Remote Sensing for Ag
+Author:         bmarron
+Created:        19 Nov 2026
+Revised:        
+
+
+
+---------------------------------------------------------
+I wrote `region_ndvi_fractal.py` and ran it on your new CSV (278,378 pixels). Usage is `python3 region_ndvi_fractal.py path/to/UMA_S2_2022_04_B8B4_stats.csv`.
+
+The CSV has no NDVI column, so the script computes each pixel's NDVI from the same statistic's bands, for example `(B8_mean − B4_mean) / (B8_mean + B4_mean)`. It keeps pixels with NDVI > 0.25 and takes the area-weighted mean NIR and Red separately. Then it computes the region NDVI once from those two means, finds the bin, and applies the exponent. Pixels are all 10 m × 10 m, so the weights are equal. If you have per-pixel areas, put the column name in `AREA_COL`.
+
+| Statistic | Pixels used | Mean NIR | Mean Red | Region NDVI | Bin → exponent | NDVI^exp |
+|---|---|---|---|---|---|---|
+| mean | 273,480 | 0.24950 | 0.05947 | **0.61503** | 0.6–1.0 → 3.0 | **0.23264** |
+| min | 275,721 | 0.16726 | 0.02607 | 0.73034 | 0.6–1.0 → 3.0 | 0.38957 |
+| max | 264,705 | 0.34878 | 0.11054 | 0.51867 | 0.4–0.6 → 2.5 | 0.19374 |
+
+- **Use the mean row:** Min and max are taken per band across dates, so NIR and Red can come from different days at the same pixel. The mean row is the only one that describes a consistent average state. I kept min and max in the output because you exported them, and you can drop them via `STATS_TO_RUN`.
+- **Bin edge:** The mean-based region NDVI (0.615) is only 0.015 above the 0.6 bin edge. A slightly different mask or cloud filter could drop it into the 2.5 bin, so the exponent choice is sensitive here.
+- **Error in my v1_4 docstring:** I said the `x`/`y` columns are in metres, but they are pixel-grid indices (38539.5 here means 385,395 m in UTM). This doesn't affect the calculation above. To fix it, multiply the coordinates by `EXPORT_SCALE` in the export cell, and I can patch v1_4 if you want.
+
+
+You're welcome! Enjoy the rest of your Friday. If you want the `x`/`y` coordinate fix in v1_4, or an NDVI column added to the band-stats CSV, bring the script back and I'll patch it.

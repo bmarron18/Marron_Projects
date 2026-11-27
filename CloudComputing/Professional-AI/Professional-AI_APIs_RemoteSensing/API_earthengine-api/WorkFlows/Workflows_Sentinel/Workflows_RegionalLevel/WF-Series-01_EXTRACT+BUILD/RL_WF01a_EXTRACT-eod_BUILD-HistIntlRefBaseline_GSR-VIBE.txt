@@ -1,7 +1,7 @@
 Title:          Region-Level Workflow 01a:
                 EXTRACT earth observational data to BUILD a Historic International Reference Baseline (HIRB) 
                 of metrics and thresholds that will be used as the Gold-Standard Reference (GSR) for 
-                EVALUATING ECOSYSTEM SERVICES in agroecosystems at the regional level
+                EVALUATING the VIBE Index in agroecosystems at the regional level
 
 Project:        Remote Sensing for Ag
 Author:         bmarron, claude-fable-5-1
@@ -31,6 +31,9 @@ CCC
 DEM
   Digital Elevation Model
 
+EOS
+  End of Season; The point where NDVI drops back toward the dormant baseline.
+
 fAPAR, fCover
   Fraction of Absorbed Photosynthetically Active Radiation
     How actively plants are photosynthesizing and converting light into energy. It is a direct indicator of primary productivity, crop growth rates, and vegetation stress.
@@ -58,6 +61,9 @@ NPP
   Net Primary Production (g C⋅m⁻²⋅dekad⁻¹ or g C⋅m⁻²⋅yr⁻¹) 
   Measures net carbon assimilated by vegetation after autotrophic respiration; directly proxies carbon sequestration and biomass accumulation.
 
+POS
+  Peak of Season; The maximum NDVI value reached during peak biomass and canopy closure.
+
 RUSLE
   Revised Universal Soil Loss Equation. In soil erosion and hydrological modeling, a Digital Elevation Model (DEM) provides topographic inputs (slope and flow accumulation for the LS factor), while CHIRPS provides precipitation data to calculate rainfall erosivity (the R factor). Estimating the RUSLE rainfall erosivity factor (\(R\)) from CHIRPS requires empirical regression equations based on monthly or annual rainfall totals, since the dataset provides daily, pentad, and monthly accumulations rather than sub-hourly storm intensities.
 
@@ -66,6 +72,9 @@ SCL
 
 SNH
   Semi-natural habitat
+
+SOS
+  Start of Season; The inflection point where NDVI begins rising rapidly above the winter or dry-season baseline.
 
 SWIR
   Short-Wave Infrared
@@ -93,16 +102,101 @@ See .tex doc
 
 
 VIBE can be a harmonic oscillation (energy from frequency and amplitude) bc time series analysis
-
-VIBE  = mf^2A^2
-      = (m = log of the count of binned NDVI values with high reflectance) *
-      (f = cycle to peaks of veg growth max over time (momths)^2 *
-      (A = total life index = f(binned NDVI values^3))^2
-
 disturbance, NDVI, NPP, diversity
 
 
+
+VIBE  = mf^2A^2
+
+      m   = ratio of no. NDVI values > 0.25 / total no. NDVI values
+
+      f   = Hz (cycles/s)
+          = no. of active growing (NDVI above baseline) weeks / 52 weeks 
+
+      A   = accept only NDVI > 0.25; compute the area-weighted average of the NIR and Red bands separately 
+          first, and then calculate region NDVI value once from those aggregated band values; locate the bin in which the region NDVI value would fall; add an exponent to the region NDVI value to account for fractal growth
+
+          Bin 0.2 to 0.4    ==> exp 2.0
+          Bin 0.4 to 0.6    ==> exp 2.5
+          Bin 0.6 to 1.0    ==> exp 3.0
+
+      
+
+
+Regional NDVI
+----------------
 <<< python
+import numpy as np
+import pandas as pd
+
+# ---------------- User settings ----------------
+CSV_PATH   = "100.08882919.190335_medianNDVI_2022.csv"
+NDVI_COL   = "Ndvi-composite-median"
+NIR_COL    = "NIR-composite-median"    # adjust to your export's column name
+RED_COL    = "Red-composite-median"    # adjust to your export's column name
+AREA_COL   = None                      # e.g. "area_m2" if you have per-pixel areas
+PIXEL_SIZE = 30.0                      # metres (Landsat); used if AREA_COL is None
+NDVI_MIN   = 0.25
+
+# Bins (lower inclusive, upper exclusive; last bin includes 1.0) -> exponent
+BINS = [(0.2, 0.4, 2.0),
+        (0.4, 0.6, 2.5),
+        (0.6, 1.0, 3.0)]
+
+# ---------------- Load ----------------
+df = pd.read_csv(CSV_PATH)
+
+missing = [c for c in (NDVI_COL, NIR_COL, RED_COL) if c not in df.columns]
+if missing:
+    raise ValueError(
+        f"Missing column(s): {missing}. Found: {list(df.columns)}. "
+        "NIR and Red must be exported alongside NDVI; they cannot be derived from NDVI alone."
+    )
+
+# ---------------- 1) Keep only NDVI > 0.25 ----------------
+df = df.dropna(subset=[NDVI_COL, NIR_COL, RED_COL])
+df = df[df[NDVI_COL] > NDVI_MIN]
+if df.empty:
+    raise ValueError("No pixels with NDVI > 0.25.")
+
+# ---------------- 2) Area weights (w_i sums to 1) ----------------
+area = df[AREA_COL].to_numpy(float) if AREA_COL else np.full(len(df), PIXEL_SIZE**2)
+w = area / area.sum()
+
+# ---------------- 3) Weighted mean bands, then regional NDVI ----------------
+nir_bar = np.sum(w * df[NIR_COL].to_numpy(float))
+red_bar = np.sum(w * df[RED_COL].to_numpy(float))
+ndvi_region = (nir_bar - red_bar) / (nir_bar + red_bar)
+
+# ---------------- 4) Find bin and apply fractal exponent ----------------
+def find_bin(v):
+    for i, (lo, hi, exp) in enumerate(BINS):
+        last = i == len(BINS) - 1
+        if lo <= v < hi or (last and v == hi):
+            return (lo, hi), exp
+    return None, None
+
+bin_range, exponent = find_bin(ndvi_region)
+
+# ---------------- 5) Report ----------------
+print(f"Pixels used (NDVI > {NDVI_MIN}): {len(df)}")
+print(f"Weighted mean NIR : {nir_bar:.5f}")
+print(f"Weighted mean Red : {red_bar:.5f}")
+print(f"Region NDVI       : {ndvi_region:.5f}")
+if exponent is None:
+    print("Region NDVI falls outside the defined bins (0.2-1.0); no exponent applied.")
+else:
+    print(f"Bin               : {bin_range[0]} to {bin_range[1]}  ->  exponent {exponent}")
+    print(f"Region NDVI^{exponent}   : {ndvi_region ** exponent:.5f}")
+
+
+>>>
+
+
+
+Create NDVI bins
+-----------------
+<<< python 
 import numpy as np
 
 # Example flattened NDVI raster values (-1.0 to 1.0)
